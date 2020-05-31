@@ -1,0 +1,73 @@
+C:\Users\victo\source\repos\OrderNowWeb\OrderNowDAL\bin\Debug\OrderNowDAL.dll.config
+C:\Users\victo\source\repos\OrderNowWeb\OrderNowDAL\bin\Debug\OrderNowDAL.dll
+C:\Users\victo\source\repos\OrderNowWeb\OrderNowDAL\bin\Debug\OrderNowDAL.pdb
+C:\Users\victo\source\repos\OrderNowWeb\OrderNowDAL\bin\Debug\EntityFramework.dll
+C:\Users\victo\source\repos\OrderNowWeb\OrderNowDAL\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\victo\source\repos\OrderNowWeb\OrderNowDAL\bin\Debug\EntityFramework.xml
+C:\Users\victo\source\repos\OrderNowWeb\OrderNowDAL\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\victo\source\repos\OrderNowWeb\OrderNowDAL\obj\Debug\OrderNowDAL.csprojAssemblyReference.cache
+C:\Users\victo\source\repos\OrderNowWeb\OrderNowDAL\obj\Debug\OrderNowDAL.csproj.CoreCompileInputs.cache
+C:\Users\victo\source\repos\OrderNowWeb\OrderNowDAL\obj\Debug\OrderNowDAL.csproj.CopyComplete
+C:\Users\victo\source\repos\OrderNowWeb\OrderNowDAL\obj\Debug\OrderNowDAL.dll
+C:\Users\victo\source\repos\OrderNowWeb\OrderNowDAL\obj\Debug\OrderNowDAL.pdb
+C:\Users\eugen\Downloads\OrderNowWeb\OrderNowDAL\bin\Debug\OrderNowDAL.dll.config
+C:\Users\eugen\Downloads\OrderNowWeb\OrderNowDAL\bin\Debug\OrderNowDAL.dll
+C:\Users\eugen\Downloads\OrderNowWeb\OrderNowDAL\bin\Debug\OrderNowDAL.pdb
+C:\Users\eugen\Downloads\OrderNowWeb\OrderNowDAL\bin\Debug\EntityFramework.dll
+C:\Users\eugen\Downloads\OrderNowWeb\OrderNowDAL\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\eugen\Downloads\OrderNowWeb\OrderNowDAL\bin\Debug\EntityFramework.xml
+C:\Users\eugen\Downloads\OrderNowWeb\OrderNowDAL\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\eugen\Downloads\OrderNowWeb\OrderNowDAL\obj\Debug\OrderNowDAL.csprojAssemblyReference.cache
+C:\Users\eugen\Downloads\OrderNowWeb\OrderNowDAL\obj\Debug\OrderNowDAL.csproj.CoreCompileInputs.cache
+C:\Users\eugen\Downloads\OrderNowWeb\OrderNowDAL\obj\Debug\OrderNowDAL.csproj.CopyComplete
+C:\Users\eugen\Downloads\OrderNowWeb\OrderNowDAL\obj\Debug\OrderNowDAL.dll
+C:\Users\eugen\Downloads\OrderNowWeb\OrderNowDAL\obj\Debug\OrderNowDAL.pdb
+E:\Escritorio\OrderNowV\OrderNowWeb\OrderNowDAL\bin\Debug\OrderNowDAL.dll.config
+E:\Escritorio\OrderNowV\OrderNowWeb\OrderNowDAL\bin\Debug\OrderNowDAL.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\OrderNowDAL\bin\Debug\OrderNowDAL.pdb
+E:\Escritorio\OrderNowV\OrderNowWeb\OrderNowDAL\bin\Debug\EntityFramework.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\OrderNowDAL\bin\Debug\EntityFramework.SqlServer.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\OrderNowDAL\bin\Debug\EntityFramework.xml
+E:\Escritorio\OrderNowV\OrderNowWeb\OrderNowDAL\bin\Debug\EntityFramework.SqlServer.xml
+E:\Escritorio\OrderNowV\OrderNowWeb\OrderNowDAL\obj\Debug\OrderNowDAL.csprojAssemblyReference.cache
+E:\Escritorio\OrderNowV\OrderNowWeb\OrderNowDAL\obj\Debug\OrderNowDAL.csproj.CoreCompileInputs.cache
+E:\Escritorio\OrderNowV\OrderNowWeb\OrderNowDAL\obj\Debug\OrderNowDAL.csproj.CopyComplete
+E:\Escritorio\OrderNowV\OrderNowWeb\OrderNowDAL\obj\Debug\OrderNowDAL.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\OrderNowDAL\obj\Debug\OrderNowDAL.pdb
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\OrderNowDAL\bin\Debug\OrderNowDAL.dll.config
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\OrderNowDAL\bin\Debug\OrderNowDAL.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\OrderNowDAL\bin\Debug\OrderNowDAL.pdb
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\OrderNowDAL\bin\Debug\EntityFramework.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\OrderNowDAL\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\OrderNowDAL\bin\Debug\EntityFramework.xml
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\OrderNowDAL\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\OrderNowDAL\obj\Debug\OrderNowDAL.csprojAssemblyReference.cache
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\OrderNowDAL\obj\Debug\OrderNowDAL.csproj.CoreCompileInputs.cache
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\OrderNowDAL\obj\Debug\OrderNowDAL.csproj.CopyComplete
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\OrderNowDAL\obj\Debug\OrderNowDAL.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\OrderNowDAL\obj\Debug\OrderNowDAL.pdb
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\OrderNowDAL\bin\Debug\OrderNowDAL.dll.config
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\OrderNowDAL\bin\Debug\OrderNowDAL.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\OrderNowDAL\bin\Debug\OrderNowDAL.pdb
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\OrderNowDAL\bin\Debug\EntityFramework.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\OrderNowDAL\bin\Debug\EntityFramework.SqlServer.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\OrderNowDAL\bin\Debug\EntityFramework.xml
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\OrderNowDAL\bin\Debug\EntityFramework.SqlServer.xml
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\OrderNowDAL\obj\Debug\OrderNowDAL.csprojAssemblyReference.cache
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\OrderNowDAL\obj\Debug\OrderNowDAL.csproj.CoreCompileInputs.cache
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\OrderNowDAL\obj\Debug\OrderNowDAL.csproj.CopyComplete
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\OrderNowDAL\obj\Debug\OrderNowDAL.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\OrderNowDAL\obj\Debug\OrderNowDAL.pdb
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\obj\Debug\OrderNowDAL.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\obj\Debug\OrderNowDAL.pdb
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\OrderNowDAL.dll.config
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\OrderNowDAL.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\OrderNowDAL.pdb
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\EntityFramework.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\EntityFramework.xml
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\obj\Debug\OrderNowDAL.csprojAssemblyReference.cache
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\obj\Debug\OrderNowDAL.csproj.CoreCompileInputs.cache
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\obj\Debug\OrderNowDAL.csproj.CopyComplete
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\AjaxControlToolkit.dll

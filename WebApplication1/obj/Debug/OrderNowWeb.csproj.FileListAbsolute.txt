@@ -1,0 +1,388 @@
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\WebApplication1.dll.config
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\WebApplication1.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\WebApplication1.pdb
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\csc.exe
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\csc.exe.config
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\csc.rsp
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\csi.exe
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\csi.exe.config
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\csi.rsp
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\System.AppContext.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\System.Console.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\System.IO.Compression.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\System.IO.Pipes.AccessControl.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\System.IO.Pipes.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\System.Security.AccessControl.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\System.Security.Claims.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\System.Security.Principal.Windows.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\System.ValueTuple.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\System.Xml.XPath.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\vbc.exe
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\vbc.exe.config
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\vbc.rsp
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\VBCSCompiler.exe
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\obj\Debug\OrderNowWeb.csprojAssemblyReference.cache
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\obj\Debug\OrderNowWeb.csproj.CoreCompileInputs.cache
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\obj\Debug\OrderNowWeb.csproj.CopyComplete
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\obj\Debug\WebApplication1.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\obj\Debug\WebApplication1.pdb
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\EntityFramework.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\EntityFramework.SqlServer.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\OrderNowDAL.dll
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\OrderNowDAL.pdb
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\OrderNowDAL.dll.config
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\EntityFramework.xml
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\bin\EntityFramework.SqlServer.xml
+C:\Users\victo\source\repos\OrderNowWeb\WebApplication1\obj\Debug\OrderNowWeb.sourcelink.json
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\WebApplication1.dll.config
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\WebApplication1.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\WebApplication1.pdb
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\csc.exe
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\csc.exe.config
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\csc.rsp
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\csi.exe
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\csi.exe.config
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\csi.rsp
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\System.AppContext.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\System.Console.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\System.IO.Compression.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\System.IO.Pipes.AccessControl.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\System.IO.Pipes.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\System.Security.AccessControl.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\System.Security.Claims.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\System.Security.Principal.Windows.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\System.ValueTuple.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\System.Xml.XPath.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\vbc.exe
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\vbc.exe.config
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\vbc.rsp
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\VBCSCompiler.exe
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\EntityFramework.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\EntityFramework.SqlServer.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\OrderNowDAL.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\OrderNowDAL.pdb
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\OrderNowDAL.dll.config
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\EntityFramework.xml
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\EntityFramework.SqlServer.xml
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\obj\Debug\OrderNowWeb.csprojAssemblyReference.cache
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\obj\Debug\OrderNowWeb.csproj.CoreCompileInputs.cache
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\obj\Debug\OrderNowWeb.sourcelink.json
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\obj\Debug\OrderNowWeb.csproj.CopyComplete
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\obj\Debug\WebApplication1.dll
+C:\Users\eugen\Downloads\OrderNowWeb\WebApplication1\obj\Debug\WebApplication1.pdb
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\WebApplication1.dll.config
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\WebApplication1.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\WebApplication1.pdb
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\csc.exe
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\csc.exe.config
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\csc.rsp
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\csi.exe
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\csi.exe.config
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\csi.rsp
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.Managed.Core.targets
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\System.AppContext.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\System.Collections.Immutable.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\System.Console.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\System.Diagnostics.StackTrace.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\System.IO.Compression.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\System.IO.FileSystem.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\System.IO.FileSystem.Primitives.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\System.IO.Pipes.AccessControl.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\System.IO.Pipes.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\System.Reflection.Metadata.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\System.Security.AccessControl.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\System.Security.Claims.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\System.Security.Cryptography.Encoding.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\System.Security.Cryptography.Primitives.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\System.Security.Principal.Windows.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\System.Text.Encoding.CodePages.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\System.ValueTuple.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\System.Xml.ReaderWriter.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\System.Xml.XmlDocument.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\System.Xml.XPath.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\System.Xml.XPath.XDocument.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\vbc.exe
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\vbc.exe.config
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\vbc.rsp
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\VBCSCompiler.exe
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\roslyn\VBCSCompiler.exe.config
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\EntityFramework.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\EntityFramework.SqlServer.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\OrderNowDAL.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\OrderNowDAL.pdb
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\OrderNowDAL.dll.config
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\EntityFramework.xml
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\EntityFramework.SqlServer.xml
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\obj\Debug\OrderNowWeb.csprojAssemblyReference.cache
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\obj\Debug\OrderNowWeb.csproj.CoreCompileInputs.cache
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\obj\Debug\OrderNowWeb.sourcelink.json
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\obj\Debug\OrderNowWeb.csproj.CopyComplete
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\obj\Debug\WebApplication1.dll
+E:\Escritorio\OrderNowV\OrderNowWeb\WebApplication1\obj\Debug\WebApplication1.pdb
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\WebApplication1.dll.config
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\WebApplication1.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\WebApplication1.pdb
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\csc.exe
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\csc.exe.config
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\csc.rsp
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\csi.exe
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\csi.exe.config
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\csi.rsp
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.AppContext.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Console.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.IO.Compression.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.IO.Pipes.AccessControl.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.IO.Pipes.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Security.AccessControl.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Security.Claims.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Security.Principal.Windows.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.ValueTuple.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Xml.XPath.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\vbc.exe
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\vbc.exe.config
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\vbc.rsp
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\VBCSCompiler.exe
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\EntityFramework.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\EntityFramework.SqlServer.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\OrderNowDAL.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\OrderNowDAL.pdb
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\OrderNowDAL.dll.config
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\EntityFramework.xml
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\EntityFramework.SqlServer.xml
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\obj\Debug\OrderNowWeb.csprojAssemblyReference.cache
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\obj\Debug\OrderNowWeb.csproj.CoreCompileInputs.cache
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\obj\Debug\OrderNowWeb.sourcelink.json
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\obj\Debug\OrderNowWeb.csproj.CopyComplete
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\obj\Debug\WebApplication1.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.1\WebApplication1\obj\Debug\WebApplication1.pdb
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\WebApplication1.dll.config
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\WebApplication1.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\WebApplication1.pdb
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\csc.exe
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\csc.exe.config
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\csc.rsp
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\csi.exe
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\csi.exe.config
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\csi.rsp
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\Microsoft.Managed.Core.targets
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.AppContext.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Collections.Immutable.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Console.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Diagnostics.StackTrace.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.IO.Compression.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.IO.FileSystem.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.IO.FileSystem.Primitives.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.IO.Pipes.AccessControl.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.IO.Pipes.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Reflection.Metadata.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Security.AccessControl.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Security.Claims.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Security.Cryptography.Encoding.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Security.Cryptography.Primitives.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Security.Principal.Windows.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Text.Encoding.CodePages.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.ValueTuple.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Xml.ReaderWriter.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Xml.XmlDocument.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Xml.XPath.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\System.Xml.XPath.XDocument.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\vbc.exe
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\vbc.exe.config
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\vbc.rsp
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\VBCSCompiler.exe
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\roslyn\VBCSCompiler.exe.config
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\EntityFramework.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\EntityFramework.SqlServer.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\OrderNowDAL.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\OrderNowDAL.pdb
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\OrderNowDAL.dll.config
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\EntityFramework.xml
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\EntityFramework.SqlServer.xml
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\obj\Debug\OrderNowWeb.csprojAssemblyReference.cache
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\obj\Debug\OrderNowWeb.csproj.CoreCompileInputs.cache
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\obj\Debug\OrderNowWeb.sourcelink.json
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\obj\Debug\OrderNowWeb.csproj.CopyComplete
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\obj\Debug\WebApplication1.dll
+E:\Escritorio\ScreenShots\OrderNowWeb V5.1\WebApplication1\obj\Debug\WebApplication1.pdb
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\WebApplication1.dll.config
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\WebApplication1.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\WebApplication1.pdb
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\csc.exe
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\csc.exe.config
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\csc.rsp
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\csi.exe
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\csi.exe.config
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\csi.rsp
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\System.AppContext.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\System.Console.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\System.IO.Compression.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\System.IO.Pipes.AccessControl.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\System.IO.Pipes.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\System.Security.AccessControl.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\System.Security.Claims.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\System.Security.Principal.Windows.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\System.ValueTuple.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\System.Xml.XPath.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\vbc.exe
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\vbc.exe.config
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\vbc.rsp
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\VBCSCompiler.exe
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\EntityFramework.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\EntityFramework.SqlServer.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\OrderNowDAL.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\OrderNowDAL.pdb
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\OrderNowDAL.dll.config
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\EntityFramework.xml
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\EntityFramework.SqlServer.xml
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\obj\Debug\OrderNowWeb.csprojAssemblyReference.cache
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\obj\Debug\OrderNowWeb.csproj.CoreCompileInputs.cache
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\obj\Debug\OrderNowWeb.sourcelink.json
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\obj\Debug\OrderNowWeb.csproj.CopyComplete
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\obj\Debug\WebApplication1.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\obj\Debug\WebApplication1.pdb
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\SpreadsheetLight.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\SpreadsheetLight.xml
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\DocumentFormat.OpenXml.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\AjaxControlToolkit.dll

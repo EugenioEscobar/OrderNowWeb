@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29920.165
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderNowWeb", "WebApplication1\OrderNowWeb.csproj", "{2E1D40F9-524B-4AF7-A302-4FA25BDB8B0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderNowDAL", "OrderNowDAL\OrderNowDAL.csproj", "{3D9D570E-626E-4708-93C2-8F915459AACA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E1D40F9-524B-4AF7-A302-4FA25BDB8B0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E1D40F9-524B-4AF7-A302-4FA25BDB8B0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E1D40F9-524B-4AF7-A302-4FA25BDB8B0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E1D40F9-524B-4AF7-A302-4FA25BDB8B0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D9D570E-626E-4708-93C2-8F915459AACA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D9D570E-626E-4708-93C2-8F915459AACA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D9D570E-626E-4708-93C2-8F915459AACA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D9D570E-626E-4708-93C2-8F915459AACA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EAB192CA-4841-4680-B12C-11429AA794A4}
+	EndGlobalSection
+EndGlobal
