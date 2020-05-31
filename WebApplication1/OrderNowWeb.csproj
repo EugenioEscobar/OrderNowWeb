@@ -108,6 +108,7 @@
     <Content Include="Fotos\OrderNow.png" />
     <Content Include="IngresarOrdenDeCompra.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="Mantenedores\CrudMarcas.aspx" />
     <Content Include="MenuComida.aspx" />
     <Content Include="MenuPrincipal.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -299,6 +300,13 @@
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Mantenedores\CrudMarcas.aspx.cs">
+      <DependentUpon>CrudMarcas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Mantenedores\CrudMarcas.aspx.designer.cs">
+      <DependentUpon>CrudMarcas.aspx</DependentUpon>
     </Compile>
     <Compile Include="MenuComida.aspx.cs">
       <DependentUpon>MenuComida.aspx</DependentUpon>
