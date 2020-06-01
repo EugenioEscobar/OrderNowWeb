@@ -36,5 +36,10 @@ namespace OrderNowDAL.DAL
             TipoAlimento m = nowBDEntities.TipoAlimento.FirstOrDefault(obj => obj.IdTipoAlimento == id);
             return m;
         }
+        public TipoAlimento FindByName(string name)
+        {
+            TipoAlimento m = nowBDEntities.TipoAlimento.FirstOrDefault(obj => obj.Descripcion.ToUpper() == name.ToUpper());
+            return m;
+        }
     }
 }

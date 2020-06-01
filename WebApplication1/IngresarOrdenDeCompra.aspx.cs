@@ -1,4 +1,6 @@
-﻿using SpreadsheetLight;
+﻿using OrderNowDAL;
+using OrderNowDAL.DAL;
+using SpreadsheetLight;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,6 +13,14 @@ namespace WebApplication1
 {
     public partial class IngresarOrdenDeCompra : System.Web.UI.Page
     {
+        const char refIndexEx = 'A'; //Referencia de la letra en la que está ubicado el index
+        const char refNombreEx = 'K'; //Referencia de la letra en la que está ubicado el Nombre
+        readonly string[] columns = { "Nombre", "Descripción", "Cantidad", "Marca", "TipoAlimento", "TipoMedicion", "Precio", "Total" };
+        readonly string[] valueNecessary = { "Nombre", "Cantidad", "TipoMedicion", "Precio", "Total" }; //Columnas que no pueden estar vacías
+        MarcaDAL mDAL = new MarcaDAL();
+        TipoMedicionDAL tMDAL = new TipoMedicionDAL();
+        TipoAlimentoDAL tADAL = new TipoAlimentoDAL();
+
         List<string[]> listaRegistro = new List<string[]>();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -19,60 +29,89 @@ namespace WebApplication1
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            using (SLDocument doc = new SLDocument(FileUpload1.FileContent))
+            using (SLDocument doc = new SLDocument(FileUpload1.FileContent, "CargaDatos"))
             {
-                //Los contadores son inicalidos en 1, ya que la planilla excel cuenta desde el 1,
-                //si parte desde el cero no entraría al ciclo.
-                int rows = 1;
-                int columns = 1;
-
-                //Cuenta las columnas que hay antes hasta encontrar un espacio en blanco (se utiliza como referencia la fila 1)
-                while (!string.IsNullOrEmpty(doc.GetCellValueAsString(1, columns)))
-                {
-                    columns++;
-                }
-                columns--;
-
-                //Cuenta las filas que hay antes hasta encontrar un espacio en blanco (se utiliza como referencia la columna 1)
-                while (!string.IsNullOrEmpty(doc.GetCellValueAsString(rows, 1)))
-                {
-                    rows++;
-                }
-                rows--;
-
-                string[] registro = new string[columns];
-
-                //Llena lista con todos los registros obtenidos desde el excel
-                for (int i = 1; i <= rows; i++)
-                {
-                    registro = new string[columns];
-                    for (int j = 1; j <= columns; j++)
-                    {
-                        string value = doc.GetCellValueAsString(i, j);
-                        registro[j - 1] = value;
-                    }
-                    listaRegistro.Add(registro);
-                }
-                DataTable dt = crearTabla(listaRegistro);
+                DataTable dt = getTable(doc);
+                ValidateFields(dt);
+                //Llenar datos de Factura
                 GridView1.DataSource = dt;
                 GridView1.DataBind();
             }
         }
 
-        private DataTable crearTabla(List<string[]> lista)
+        private DataTable getTable(SLDocument doc)
         {
             DataTable dt = new DataTable();
+            char letterExcel = refNombreEx;
 
-            int columnsCount = lista.ElementAt(0).Count();
-            for (int i = 0; i < columnsCount; i++)
+            //Se setean las columnas del DataTable
+            foreach (string column in columns)
             {
-                dt.Columns.Add(lista.ElementAt(0)[i]);
+                dt.Columns.Add(column);
             }
-            for (int i = 1; i < lista.Count; i++)
+
+            //Se Recorren las filas hasta encontrar un index Vacío
+            for (int rowExcel = 3; rowExcel < 1000; rowExcel++)
             {
-                dt.Rows.Add(lista.ElementAt(i));
+                string[] row = new string[columns.Count()];
+                letterExcel = refNombreEx;
+
+                if (!string.IsNullOrEmpty(doc.GetCellValueAsString(refIndexEx + "" + rowExcel)))
+                {
+                    // El index del Excel no está vacío
+                    for (int j = 0; j < columns.Count(); j++)
+                    {
+                        row[j] = doc.GetCellValueAsString(letterExcel + "" + rowExcel);
+                        letterExcel++;
+                    }
+                }
+                else { break; }
+
+                dt.Rows.Add(row);
             }
             return dt;
+        }
+
+        private void ValidateFields(DataTable dt)
+        {
+            string val = "Descripción";
+            foreach (DataRow row in dt.Rows)
+            {
+                foreach (string column in columns)
+                {
+                    val = row[column].ToString();
+                    if (valueNecessary.Contains(column) && val == "")
+                    {
+                        InsertMessage("");
+                    }
+                    switch (column)
+                    {
+                        case "Marca":
+                            Marca marca = val != "" ? mDAL.FindByName(val) : null;
+                            break;
+
+                        case "TipoAlimento":
+                            TipoAlimento tipoAlimento = val != "" ? tADAL.FindByName(val) : null;
+                            break;
+
+                        case "TipoMedicion":
+                            TipoMedicion tipoMed = val != "" ? tMDAL.FindByName(val) : null;
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+
+        private void InsertMessage(string mensaje)
+        {
+            if (mensaje != "")
+            {
+                lblMensaje.Text = mensaje;
+            }
+            else { }
         }
     }
 }

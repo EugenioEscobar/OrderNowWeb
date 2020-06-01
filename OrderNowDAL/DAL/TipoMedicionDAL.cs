@@ -36,5 +36,10 @@ namespace OrderNowDAL.DAL
             TipoMedicion m = nowBDEntities.TipoMedicion.FirstOrDefault(obj => obj.IdTipoMedicion == id);
             return m;
         }
+        public TipoMedicion FindByName(string name)
+        {
+            TipoMedicion m = nowBDEntities.TipoMedicion.FirstOrDefault(obj => obj.Descripcion.ToUpper() == name.ToUpper());
+            return m;
+        }
     }
 }

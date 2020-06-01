@@ -27,14 +27,19 @@ namespace OrderNowDAL.DAL
             Marca = p;
             nowBDEntities.SaveChanges();
         }
-        public List<Marca> GetAll()
-        {
-            return nowBDEntities.Marca.ToList();
-        }
         public Marca Find(int id)
         {
             Marca m = nowBDEntities.Marca.FirstOrDefault(obj => obj.IdMarca == id);
             return m;
+        }
+        public Marca FindByName(string name)
+        {
+            Marca m = nowBDEntities.Marca.FirstOrDefault(obj => obj.Nombre.ToUpper() == name.ToUpper());
+            return m;
+        }
+        public List<Marca> GetAll()
+        {
+            return nowBDEntities.Marca.ToList();
         }
     }
 }
