@@ -13,9 +13,8 @@ namespace WebApplication1
 {
     public partial class IngresarOrdenDeCompra : System.Web.UI.Page
     {
-        const char refIndexEx = 'A'; //Referencia de la letra en la que está ubicado el index
-        const char refNombreEx = 'K'; //Referencia de la letra en la que está ubicado el Nombre
-        readonly string[] columns = { "Nombre", "Descripción", "Cantidad", "Marca", "TipoAlimento", "TipoMedicion", "Precio", "Total" };
+        const char refIndexEx = 'D'; //Referencia de la letra en la que está ubicado el Nombre
+        readonly string[] columns = { "Index", "Nombre", "Descripción", "Cantidad", "Marca", "TipoAlimento", "TipoMedicion", "Precio", "Total" };
         readonly string[] valueNecessary = { "Nombre", "Cantidad", "TipoMedicion", "Precio", "Total" }; //Columnas que no pueden estar vacías
         MarcaDAL mDAL = new MarcaDAL();
         TipoMedicionDAL tMDAL = new TipoMedicionDAL();
@@ -24,7 +23,8 @@ namespace WebApplication1
         List<string[]> listaRegistro = new List<string[]>();
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            ViewState["Message"] = false;
+            userMessage("","");
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -32,7 +32,7 @@ namespace WebApplication1
             using (SLDocument doc = new SLDocument(FileUpload1.FileContent, "CargaDatos"))
             {
                 DataTable dt = getTable(doc);
-                ValidateFields(dt);
+                ValidateEmptyFields(dt);
                 //Llenar datos de Factura
                 GridView1.DataSource = dt;
                 GridView1.DataBind();
@@ -42,7 +42,7 @@ namespace WebApplication1
         private DataTable getTable(SLDocument doc)
         {
             DataTable dt = new DataTable();
-            char letterExcel = refNombreEx;
+            char letterExcel = refIndexEx;
 
             //Se setean las columnas del DataTable
             foreach (string column in columns)
@@ -54,7 +54,7 @@ namespace WebApplication1
             for (int rowExcel = 3; rowExcel < 1000; rowExcel++)
             {
                 string[] row = new string[columns.Count()];
-                letterExcel = refNombreEx;
+                letterExcel = refIndexEx;
 
                 if (!string.IsNullOrEmpty(doc.GetCellValueAsString(refIndexEx + "" + rowExcel)))
                 {
@@ -72,7 +72,7 @@ namespace WebApplication1
             return dt;
         }
 
-        private void ValidateFields(DataTable dt)
+        private void ValidateEmptyFields(DataTable dt)
         {
             string val = "Descripción";
             foreach (DataRow row in dt.Rows)
@@ -82,36 +82,86 @@ namespace WebApplication1
                     val = row[column].ToString();
                     if (valueNecessary.Contains(column) && val == "")
                     {
-                        InsertMessage("");
-                    }
-                    switch (column)
-                    {
-                        case "Marca":
-                            Marca marca = val != "" ? mDAL.FindByName(val) : null;
-                            break;
-
-                        case "TipoAlimento":
-                            TipoAlimento tipoAlimento = val != "" ? tADAL.FindByName(val) : null;
-                            break;
-
-                        case "TipoMedicion":
-                            TipoMedicion tipoMed = val != "" ? tMDAL.FindByName(val) : null;
-                            break;
-
-                        default:
-                            break;
+                        userMessage($"El valor de {column}  en la fila {row[0]} no puede estár vacío.","danger");
+                        uploadOption(false);
                     }
                 }
             }
         }
 
-        private void InsertMessage(string mensaje)
+        private void userMessage(string mensaje, string type)
         {
             if (mensaje != "")
             {
+                divMessage.Attributes.Add("class", "alert alert-" + type);
                 lblMensaje.Text = mensaje;
             }
-            else { }
+            else
+            {
+                divMessage.Attributes.Add("class", "");
+                lblMensaje.Text = mensaje;
+            }
+        }
+
+        private void uploadOption(bool valid)
+        {
+            if (valid)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                bool flag = false;
+                string val = "";
+                int columnIndex = 0;
+                #region Validación de Marca
+                columnIndex = Array.IndexOf(columns, "Marca") + 1;
+                val = e.Row.Cells[columnIndex].Text;
+                Marca marca = val != "" ? mDAL.FindByName(val) : null;
+                if (marca == null)
+                {
+                    e.Row.Cells[columnIndex].BackColor = System.Drawing.Color.Red;
+                    flag = true;
+                }
+                #endregion
+
+                #region Validación de Tipo Alimento
+                columnIndex = Array.IndexOf(columns, "TipoAlimento") + 1;
+                val = e.Row.Cells[columnIndex].Text;
+                TipoAlimento tipoAlimento = val != "" ? tADAL.FindByName(val) : null;
+                if (tipoAlimento == null)
+                {
+                    e.Row.Cells[columnIndex].BackColor = System.Drawing.Color.Red;
+                    flag = true;
+                }
+                #endregion
+
+                #region Validación de Tipo Medición
+                columnIndex = Array.IndexOf(columns, "TipoMedicion") + 1;
+                val = e.Row.Cells[columnIndex].Text;
+                TipoMedicion tipoMedicion = val != "" ? tMDAL.FindByName(val) : null;
+                if (tipoMedicion == null)
+                {
+                    e.Row.Cells[columnIndex].BackColor = System.Drawing.Color.Red;
+                    flag = true;
+                }
+                #endregion
+
+                if (flag && (bool)ViewState["Message"] == false)
+                {
+                    userMessage($"{lblMensaje.Text} " +
+                        $" \n Lo datos en rojo se agregarán a la Base de datos automaticamente al ingresar la planilla","danger");
+                    ViewState["Message"] = true;
+                }
+            }
         }
     }
 }

@@ -2,12 +2,23 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container">
-        <asp:FileUpload ID="FileUpload1" runat="server" />
-        <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click" />
-        <asp:Label ID="lblMensaje" runat="server" Text=""></asp:Label>
+        <div class="form-row">
+            <asp:FileUpload ID="FileUpload1" runat="server" />
+            <asp:Button ID="Button1" runat="server" Text="Subir Planilla" OnClick="Button1_Click" />
+        </div>
+        <div id="divMessage" runat="server" class="">
+            <asp:Label ID="lblMensaje" runat="server" Text=""></asp:Label>
+        </div>
         <div class="text-center">
-            <asp:GridView ID="GridView1" runat="server" CellPadding="4" CssClass="table table-primary" ForeColor="#333333" GridLines="None" Width="100%">
+            <asp:GridView ID="GridView1" runat="server" CellPadding="4" CssClass="table table-primary" ForeColor="#333333" GridLines="None" Width="100%" OnRowDataBound="GridView1_RowDataBound">
                 <AlternatingRowStyle BackColor="White" />
+                <Columns>
+                    <asp:TemplateField>
+                        <ItemTemplate>
+                            <asp:Label ID="lblFlag" runat="server" Text=""></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
                 <EditRowStyle BackColor="#2461BF" />
                 <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
                 <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
