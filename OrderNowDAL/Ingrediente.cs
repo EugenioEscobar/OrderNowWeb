@@ -31,6 +31,7 @@ namespace OrderNowDAL
         public Nullable<int> IdTipoAlimento { get; set; }
         public Nullable<int> IdTipoMedicion { get; set; }
         public string Foto { get; set; }
+        public Nullable<int> Porción { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ExtraPedido> ExtraPedido { get; set; }

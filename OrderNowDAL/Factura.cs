@@ -20,12 +20,13 @@ namespace OrderNowDAL
             this.IngredienteFactura = new HashSet<IngredienteFactura>();
         }
     
-        public int Folio { get; set; }
+        public int IdFactura { get; set; }
         public Nullable<int> TotalNeto { get; set; }
         public Nullable<double> TotalIva { get; set; }
         public Nullable<int> IdDistribuidor { get; set; }
         public Nullable<int> IdTipoPago { get; set; }
         public Nullable<System.DateTime> Fecha { get; set; }
+        public Nullable<int> Folio { get; set; }
     
         public virtual Distribuidor Distribuidor { get; set; }
         public virtual TipoPago TipoPago { get; set; }

@@ -4,26 +4,26 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="43db54edd01c4333b24e83e1a359f5d9" Name="Diagram1">
+      <Diagram DiagramId="7a261dca912c42619b04c4d735c9a1bb" Name="Diagram1">
         <EntityTypeShape EntityType="OrderNowBDModel.Alimento" Width="1.5" PointX="12.75" PointY="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="OrderNowBDModel.AlimentoPedido" Width="1.5" PointX="15" PointY="9.875" IsExpanded="true" />
         <EntityTypeShape EntityType="OrderNowBDModel.Boleta" Width="1.5" PointX="18" PointY="9.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="OrderNowBDModel.Ciudad" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
         <EntityTypeShape EntityType="OrderNowBDModel.Cliente" Width="1.5" PointX="7.5" PointY="9.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="OrderNowBDModel.Comuna" Width="1.5" PointX="5.25" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrderNowBDModel.Comuna" Width="1.5" PointX="5.25" PointY="9.625" IsExpanded="true" />
         <EntityTypeShape EntityType="OrderNowBDModel.Distribuidor" Width="1.5" PointX="7.5" PointY="13.875" IsExpanded="true" />
         <EntityTypeShape EntityType="OrderNowBDModel.EstadoPedido" Width="1.5" PointX="10.5" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OrderNowBDModel.ExtraPedido" Width="1.5" PointX="20.25" PointY="9.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="OrderNowBDModel.Factura" Width="1.5" PointX="9.75" PointY="14" IsExpanded="true" />
-        <EntityTypeShape EntityType="OrderNowBDModel.Ingrediente" Width="1.5" PointX="18" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrderNowBDModel.Factura" Width="1.5" PointX="9.75" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrderNowBDModel.Ingrediente" Width="1.5" PointX="18" PointY="14.875" IsExpanded="true" />
         <EntityTypeShape EntityType="OrderNowBDModel.IngredienteFactura" Width="1.5" PointX="12" PointY="14.125" IsExpanded="true" />
         <EntityTypeShape EntityType="OrderNowBDModel.IngredientesAlimento" Width="1.5" PointX="20.25" PointY="6.125" IsExpanded="true" />
         <EntityTypeShape EntityType="OrderNowBDModel.Marca" Width="1.5" PointX="15.75" PointY="13.375" IsExpanded="true" />
         <EntityTypeShape EntityType="OrderNowBDModel.Oferta" Width="1.5" PointX="12.75" PointY="5.625" IsExpanded="true" />
         <EntityTypeShape EntityType="OrderNowBDModel.OfertaAlimento" Width="1.5" PointX="15" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="OrderNowBDModel.OfertaPedido" Width="1.5" PointX="15" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="OrderNowBDModel.Pais" Width="1.5" PointX="0.75" PointY="10.125" IsExpanded="true" />
         <EntityTypeShape EntityType="OrderNowBDModel.Pedido" Width="1.5" PointX="12.75" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrderNowBDModel.Provincia" Width="1.5" PointX="3" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrderNowBDModel.Region" Width="1.5" PointX="0.75" PointY="10" IsExpanded="true" />
         <EntityTypeShape EntityType="OrderNowBDModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="OrderNowBDModel.TipoAlimento" Width="1.5" PointX="15.75" PointY="16" IsExpanded="true" />
         <EntityTypeShape EntityType="OrderNowBDModel.TipoMedicion" Width="1.5" PointX="15.75" PointY="18.5" IsExpanded="true" />
@@ -39,11 +39,10 @@
         <AssociationConnector Association="OrderNowBDModel.FK__ExtraPedi__IdAli__1EA48E88" ManuallyRouted="false" />
         <AssociationConnector Association="OrderNowBDModel.FK__Boleta__IdTipoPa__71D1E811" ManuallyRouted="false" />
         <AssociationConnector Association="OrderNowBDModel.FK__Boleta__Pedido__72C60C4A" ManuallyRouted="false" />
-        <AssociationConnector Association="OrderNowBDModel.FK__Ciudad__IdPais__398D8EEE" ManuallyRouted="false" />
-        <AssociationConnector Association="OrderNowBDModel.FK__Comuna__IdCiudad__3C69FB99" ManuallyRouted="false" />
         <AssociationConnector Association="OrderNowBDModel.FK__Cliente__Comuna__52593CB8" ManuallyRouted="false" />
         <AssociationConnector Association="OrderNowBDModel.FK__Cliente__IdUsuar__534D60F1" ManuallyRouted="false" />
         <AssociationConnector Association="OrderNowBDModel.FK__Pedido__IdClient__6D0D32F4" ManuallyRouted="false" />
+        <AssociationConnector Association="OrderNowBDModel.FK__Comuna__IdProvin__2DE6D218" ManuallyRouted="false" />
         <AssociationConnector Association="OrderNowBDModel.FK__Distribui__IdCom__4CA06362" ManuallyRouted="false" />
         <AssociationConnector Association="OrderNowBDModel.FK__Trabajado__Comun__66603565" ManuallyRouted="false" />
         <AssociationConnector Association="OrderNowBDModel.FK__Factura__IdDistr__5629CD9C" ManuallyRouted="false" />
@@ -61,6 +60,7 @@
         <AssociationConnector Association="OrderNowBDModel.FK__OfertaPed__IdPed__05D8E0BE" ManuallyRouted="false" />
         <AssociationConnector Association="OrderNowBDModel.FK__Pedido__IdTipoPe__6EF57B66" ManuallyRouted="false" />
         <AssociationConnector Association="OrderNowBDModel.FK__Pedido__Trabajad__6E01572D" ManuallyRouted="false" />
+        <AssociationConnector Association="OrderNowBDModel.FK__PROVINCIA__IdReg__2CF2ADDF" ManuallyRouted="false" />
         <AssociationConnector Association="OrderNowBDModel.FK__Usuario__IdTipoU__4F7CD00D" ManuallyRouted="false" />
         <AssociationConnector Association="OrderNowBDModel.FK__Trabajado__IdUsu__6754599E" ManuallyRouted="false" />
       </Diagram>

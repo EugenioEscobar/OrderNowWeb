@@ -36,14 +36,6 @@
           <Property Name="Pedido" Type="int" />
           <Property Name="Descuento" Type="float" />
         </EntityType>
-        <EntityType Name="Ciudad">
-          <Key>
-            <PropertyRef Name="IdCiudad" />
-          </Key>
-          <Property Name="IdCiudad" Type="int" Nullable="false" />
-          <Property Name="Nombre" Type="varchar" MaxLength="50" />
-          <Property Name="IdPais" Type="int" />
-        </EntityType>
         <EntityType Name="Cliente">
           <Key>
             <PropertyRef Name="IdCliente" />
@@ -66,7 +58,8 @@
           </Key>
           <Property Name="IdComuna" Type="int" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" />
-          <Property Name="IdCiudad" Type="int" />
+          <Property Name="IdProvincia" Type="int" />
+          <Property Name="Estado" Type="varchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="Distribuidor">
           <Key>
@@ -101,14 +94,15 @@
         </EntityType>
         <EntityType Name="Factura">
           <Key>
-            <PropertyRef Name="Folio" />
+            <PropertyRef Name="IdFactura" />
           </Key>
-          <Property Name="Folio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdFactura" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TotalNeto" Type="int" />
           <Property Name="TotalIva" Type="float" />
           <Property Name="IdDistribuidor" Type="int" />
           <Property Name="IdTipoPago" Type="int" />
           <Property Name="Fecha" Type="datetime" />
+          <Property Name="Folio" Type="int" />
         </EntityType>
         <EntityType Name="Ingrediente">
           <Key>
@@ -123,6 +117,7 @@
           <Property Name="IdTipoAlimento" Type="int" />
           <Property Name="IdTipoMedicion" Type="int" />
           <Property Name="Foto" Type="varchar" MaxLength="50" />
+          <Property Name="Porción" Type="int" />
         </EntityType>
         <EntityType Name="IngredienteFactura">
           <Key>
@@ -180,13 +175,6 @@
           <Property Name="IdOferta" Type="int" />
           <Property Name="IdPedido" Type="int" />
         </EntityType>
-        <EntityType Name="Pais">
-          <Key>
-            <PropertyRef Name="IdPais" />
-          </Key>
-          <Property Name="IdPais" Type="int" Nullable="false" />
-          <Property Name="Nombre" Type="varchar" MaxLength="50" />
-        </EntityType>
         <EntityType Name="Pedido">
           <Key>
             <PropertyRef Name="IdPedido" />
@@ -198,6 +186,23 @@
           <Property Name="IdTipoPedido" Type="int" />
           <Property Name="Direccion" Type="varchar" MaxLength="30" />
           <Property Name="Observación" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Provincia">
+          <Key>
+            <PropertyRef Name="IdProvincia" />
+          </Key>
+          <Property Name="IdProvincia" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="150" />
+          <Property Name="IdRegion" Type="int" />
+          <Property Name="Estado" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="IdRegion" />
+          </Key>
+          <Property Name="IdRegion" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="150" />
+          <Property Name="Estado" Type="varchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -326,18 +331,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Ciudad__IdPais__398D8EEE">
-          <End Role="Pais" Type="Self.Pais" Multiplicity="0..1" />
-          <End Role="Ciudad" Type="Self.Ciudad" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Pais">
-              <PropertyRef Name="IdPais" />
-            </Principal>
-            <Dependent Role="Ciudad">
-              <PropertyRef Name="IdPais" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Cliente__Comuna__52593CB8">
           <End Role="Comuna" Type="Self.Comuna" Multiplicity="0..1" />
           <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
@@ -362,15 +355,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Comuna__IdCiudad__3C69FB99">
-          <End Role="Ciudad" Type="Self.Ciudad" Multiplicity="0..1" />
+        <Association Name="FK__Comuna__IdProvin__2DE6D218">
+          <End Role="Provincia" Type="Self.Provincia" Multiplicity="0..1" />
           <End Role="Comuna" Type="Self.Comuna" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Ciudad">
-              <PropertyRef Name="IdCiudad" />
+            <Principal Role="Provincia">
+              <PropertyRef Name="IdProvincia" />
             </Principal>
             <Dependent Role="Comuna">
-              <PropertyRef Name="IdCiudad" />
+              <PropertyRef Name="IdProvincia" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -451,7 +444,7 @@
           <End Role="IngredienteFactura" Type="Self.IngredienteFactura" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Factura">
-              <PropertyRef Name="Folio" />
+              <PropertyRef Name="IdFactura" />
             </Principal>
             <Dependent Role="IngredienteFactura">
               <PropertyRef Name="Factura" />
@@ -614,6 +607,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__PROVINCIA__IdReg__2CF2ADDF">
+          <End Role="Region" Type="Self.Region" Multiplicity="0..1" />
+          <End Role="Provincia" Type="Self.Provincia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="IdRegion" />
+            </Principal>
+            <Dependent Role="Provincia">
+              <PropertyRef Name="IdRegion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Trabajado__Comun__66603565">
           <End Role="Comuna" Type="Self.Comuna" Multiplicity="0..1" />
           <End Role="Trabajador" Type="Self.Trabajador" Multiplicity="*" />
@@ -654,7 +659,6 @@
           <EntitySet Name="Alimento" EntityType="Self.Alimento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlimentoPedido" EntityType="Self.AlimentoPedido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Boleta" EntityType="Self.Boleta" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Ciudad" EntityType="Self.Ciudad" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comuna" EntityType="Self.Comuna" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Distribuidor" EntityType="Self.Distribuidor" Schema="dbo" store:Type="Tables" />
@@ -668,8 +672,9 @@
           <EntitySet Name="Oferta" EntityType="Self.Oferta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OfertaAlimento" EntityType="Self.OfertaAlimento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OfertaPedido" EntityType="Self.OfertaPedido" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Pais" EntityType="Self.Pais" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pedido" EntityType="Self.Pedido" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Provincia" EntityType="Self.Provincia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Region" EntityType="Self.Region" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoAlimento" EntityType="Self.TipoAlimento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoMedicion" EntityType="Self.TipoMedicion" Schema="dbo" store:Type="Tables" />
@@ -694,10 +699,6 @@
             <End Role="Pedido" EntitySet="Pedido" />
             <End Role="Boleta" EntitySet="Boleta" />
           </AssociationSet>
-          <AssociationSet Name="FK__Ciudad__IdPais__398D8EEE" Association="Self.FK__Ciudad__IdPais__398D8EEE">
-            <End Role="Pais" EntitySet="Pais" />
-            <End Role="Ciudad" EntitySet="Ciudad" />
-          </AssociationSet>
           <AssociationSet Name="FK__Cliente__Comuna__52593CB8" Association="Self.FK__Cliente__Comuna__52593CB8">
             <End Role="Comuna" EntitySet="Comuna" />
             <End Role="Cliente" EntitySet="Cliente" />
@@ -706,8 +707,8 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Cliente" EntitySet="Cliente" />
           </AssociationSet>
-          <AssociationSet Name="FK__Comuna__IdCiudad__3C69FB99" Association="Self.FK__Comuna__IdCiudad__3C69FB99">
-            <End Role="Ciudad" EntitySet="Ciudad" />
+          <AssociationSet Name="FK__Comuna__IdProvin__2DE6D218" Association="Self.FK__Comuna__IdProvin__2DE6D218">
+            <End Role="Provincia" EntitySet="Provincia" />
             <End Role="Comuna" EntitySet="Comuna" />
           </AssociationSet>
           <AssociationSet Name="FK__Distribui__IdCom__4CA06362" Association="Self.FK__Distribui__IdCom__4CA06362">
@@ -790,6 +791,10 @@
             <End Role="Trabajador" EntitySet="Trabajador" />
             <End Role="Pedido" EntitySet="Pedido" />
           </AssociationSet>
+          <AssociationSet Name="FK__PROVINCIA__IdReg__2CF2ADDF" Association="Self.FK__PROVINCIA__IdReg__2CF2ADDF">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="Provincia" EntitySet="Provincia" />
+          </AssociationSet>
           <AssociationSet Name="FK__Trabajado__Comun__66603565" Association="Self.FK__Trabajado__Comun__66603565">
             <End Role="Comuna" EntitySet="Comuna" />
             <End Role="Trabajador" EntitySet="Trabajador" />
@@ -847,16 +852,6 @@
           <NavigationProperty Name="TipoPago" Relationship="Self.FK__Boleta__IdTipoPa__71D1E811" FromRole="Boleta" ToRole="TipoPago" />
           <NavigationProperty Name="Pedido1" Relationship="Self.FK__Boleta__Pedido__72C60C4A" FromRole="Boleta" ToRole="Pedido" />
         </EntityType>
-        <EntityType Name="Ciudad">
-          <Key>
-            <PropertyRef Name="IdCiudad" />
-          </Key>
-          <Property Name="IdCiudad" Type="Int32" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdPais" Type="Int32" />
-          <NavigationProperty Name="Pais" Relationship="Self.FK__Ciudad__IdPais__398D8EEE" FromRole="Ciudad" ToRole="Pais" />
-          <NavigationProperty Name="Comuna" Relationship="Self.FK__Comuna__IdCiudad__3C69FB99" FromRole="Ciudad" ToRole="Comuna" />
-        </EntityType>
         <EntityType Name="Cliente">
           <Key>
             <PropertyRef Name="IdCliente" />
@@ -882,9 +877,10 @@
           </Key>
           <Property Name="IdComuna" Type="Int32" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdCiudad" Type="Int32" />
-          <NavigationProperty Name="Ciudad" Relationship="Self.FK__Comuna__IdCiudad__3C69FB99" FromRole="Comuna" ToRole="Ciudad" />
+          <Property Name="IdProvincia" Type="Int32" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Cliente" Relationship="Self.FK__Cliente__Comuna__52593CB8" FromRole="Comuna" ToRole="Cliente" />
+          <NavigationProperty Name="Provincia" Relationship="Self.FK__Comuna__IdProvin__2DE6D218" FromRole="Comuna" ToRole="Provincia" />
           <NavigationProperty Name="Distribuidor" Relationship="Self.FK__Distribui__IdCom__4CA06362" FromRole="Comuna" ToRole="Distribuidor" />
           <NavigationProperty Name="Trabajador" Relationship="Self.FK__Trabajado__Comun__66603565" FromRole="Comuna" ToRole="Trabajador" />
         </EntityType>
@@ -926,14 +922,15 @@
         </EntityType>
         <EntityType Name="Factura">
           <Key>
-            <PropertyRef Name="Folio" />
+            <PropertyRef Name="IdFactura" />
           </Key>
-          <Property Name="Folio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdFactura" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TotalNeto" Type="Int32" />
           <Property Name="TotalIva" Type="Double" />
           <Property Name="IdDistribuidor" Type="Int32" />
           <Property Name="IdTipoPago" Type="Int32" />
           <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <Property Name="Folio" Type="Int32" />
           <NavigationProperty Name="Distribuidor" Relationship="Self.FK__Factura__IdDistr__5629CD9C" FromRole="Factura" ToRole="Distribuidor" />
           <NavigationProperty Name="TipoPago" Relationship="Self.FK__Factura__IdTipoP__571DF1D5" FromRole="Factura" ToRole="TipoPago" />
           <NavigationProperty Name="IngredienteFactura" Relationship="Self.FK__Ingredien__Factu__628FA481" FromRole="Factura" ToRole="IngredienteFactura" />
@@ -951,6 +948,7 @@
           <Property Name="IdTipoAlimento" Type="Int32" />
           <Property Name="IdTipoMedicion" Type="Int32" />
           <Property Name="Foto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Porción" Type="Int32" />
           <NavigationProperty Name="ExtraPedido" Relationship="Self.FK__ExtraPedi__IdIng__797309D9" FromRole="Ingrediente" ToRole="ExtraPedido" />
           <NavigationProperty Name="Marca" Relationship="Self.FK__Ingredien__IdMar__5DCAEF64" FromRole="Ingrediente" ToRole="Marca" />
           <NavigationProperty Name="TipoAlimento" Relationship="Self.FK__Ingredien__IdTip__5EBF139D" FromRole="Ingrediente" ToRole="TipoAlimento" />
@@ -1025,14 +1023,6 @@
           <NavigationProperty Name="Oferta" Relationship="Self.FK__OfertaPed__IdOfe__04E4BC85" FromRole="OfertaPedido" ToRole="Oferta" />
           <NavigationProperty Name="Pedido" Relationship="Self.FK__OfertaPed__IdPed__05D8E0BE" FromRole="OfertaPedido" ToRole="Pedido" />
         </EntityType>
-        <EntityType Name="Pais">
-          <Key>
-            <PropertyRef Name="IdPais" />
-          </Key>
-          <Property Name="IdPais" Type="Int32" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Ciudad" Relationship="Self.FK__Ciudad__IdPais__398D8EEE" FromRole="Pais" ToRole="Ciudad" />
-        </EntityType>
         <EntityType Name="Pedido">
           <Key>
             <PropertyRef Name="IdPedido" />
@@ -1051,6 +1041,26 @@
           <NavigationProperty Name="OfertaPedido" Relationship="Self.FK__OfertaPed__IdPed__05D8E0BE" FromRole="Pedido" ToRole="OfertaPedido" />
           <NavigationProperty Name="TipoPedido" Relationship="Self.FK__Pedido__IdTipoPe__6EF57B66" FromRole="Pedido" ToRole="TipoPedido" />
           <NavigationProperty Name="Trabajador1" Relationship="Self.FK__Pedido__Trabajad__6E01572D" FromRole="Pedido" ToRole="Trabajador" />
+        </EntityType>
+        <EntityType Name="Provincia">
+          <Key>
+            <PropertyRef Name="IdProvincia" />
+          </Key>
+          <Property Name="IdProvincia" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="IdRegion" Type="Int32" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Comuna" Relationship="Self.FK__Comuna__IdProvin__2DE6D218" FromRole="Provincia" ToRole="Comuna" />
+          <NavigationProperty Name="Region" Relationship="Self.FK__PROVINCIA__IdReg__2CF2ADDF" FromRole="Provincia" ToRole="Region" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="IdRegion" />
+          </Key>
+          <Property Name="IdRegion" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Provincia" Relationship="Self.FK__PROVINCIA__IdReg__2CF2ADDF" FromRole="Region" ToRole="Provincia" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -1227,30 +1237,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Ciudad__IdPais__398D8EEE">
-          <End Role="Pais" Type="Self.Pais" Multiplicity="0..1" />
-          <End Role="Ciudad" Type="Self.Ciudad" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Pais">
-              <PropertyRef Name="IdPais" />
-            </Principal>
-            <Dependent Role="Ciudad">
-              <PropertyRef Name="IdPais" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Comuna__IdCiudad__3C69FB99">
-          <End Role="Ciudad" Type="Self.Ciudad" Multiplicity="0..1" />
-          <End Role="Comuna" Type="Self.Comuna" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ciudad">
-              <PropertyRef Name="IdCiudad" />
-            </Principal>
-            <Dependent Role="Comuna">
-              <PropertyRef Name="IdCiudad" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Cliente__Comuna__52593CB8">
           <End Role="Comuna" Type="Self.Comuna" Multiplicity="0..1" />
           <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
@@ -1284,6 +1270,18 @@
             </Principal>
             <Dependent Role="Pedido">
               <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comuna__IdProvin__2DE6D218">
+          <End Role="Provincia" Type="Self.Provincia" Multiplicity="0..1" />
+          <End Role="Comuna" Type="Self.Comuna" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provincia">
+              <PropertyRef Name="IdProvincia" />
+            </Principal>
+            <Dependent Role="Comuna">
+              <PropertyRef Name="IdProvincia" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1364,7 +1362,7 @@
           <End Role="IngredienteFactura" Type="Self.IngredienteFactura" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Factura">
-              <PropertyRef Name="Folio" />
+              <PropertyRef Name="IdFactura" />
             </Principal>
             <Dependent Role="IngredienteFactura">
               <PropertyRef Name="Factura" />
@@ -1491,6 +1489,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__PROVINCIA__IdReg__2CF2ADDF">
+          <End Role="Region" Type="Self.Region" Multiplicity="0..1" />
+          <End Role="Provincia" Type="Self.Provincia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="IdRegion" />
+            </Principal>
+            <Dependent Role="Provincia">
+              <PropertyRef Name="IdRegion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Usuario__IdTipoU__4F7CD00D">
           <End Role="TipoUsuario" Type="Self.TipoUsuario" Multiplicity="0..1" />
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
@@ -1519,7 +1529,6 @@
           <EntitySet Name="Alimento" EntityType="Self.Alimento" />
           <EntitySet Name="AlimentoPedido" EntityType="Self.AlimentoPedido" />
           <EntitySet Name="Boleta" EntityType="Self.Boleta" />
-          <EntitySet Name="Ciudad" EntityType="Self.Ciudad" />
           <EntitySet Name="Cliente" EntityType="Self.Cliente" />
           <EntitySet Name="Comuna" EntityType="Self.Comuna" />
           <EntitySet Name="Distribuidor" EntityType="Self.Distribuidor" />
@@ -1533,8 +1542,9 @@
           <EntitySet Name="Oferta" EntityType="Self.Oferta" />
           <EntitySet Name="OfertaAlimento" EntityType="Self.OfertaAlimento" />
           <EntitySet Name="OfertaPedido" EntityType="Self.OfertaPedido" />
-          <EntitySet Name="Pais" EntityType="Self.Pais" />
           <EntitySet Name="Pedido" EntityType="Self.Pedido" />
+          <EntitySet Name="Provincia" EntityType="Self.Provincia" />
+          <EntitySet Name="Region" EntityType="Self.Region" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="TipoAlimento" EntityType="Self.TipoAlimento" />
           <EntitySet Name="TipoMedicion" EntityType="Self.TipoMedicion" />
@@ -1571,14 +1581,6 @@
             <End Role="Pedido" EntitySet="Pedido" />
             <End Role="Boleta" EntitySet="Boleta" />
           </AssociationSet>
-          <AssociationSet Name="FK__Ciudad__IdPais__398D8EEE" Association="Self.FK__Ciudad__IdPais__398D8EEE">
-            <End Role="Pais" EntitySet="Pais" />
-            <End Role="Ciudad" EntitySet="Ciudad" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Comuna__IdCiudad__3C69FB99" Association="Self.FK__Comuna__IdCiudad__3C69FB99">
-            <End Role="Ciudad" EntitySet="Ciudad" />
-            <End Role="Comuna" EntitySet="Comuna" />
-          </AssociationSet>
           <AssociationSet Name="FK__Cliente__Comuna__52593CB8" Association="Self.FK__Cliente__Comuna__52593CB8">
             <End Role="Comuna" EntitySet="Comuna" />
             <End Role="Cliente" EntitySet="Cliente" />
@@ -1590,6 +1592,10 @@
           <AssociationSet Name="FK__Pedido__IdClient__6D0D32F4" Association="Self.FK__Pedido__IdClient__6D0D32F4">
             <End Role="Cliente" EntitySet="Cliente" />
             <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comuna__IdProvin__2DE6D218" Association="Self.FK__Comuna__IdProvin__2DE6D218">
+            <End Role="Provincia" EntitySet="Provincia" />
+            <End Role="Comuna" EntitySet="Comuna" />
           </AssociationSet>
           <AssociationSet Name="FK__Distribui__IdCom__4CA06362" Association="Self.FK__Distribui__IdCom__4CA06362">
             <End Role="Comuna" EntitySet="Comuna" />
@@ -1659,6 +1665,10 @@
             <End Role="Trabajador" EntitySet="Trabajador" />
             <End Role="Pedido" EntitySet="Pedido" />
           </AssociationSet>
+          <AssociationSet Name="FK__PROVINCIA__IdReg__2CF2ADDF" Association="Self.FK__PROVINCIA__IdReg__2CF2ADDF">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="Provincia" EntitySet="Provincia" />
+          </AssociationSet>
           <AssociationSet Name="FK__Usuario__IdTipoU__4F7CD00D" Association="Self.FK__Usuario__IdTipoU__4F7CD00D">
             <End Role="TipoUsuario" EntitySet="TipoUsuario" />
             <End Role="Usuario" EntitySet="Usuario" />
@@ -1708,15 +1718,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Ciudad">
-            <EntityTypeMapping TypeName="OrderNowBDModel.Ciudad">
-              <MappingFragment StoreEntitySet="Ciudad">
-                <ScalarProperty Name="IdCiudad" ColumnName="IdCiudad" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Cliente">
             <EntityTypeMapping TypeName="OrderNowBDModel.Cliente">
               <MappingFragment StoreEntitySet="Cliente">
@@ -1739,7 +1740,8 @@
               <MappingFragment StoreEntitySet="Comuna">
                 <ScalarProperty Name="IdComuna" ColumnName="IdComuna" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="IdCiudad" ColumnName="IdCiudad" />
+                <ScalarProperty Name="IdProvincia" ColumnName="IdProvincia" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1780,12 +1782,13 @@
           <EntitySetMapping Name="Factura">
             <EntityTypeMapping TypeName="OrderNowBDModel.Factura">
               <MappingFragment StoreEntitySet="Factura">
-                <ScalarProperty Name="Folio" ColumnName="Folio" />
+                <ScalarProperty Name="IdFactura" ColumnName="IdFactura" />
                 <ScalarProperty Name="TotalNeto" ColumnName="TotalNeto" />
                 <ScalarProperty Name="TotalIva" ColumnName="TotalIva" />
                 <ScalarProperty Name="IdDistribuidor" ColumnName="IdDistribuidor" />
                 <ScalarProperty Name="IdTipoPago" ColumnName="IdTipoPago" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Folio" ColumnName="Folio" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1801,6 +1804,7 @@
                 <ScalarProperty Name="IdTipoAlimento" ColumnName="IdTipoAlimento" />
                 <ScalarProperty Name="IdTipoMedicion" ColumnName="IdTipoMedicion" />
                 <ScalarProperty Name="Foto" ColumnName="Foto" />
+                <ScalarProperty Name="Porción" ColumnName="Porción" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1866,14 +1870,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Pais">
-            <EntityTypeMapping TypeName="OrderNowBDModel.Pais">
-              <MappingFragment StoreEntitySet="Pais">
-                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Pedido">
             <EntityTypeMapping TypeName="OrderNowBDModel.Pedido">
               <MappingFragment StoreEntitySet="Pedido">
@@ -1884,6 +1880,25 @@
                 <ScalarProperty Name="IdTipoPedido" ColumnName="IdTipoPedido" />
                 <ScalarProperty Name="Direccion" ColumnName="Direccion" />
                 <ScalarProperty Name="Observación" ColumnName="Observación" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Provincia">
+            <EntityTypeMapping TypeName="OrderNowBDModel.Provincia">
+              <MappingFragment StoreEntitySet="Provincia">
+                <ScalarProperty Name="IdProvincia" ColumnName="IdProvincia" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdRegion" ColumnName="IdRegion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Region">
+            <EntityTypeMapping TypeName="OrderNowBDModel.Region">
+              <MappingFragment StoreEntitySet="Region">
+                <ScalarProperty Name="IdRegion" ColumnName="IdRegion" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

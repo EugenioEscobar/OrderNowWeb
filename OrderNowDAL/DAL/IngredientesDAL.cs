@@ -10,10 +10,11 @@ namespace OrderNowDAL.DAL
     {
         private OrderNowBDEntities nowBDEntities = new OrderNowBDEntities();
 
-        public void Add(Ingrediente i)
+        public Ingrediente Add(Ingrediente i)
         {
-            nowBDEntities.Ingrediente.Add(i);
+            Ingrediente obj = nowBDEntities.Ingrediente.Add(i);
             nowBDEntities.SaveChanges();
+            return obj;
         }
         public void Remove(string nombre)
         {
@@ -34,7 +35,12 @@ namespace OrderNowDAL.DAL
         }
         public Ingrediente Find(int id)
         {
-            Ingrediente  i = nowBDEntities.Ingrediente.FirstOrDefault(obj => obj.IdIngrediente == id);
+            Ingrediente i = nowBDEntities.Ingrediente.FirstOrDefault(obj => obj.IdIngrediente == id);
+            return i;
+        }
+        public Ingrediente FindByName(string name)
+        {
+            Ingrediente i = nowBDEntities.Ingrediente.FirstOrDefault(obj => obj.Nombre == name);
             return i;
         }
         public void Update(string nombre, string descripcion, int? stock, double? valorneto, int? marca, int? medicion, int? tipoalimento)

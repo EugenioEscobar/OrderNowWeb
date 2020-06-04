@@ -35,15 +35,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Ciudad">
-      <EntityTypeMapping TypeName="OrderNowBDModel.Ciudad">
-        <MappingFragment StoreEntitySet="Ciudad">
-          <ScalarProperty Name="IdCiudad" ColumnName="IdCiudad" />
-          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-          <ScalarProperty Name="IdPais" ColumnName="IdPais" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Cliente">
       <EntityTypeMapping TypeName="OrderNowBDModel.Cliente">
         <MappingFragment StoreEntitySet="Cliente">
@@ -66,7 +57,8 @@
         <MappingFragment StoreEntitySet="Comuna">
           <ScalarProperty Name="IdComuna" ColumnName="IdComuna" />
           <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-          <ScalarProperty Name="IdCiudad" ColumnName="IdCiudad" />
+          <ScalarProperty Name="IdProvincia" ColumnName="IdProvincia" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -107,12 +99,13 @@
     <EntitySetMapping Name="Factura">
       <EntityTypeMapping TypeName="OrderNowBDModel.Factura">
         <MappingFragment StoreEntitySet="Factura">
-          <ScalarProperty Name="Folio" ColumnName="Folio" />
+          <ScalarProperty Name="IdFactura" ColumnName="IdFactura" />
           <ScalarProperty Name="TotalNeto" ColumnName="TotalNeto" />
           <ScalarProperty Name="TotalIva" ColumnName="TotalIva" />
           <ScalarProperty Name="IdDistribuidor" ColumnName="IdDistribuidor" />
           <ScalarProperty Name="IdTipoPago" ColumnName="IdTipoPago" />
           <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="Folio" ColumnName="Folio" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -128,6 +121,7 @@
           <ScalarProperty Name="IdTipoAlimento" ColumnName="IdTipoAlimento" />
           <ScalarProperty Name="IdTipoMedicion" ColumnName="IdTipoMedicion" />
           <ScalarProperty Name="Foto" ColumnName="Foto" />
+          <ScalarProperty Name="Porción" ColumnName="Porción" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -193,14 +187,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Pais">
-      <EntityTypeMapping TypeName="OrderNowBDModel.Pais">
-        <MappingFragment StoreEntitySet="Pais">
-          <ScalarProperty Name="IdPais" ColumnName="IdPais" />
-          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Pedido">
       <EntityTypeMapping TypeName="OrderNowBDModel.Pedido">
         <MappingFragment StoreEntitySet="Pedido">
@@ -211,6 +197,25 @@
           <ScalarProperty Name="IdTipoPedido" ColumnName="IdTipoPedido" />
           <ScalarProperty Name="Direccion" ColumnName="Direccion" />
           <ScalarProperty Name="Observación" ColumnName="Observación" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Provincia">
+      <EntityTypeMapping TypeName="OrderNowBDModel.Provincia">
+        <MappingFragment StoreEntitySet="Provincia">
+          <ScalarProperty Name="IdProvincia" ColumnName="IdProvincia" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="IdRegion" ColumnName="IdRegion" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Region">
+      <EntityTypeMapping TypeName="OrderNowBDModel.Region">
+        <MappingFragment StoreEntitySet="Region">
+          <ScalarProperty Name="IdRegion" ColumnName="IdRegion" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -99,6 +99,7 @@ namespace WebApplication1
         private void ActivarPopUpExtra(Alimento obj)
         {
             ModalPopupExtender1.Show();
+            txtPreparacion.Text = obj.Nombre;
         }
 
         protected void btnIngresarPedido_Click(object sender, EventArgs e)

@@ -4,10 +4,26 @@
 
 <asp:Content runat="server" ID="ContentHeader" ContentPlaceHolderID="ContentPlaceHolderHeader">
     <style>
-        .content-Grid{
-            min-height:200px;
-            max-height:400px;
-            overflow-x:scroll;
+        .content-Grid {
+            min-height: 200px;
+            max-height: 400px;
+            overflow-x: scroll;
+        }
+
+        .modalBackground {
+            background-color: black;
+            filter: alpha(opacity=90);
+            opacity: 0.8;
+        }
+
+        .modalPopUp {
+            background-color: #FFFFFF;
+            border-width: 3px;
+            border-style: solid;
+            border-color: black;
+            padding-top: 10px;
+            padding-left: 10px;
+            width: 700px;
         }
     </style>
 </asp:Content>
@@ -27,13 +43,23 @@
             </div>
 
             <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+            <asp:UpdatePanel ID="UpdatePanel1" runat="server" class="modalPopUp">
                 <ContentTemplate>
                     Ventana Modal
-            <asp:Button ID="btnCerrar" runat="server" Text="Cerrar Pop Up" />
+                    
+                    <div class="form-row">
+                        <asp:Label ID="Label5" runat="server" Text="Preparación"></asp:Label>
+                        <asp:TextBox ID="txtPreparacion" CssClass="form-control" Enabled="false" runat="server"></asp:TextBox>
+                    </div>
+                    <div class="form-row">
+                        <asp:Label ID="Label6" runat="server" Text="Agregar Extra"></asp:Label>
+                        <asp:TextBox ID="txtExtra" runat="server"></asp:TextBox>
+                    </div>
+
+                    <asp:Button ID="btnCerrar" runat="server" Text="Cerrar Pop Up" />
                 </ContentTemplate>
             </asp:UpdatePanel>
-            <ajaxToolkit:ModalPopupExtender ID="ModalPopupExtender1" runat="server" OkControlID="btnCerrar" PopupControlID="UpdatePanel1" TargetControlID="Label2"></ajaxToolkit:ModalPopupExtender>
+            <ajaxToolkit:ModalPopupExtender ID="ModalPopupExtender1" runat="server" BackgroundCssClass="modalBackground" OkControlID="btnCerrar" PopupControlID="UpdatePanel1" TargetControlID="Label2"></ajaxToolkit:ModalPopupExtender>
 
 
             <div class="form-row">

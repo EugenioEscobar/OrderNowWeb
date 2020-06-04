@@ -28,7 +28,6 @@ namespace OrderNowDAL
         public virtual DbSet<Alimento> Alimento { get; set; }
         public virtual DbSet<AlimentoPedido> AlimentoPedido { get; set; }
         public virtual DbSet<Boleta> Boleta { get; set; }
-        public virtual DbSet<Ciudad> Ciudad { get; set; }
         public virtual DbSet<Cliente> Cliente { get; set; }
         public virtual DbSet<Comuna> Comuna { get; set; }
         public virtual DbSet<Distribuidor> Distribuidor { get; set; }
@@ -42,8 +41,9 @@ namespace OrderNowDAL
         public virtual DbSet<Oferta> Oferta { get; set; }
         public virtual DbSet<OfertaAlimento> OfertaAlimento { get; set; }
         public virtual DbSet<OfertaPedido> OfertaPedido { get; set; }
-        public virtual DbSet<Pais> Pais { get; set; }
         public virtual DbSet<Pedido> Pedido { get; set; }
+        public virtual DbSet<Provincia> Provincia { get; set; }
+        public virtual DbSet<Region> Region { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TipoAlimento> TipoAlimento { get; set; }
         public virtual DbSet<TipoMedicion> TipoMedicion { get; set; }

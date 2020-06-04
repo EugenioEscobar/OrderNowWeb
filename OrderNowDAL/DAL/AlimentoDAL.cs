@@ -12,10 +12,11 @@ namespace OrderNowDAL.DAL
         private OrderNowBDEntities nowBDEntities = new OrderNowBDEntities();
 
 
-        public void Add(Alimento a)
+        public Alimento Add(Alimento a)
         {
-            nowBDEntities.Alimento.Add(a);
+            Alimento obj = nowBDEntities.Alimento.Add(a);
             nowBDEntities.SaveChanges();
+            return obj;
         }
         public void Remove(string nombre)
         {

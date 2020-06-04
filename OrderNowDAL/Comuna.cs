@@ -24,11 +24,12 @@ namespace OrderNowDAL
     
         public int IdComuna { get; set; }
         public string Nombre { get; set; }
-        public Nullable<int> IdCiudad { get; set; }
+        public Nullable<int> IdProvincia { get; set; }
+        public string Estado { get; set; }
     
-        public virtual Ciudad Ciudad { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cliente> Cliente { get; set; }
+        public virtual Provincia Provincia { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Distribuidor> Distribuidor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -10,10 +10,11 @@ namespace OrderNowDAL.DAL
     {
         private OrderNowBDEntities nowBDEntities = new OrderNowBDEntities();
 
-        public void Add(EstadoPedido p)
+        public EstadoPedido Add(EstadoPedido p)
         {
-            nowBDEntities.EstadoPedido.Add(p);
+            EstadoPedido obj = nowBDEntities.EstadoPedido.Add(p);
             nowBDEntities.SaveChanges();
+            return obj;
         }
         public void Remove(string id)
         {

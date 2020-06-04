@@ -7,13 +7,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href=""
     <asp:ContentPlaceHolder ID="ContentPlaceHolderHeader" runat="server"></asp:ContentPlaceHolder>
     <style>
         .site-footer {
             background-color: #26272b;
-            position:relative;
-            bottom:0;
-            width:100%;
+            position: relative;
+            bottom: 0;
+            width: 100%;
             padding: 45px 0 20px;
             font-size: 15px;
             line-height: 24px;
@@ -221,10 +222,10 @@
 
         </div>
 
-
-        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-        </asp:ContentPlaceHolder>
-
+        <div style="min-height: 59vh;" class="my-1">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
 
         <!-- Footer -->
         <footer class="site-footer">

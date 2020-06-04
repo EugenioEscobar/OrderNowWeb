@@ -10,10 +10,11 @@ namespace OrderNowDAL.DAL
     {
         private OrderNowBDEntities nowBDEntities = new OrderNowBDEntities();
 
-        public void Add(Trabajador t)
+        public Trabajador Add(Trabajador t)
         {
-            nowBDEntities.Trabajador.Add(t);
+            Trabajador obj = nowBDEntities.Trabajador.Add(t);
             nowBDEntities.SaveChanges();
+            return obj;
         }
         public void Remove(string rut)
         {

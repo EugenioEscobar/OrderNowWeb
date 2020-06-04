@@ -36,10 +36,11 @@ namespace OrderNowDAL.DAL
                 return 2;
             }
         }
-        public void Add(Usuario m)
+        public Usuario Add(Usuario m)
         {
-            nowBDEntities.Usuario.Add(m);
+            Usuario obj = nowBDEntities.Usuario.Add(m);
             nowBDEntities.SaveChanges();
+            return obj;
         }
         public void Remove(int id)
         {

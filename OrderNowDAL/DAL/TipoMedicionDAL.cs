@@ -10,10 +10,11 @@ namespace OrderNowDAL.DAL
     {
         private OrderNowBDEntities nowBDEntities = new OrderNowBDEntities();
 
-        public void Add(TipoMedicion p)
+        public TipoMedicion Add(TipoMedicion p)
         {
-            nowBDEntities.TipoMedicion.Add(p);
+            TipoMedicion obj = nowBDEntities.TipoMedicion.Add(p);
             nowBDEntities.SaveChanges();
+            return obj;
         }
         public void Remove(string id)
         {
