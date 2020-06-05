@@ -105,11 +105,36 @@
             <asp:GridView ID="GridView1" runat="server" CellPadding="4" CssClass="table table-primary" ForeColor="#333333" GridLines="None" Width="100%" OnRowDataBound="GridView1_RowDataBound" ShowHeaderWhenEmpty="true" OnRowCommand="GridView1_RowCommand" AutoGenerateColumns="false">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
-                    <asp:TemplateField>
+                    <asp:TemplateField HeaderText="Modificar" Visible="false">
                         <ItemTemplate>
                             <asp:Button ID="btnEdit" runat="server" Text="Edit" CommandArgument='<%#((GridViewRow)Container).RowIndex %>' CommandName="Editar" />
                         </ItemTemplate>
                     </asp:TemplateField>
+                    <asp:BoundField DataField="Index" HeaderText="Index" />
+                    <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+                    <asp:BoundField DataField="Descripción" HeaderText="Descripción" />
+                    <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" />
+                    
+                    <asp:TemplateField HeaderText="Marca">
+                        <ItemTemplate>
+                            <asp:Label ID="lblMarca" runat="server" Text='<%#Bind("Marca") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    
+                    <asp:TemplateField HeaderText="Tipo de Alimento">
+                        <ItemTemplate>
+                            <asp:Label ID="lblTipoAlimento" runat="server" Text='<%#Bind("TipoAlimento") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    
+                    <asp:TemplateField HeaderText="Medición">
+                        <ItemTemplate>
+                            <asp:Label ID="lblTipoMedicion" runat="server" Text='<%#Bind("TipoMedicion") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:BoundField DataField="Precio" HeaderText="Precio" />
+                    <asp:BoundField DataField="Total" HeaderText="Total" />
                 </Columns>
                 <EditRowStyle BackColor="#2461BF" />
                 <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />

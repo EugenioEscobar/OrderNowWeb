@@ -48,7 +48,11 @@ namespace OrderNowDAL.DAL
 
         public TipoMedicion FindByName(string name)
         {
-            TipoMedicion m = nowBDEntities.TipoMedicion.FirstOrDefault(obj => obj.Descripcion.ToUpper() == name.ToUpper() || obj.Simbología.ToUpper() == name.ToUpper() );
+            //En este caso se realizar la comparación con el nombre, la simbología, y la simbología con un punto al final
+            TipoMedicion m = nowBDEntities.TipoMedicion.FirstOrDefault
+                (obj => obj.Descripcion.ToUpper() == name.ToUpper() ||
+                obj.Simbología.ToUpper() == name.ToUpper() ||
+                obj.Simbología.ToUpper() + "." == name.ToUpper());
             return m;
         }
 

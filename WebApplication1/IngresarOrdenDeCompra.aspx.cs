@@ -51,7 +51,6 @@ namespace WebApplication1
             if (!Page.IsPostBack)
             {
                 ViewState["Message"] = false;
-                PutColumnsGrid(GridView1);
                 InitCbos();
             }
             UserMessage("", "");
@@ -122,7 +121,7 @@ namespace WebApplication1
                 int columnIndex = 0;
                 #region Validación de Marca
                 columnIndex = Array.IndexOf(columns, "Marca") + 1;
-                val = e.Row.Cells[columnIndex].Text;
+                val = ((Label)e.Row.FindControl("lblMarca")).Text;
                 Marca marca = val != "" ? mDAL.FindByName(val) : null;
                 if (marca == null && val != "")
                 {
@@ -133,7 +132,7 @@ namespace WebApplication1
 
                 #region Validación de Tipo Alimento
                 columnIndex = Array.IndexOf(columns, "TipoAlimento") + 1;
-                val = e.Row.Cells[columnIndex].Text;
+                val = ((Label)e.Row.FindControl("lblTipoAlimento")).Text;
                 TipoAlimento tipoAlimento = val != "" ? tADAL.FindByName(val) : null;
                 if (tipoAlimento == null && val != "")
                 {
@@ -144,7 +143,7 @@ namespace WebApplication1
 
                 #region Validación de Tipo Medición
                 columnIndex = Array.IndexOf(columns, "TipoMedicion") + 1;
-                val = e.Row.Cells[columnIndex].Text;
+                val = ((Label)e.Row.FindControl("lblTipoMedicion")).Text;
                 TipoMedicion tipoMedicion = val != "" ? tMDAL.FindByName(val) : null;
                 if (tipoMedicion == null && val != "")
                 {
@@ -302,29 +301,6 @@ namespace WebApplication1
             }
         }
 
-        private void PutColumnsGrid(GridView grid)
-        {
-            foreach (string column in columns)
-            {
-                BoundField template = new BoundField();
-                switch (column)
-                {
-                    //Se hacen excepciones para las columnas con nombres de 2 palabras
-                    case "TipoAlimento":
-                        template.HeaderText = "Tipo de alimento";
-                        break;
-                    case "TipoMedicion":
-                        template.HeaderText = "Medición";
-                        break;
-                    default:
-                        template.HeaderText = column;
-                        break;
-                } //Asignacion de headerText
-                template.DataField = column;
-                grid.Columns.Add(template);
-            }
-        }
-
         protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
         {
 
@@ -398,7 +374,8 @@ namespace WebApplication1
                     Folio = folio,
                     IdTipoPago = idTipoPago,
                     Fecha = fecha,
-                    TotalNeto = totalNeto
+                    TotalNeto = totalNeto,
+                    TotalIva = totalNeto * 1.19
                 };
                 factura = fDAL.Add(factura);
                 SaveIngredients(factura);
