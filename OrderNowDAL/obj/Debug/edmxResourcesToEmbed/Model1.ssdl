@@ -239,7 +239,7 @@
       <PropertyRef Name="IdTipoPedido" />
     </Key>
     <Property Name="IdTipoPedido" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Decripcion" Type="varchar" MaxLength="30" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="30" />
     <Property Name="Estado" Type="int" />
   </EntityType>
   <EntityType Name="TipoUsuario">

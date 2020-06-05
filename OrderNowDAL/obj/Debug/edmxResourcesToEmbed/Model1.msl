@@ -261,8 +261,8 @@
     <EntitySetMapping Name="TipoPedido">
       <EntityTypeMapping TypeName="OrderNowBDModel.TipoPedido">
         <MappingFragment StoreEntitySet="TipoPedido">
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
           <ScalarProperty Name="IdTipoPedido" ColumnName="IdTipoPedido" />
-          <ScalarProperty Name="Decripcion" ColumnName="Decripcion" />
           <ScalarProperty Name="Estado" ColumnName="Estado" />
         </MappingFragment>
       </EntityTypeMapping>

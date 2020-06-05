@@ -8,6 +8,8 @@ namespace OrderNowDAL.DAL
 {
     public class TipoMedicionDAL
     {
+        private IngredientesDAL iDAL = new IngredientesDAL();
+
         private OrderNowBDEntities nowBDEntities = new OrderNowBDEntities();
 
         public TipoMedicion Add(TipoMedicion p)
@@ -16,31 +18,46 @@ namespace OrderNowDAL.DAL
             nowBDEntities.SaveChanges();
             return obj;
         }
-        public void Remove(string id)
+
+        public void Remove(int id)
         {
-            TipoMedicion p = nowBDEntities.TipoMedicion.Find(id);
+            TipoMedicion p = Find(id);
             nowBDEntities.TipoMedicion.Remove(p);
             nowBDEntities.SaveChanges();
         }
+
         public void Edit(TipoMedicion p)
         {
-            TipoMedicion TipoMedicion = nowBDEntities.TipoMedicion.FirstOrDefault(obj => obj.IdTipoMedicion == p.IdTipoMedicion);
-            TipoMedicion = p;
+            TipoMedicion tipoMedicion = nowBDEntities.TipoMedicion.FirstOrDefault(obj => obj.IdTipoMedicion == p.IdTipoMedicion);
+            tipoMedicion.Descripcion = p.Descripcion;
+            tipoMedicion.Estado = p.Estado;
+            tipoMedicion = p;
             nowBDEntities.SaveChanges();
         }
+
         public List<TipoMedicion> GetAll()
         {
             return nowBDEntities.TipoMedicion.ToList();
         }
+
         public TipoMedicion Find(int id)
         {
             TipoMedicion m = nowBDEntities.TipoMedicion.FirstOrDefault(obj => obj.IdTipoMedicion == id);
             return m;
         }
+
         public TipoMedicion FindByName(string name)
         {
-            TipoMedicion m = nowBDEntities.TipoMedicion.FirstOrDefault(obj => obj.Descripcion.ToUpper() == name.ToUpper());
+            TipoMedicion m = nowBDEntities.TipoMedicion.FirstOrDefault(obj => obj.Descripcion.ToUpper() == name.ToUpper() || obj.Simbología.ToUpper() == name.ToUpper() );
             return m;
+        }
+
+        public bool ValidateDependencies(int id)
+        {
+            bool have = false;
+            List<Ingrediente> lis1 = iDAL.GetAll().Where(x => x.IdTipoMedicion == id).ToList();
+            have = lis1.Count > 0;
+            return have;
         }
     }
 }

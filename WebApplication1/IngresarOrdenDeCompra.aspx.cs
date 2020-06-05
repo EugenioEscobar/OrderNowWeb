@@ -4,7 +4,9 @@ using SpreadsheetLight;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -38,6 +40,7 @@ namespace WebApplication1
 
         FacturaDAL fDAL = new FacturaDAL();
         IngredientesDAL iDAL = new IngredientesDAL();
+        IngredienteFacturaDAL iFDAL = new IngredienteFacturaDAL();
 
         RegionDAL rDAL = new RegionDAL();
         ProvinciaDAL pDAL = new ProvinciaDAL();
@@ -48,10 +51,10 @@ namespace WebApplication1
             if (!Page.IsPostBack)
             {
                 ViewState["Message"] = false;
-                putColumnsGrid(GridView1);
-                initCbos();
+                PutColumnsGrid(GridView1);
+                InitCbos();
             }
-            userMessage("", "");
+            UserMessage("", "");
         }
 
         protected void btnSubirPlanilla_Click(object sender, EventArgs e)
@@ -61,7 +64,7 @@ namespace WebApplication1
             {
                 DataTable dt = getTable(doc);
 
-                validateEmptyFields(dt);
+                ValidateEmptyFields(dt);
 
                 GridView1.DataSource = dt;
                 GridView1.DataBind();
@@ -70,7 +73,7 @@ namespace WebApplication1
 
                 ViewState["Data"] = dt;
 
-                fillFacturaFields(doc);//El fillFacture se llama al final ya que envía un error
+                FillFacturaFields(doc);//El fillFacture se llama al final ya que podría enviar una Exception
             }
         }
 
@@ -90,13 +93,16 @@ namespace WebApplication1
             {
                 string[] row = new string[columns.Count()];
                 letterExcel = refIndexEx;
+                string val = "";
 
                 if (!string.IsNullOrEmpty(doc.GetCellValueAsString(refIndexEx + "" + rowExcel)))
                 {
                     // El index del Excel no está vacío
                     for (int j = 0; j < columns.Count(); j++)
                     {
-                        row[j] = doc.GetCellValueAsString(letterExcel + "" + rowExcel);
+                        val = doc.GetCellValueAsString(letterExcel + "" + rowExcel);
+                        val = val.Contains("nbsp") ? "" : val;
+                        row[j] = val;
                         letterExcel++;
                     }
                 }
@@ -117,7 +123,6 @@ namespace WebApplication1
                 #region Validación de Marca
                 columnIndex = Array.IndexOf(columns, "Marca") + 1;
                 val = e.Row.Cells[columnIndex].Text;
-                val = val.Contains("nbsp") ? "" : val;
                 Marca marca = val != "" ? mDAL.FindByName(val) : null;
                 if (marca == null && val != "")
                 {
@@ -129,7 +134,6 @@ namespace WebApplication1
                 #region Validación de Tipo Alimento
                 columnIndex = Array.IndexOf(columns, "TipoAlimento") + 1;
                 val = e.Row.Cells[columnIndex].Text;
-                val = val.Contains("nbsp") ? "" : val;
                 TipoAlimento tipoAlimento = val != "" ? tADAL.FindByName(val) : null;
                 if (tipoAlimento == null && val != "")
                 {
@@ -141,7 +145,6 @@ namespace WebApplication1
                 #region Validación de Tipo Medición
                 columnIndex = Array.IndexOf(columns, "TipoMedicion") + 1;
                 val = e.Row.Cells[columnIndex].Text;
-                val = val.Contains("nbsp") ? "" : val;
                 TipoMedicion tipoMedicion = val != "" ? tMDAL.FindByName(val) : null;
                 if (tipoMedicion == null && val != "")
                 {
@@ -152,14 +155,14 @@ namespace WebApplication1
 
                 if (flag && (bool)ViewState["Message"] == false)
                 {
-                    userMessage($"{lblMensaje.Text} " +
+                    UserMessage($"{lblMensaje.Text} " +
                         $" \n Los datos en rojo se agregarán automaticamente a la Base de datos al ingresar la planilla", "danger");
                     ViewState["Message"] = true;
                 }
             }
         }
 
-        private void validateEmptyFields(DataTable dt)
+        private void ValidateEmptyFields(DataTable dt)
         {
             string val = "Descripción";
             foreach (DataRow row in dt.Rows)
@@ -169,14 +172,14 @@ namespace WebApplication1
                     val = row[column].ToString();
                     if (valueNecessary.Contains(column) && val == "")
                     {
-                        userMessage($"El valor de {column}  en la fila {row[0]} no puede estár vacío.", "danger");
-                        uploadOption(false);
+                        UserMessage($"El valor de {column}  en la fila {row[0]} no puede estár vacío.", "danger");
+                        UploadOption(false);
                     }
                 }
             }
         }
 
-        private void userMessage(string mensaje, string type)
+        private void UserMessage(string mensaje, string type)
         {
             if (mensaje != "")
             {
@@ -190,7 +193,7 @@ namespace WebApplication1
             }
         }
 
-        private void uploadOption(bool valid)
+        private void UploadOption(bool valid)
         {
             if (valid)
             {
@@ -202,12 +205,12 @@ namespace WebApplication1
             }
         }
 
-        private void fillFacturaFields(SLDocument doc)
+        private void FillFacturaFields(SLDocument doc)
         {
             //Se llenarán los datos de la factura
             try
             {
-                validateFacturaFields(doc);
+                ValidateFacturaFields(doc);
                 int itemsCount = dataIndexList.GetLength(0);
                 string itemName = "";
                 string itemIndex = "";
@@ -243,7 +246,7 @@ namespace WebApplication1
                             Comuna comuna = cDAL.FindByName(val);
                             if (comuna != null && val != "")
                             {
-                                setCbosFromExcel(comuna);
+                                SetCbosFromExcel(comuna);
                             }
                             //txtComuna.Text = val;
                             break;
@@ -275,11 +278,11 @@ namespace WebApplication1
             }
             catch (Exception ex)
             {
-                userMessage(ex.Message, "warning");
+                UserMessage(ex.Message, "warning");
             }
         }
 
-        private void validateFacturaFields(SLDocument doc)
+        private void ValidateFacturaFields(SLDocument doc)
         {
             int itemsCount = dataIndexList.GetLength(0);
             string itemName = "";
@@ -299,7 +302,7 @@ namespace WebApplication1
             }
         }
 
-        private void putColumnsGrid(GridView grid)
+        private void PutColumnsGrid(GridView grid)
         {
             foreach (string column in columns)
             {
@@ -343,7 +346,7 @@ namespace WebApplication1
             }
         }
 
-        private void initCbos()
+        private void InitCbos()
         {
             cboDistribuidor.DataSource = dDAL.getDataTable(dDAL.GetAllActives());
             cboDistribuidor.DataBind();
@@ -355,26 +358,26 @@ namespace WebApplication1
             cboTipoPago.DataBind();
         }
 
-        private void setCbosFromExcel(Comuna obj)
+        private void SetCbosFromExcel(Comuna obj)
         {
             int idProvincia = (int)obj.IdProvincia;
             Provincia prov = pDAL.Find(idProvincia);
             cboRegion.SelectedValue = prov.IdRegion.ToString();
 
-            loadProvinciaCbo((int)prov.IdRegion);
+            LoadProvinciaCbo((int)prov.IdRegion);
             cboProvincia.SelectedValue = ((int)prov.IdProvincia).ToString();
 
-            loadComunaCbo((int)obj.IdProvincia);
+            LoadComunaCbo((int)obj.IdProvincia);
             cboComuna.SelectedValue = (obj.IdComuna).ToString();
         }
 
-        private void loadComunaCbo(int idProvincia)
+        private void LoadComunaCbo(int idProvincia)
         {
             cboComuna.DataSource = cDAL.getDataTable(cDAL.GetAllByProvincia(idProvincia));
             cboComuna.DataBind();
         }
 
-        private void loadProvinciaCbo(int idRegion)
+        private void LoadProvinciaCbo(int idRegion)
         {
             cboProvincia.DataSource = pDAL.getDataTable(pDAL.GetAllByRegion(idRegion));
             cboProvincia.DataBind();
@@ -384,18 +387,6 @@ namespace WebApplication1
         {
             try
             {
-
-                //{ "Folio"       ,"4" }
-                //{ "Distribuidor","5" }
-                //{ "Dirección"   ,"6" }
-                //{ "Comuna"      ,"7" }
-                //{ "Teléfono"    ,"8" }
-                //{ "RUT"         ,"9" }
-                //{ "Fecha"       ,"10" }
-                //{ "Email"       ,"11" }
-                //{ "TipoPago"    ,"12" }
-                //{ "Total"       ,"14" }
-
                 int idDistribuidor = Convert.ToInt32(cboDistribuidor.SelectedValue);
                 int folio = Convert.ToInt32(txtFolio.Text);
                 int idTipoPago = Convert.ToInt32(cboTipoPago.SelectedValue);
@@ -409,16 +400,20 @@ namespace WebApplication1
                     Fecha = fecha,
                     TotalNeto = totalNeto
                 };
-                //factura = fDAL.Add(factura);
-                saveIngredients(factura);
+                factura = fDAL.Add(factura);
+                SaveIngredients(factura);
+                UserMessage("Factura Guardada con Éxito", "succes");
+
+                GridView1.DataSource = ViewState["Data"] as DataTable;
+                GridView1.DataBind();
             }
             catch (Exception ex)
             {
-                userMessage(ex.Message, "warning");
+                UserMessage(ex.Message, "warning");
             }
         }
 
-        private void saveIngredients(Factura obj)
+        private void SaveIngredients(Factura obj)
         {
             DataTable dt = ViewState["Data"] as DataTable;
             foreach (DataRow row in dt.Rows)
@@ -433,16 +428,57 @@ namespace WebApplication1
                 string rowPrecio = row["Precio"] as string;
                 string rowTotal = row["Total"] as string;
 
-                rowDescripción = rowDescripción.Contains("nbsp") ? "" : rowDescripción;
-                rowMarca = rowMarca.Contains("nbsp") ? "" : rowMarca;
-                rowTipoAlimento = rowTipoAlimento.Contains("nbsp") ? "" : rowTipoAlimento;
                 #endregion
-                Ingrediente ingrendiente = iDAL.FindByName(rowNombre);
-                if(ingrendiente != null)
+
+                Marca marca = mDAL.FindByName(rowMarca);
+                TipoAlimento tipoAlimento = tADAL.FindByName(rowTipoAlimento);
+                TipoMedicion tipoMedicion = tMDAL.FindByName(rowTipoMedicion);
+                Ingrediente ingrediente = iDAL.FindByName(rowNombre);
+
+                IngredienteFactura ingredienteFactura = new IngredienteFactura();
+                if (ingrediente == null)
                 {
-
+                    if (marca == null)
+                    {
+                        marca = mDAL.Add(new Marca()
+                        {
+                            Nombre = rowMarca,
+                            Estado = 1
+                        });
+                    }
+                    if (tipoAlimento == null)
+                    {
+                        tipoAlimento = tADAL.Add(new TipoAlimento()
+                        {
+                            Descripcion = rowTipoAlimento,
+                            Estado = 1
+                        });
+                    }
+                    if (tipoMedicion == null)
+                    {
+                        tipoMedicion = tMDAL.Add(new TipoMedicion()
+                        {
+                            Descripcion = rowTipoMedicion,
+                            Estado = 1
+                        });
+                    }
+                    ingrediente = new Ingrediente()
+                    {
+                        Nombre = rowNombre,
+                        Descripcion = rowDescripción,
+                        Stock = 0,
+                        IdMarca = marca.IdMarca,
+                        IdTipoAlimento = tipoAlimento.IdTipoAlimento,
+                        IdTipoMedicion = tipoMedicion.IdTipoMedicion
+                    };
+                    ingrediente = iDAL.Add(ingrediente);
                 }
-
+                ingredienteFactura.Factura = obj.IdFactura;
+                ingredienteFactura.Ingrediente = ingrediente.IdIngrediente;
+                ingredienteFactura.Precio = Convert.ToInt32(rowPrecio);
+                ingredienteFactura.Cantidad = Convert.ToInt32(rowCantidad);
+                ingredienteFactura.Impuesto = 0;
+                iFDAL.Add(ingredienteFactura);
             }
         }
     }

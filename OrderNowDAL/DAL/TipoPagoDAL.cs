@@ -9,6 +9,9 @@ namespace OrderNowDAL.DAL
 {
     public class TipoPagoDAL
     {
+        private BoletaDAL bDAL = new BoletaDAL();
+        private FacturaDAL fDAL = new FacturaDAL();
+
         private OrderNowBDEntities nowBDEntities = new OrderNowBDEntities();
 
         public TipoPago Add(TipoPago p)
@@ -18,9 +21,9 @@ namespace OrderNowDAL.DAL
             return obj;
         }
 
-        public void Remove(string id)
+        public void Remove(int id)
         {
-            TipoPago p = nowBDEntities.TipoPago.Find(id);
+            TipoPago p = Find(id);
             nowBDEntities.TipoPago.Remove(p);
             nowBDEntities.SaveChanges();
         }
@@ -28,7 +31,8 @@ namespace OrderNowDAL.DAL
         public void Edit(TipoPago p)
         {
             TipoPago tipoPago = nowBDEntities.TipoPago.FirstOrDefault(obj => obj.IdTipoPago == p.IdTipoPago);
-            tipoPago = p;
+            tipoPago.Descripcion = p.Descripcion;
+            tipoPago.Estado = p.Estado;
             nowBDEntities.SaveChanges();
         }
 
@@ -71,6 +75,15 @@ namespace OrderNowDAL.DAL
                 dt.Rows.Add(reg);
             }
             return dt;
+        }
+
+        public bool ValidateDependencies(int id)
+        {
+            bool have = false;
+            List<Factura> lis1 = fDAL.GetAll().Where(x => x.IdTipoPago == id).ToList();
+            List<Boleta> lis2 = bDAL.GetAll().Where(x => x.IdTipoPago == id).ToList();
+            have = (lis1.Count > 0 || lis2.Count > 0);
+            return have;
         }
     }
 }

@@ -74,7 +74,7 @@
             <div class="form-row">
                 <div class="form-group col-md-9">
                     <asp:Label ID="Label4" runat="server" Text="Tipo Pedido"></asp:Label>
-                    <asp:DropDownList ID="cboTipoPedido" CssClass="form-control" runat="server" DataSourceID="SqlDataSource3" DataTextField="Decripcion" DataValueField="IdTipoPedido" AppendDataBoundItems="True">
+                    <asp:DropDownList ID="cboTipoPedido" CssClass="form-control" runat="server" DataSourceID="SqlDataSource3" DataTextField="Descripcion" DataValueField="IdTipoPedido" AppendDataBoundItems="True">
                         <asp:ListItem Value="0">Seleccione un Tipo de Pedido</asp:ListItem>
                     </asp:DropDownList>
                     <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:OrderNowBDConnectionString %>" SelectCommand="SELECT * FROM [TipoPedido]"></asp:SqlDataSource>

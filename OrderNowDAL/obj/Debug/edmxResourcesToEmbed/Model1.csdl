@@ -293,9 +293,9 @@
       <PropertyRef Name="IdTipoPedido" />
     </Key>
     <Property Name="IdTipoPedido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Decripcion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
     <Property Name="Estado" Type="Int32" />
     <NavigationProperty Name="Pedido" Relationship="Self.FK__Pedido__IdTipoPe__6EF57B66" FromRole="TipoPedido" ToRole="Pedido" />
+    <Property Name="Descripcion" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="TipoUsuario">
     <Key>

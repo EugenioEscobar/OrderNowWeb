@@ -27,7 +27,7 @@ namespace WebApplication1
             {
                 switch (e.CommandName)
                 {
-                    case "Agregar":
+                    case "Modificar":
                         int index = Convert.ToInt32(e.CommandArgument);
                         Label codigo = (Label)GridView1.Rows[index].FindControl("lblCodigo");
                         Ingrediente obj = iDAL.Find(Convert.ToInt32(codigo.Text));

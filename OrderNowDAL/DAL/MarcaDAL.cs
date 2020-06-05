@@ -8,6 +8,8 @@ namespace OrderNowDAL.DAL
 {
     public class MarcaDAL
     {
+        private IngredientesDAL iDAL = new IngredientesDAL();
+
         private OrderNowBDEntities nowBDEntities = new OrderNowBDEntities();
 
         public Marca Add(Marca p)
@@ -17,9 +19,9 @@ namespace OrderNowDAL.DAL
             return obj;
         }
 
-        public void Remove(string id)
+        public void Remove(int id)
         {
-            Marca p = nowBDEntities.Marca.Find(id);
+            Marca p = Find(id);
             nowBDEntities.Marca.Remove(p);
             nowBDEntities.SaveChanges();
         }
@@ -27,7 +29,8 @@ namespace OrderNowDAL.DAL
         public void Edit(Marca p)
         {
             Marca Marca = nowBDEntities.Marca.FirstOrDefault(obj => obj.IdMarca == p.IdMarca);
-            Marca = p;
+            Marca.Nombre = p.Nombre;
+            Marca.Estado = p.Estado;
             nowBDEntities.SaveChanges();
         }
 
@@ -46,6 +49,14 @@ namespace OrderNowDAL.DAL
         public List<Marca> GetAll()
         {
             return nowBDEntities.Marca.ToList();
+        }
+
+        public bool ValidateDependencies(int id)
+        {
+            bool have = false;
+            List<Ingrediente> var = iDAL.GetAll().Where(x => x.IdMarca == id).ToList();
+            have = var.Count > 0;
+            return have;
         }
     }
 }
