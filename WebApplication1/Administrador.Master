@@ -6,7 +6,7 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="Content/bootstrap-4.5.0-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="Content/fontawesome-free-5.11.2-web/css/all.min.css" />
     <asp:ContentPlaceHolder ID="ContentPlaceHolderHeader" runat="server"></asp:ContentPlaceHolder>
     <style>
@@ -103,6 +103,11 @@
                 }
         }
     </style>
+    <script type="text/javascript">
+        function newPeididosWindows() {
+            window.open("DefaultAdmin.aspx");
+        }
+    </script>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -125,16 +130,16 @@
                             </a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="/DefaultAdmin.aspx">
+                            <asp:LinkButton ID="btnDefault" runat="server" class="nav-link" href="/DefaultAdmin.aspx" OnClientClick="newPeididosWindows();">
                                 <svg class="bi bi-card-checklist" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 00-.5.5v9a.5.5 0 00.5.5h13a.5.5 0 00.5-.5v-9a.5.5 0 00-.5-.5zm-13-1A1.5 1.5 0 000 3.5v9A1.5 1.5 0 001.5 14h13a1.5 1.5 0 001.5-1.5v-9A1.5 1.5 0 0014.5 2h-13z" clip-rule="evenodd" />
                                     <path fill-rule="evenodd" d="M7 5.5a.5.5 0 01.5-.5h5a.5.5 0 010 1h-5a.5.5 0 01-.5-.5zm-1.496-.854a.5.5 0 010 .708l-1.5 1.5a.5.5 0 01-.708 0l-.5-.5a.5.5 0 11.708-.708l.146.147 1.146-1.147a.5.5 0 01.708 0zM7 9.5a.5.5 0 01.5-.5h5a.5.5 0 010 1h-5a.5.5 0 01-.5-.5zm-1.496-.854a.5.5 0 010 .708l-1.5 1.5a.5.5 0 01-.708 0l-.5-.5a.5.5 0 01.708-.708l.146.147 1.146-1.147a.5.5 0 01.708 0z" clip-rule="evenodd" />
                                 </svg>
                                 Pedidos
-                            </a>
+                            </asp:LinkButton>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="/CrudIngrediente.aspx">
+                            <a class="nav-link" href="/Mantenedores/CrudIngrediente.aspx">
                                 <svg class="bi bi-table" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M14 1H2a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V2a1 1 0 00-1-1zM2 0a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V2a2 2 0 00-2-2H2z" clip-rule="evenodd" />
                                     <path fill-rule="evenodd" d="M15 4H1V3h14v1z" clip-rule="evenodd" />
@@ -146,7 +151,7 @@
                             </a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="/CRUDtrabajador.aspx">
+                            <a class="nav-link" href="/Mantenedores/CRUDtrabajador.aspx">
                                 <svg class="bi bi-table" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M14 1H2a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V2a1 1 0 00-1-1zM2 0a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V2a2 2 0 00-2-2H2z" clip-rule="evenodd" />
                                     <path fill-rule="evenodd" d="M15 4H1V3h14v1z" clip-rule="evenodd" />
@@ -170,7 +175,7 @@
                             </asp:LinkButton>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="/CrudDistribuidor.aspx">
+                            <a class="nav-link" href="/Mantenedores/CrudDistribuidor.aspx">
                                 <svg class="bi bi-table" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M14 1H2a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V2a1 1 0 00-1-1zM2 0a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V2a2 2 0 00-2-2H2z" clip-rule="evenodd" />
                                     <path fill-rule="evenodd" d="M15 4H1V3h14v1z" clip-rule="evenodd" />
@@ -182,7 +187,7 @@
                             </a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="/CRUDCliente.aspx">
+                            <a class="nav-link" href="/Mantenedores/CRUDCliente.aspx">
                                 <svg class="bi bi-table" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M14 1H2a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V2a1 1 0 00-1-1zM2 0a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V2a2 2 0 00-2-2H2z" clip-rule="evenodd" />
                                     <path fill-rule="evenodd" d="M15 4H1V3h14v1z" clip-rule="evenodd" />

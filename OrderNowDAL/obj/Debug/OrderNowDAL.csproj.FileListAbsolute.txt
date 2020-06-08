@@ -71,3 +71,8 @@ C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\obj\Debug\OrderNowDAL.csp
 C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\obj\Debug\OrderNowDAL.csproj.CoreCompileInputs.cache
 C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\obj\Debug\OrderNowDAL.csproj.CopyComplete
 C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\AjaxControlToolkit.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\EntityFramework.Triggers.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\System.Collections.Immutable.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.xml
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\System.Collections.Immutable.xml

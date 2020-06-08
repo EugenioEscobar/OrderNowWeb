@@ -34,5 +34,17 @@ namespace OrderNowDAL.DAL
         {
             return nowBDEntities.IngredienteFactura.ToList();
         }
+
+        public void UpdateIngrediente(IngredienteFactura obj)
+        {
+            Ingrediente ingrediente = nowBDEntities.Ingrediente.Find((int)obj.Ingrediente);
+            double? precioPromedioActual = ingrediente.ValorNeto != null ? ingrediente.ValorNeto * ingrediente.Stock : null;
+            double precioTotalFactura = (double)(obj.Precio * obj.Cantidad);
+
+            double precioPromedioTotal = precioPromedioActual != null ? (double)(precioTotalFactura + precioPromedioActual) / ((int)obj.Cantidad + (int)ingrediente.Stock) : (double)obj.Precio;
+            ingrediente.Stock += obj.Cantidad;
+            ingrediente.ValorNeto = precioPromedioTotal;
+            nowBDEntities.SaveChanges();
+        }
     }
 }

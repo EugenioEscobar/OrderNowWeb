@@ -45,14 +45,5 @@ namespace OrderNowDAL.DAL
                         select c;
             return query.ToList();
         }
-        public int ObtenerIdMax()
-        {
-            var query = from c in nowBDEntities.Pedido
-                        select c.IdPedido;
-            int idMax = query.Max();
-
-            return idMax;
-
-        }
     }
 }

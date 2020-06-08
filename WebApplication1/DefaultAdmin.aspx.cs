@@ -16,6 +16,7 @@ namespace WebApplication1
         IngredientesDAL iDAL = new IngredientesDAL();
         AlimentoPedidoDAL aPDAL = new AlimentoPedidoDAL();
         AlimentoDAL aDAL = new AlimentoDAL();
+        ExtraPedidoDAL exPDAL = new ExtraPedidoDAL();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -78,30 +79,56 @@ namespace WebApplication1
             {
                 //Cargar la lista de alimentos que tiene el pedido
                 Label codigoLbl = (Label)e.Row.FindControl("lblCodigo");
-                int idPedido = Convert.ToInt32(codigoLbl.Text);
+                int idAlimentoPedido = Convert.ToInt32(codigoLbl.Text);
                 Panel listaAlimentosGrid = (Panel)e.Row.FindControl("listAlimentos");
-                listaAlimentosGrid.Controls.Add(llenarOrden(idPedido));
-
-                //BulletedList listaAlimentosGrid = (BulletedList)e.Row.FindControl("lblAlimentos");
-                //int id = Convert.ToInt32(codigoLbl.Text);
-                
-                //listaAlimentosGrid.Controls.Add(lista);
-                listaAlimentosGrid.Width = Unit.Percentage(100);
-                for (int i = 0; i < GridView1.Columns.Count; i++)
-                {
-                    //e.Row.Cells[i].Attributes["style"] = "vertical-align:middle;";
-                }
+                listaAlimentosGrid.Controls.Add(new LiteralControl("<table class='table table-light text-center table-striped table-bordered'>"));
+                listaAlimentosGrid.Controls.Add(new LiteralControl(LlenarOrden(idAlimentoPedido)));
+                listaAlimentosGrid.Controls.Add(new LiteralControl("</table>"));
             }
         }
 
-        private Label llenarOrden(int id)
+        private string LlenarOrden(int id)
         {
-            Label alimentos = new Label();
-            alimentos.Text = "";
-            List<AlimentoPedido> listaAlimentos = aPDAL.GetAlimentos(id);
-            foreach (AlimentoPedido xx in listaAlimentos)
+            string alimentos = "";
+            foreach (AlimentoPedido item in aPDAL.GetAlimentos(id))
             {
-                alimentos.Text += "<div class='AlimentoGrid'>"+aDAL.Find((int)xx.IdAlimento).Nombre+"</div>";
+                List<ExtraPedido> extras = exPDAL.GetAll().Where(x => x.IdAlimentoPedido == item.IdAlimentoPedido).ToList();
+                int cantidadExtras = extras.Count;
+                alimentos += "<tr>";
+                if (cantidadExtras < 2)
+                {
+                    alimentos += $"<td>{aDAL.Find((int)item.IdAlimento).Nombre}</td>";
+                    if (cantidadExtras == 0)
+                    {
+                        alimentos += $"<td>No tiene Extras</td>";
+                    }
+                    else
+                    {
+                        ExtraPedido obj = exPDAL.GetAll().FirstOrDefault(x => x.IdAlimentoPedido == item.IdAlimentoPedido);
+                        Ingrediente ingrediente = iDAL.Find((int)obj.IdIngrediente);
+                        alimentos += $"<td>Extra {ingrediente.Nombre}</td>";
+                    }
+                }
+                else
+                {
+                    alimentos += $"<td rowspan='{cantidadExtras}' class='align-middle'>{aDAL.Find((int)item.IdAlimento).Nombre}</td>";
+                    foreach (ExtraPedido extra in extras)
+                    {
+                        if (extra.CantidadExtra < 2)//Cantidad de porciones
+                        {
+                            alimentos += $"<td>Extra {iDAL.Find((int)extra.IdIngrediente).Nombre}</td>";
+                        }
+                        else
+                        {
+                            alimentos += $"<td>Extra {iDAL.Find((int)extra.IdIngrediente).Nombre} x{extra.CantidadExtra}</td>";
+                        }
+                        if ((cantidadExtras % 2 == 0) || (extras.IndexOf(extra) != extras.IndexOf(extras.Last()))) //Evita que se haga una nueva row al final de la tabla,
+                        {
+                            alimentos += "</tr><tr>"; 
+                        }
+                    }
+                }
+                alimentos += "</tr>";
             }
             return alimentos;
         }

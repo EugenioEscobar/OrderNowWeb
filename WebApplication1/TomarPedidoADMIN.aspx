@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Administrador.Master" AutoEventWireup="true" CodeBehind="TomarPedidoADMIN.aspx.cs" Inherits="WebApplication1.TomarPedidoADMIN" %>
+﻿<%@ Page Title="Tomar Pedido" Language="C#" MasterPageFile="~/Administrador.Master" AutoEventWireup="true" CodeBehind="TomarPedidoADMIN.aspx.cs" Inherits="WebApplication1.TomarPedidoADMIN" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 
@@ -10,179 +10,276 @@
             overflow-x: scroll;
         }
 
+        .modal-lrg {
+            min-width: 800px;
+        }
+
+        .table-extra{
+            max-height:300px;
+            overflow-y:scroll;
+        }
+
         .modalBackground {
             background-color: black;
             filter: alpha(opacity=90);
             opacity: 0.8;
         }
-
-        .modalPopUp {
-            background-color: #FFFFFF;
-            border-width: 3px;
-            border-style: solid;
-            border-color: black;
-            padding-top: 10px;
-            padding-left: 10px;
-            width: 700px;
-        }
     </style>
+
 </asp:Content>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:UpdatePanel ID="UpdatePanel2" runat="server">
-        <ContentTemplate>
-            <div class="form-row">
-                <div class="form-group col-md-9">
-                    <asp:Label ID="Label2" runat="server" Text="Numero de Pedido"></asp:Label>
-                    <asp:Label ID="txtPedido" runat="server" Text=""></asp:Label>
-                </div>
-                <div class="form-group col-md-3">
-                    <asp:Label ID="Label1" runat="server" Text="Trabajador"></asp:Label>
-                    <asp:Label ID="txtTrabajador" runat="server" Text=""></asp:Label>
-                </div>
-            </div>
+    <div class="container-fluid">
+        <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+            <ContentTemplate>
+                <asp:HiddenField ID="HiddenActivateModal" runat="server" />
+                <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
 
-            <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-            <asp:UpdatePanel ID="UpdatePanel1" runat="server" class="modalPopUp">
-                <ContentTemplate>
-                    Ventana Modal
-                    
-                    <div class="form-row">
-                        <asp:Label ID="Label5" runat="server" Text="Preparación"></asp:Label>
-                        <asp:TextBox ID="txtPreparacion" CssClass="form-control" Enabled="false" runat="server"></asp:TextBox>
+                <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                    <ContentTemplate>
+                        <div class="modal-dialog modal-lrg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Agregar Extra</h5>
+                                    <asp:LinkButton ID="btnCerrar" runat="server" CssClass="close" OnClick="btnCerrarModal_Click">
+                                        <span aria-hidden="true">&times;</span>
+                                    </asp:LinkButton>
+                                </div>
+                                <div class="modal-body">
+                                    <asp:HiddenField ID="HiddenDesactivateModal" runat="server" />
+                                    <asp:TextBox ID="txtIdAlimentoPedido" runat="server" Visible="false"></asp:TextBox>
+                                    <div class="form-row mt-3">
+                                        <div class="col-md-6">
+                                            <asp:Label ID="Label5" runat="server" Text="Preparación"></asp:Label>
+                                            <asp:TextBox ID="txtPreparacion" CssClass="form-control" Enabled="false" runat="server"></asp:TextBox>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <asp:Label ID="Label6" runat="server" Text="Ingrediente"></asp:Label>
+                                            <asp:DropDownList ID="cboIngrediente" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource4" DataTextField="Descripcion" DataValueField="IdIngrediente" CssClass="form-control" AppendDataBoundItems="true" OnTextChanged="cboIngrediente_TextChanged">
+                                                <asp:ListItem Value="0">Seleccione un ingrediente</asp:ListItem>
+                                            </asp:DropDownList>
+                                            <asp:SqlDataSource ID="SqlDataSource4" runat="server" ConnectionString="<%$ ConnectionStrings:OrderNowBDConnectionString %>" SelectCommand="SELECT [IdIngrediente], [Nombre], [Descripcion] FROM [Ingrediente]"></asp:SqlDataSource>
+                                        </div>
+                                    </div>
+                                    <div class="form-row my-4">
+                                        <div class="col-lg-6">
+                                            <asp:Label ID="Label7" runat="server" Text="Porciones Extra"></asp:Label>
+                                            <asp:TextBox ID="txtCantidadPorcion" CssClass="form-control" runat="server" Enabled="false" TextMode="Number" min-value="1"></asp:TextBox>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <asp:Label ID="Label8" runat="server" Text="Valor por porción"></asp:Label>
+                                            <asp:TextBox ID="txtValorPorPorcion" CssClass="form-control text-center text-capitalize" runat="server" Enabled="false"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="form-row my-4 text-left">
+                                        <div class="col-md-3">
+                                            <asp:Label ID="lblTotalExtra" runat="server">Valor Extra $</asp:Label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <asp:TextBox ID="txtValorExtra" runat="server" TextMode="Number" Enabled="false"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="form-row my-4">
+                                        <div id="divMenssageExtra" runat="server">
+                                            <asp:Label ID="lblMensajeExtra" runat="server" Text=""></asp:Label>
+                                        </div>
+                                    </div>
+                                    <div class="form-row my-4">
+                                        <div class="col"></div>
+                                        <div class="col-4">
+                                            <asp:LinkButton ID="btnAgregarExtra" runat="server" CssClass="btn btn-primary btn-block" OnClick="btnAgregarExtra_Click">Agregar Extra</asp:LinkButton>
+                                        </div>
+                                        <div class="col"></div>
+                                    </div>
+                                    <div class="form-row my-4">
+                                        <div class="col-md-12">
+                                            <asp:GridView ID="GridViewExtras" runat="server" AutoGenerateColumns="False" ShowHeaderWhenEmpty="true" GridLines="Horizontal" BorderStyle="None" CssClass="table table-light text-center table-extra" HeaderStyle-CssClass="thead-light" OnRowDataBound="GridViewExtras_RowDataBound" OnRowCommand="GridViewExtras_RowCommand">
+                                                <Columns>
+                                                    <asp:TemplateField HeaderText="Editar">
+                                                        <ItemTemplate>
+                                                            <asp:LinkButton ID="btnModificar" runat="server" CssClass="btn btn-primary btn-block" CommandArgument='<%# (((GridViewRow)Container).RowIndex) %>' CommandName="Modificar">Modificar</asp:LinkButton>
+                                                            <asp:Label ID="lblIdExtra" runat="server" Text='<%# Bind("IdExtraPedido") %>' Visible="false"></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+
+                                                    <asp:TemplateField HeaderText="Valor Extra">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="lblValor" runat="server" Text='<%# Bind("ValorExtra") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+
+
+                                                    <asp:BoundField DataField="CantidadExtra" HeaderText="Cantidad Extra" SortExpression="CantidadExtra"></asp:BoundField>
+
+                                                    <asp:TemplateField HeaderText="Porción">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="lblTipoMedicion" runat="server" Text='<%# Bind("IdTipoMedicion") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+
+                                                    <asp:TemplateField HeaderText="Ingrediente">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="lblIdIngrediente" runat="server" Text='<%# Bind("IdIngrediente") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                </Columns>
+                                                <EmptyDataTemplate>
+                                                    <p class="p-2 bg-secondary text-white">Agregue algún extra</p>
+                                                </EmptyDataTemplate>
+                                            </asp:GridView>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <asp:LinkButton ID="btnLimpiarExtra" runat="server" class="btn btn-secondary" OnClick="btnLimpiarExtra_Click">Limpiar</asp:LinkButton>
+                                    <asp:LinkButton ID="btnGuardarExtras" runat="server" class="btn btn-primary" OnClick="btnGuardarExtras_Click">Guardar Cambios</asp:LinkButton>
+                                </div>
+                            </div>
+                        </div>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+                <ajaxToolkit:ModalPopupExtender ID="ModalPopupExtender1" runat="server" BackgroundCssClass="modalBackground" OkControlID="HiddenDesactivateModal" PopupControlID="UpdatePanel1" TargetControlID="HiddenActivateModal"></ajaxToolkit:ModalPopupExtender>
+
+
+                <div class="form-row">
+                    <div class="form-group col-md-9">
+                        <asp:Label ID="Label2" runat="server" Text="Numero de Pedido"></asp:Label>
+                        <asp:Label ID="txtPedido" runat="server" Text=""></asp:Label>
                     </div>
-                    <div class="form-row">
-                        <asp:Label ID="Label6" runat="server" Text="Agregar Extra"></asp:Label>
-                        <asp:TextBox ID="txtExtra" runat="server"></asp:TextBox>
+                    <div class="form-group col-md-3">
+                        <asp:Label ID="Label1" runat="server" Text="Trabajador"></asp:Label>
+                        <asp:Label ID="txtTrabajador" runat="server" Text=""></asp:Label>
                     </div>
-
-                    <asp:Button ID="btnCerrar" runat="server" Text="Cerrar Pop Up" />
-                </ContentTemplate>
-            </asp:UpdatePanel>
-            <ajaxToolkit:ModalPopupExtender ID="ModalPopupExtender1" runat="server" BackgroundCssClass="modalBackground" OkControlID="btnCerrar" PopupControlID="UpdatePanel1" TargetControlID="Label2"></ajaxToolkit:ModalPopupExtender>
-
-
-            <div class="form-row">
-                <div class="form-group col-md-9">
-                    <asp:Label ID="Label3" runat="server" Text="Cliente"></asp:Label>
-                    <asp:DropDownList ID="cboClientes" runat="server" CssClass="form-control" DataSourceID="SqlDataSource2" DataTextField="NOMBRE" DataValueField="CODIGO" AppendDataBoundItems="true">
-                        <asp:ListItem Value="0">Seleccione un Cliente</asp:ListItem>
-                    </asp:DropDownList>
-                    <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:OrderNowBDConnectionString %>" SelectCommand="SELECT IdCliente AS CODIGO, Nombres + ' ' + ApellidoPat AS NOMBRE FROM Cliente"></asp:SqlDataSource>
                 </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-9">
-                    <asp:Label ID="Label4" runat="server" Text="Tipo Pedido"></asp:Label>
-                    <asp:DropDownList ID="cboTipoPedido" CssClass="form-control" runat="server" DataSourceID="SqlDataSource3" DataTextField="Descripcion" DataValueField="IdTipoPedido" AppendDataBoundItems="True">
-                        <asp:ListItem Value="0">Seleccione un Tipo de Pedido</asp:ListItem>
-                    </asp:DropDownList>
-                    <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:OrderNowBDConnectionString %>" SelectCommand="SELECT * FROM [TipoPedido]"></asp:SqlDataSource>
+                <div class="form-row">
+                    <div class="form-group col-md-9">
+                        <asp:Label ID="Label3" runat="server" Text="Cliente"></asp:Label>
+                        <asp:DropDownList ID="cboClientes" runat="server" CssClass="form-control" DataSourceID="SqlDataSource2" DataTextField="NOMBRE" DataValueField="CODIGO" AppendDataBoundItems="true">
+                            <asp:ListItem Value="0">Seleccione un Cliente</asp:ListItem>
+                        </asp:DropDownList>
+                        <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:OrderNowBDConnectionString %>" SelectCommand="SELECT IdCliente AS CODIGO, Nombres + ' ' + ApellidoPat AS NOMBRE FROM Cliente"></asp:SqlDataSource>
+                    </div>
                 </div>
-            </div>
+                <div class="form-row">
+                    <div class="form-group col-md-9">
+                        <asp:Label ID="Label4" runat="server" Text="Tipo Pedido"></asp:Label>
+                        <asp:DropDownList ID="cboTipoPedido" CssClass="form-control" runat="server" DataSourceID="SqlDataSource3" DataTextField="Descripcion" DataValueField="IdTipoPedido" AppendDataBoundItems="True">
+                            <asp:ListItem Value="0">Seleccione un Tipo de Pedido</asp:ListItem>
+                        </asp:DropDownList>
+                        <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:OrderNowBDConnectionString %>" SelectCommand="SELECT * FROM [TipoPedido]"></asp:SqlDataSource>
+                    </div>
+                </div>
 
-            <div class="text-center content-Grid">
-                <asp:GridView ID="GridViewPedido" runat="server" ShowHeaderWhenEmpty="True" CssClass="table table-hover" AutoGenerateColumns="False" CellPadding="4" ForeColor="#333333" GridLines="None" OnRowCommand="GridViewPedido_RowCommand">
-                    <AlternatingRowStyle BackColor="White" />
-                    <Columns>
-
-                        <asp:TemplateField HeaderText="Quitar Preparación">
-                            <ItemTemplate>
-                                <asp:Button ID="btnQuitar" runat="server" CommandName="Quitar" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" Text="-" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
-
-                        <asp:TemplateField>
-                            <ItemTemplate>
-                                <asp:Label ID="lblIdAlimentoPedido" runat="server" Text='<%# Bind("IdAlimentoPedido") %>' Visible="false"></asp:Label>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-
-                        <asp:TemplateField>
-                            <ItemTemplate>
-                                <asp:Label ID="lblIdAlimento" runat="server" Text='<%# Bind("IdAlimento") %>' Visible="false"></asp:Label>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-
-                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" SortExpression="Nombre" />
-                        <asp:BoundField DataField="Descripcion" HeaderText="Descripción" SortExpression="Descripcion" />
-                        <asp:BoundField DataField="ValorUnidad" HeaderText="ValorUnidad" SortExpression="ValorUnidad" />
-
-                        <asp:TemplateField HeaderText="Agregar Extra">
-                            <ItemTemplate>
-                                <asp:Button ID="btnAgregarExtra" runat="server" CommandName="AgregarExtra" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" Text="+" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
-
-                        <asp:TemplateField>
-                            <ItemTemplate>
-                                <%--Yo habia ponido mi imagen aki--%>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-
-                    </Columns>
-                    <EditRowStyle BackColor="#2461BF" />
-                    <EmptyDataTemplate>
-                        No hay preparaciones Agregadas
-                    </EmptyDataTemplate>
-                    <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                    <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                    <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
-                    <RowStyle BackColor="#EFF3FB" />
-                    <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
-                    <SortedAscendingCellStyle BackColor="#F5F7FB" />
-                    <SortedAscendingHeaderStyle BackColor="#6D95E1" />
-                    <SortedDescendingCellStyle BackColor="#E9EBEF" />
-                    <SortedDescendingHeaderStyle BackColor="#4870BE" />
-                </asp:GridView>
-            </div>
-            <div class="form-row">
-                <p>Valor Total $</p>
-                <asp:Label ID="lblTotal" runat="server" Text="0"></asp:Label>
-            </div>
-            <div>
-                <asp:Button ID="btnIngresarPedido" runat="server" Text="Aceptar" OnClick="btnIngresarPedido_Click" />
-                <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" />
-            </div>
-            <div>
-                <asp:Label ID="lblMensaje" runat="server" Text=""></asp:Label>
-            </div>
-            <div>
-                <div class="text-center">
-                    <asp:GridView ID="GridViewAlimentos" runat="server" ShowHeaderWhenEmpty="True" CssClass="table table-hover" AutoGenerateColumns="False" CellPadding="3" DataKeyNames="IdAlimento" DataSourceID="SqlDataSource1" OnRowCommand="GridViewAlimentos_RowCommand" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" GridLines="None">
+                <div class="text-center content-Grid">
+                    <asp:GridView ID="GridViewPedido" runat="server" ShowHeaderWhenEmpty="True" CssClass="table table-hover" AutoGenerateColumns="False" CellPadding="4" ForeColor="#333333" GridLines="None" OnRowCommand="GridViewPedido_RowCommand">
+                        <AlternatingRowStyle BackColor="White" />
                         <Columns>
-                            <asp:TemplateField>
-                                <HeaderTemplate>
-                                    <asp:Label ID="Label1" runat="server" Text="Agregar"></asp:Label>
-                                </HeaderTemplate>
+
+                            <asp:TemplateField HeaderText="Quitar Preparación">
                                 <ItemTemplate>
-                                    <asp:Button ID="btnAgregar" runat="server" CommandName="Agregar" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" Text="+" />
+                                    <asp:Button ID="btnQuitar" runat="server" CommandName="Quitar" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" Text="-" />
                                 </ItemTemplate>
                             </asp:TemplateField>
 
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:Label ID="lblCodigo" runat="server" Text='<%# Bind("IdAlimento") %>' />
+                                    <asp:Label ID="lblIdAlimentoPedido" runat="server" Text='<%# Bind("IdAlimentoPedido") %>' Visible="false"></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:Label ID="lblIdAlimento" runat="server" Text='<%# Bind("IdAlimento") %>' Visible="false"></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
 
                             <asp:BoundField DataField="Nombre" HeaderText="Nombre" SortExpression="Nombre" />
-                            <asp:BoundField DataField="Calorías" HeaderText="Calorías" SortExpression="Calorías" />
-                            <asp:BoundField DataField="Precio" HeaderText="Precio" SortExpression="Precio" />
+                            <asp:BoundField DataField="Descripcion" HeaderText="Descripción" SortExpression="Descripcion" />
+                            <asp:BoundField DataField="ValorUnidad" HeaderText="Valor Unidad" SortExpression="ValorUnidad" />
+
+                            <asp:TemplateField HeaderText="Agregar Extra">
+                                <ItemTemplate>
+                                    <asp:Button ID="btnAgregarExtra" runat="server" CommandName="AgregarExtra" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" Text="+" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <%--Yo habia ponido mi imagen aki--%>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+
                         </Columns>
-                        <FooterStyle BackColor="White" ForeColor="#000066" />
-                        <HeaderStyle BackColor="#006699" Font-Bold="True" ForeColor="White" />
-                        <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
-                        <RowStyle ForeColor="#000066" />
-                        <SelectedRowStyle BackColor="#669999" Font-Bold="True" ForeColor="White" />
-                        <SortedAscendingCellStyle BackColor="#F1F1F1" />
-                        <SortedAscendingHeaderStyle BackColor="#007DBB" />
-                        <SortedDescendingCellStyle BackColor="#CAC9C9" />
-                        <SortedDescendingHeaderStyle BackColor="#00547E" />
+                        <EditRowStyle BackColor="#2461BF" />
+                        <EmptyDataTemplate>
+                            No hay preparaciones Agregadas
+                        </EmptyDataTemplate>
+                        <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                        <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                        <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
+                        <RowStyle BackColor="#EFF3FB" />
+                        <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+                        <SortedAscendingCellStyle BackColor="#F5F7FB" />
+                        <SortedAscendingHeaderStyle BackColor="#6D95E1" />
+                        <SortedDescendingCellStyle BackColor="#E9EBEF" />
+                        <SortedDescendingHeaderStyle BackColor="#4870BE" />
                     </asp:GridView>
                 </div>
-                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:OrderNowBDConnectionString %>" SelectCommand="SELECT * FROM [Alimento]"></asp:SqlDataSource>
-            </div>
-        </ContentTemplate>
-    </asp:UpdatePanel>
+                <div class="form-row">
+                    <div class="col-md-6"></div>
+                    <p>Valor Alimentos $</p>
+                    <asp:Label ID="lblAlimento" runat="server" Text="0"></asp:Label>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-6"></div>
+                    <p>Valor Extras $</p>
+                    <asp:Label ID="lblExtras" runat="server" Text="0"></asp:Label>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-6"></div>
+                    <p>Valor Total $</p>
+                    <asp:Label ID="lblTotal" runat="server" Text="0"></asp:Label>
+                </div>
+                <div>
+                    <asp:Button ID="btnIngresarPedido" runat="server" Text="Aceptar" OnClick="btnIngresarPedido_Click" />
+                    <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" />
+                </div>
+                <div>
+                    <asp:Label ID="lblMensaje" runat="server" Text=""></asp:Label>
+                </div>
+                <div>
+                    <div class="text-center">
+                        <asp:GridView ID="GridViewAlimentos" runat="server" ShowHeaderWhenEmpty="True" CssClass="table table-hover" AutoGenerateColumns="False" CellPadding="3" DataKeyNames="IdAlimento" DataSourceID="SqlDataSource1" OnRowCommand="GridViewAlimentos_RowCommand" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" GridLines="None">
+                            <Columns>
+                                <asp:TemplateField>
+                                    <HeaderTemplate>
+                                        <asp:Label ID="Label1" runat="server" Text="Agregar"></asp:Label>
+                                    </HeaderTemplate>
+                                    <ItemTemplate>
+                                        <asp:Button ID="btnAgregar" runat="server" CommandName="Agregar" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" Text="+" />
+                                        <asp:Label ID="lblCodigo" runat="server" Text='<%# Bind("IdAlimento") %>' Visible="false" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+
+                                <asp:BoundField DataField="Nombre" HeaderText="Nombre" SortExpression="Nombre" />
+                                <asp:BoundField DataField="Calorías" HeaderText="Calorías" SortExpression="Calorías" />
+                                <asp:BoundField DataField="Precio" HeaderText="Precio" SortExpression="Precio" />
+                            </Columns>
+                            <FooterStyle BackColor="White" ForeColor="#000066" />
+                            <HeaderStyle BackColor="#006699" Font-Bold="True" ForeColor="White" />
+                            <PagerStyle BackColor="White" ForeColor="#000066" HorizontalAlign="Left" />
+                            <RowStyle ForeColor="#000066" />
+                            <SelectedRowStyle BackColor="#669999" Font-Bold="True" ForeColor="White" />
+                            <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                            <SortedAscendingHeaderStyle BackColor="#007DBB" />
+                            <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                            <SortedDescendingHeaderStyle BackColor="#00547E" />
+                        </asp:GridView>
+                    </div>
+                    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:OrderNowBDConnectionString %>" SelectCommand="SELECT * FROM [Alimento]"></asp:SqlDataSource>
+                </div>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+    </div>
 </asp:Content>

@@ -86,6 +86,7 @@
     <Property Name="IdIngrediente" Type="int" />
     <Property Name="CantidadExtra" Type="int" />
     <Property Name="IdAlimentoPedido" Type="int" />
+    <Property Name="ValorExtra" Type="int" />
   </EntityType>
   <EntityType Name="Factura">
     <Key>

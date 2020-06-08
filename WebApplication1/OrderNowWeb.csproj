@@ -88,6 +88,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-4.5.0-dist\css\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-4.5.0-dist\css\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-4.5.0-dist\css\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-4.5.0-dist\css\bootstrap-reboot.min.css" />
+    <Content Include="Content\bootstrap-4.5.0-dist\css\bootstrap.css" />
+    <Content Include="Content\bootstrap-4.5.0-dist\css\bootstrap.min.css" />
+    <Content Include="Content\bootstrap-4.5.0-dist\js\bootstrap.bundle.js" />
+    <Content Include="Content\bootstrap-4.5.0-dist\js\bootstrap.bundle.min.js" />
+    <Content Include="Content\bootstrap-4.5.0-dist\js\bootstrap.js" />
+    <Content Include="Content\bootstrap-4.5.0-dist\js\bootstrap.min.js" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -1675,11 +1685,9 @@
     <Content Include="Content\fontawesome-free-5.11.2-web\webfonts\fa-brands-400.svg" />
     <Content Include="Content\fontawesome-free-5.11.2-web\webfonts\fa-regular-400.svg" />
     <Content Include="Content\fontawesome-free-5.11.2-web\webfonts\fa-solid-900.svg" />
-    <Content Include="CrudAlimentos.aspx" />
-    <Content Include="CRUDCliente.aspx" />
-    <Content Include="CrudIngrediente.aspx" />
-    <Content Include="CrudDistribuidor.aspx" />
-    <Content Include="CRUDTrabajador.aspx" />
+    <Content Include="Mantenedores\CrudAlimentos.aspx" />
+    <Content Include="Mantenedores\CrudIngrediente.aspx" />
+    <Content Include="Mantenedores\CrudDistribuidor.aspx" />
     <Content Include="css\EstiloMenu.css" />
     <Content Include="Default.aspx" />
     <Content Include="DefaultAdmin.aspx" />
@@ -1689,11 +1697,13 @@
     <Content Include="Fotos\OrderNow.png" />
     <Content Include="IngresarOrdenDeCompra.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="Mantenedores\CrudCliente.aspx" />
     <Content Include="Mantenedores\CrudMarcas.aspx" />
     <Content Include="Mantenedores\CrudTipoAlimento.aspx" />
     <Content Include="Mantenedores\CrudTipoMedicion.aspx" />
     <Content Include="Mantenedores\CrudTipoPago.aspx" />
     <Content Include="Mantenedores\CrudTipoPedido.aspx" />
+    <Content Include="Mantenedores\CrudTrabajador.aspx" />
     <Content Include="MenuComida.aspx" />
     <Content Include="MenuPrincipal.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -1777,6 +1787,16 @@
     <Content Include="Content\fontawesome-free-5.11.2-web\webfonts\fa-solid-900.ttf" />
     <Content Include="Content\fontawesome-free-5.11.2-web\webfonts\fa-solid-900.woff" />
     <Content Include="Content\fontawesome-free-5.11.2-web\webfonts\fa-solid-900.woff2" />
+    <Content Include="Content\bootstrap-4.5.0-dist\css\bootstrap-grid.css.map" />
+    <Content Include="Content\bootstrap-4.5.0-dist\css\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-4.5.0-dist\css\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-4.5.0-dist\css\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\bootstrap-4.5.0-dist\css\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-4.5.0-dist\css\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap-4.5.0-dist\js\bootstrap.bundle.js.map" />
+    <Content Include="Content\bootstrap-4.5.0-dist\js\bootstrap.bundle.min.js.map" />
+    <Content Include="Content\bootstrap-4.5.0-dist\js\bootstrap.js.map" />
+    <Content Include="Content\bootstrap-4.5.0-dist\js\bootstrap.min.js.map" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
@@ -1877,40 +1897,26 @@
     <Compile Include="Administrador.Master.designer.cs">
       <DependentUpon>Administrador.Master</DependentUpon>
     </Compile>
-    <Compile Include="CrudAlimentos.aspx.cs">
+    <Compile Include="Mantenedores\CrudAlimentos.aspx.cs">
       <DependentUpon>CrudAlimentos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="CrudAlimentos.aspx.designer.cs">
+    <Compile Include="Mantenedores\CrudAlimentos.aspx.designer.cs">
       <DependentUpon>CrudAlimentos.aspx</DependentUpon>
     </Compile>
-    <Compile Include="CRUDCliente.aspx.cs">
-      <DependentUpon>CRUDCliente.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CRUDCliente.aspx.designer.cs">
-      <DependentUpon>CRUDCliente.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CrudIngrediente.aspx.cs">
+    <Compile Include="Mantenedores\CrudIngrediente.aspx.cs">
       <DependentUpon>CrudIngrediente.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="CrudIngrediente.aspx.designer.cs">
+    <Compile Include="Mantenedores\CrudIngrediente.aspx.designer.cs">
       <DependentUpon>CrudIngrediente.aspx</DependentUpon>
     </Compile>
-    <Compile Include="CrudDistribuidor.aspx.cs">
+    <Compile Include="Mantenedores\CrudDistribuidor.aspx.cs">
       <DependentUpon>CrudDistribuidor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="CrudDistribuidor.aspx.designer.cs">
+    <Compile Include="Mantenedores\CrudDistribuidor.aspx.designer.cs">
       <DependentUpon>CrudDistribuidor.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CRUDTrabajador.aspx.cs">
-      <DependentUpon>CRUDTrabajador.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CRUDTrabajador.aspx.designer.cs">
-      <DependentUpon>CRUDTrabajador.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -1939,6 +1945,13 @@
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Mantenedores\CrudCliente.aspx.cs">
+      <DependentUpon>CrudCliente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Mantenedores\CrudCliente.aspx.designer.cs">
+      <DependentUpon>CrudCliente.aspx</DependentUpon>
     </Compile>
     <Compile Include="Mantenedores\CrudMarcas.aspx.cs">
       <DependentUpon>CrudMarcas.aspx</DependentUpon>
@@ -1974,6 +1987,13 @@
     </Compile>
     <Compile Include="Mantenedores\CrudTipoPedido.aspx.designer.cs">
       <DependentUpon>CrudTipoPedido.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Mantenedores\CrudTrabajador.aspx.cs">
+      <DependentUpon>CrudTrabajador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Mantenedores\CrudTrabajador.aspx.designer.cs">
+      <DependentUpon>CrudTrabajador.aspx</DependentUpon>
     </Compile>
     <Compile Include="MenuComida.aspx.cs">
       <DependentUpon>MenuComida.aspx</DependentUpon>

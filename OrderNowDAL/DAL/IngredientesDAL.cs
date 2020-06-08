@@ -18,7 +18,7 @@ namespace OrderNowDAL.DAL
         }
         public void Remove(string nombre)
         {
-         
+
             var query = from c in nowBDEntities.Ingrediente
                         where c.Nombre == nombre
                         select c;
@@ -27,7 +27,13 @@ namespace OrderNowDAL.DAL
             Ingrediente a = nowBDEntities.Ingrediente.Find(objRemove.IdIngrediente);
             nowBDEntities.Ingrediente.Remove(a);
             nowBDEntities.SaveChanges();
-        
+
+        }
+        public void Remove(int id)
+        {
+            nowBDEntities.Ingrediente.Remove(Find(id));
+            nowBDEntities.SaveChanges();
+
         }
         public List<Ingrediente> GetAll()
         {

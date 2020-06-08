@@ -91,6 +91,7 @@
           <Property Name="IdIngrediente" Type="int" />
           <Property Name="CantidadExtra" Type="int" />
           <Property Name="IdAlimentoPedido" Type="int" />
+          <Property Name="ValorExtra" Type="int" />
         </EntityType>
         <EntityType Name="Factura">
           <Key>
@@ -918,6 +919,7 @@
           <Property Name="IdAlimentoPedido" Type="Int32" />
           <NavigationProperty Name="AlimentoPedido" Relationship="Self.FK__ExtraPedi__IdAli__1EA48E88" FromRole="ExtraPedido" ToRole="AlimentoPedido" />
           <NavigationProperty Name="Ingrediente" Relationship="Self.FK__ExtraPedi__IdIng__797309D9" FromRole="ExtraPedido" ToRole="Ingrediente" />
+          <Property Name="ValorExtra" Type="Int32" />
         </EntityType>
         <EntityType Name="Factura">
           <Key>
@@ -1771,6 +1773,7 @@
           <EntitySetMapping Name="ExtraPedido">
             <EntityTypeMapping TypeName="OrderNowBDModel.ExtraPedido">
               <MappingFragment StoreEntitySet="ExtraPedido">
+                <ScalarProperty Name="ValorExtra" ColumnName="ValorExtra" />
                 <ScalarProperty Name="IdExtraPedido" ColumnName="IdExtraPedido" />
                 <ScalarProperty Name="IdIngrediente" ColumnName="IdIngrediente" />
                 <ScalarProperty Name="CantidadExtra" ColumnName="CantidadExtra" />

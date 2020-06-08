@@ -106,6 +106,7 @@
     <Property Name="IdAlimentoPedido" Type="Int32" />
     <NavigationProperty Name="AlimentoPedido" Relationship="Self.FK__ExtraPedi__IdAli__1EA48E88" FromRole="ExtraPedido" ToRole="AlimentoPedido" />
     <NavigationProperty Name="Ingrediente" Relationship="Self.FK__ExtraPedi__IdIng__797309D9" FromRole="ExtraPedido" ToRole="Ingrediente" />
+    <Property Name="ValorExtra" Type="Int32" />
   </EntityType>
   <EntityType Name="Factura">
     <Key>

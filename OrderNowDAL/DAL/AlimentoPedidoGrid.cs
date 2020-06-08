@@ -13,7 +13,6 @@ namespace OrderNowDAL.DAL
         private IngredientesDAL iDAL = new IngredientesDAL();
         private IngredienteAlimentoDAL iADAL = new IngredienteAlimentoDAL();
         private static List<AlimentoPedido> alimentos = new List<AlimentoPedido>();
-        private static List<ExtraPedido> extras = new List<ExtraPedido>();
 
         public void AgregarAlimento(Alimento alimento)
         {

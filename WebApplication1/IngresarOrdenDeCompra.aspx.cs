@@ -76,42 +76,6 @@ namespace WebApplication1
             }
         }
 
-        private DataTable getTable(SLDocument doc)
-        {
-            DataTable dt = new DataTable();
-            char letterExcel = refIndexEx;
-
-            //Se setean las columnas del DataTable
-            foreach (string column in columns)
-            {
-                dt.Columns.Add(column);
-            }
-
-            //Se Recorren las filas hasta encontrar un index Vacío
-            for (int rowExcel = 3; rowExcel < 1000; rowExcel++)
-            {
-                string[] row = new string[columns.Count()];
-                letterExcel = refIndexEx;
-                string val = "";
-
-                if (!string.IsNullOrEmpty(doc.GetCellValueAsString(refIndexEx + "" + rowExcel)))
-                {
-                    // El index del Excel no está vacío
-                    for (int j = 0; j < columns.Count(); j++)
-                    {
-                        val = doc.GetCellValueAsString(letterExcel + "" + rowExcel);
-                        val = val.Contains("nbsp") ? "" : val;
-                        row[j] = val;
-                        letterExcel++;
-                    }
-                }
-                else { break; }
-
-                dt.Rows.Add(row);
-            }
-            return dt;
-        }
-
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -160,6 +124,60 @@ namespace WebApplication1
                 }
             }
         }
+
+        protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+
+        }
+
+        protected void btnDatosFactura_Click(object sender, EventArgs e)
+        {
+            if (btnDatosFactura.Text == "Mostrar Datos Factura")
+            {
+                btnDatosFactura.Text = "Ocultar Datos";
+                btnDatosFactura.CssClass = "btn btn-secondary btn-block";
+                divDatos.Visible = true;
+            }
+            else
+            {
+                btnDatosFactura.Text = "Mostrar Datos Factura";
+                btnDatosFactura.CssClass = "btn btn-primary btn-block";
+                divDatos.Visible = false;
+            }
+        }
+
+        protected void btnGuardar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int idDistribuidor = Convert.ToInt32(cboDistribuidor.SelectedValue);
+                int folio = Convert.ToInt32(txtFolio.Text);
+                int idTipoPago = Convert.ToInt32(cboTipoPago.SelectedValue);
+                DateTime fecha = DateTime.Parse(txtFecha.Text);
+                int totalNeto = Convert.ToInt32(txtTotal.Text);
+                Factura factura = new Factura()
+                {
+                    IdDistribuidor = idDistribuidor,
+                    Folio = folio,
+                    IdTipoPago = idTipoPago,
+                    Fecha = fecha,
+                    TotalNeto = totalNeto,
+                    TotalIva = totalNeto * 1.19
+                };
+                factura = fDAL.Add(factura);
+                SaveIngredients(factura);
+                UserMessage("Factura Guardada con Éxito", "succes");
+
+                GridView1.DataSource = ViewState["Data"] as DataTable;
+                GridView1.DataBind();
+            }
+            catch (Exception ex)
+            {
+                UserMessage(ex.Message, "warning");
+            }
+        }
+
+
 
         private void ValidateEmptyFields(DataTable dt)
         {
@@ -301,27 +319,6 @@ namespace WebApplication1
             }
         }
 
-        protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-
-        }
-
-        protected void btnDatosFactura_Click(object sender, EventArgs e)
-        {
-            if (btnDatosFactura.Text == "Mostrar Datos Factura")
-            {
-                btnDatosFactura.Text = "Ocultar Datos";
-                btnDatosFactura.CssClass = "btn btn-secondary btn-block";
-                divDatos.Visible = true;
-            }
-            else
-            {
-                btnDatosFactura.Text = "Mostrar Datos Factura";
-                btnDatosFactura.CssClass = "btn btn-primary btn-block";
-                divDatos.Visible = false;
-            }
-        }
-
         private void InitCbos()
         {
             cboDistribuidor.DataSource = dDAL.getDataTable(dDAL.GetAllActives());
@@ -359,35 +356,40 @@ namespace WebApplication1
             cboProvincia.DataBind();
         }
 
-        protected void btnGuardar_Click(object sender, EventArgs e)
+        private DataTable getTable(SLDocument doc)
         {
-            try
-            {
-                int idDistribuidor = Convert.ToInt32(cboDistribuidor.SelectedValue);
-                int folio = Convert.ToInt32(txtFolio.Text);
-                int idTipoPago = Convert.ToInt32(cboTipoPago.SelectedValue);
-                DateTime fecha = DateTime.Parse(txtFecha.Text);
-                int totalNeto = Convert.ToInt32(txtTotal.Text);
-                Factura factura = new Factura()
-                {
-                    IdDistribuidor = idDistribuidor,
-                    Folio = folio,
-                    IdTipoPago = idTipoPago,
-                    Fecha = fecha,
-                    TotalNeto = totalNeto,
-                    TotalIva = totalNeto * 1.19
-                };
-                factura = fDAL.Add(factura);
-                SaveIngredients(factura);
-                UserMessage("Factura Guardada con Éxito", "succes");
+            DataTable dt = new DataTable();
+            char letterExcel = refIndexEx;
 
-                GridView1.DataSource = ViewState["Data"] as DataTable;
-                GridView1.DataBind();
-            }
-            catch (Exception ex)
+            //Se setean las columnas del DataTable
+            foreach (string column in columns)
             {
-                UserMessage(ex.Message, "warning");
+                dt.Columns.Add(column);
             }
+
+            //Se Recorren las filas hasta encontrar un index Vacío
+            for (int rowExcel = 3; rowExcel < 1000; rowExcel++)
+            {
+                string[] row = new string[columns.Count()];
+                letterExcel = refIndexEx;
+                string val = "";
+
+                if (!string.IsNullOrEmpty(doc.GetCellValueAsString(refIndexEx + "" + rowExcel)))
+                {
+                    // El index del Excel no está vacío
+                    for (int j = 0; j < columns.Count(); j++)
+                    {
+                        val = doc.GetCellValueAsString(letterExcel + "" + rowExcel);
+                        val = val.Contains("nbsp") ? "" : val;
+                        row[j] = val;
+                        letterExcel++;
+                    }
+                }
+                else { break; }
+
+                dt.Rows.Add(row);
+            }
+            return dt;
         }
 
         private void SaveIngredients(Factura obj)
@@ -456,6 +458,7 @@ namespace WebApplication1
                 ingredienteFactura.Cantidad = Convert.ToInt32(rowCantidad);
                 ingredienteFactura.Impuesto = 0;
                 iFDAL.Add(ingredienteFactura);
+                iFDAL.UpdateIngrediente(ingredienteFactura);
             }
         }
     }

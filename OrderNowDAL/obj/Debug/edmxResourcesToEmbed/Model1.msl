@@ -89,6 +89,7 @@
     <EntitySetMapping Name="ExtraPedido">
       <EntityTypeMapping TypeName="OrderNowBDModel.ExtraPedido">
         <MappingFragment StoreEntitySet="ExtraPedido">
+          <ScalarProperty Name="ValorExtra" ColumnName="ValorExtra" />
           <ScalarProperty Name="IdExtraPedido" ColumnName="IdExtraPedido" />
           <ScalarProperty Name="IdIngrediente" ColumnName="IdIngrediente" />
           <ScalarProperty Name="CantidadExtra" ColumnName="CantidadExtra" />

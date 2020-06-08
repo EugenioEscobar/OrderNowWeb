@@ -18,6 +18,7 @@ namespace OrderNowDAL
         public Nullable<int> IdIngrediente { get; set; }
         public Nullable<int> CantidadExtra { get; set; }
         public Nullable<int> IdAlimentoPedido { get; set; }
+        public Nullable<int> ValorExtra { get; set; }
     
         public virtual AlimentoPedido AlimentoPedido { get; set; }
         public virtual Ingrediente Ingrediente { get; set; }
