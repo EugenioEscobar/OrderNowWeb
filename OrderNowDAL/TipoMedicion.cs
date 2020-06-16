@@ -18,6 +18,7 @@ namespace OrderNowDAL
         public TipoMedicion()
         {
             this.Ingrediente = new HashSet<Ingrediente>();
+            this.Ingrediente1 = new HashSet<Ingrediente>();
         }
     
         public int IdTipoMedicion { get; set; }
@@ -27,5 +28,7 @@ namespace OrderNowDAL
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ingrediente> Ingrediente { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Ingrediente> Ingrediente1 { get; set; }
     }
 }

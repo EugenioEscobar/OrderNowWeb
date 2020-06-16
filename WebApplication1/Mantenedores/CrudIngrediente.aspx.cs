@@ -33,7 +33,7 @@ namespace WebApplication1
                         Ingrediente obj = iDAL.Find(Convert.ToInt32(codigo.Text));
 
                         LlenarFields(obj);
-                        
+
 
                         break;
 
@@ -47,7 +47,7 @@ namespace WebApplication1
                 UserMessage(ex.Message, "danger");
             }
         }
-                
+
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
             try
@@ -65,7 +65,7 @@ namespace WebApplication1
                     Porción = Convert.ToInt32(txtPorcion.Text)
                 };
                 iDAL.Add(iObj);
-                UserMessage("Ingrediente agregado", "sucess");
+                UserMessage("Ingrediente agregado", "success");
                 GridView1.DataBind();
 
             }
@@ -80,8 +80,10 @@ namespace WebApplication1
             try
             {
                 ValidarCampos();
+                int idIngrediente = Convert.ToInt32(ViewState["IdIngrediente"]);
 
                 Ingrediente ingrediente = new Ingrediente();
+                ingrediente.IdIngrediente = idIngrediente;
                 ingrediente.Nombre = txtNombre.Text;
                 ingrediente.Descripcion = txtDescripcion.Text;
 
@@ -92,7 +94,7 @@ namespace WebApplication1
                 ingrediente.IdTipoMedicion = cboTipoMedicion.SelectedValue == "0" ? (int?)null : Convert.ToInt32(cboTipoMedicion.SelectedValue);
                 ingrediente.Porción = Convert.ToInt32(txtPorcion.Text);
                 iDAL.Update(ingrediente);
-                UserMessage("Ingrediente Modificado", "sucess");
+                UserMessage("Ingrediente Modificado", "success");
                 GridView1.DataBind();
             }
             catch (Exception ex)
@@ -171,12 +173,13 @@ namespace WebApplication1
             {
                 throw new Exception("El valor de la porción debe ser mayor a 0");
             }
-            if (txtValorNeto.Text!="")
+            if (txtValorNeto.Text != "")
             {
                 try
                 {
-                    Convert.ToInt32(txtValorNeto.Text);
-                }catch(Exception ex) { throw new Exception("Valor neto Invalido"); }
+                    Convert.ToDouble(txtValorNeto.Text);
+                }
+                catch (Exception ex) { throw new Exception("Valor neto Invalido"); }
 
             }
         }
@@ -185,7 +188,7 @@ namespace WebApplication1
         {
             if (mensaje != "")
             {
-                divMessage.Attributes.Add("class", "alert alert-" + type);
+                divMessage.Attributes.Add("class", $"alert alert-{type} text-center my-3");
                 lblMensaje.Text = mensaje;
             }
             else
@@ -216,8 +219,8 @@ namespace WebApplication1
             txtDescripcion.Text = obj.Descripcion;
             txtStock.Text = obj.Stock.ToString();
             txtValorNeto.Text = obj.ValorNeto.ToString();
-            cboMarca.SelectedValue = obj.IdMarca.ToString();
-            cboTipoAlimento.SelectedValue = obj.IdTipoAlimento.ToString();
+            cboMarca.SelectedValue = obj.IdMarca.HasValue ? obj.IdMarca.Value.ToString() : "1" ;
+            cboTipoAlimento.SelectedValue = obj.IdTipoAlimento.HasValue? obj.IdTipoAlimento.ToString() : "0";
             cboTipoMedicion.SelectedValue = obj.IdTipoMedicion.ToString();
             txtPorcion.Text = obj.Porción.ToString();
 

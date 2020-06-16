@@ -104,9 +104,16 @@ namespace WebApplication1
                     }
                     else
                     {
-                        ExtraPedido obj = exPDAL.GetAll().FirstOrDefault(x => x.IdAlimentoPedido == item.IdAlimentoPedido);
-                        Ingrediente ingrediente = iDAL.Find((int)obj.IdIngrediente);
-                        alimentos += $"<td>Extra {ingrediente.Nombre}</td>";
+                        ExtraPedido extra = exPDAL.GetAll().FirstOrDefault(x => x.IdAlimentoPedido == item.IdAlimentoPedido);
+                        Ingrediente ingrediente = iDAL.Find((int)extra.IdIngrediente);
+                        if (extra.CantidadExtra < 2)//Cantidad de porciones
+                        {
+                            alimentos += $"<td>Extra {ingrediente.Nombre}</td>";
+                        }
+                        else
+                        {
+                            alimentos += $"<td>Extra {ingrediente.Nombre} x{extra.CantidadExtra}</td>";
+                        }
                     }
                 }
                 else

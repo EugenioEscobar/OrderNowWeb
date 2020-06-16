@@ -9,45 +9,35 @@
                     <fieldset>
                         <legend class="text-center header">Registrate</legend>
 
-                        <div class="form-group">
-                            <span class="col-md-1 col-md-offset-2 text-center"></span>
-                            <div class="col-md-8">
-                                <label for="txtClave">Nombre</label>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label>Nombre</label>
                                 <asp:TextBox type="text" ID="txtNombre" runat="server"
                                     CssClass="form-control" placeholder="Nombre"></asp:TextBox>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <span class="col-md-1 col-md-offset-2 text-center"></span>
-                            <div class="col-md-8">
-                                <label for="txtApellidoPaterno">Apellido Paterno</label>
+                            <div class="col-md-6">
+                                <label>Apellido Paterno</label>
                                 <asp:TextBox type="text" ID="txtApellidoPaterno" runat="server"
                                     CssClass="form-control" placeholder="Apellido Paterno"></asp:TextBox>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <span class="col-md-1 col-md-offset-2 text-center"></span>
-                            <div class="col-md-8">
-                                <label for="txtApellidoMaterno">Apellido Materno</label>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label>Apellido Materno</label>
                                 <asp:TextBox type="text" ID="txtApellidoMaterno" runat="server"
                                     CssClass="form-control" placeholder="Apellido Materno"></asp:TextBox>
                             </div>
-                        </div>
-
-                        <div class="form-group">
-                            <span class="col-md-1 col-md-offset-2 text-center"></span>
-                            <div class="col-md-8">
-                                <label for="txtDireccion">Direccion</label>
+                            <div class="col-md-6">
+                                <label>Direccion</label>
                                 <asp:TextBox type="text" ID="txtDireccion" runat="server"
                                     CssClass="form-control" placeholder="Direccion"></asp:TextBox>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <span class="col-md-1 col-md-offset-2 text-center"></span>
-                            <div class="col-md-8">
-                                <label for="txtTelefono">Telefono</label>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label>Telefono</label>
                                 <asp:TextBox type="text" ID="txtTelefono" runat="server"
                                     CssClass="form-control" placeholder="Telefono"></asp:TextBox>
                             </div>

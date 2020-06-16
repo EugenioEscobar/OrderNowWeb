@@ -77,6 +77,7 @@ namespace OrderNowDAL.DAL
             ing.IdTipoMedicion = obj.IdTipoMedicion;
             ing.IdMarca = obj.IdMarca;
             ing.IdTipoAlimento = obj.IdTipoAlimento;
+            ing.Porción = obj.Porción;
             nowBDEntities.SaveChanges();
 
         }

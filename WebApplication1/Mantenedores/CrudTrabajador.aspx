@@ -1,8 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Administrador.Master" AutoEventWireup="true" CodeBehind="CrudTrabajador.aspx.cs" Inherits="WebApplication1.Mantenedores.CrudTrabajador" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolderHeader" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    
+
     <div class="card">
 
         <div class="card-header text-center">
@@ -124,16 +125,16 @@
             <div class="col"></div>
             <div class="form-row">
                 <div class="col"></div>
-                <asp:Button ID="btnAgregar" runat="server" Text="Agregar" OnClick="btnAgregar_Click" class="btn btn-primary"  style="margin: 10px"/>
+                <asp:Button ID="btnAgregar" runat="server" Text="Agregar" OnClick="btnAgregar_Click" class="btn btn-primary" Style="margin: 10px" />
 
 
-                <asp:Button ID="btnModificar" runat="server" Text="Modificar" Visible="false" OnClick="btnModificar_Click" class="btn btn-primary"  style="margin: 10px"/>
+                <asp:Button ID="btnModificar" runat="server" Text="Modificar" Visible="false" OnClick="btnModificar_Click" class="btn btn-primary" Style="margin: 10px" />
 
 
-                <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" class="btn btn-primary" OnClick="btnEliminar_Click"  style="margin: 10px"/>
+                <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" class="btn btn-primary" OnClick="btnEliminar_Click" Style="margin: 10px" />
 
 
-                <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" class="btn btn-primary"  style="margin: 10px"/>
+                <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" class="btn btn-primary" Style="margin: 10px" />
                 <div class="col"></div>
             </div>
             <div class="col"></div>
@@ -151,8 +152,7 @@
 
     <div>
         <div class="text-center">
-            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="IdTrabajador" DataSourceID="SqlDataSource1" GridLines="Horizontal" CssClass="table table-hover" OnRowCommand="GridView1_RowCommand" OnRowDataBound="GridView1_RowDataBound" BackColor="White" BorderColor="#E7E7FF" BorderStyle="None" BorderWidth="1px" CellPadding="3">
-                <AlternatingRowStyle BackColor="#F7F7F7" />
+            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="IdTrabajador" DataSourceID="SqlDataSource1" BorderStyle="None" CssClass="table table-hover table-light" HeaderStyle-CssClass="thead-light" OnRowCommand="GridView1_RowCommand" OnRowDataBound="GridView1_RowDataBound">
                 <Columns>
                     <asp:TemplateField>
                         <HeaderTemplate>
@@ -191,15 +191,6 @@
                     <asp:BoundField DataField="Sueldo" HeaderText="Sueldo" SortExpression="Sueldo" />
                     <asp:BoundField DataField="Estado" HeaderText="Estado" SortExpression="Estado" />
                 </Columns>
-                <FooterStyle BackColor="#B5C7DE" ForeColor="#4A3C8C" />
-                <HeaderStyle BackColor="#4A3C8C" Font-Bold="True" ForeColor="#F7F7F7" />
-                <PagerStyle BackColor="#E7E7FF" ForeColor="#4A3C8C" HorizontalAlign="Right" />
-                <RowStyle BackColor="#E7E7FF" ForeColor="#4A3C8C" />
-                <SelectedRowStyle BackColor="#738A9C" Font-Bold="True" ForeColor="#F7F7F7" />
-                <SortedAscendingCellStyle BackColor="#F4F4FD" />
-                <SortedAscendingHeaderStyle BackColor="#5A4C9D" />
-                <SortedDescendingCellStyle BackColor="#D8D8F0" />
-                <SortedDescendingHeaderStyle BackColor="#3E3277" />
             </asp:GridView>
         </div>
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:OrderNowBDConnectionString %>" SelectCommand="SELECT * FROM [Trabajador]"></asp:SqlDataSource>

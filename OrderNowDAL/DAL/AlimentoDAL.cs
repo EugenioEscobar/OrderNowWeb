@@ -53,6 +53,16 @@ namespace OrderNowDAL.DAL
             nowBDEntities.SaveChanges();
 
         }
+
+        public void Update(Alimento alimento)
+        {
+            Alimento objUpdate = nowBDEntities.Alimento.FirstOrDefault(x => x.IdAlimento == alimento.IdAlimento);
+            objUpdate.Nombre = alimento.Descripcion;
+            objUpdate.Calorías = alimento.Calorías;
+            objUpdate.Precio = alimento.Precio;
+            nowBDEntities.SaveChanges();
+
+        }
         public int ObtenerIdMax()
         {
             var query = from c in nowBDEntities.Alimento
@@ -66,7 +76,7 @@ namespace OrderNowDAL.DAL
         {
             List<IngredientesAlimento> lista = new List<IngredientesAlimento>();
             var query = from c in nowBDEntities.IngredientesAlimento
-                        where c.Alimento== idAlimento
+                        where c.Alimento == idAlimento
                         select c;
             return query.ToList();
         }

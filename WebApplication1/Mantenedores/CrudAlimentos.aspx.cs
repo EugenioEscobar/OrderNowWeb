@@ -36,7 +36,6 @@ namespace WebApplication1
                         int codigo = Convert.ToInt32(codigoLbl.Text);
                         Alimento alimento = aDAL.Find(codigo);
                         LlenarFields(alimento);
-
                         break;
                     case "Default":
                         break;
@@ -131,12 +130,28 @@ namespace WebApplication1
                         iADAL.Remove(Bdd.IdIngredientesAlimento);
                     }
                 }
+                try
+                {
+                    Convert.ToInt32(txtCalorias.Text);
+                }
+                catch (Exception)
+                {
+                    throw new Exception("Las calorías deben ser un número entero");
+                }
+                try
+                {
+                    Convert.ToInt32(txtValor.Text);
+                }
+                catch (Exception)
+                {
+                    throw new Exception("El valor debe ser un número entero");
+                }
+                Alimento alimento = aDAL.Find(idAlimento);
+                alimento.Descripcion = txtNombre.Text;
+                alimento.Calorías = Convert.ToInt32(txtCalorias.Text);
+                alimento.Precio = Convert.ToInt32(txtValor.Text);
 
-                string nombre = txtNombre.Text;
-                string calorias = txtCalorias.Text;
-                string valor = txtValor.Text;
-
-                aDAL.Update(nombre, Convert.ToInt32(calorias), Convert.ToInt32(valor));
+                aDAL.Update(alimento);
                 lblMensaje.Text = "Alimento Editado";
                 gridViewListadoAlimentos.DataBind();
                 Limpiar();

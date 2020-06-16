@@ -76,7 +76,7 @@
         Lista de Ingredientes
     </div>
     <div>
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CellPadding="4" DataKeyNames="IdIngrediente" DataSourceID="SqlDataSource1" ForeColor="#333333" GridLines="None" OnRowCommand="GridView1_RowCommand" CssClass="table table-hover" OnRowDataBound="GridView1_RowDataBound">
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CellPadding="4" DataKeyNames="IdIngrediente" DataSourceID="SqlDataSource1" ForeColor="#333333" GridLines="None" OnRowCommand="GridView1_RowCommand" CssClass="table table-hover text-center" OnRowDataBound="GridView1_RowDataBound">
             <AlternatingRowStyle BackColor="White" />
             <Columns>
                 <asp:TemplateField>

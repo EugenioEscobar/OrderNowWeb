@@ -58,10 +58,10 @@ namespace WebApplication1
 
         protected void btnSubirPlanilla_Click(object sender, EventArgs e)
         {
-            ViewState["Message"] = false;
+            ViewState["Message"] = false; //Se setea el mensaje de que la planilla está incorrecta
             using (SLDocument doc = new SLDocument(FileUpload1.FileContent, "CargaDatos"))
             {
-                DataTable dt = getTable(doc);
+                DataTable dt = GetTable(doc);
 
                 ValidateEmptyFields(dt);
 
@@ -83,6 +83,18 @@ namespace WebApplication1
                 bool flag = false;
                 string val = "";
                 int columnIndex = 0;
+                
+                #region Validación de Ingrediente
+                columnIndex = Array.IndexOf(columns, "Nombre") + 1;
+                val = ((Label)e.Row.FindControl("lblNombre")).Text;
+                Ingrediente ingrediente = iDAL.FindByName(val);
+                if (ingrediente == null && val != "")
+                {
+                    e.Row.Cells[columnIndex].BackColor = System.Drawing.Color.Red;
+                    flag = true;
+                }
+                #endregion
+
                 #region Validación de Marca
                 columnIndex = Array.IndexOf(columns, "Marca") + 1;
                 val = ((Label)e.Row.FindControl("lblMarca")).Text;
@@ -119,7 +131,7 @@ namespace WebApplication1
                 if (flag && (bool)ViewState["Message"] == false)
                 {
                     UserMessage($"{lblMensaje.Text} " +
-                        $" \n Los datos en rojo se agregarán automaticamente a la Base de datos al ingresar la planilla", "danger");
+                        " \n Los datos en rojo se agregarán automaticamente a la Base de datos al ingresar la planilla", "danger");
                     ViewState["Message"] = true;
                 }
             }
@@ -356,7 +368,7 @@ namespace WebApplication1
             cboProvincia.DataBind();
         }
 
-        private DataTable getTable(SLDocument doc)
+        private DataTable GetTable(SLDocument doc)
         {
             DataTable dt = new DataTable();
             char letterExcel = refIndexEx;
@@ -414,33 +426,27 @@ namespace WebApplication1
                 TipoMedicion tipoMedicion = tMDAL.FindByName(rowTipoMedicion);
                 Ingrediente ingrediente = iDAL.FindByName(rowNombre);
 
-                IngredienteFactura ingredienteFactura = new IngredienteFactura();
-                if (ingrediente == null)
+                //Se pregunta si la marca existe en la BDD, de lo contrario se ingresa una nueva
+                marca = marca == null ? mDAL.Add(new Marca()
                 {
-                    if (marca == null)
-                    {
-                        marca = mDAL.Add(new Marca()
-                        {
-                            Nombre = rowMarca,
-                            Estado = 1
-                        });
-                    }
-                    if (tipoAlimento == null)
-                    {
-                        tipoAlimento = tADAL.Add(new TipoAlimento()
-                        {
-                            Descripcion = rowTipoAlimento,
-                            Estado = 1
-                        });
-                    }
-                    if (tipoMedicion == null)
-                    {
-                        tipoMedicion = tMDAL.Add(new TipoMedicion()
-                        {
-                            Descripcion = rowTipoMedicion,
-                            Estado = 1
-                        });
-                    }
+                    Nombre = rowMarca,
+                    Estado = 1
+                }) : marca; 
+
+                tipoAlimento = tipoAlimento == null ? tADAL.Add(new TipoAlimento()
+                {
+                    Descripcion = rowTipoAlimento,
+                    Estado = 1
+                }) : tipoAlimento;
+
+                tipoMedicion = tipoMedicion == null ? tMDAL.Add(new TipoMedicion()
+                {
+                    Descripcion = rowTipoMedicion,
+                    Estado = 1
+                }) : tipoMedicion; 
+                
+                if ((ingrediente == null) || (ingrediente.IdMarca != marca.IdMarca || ingrediente.Descripcion != rowDescripción))
+                {
                     ingrediente = new Ingrediente()
                     {
                         Nombre = rowNombre,
@@ -452,11 +458,14 @@ namespace WebApplication1
                     };
                     ingrediente = iDAL.Add(ingrediente);
                 }
+
+                IngredienteFactura ingredienteFactura = new IngredienteFactura();
                 ingredienteFactura.Factura = obj.IdFactura;
                 ingredienteFactura.Ingrediente = ingrediente.IdIngrediente;
                 ingredienteFactura.Precio = Convert.ToInt32(rowPrecio);
                 ingredienteFactura.Cantidad = Convert.ToInt32(rowCantidad);
                 ingredienteFactura.Impuesto = 0;
+
                 iFDAL.Add(ingredienteFactura);
                 iFDAL.UpdateIngrediente(ingredienteFactura);
             }

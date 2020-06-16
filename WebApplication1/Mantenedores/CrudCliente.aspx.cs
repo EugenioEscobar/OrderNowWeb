@@ -94,8 +94,10 @@ namespace WebApplication1.Mantenedores
             try
             {
                 validarCampos();
+                int codigo = Convert.ToInt32(ViewState["Codigo"]);
                 Cliente obj = new Cliente()
                 {
+                    IdCliente = codigo,
                     Nombres = txtNombre.Text,
                     ApellidoPat = txtApellidoPaterno.Text,
                     ApellidoMat = txtApellidoMaterno.Text,
@@ -104,7 +106,7 @@ namespace WebApplication1.Mantenedores
                     Estado = 1,
                 };
                 cDAL.Edit(obj);
-                lblMensaje.Text = "Ingrediente Editado";
+                lblMensaje.Text = "Cliente Editado";
                 GridView1.DataBind();
             }
             catch (Exception ex)
@@ -128,7 +130,7 @@ namespace WebApplication1.Mantenedores
             if (txtApellidoPaterno.Text == "")
             {
                 txtApellidoPaterno.Focus();
-                throw new Exception("Debe Ingresar un nombre");
+                throw new Exception("Debe Ingresar un Apelldo");
             }
         }
 

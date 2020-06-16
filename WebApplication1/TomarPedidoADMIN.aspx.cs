@@ -28,20 +28,19 @@ namespace WebApplication1
             if (!Page.IsPostBack)
             {
                 CargarGridCarrito();
-                txtTrabajador.Text = tDAL.Find((int)Session["Usuario"]).Nombres;
+                ValidarSession();
                 GridViewExtras.DataBind();
             }
             else
             {
-                CargarTotales();
-                List<AlimentoPedido> list = carrito.ListarAlimentos();
-                lblMensaje.Text = "";
+                UserMessage("", "");
                 UserMessageExtra("", "");
                 if (txtIdAlimentoPedido.Text != "")
                 {
                     ModalPopupExtender1.Show();
                 }
             }
+            CargarTotales();
         }
 
         protected void GridViewAlimentos_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -56,8 +55,8 @@ namespace WebApplication1
 
                         Alimento obj = aDAL.Find(idAlimento);
                         carrito.AgregarAlimento(obj);
-
                         CargarGridCarrito();
+                        CargarTotales();
                         break;
                     case "Default":
                         break;
@@ -65,7 +64,7 @@ namespace WebApplication1
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = ex.Message;
+                UserMessage(ex.Message, "danger");
             }
         }
 
@@ -83,10 +82,8 @@ namespace WebApplication1
                 {
                     case "Quitar":
                         carrito.EliminarAlimento(objCarrito);
+                        CargarTotales();
                         break;
-                    //case "Agregar":
-                    //    carrito.AgregarAlimento(obj);
-                    //    break;
                     case "AgregarExtra":
                         ActivarPopUpExtra(objCarrito);
                         break;
@@ -95,7 +92,8 @@ namespace WebApplication1
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = ex.Message;
+
+                UserMessage(ex.Message, "danger");
             }
         }
 
@@ -117,11 +115,11 @@ namespace WebApplication1
                 AgregarAlimentosPorPedido(pedido);
 
                 LimpiarPedido();
-                lblMensaje.Text = "Pedido Realizado";
+                UserMessage("Pedido Realizado", "success");
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = ex.Message;
+                UserMessage(ex.Message, "danger");
             }
         }
 
@@ -133,7 +131,7 @@ namespace WebApplication1
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = ex.Message;
+                UserMessage(ex.Message, "danger");
             }
         }
 
@@ -158,21 +156,6 @@ namespace WebApplication1
                     SwitchTextBox(true);
                     UserMessageExtra("Este Ingrediente no tiene las porciones establecidas", "danger");
                 }
-            }
-        }
-
-        protected void GridViewExtras_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.RowType == DataControlRowType.DataRow)
-            {
-                Label label = e.Row.FindControl("lblIdIngrediente") as Label;
-                Ingrediente ing = iDAL.Find(Convert.ToInt32(label.Text));
-                label.Text = ing.Nombre;
-
-                label = e.Row.FindControl("lblTipoMedicion") as Label;
-                TipoMedicion tipoM = tMDAL.Find(Convert.ToInt32(label.Text));
-
-                label.Text = $"{ing.Porción} {tipoM.Descripcion}";
             }
         }
 
@@ -249,6 +232,21 @@ namespace WebApplication1
             }
         }
 
+        protected void GridViewExtras_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                Label label = e.Row.FindControl("lblIdIngrediente") as Label;
+                Ingrediente ing = iDAL.Find(Convert.ToInt32(label.Text));
+                label.Text = ing.Nombre;
+
+                label = e.Row.FindControl("lblTipoMedicion") as Label;
+                TipoMedicion tipoM = tMDAL.Find(Convert.ToInt32(label.Text));
+
+                label.Text = $"{ing.Porción} {tipoM.Descripcion}";
+            }
+        }
+
         protected void GridViewExtras_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             GridViewRow row = GridViewExtras.Rows[Convert.ToInt32(e.CommandArgument)];
@@ -272,7 +270,7 @@ namespace WebApplication1
         {
             ActivarItemsCbo();
             int idAlimentoPedido = objCarrito.IdAlimentoPedido;
-            foreach(ExtraPedido extra in extraCarrito.GetListByAlimentoPedido(idAlimentoPedido))
+            foreach (ExtraPedido extra in extraCarrito.GetListByAlimentoPedido(idAlimentoPedido))
             {
                 cboIngrediente.Items.FindByValue(extra.IdIngrediente.ToString()).Enabled = false;
             }
@@ -287,12 +285,14 @@ namespace WebApplication1
         protected void LimpiarPedido()
         {
             carrito.EliminarAlimentos();
+            extraCarrito.DeleteAll();
+
             CargarGridCarrito();
+            LimpiarModalTodo();
+            CargarTotales();
+
             cboClientes.SelectedValue = "0";
             cboTipoPedido.SelectedValue = "0";
-
-            LimpiarModal();
-            extraCarrito.DeleteAll();
         }
 
         protected void LimpiarModal()
@@ -437,7 +437,20 @@ namespace WebApplication1
             DataTable dt = carrito.DataTableAlimentos();
             GridViewPedido.DataSource = dt;
             GridViewPedido.DataBind();
-            lblAlimento.Text = carrito.ObtenerTotal().ToString();
+        }
+
+        private void UserMessage(string mensaje, string type)
+        {
+            if (mensaje != "")
+            {
+                divMenssage.Attributes.Add("class", "col-md-12 text-center alert alert-" + type);
+                lblMensaje.Text = mensaje;
+            }
+            else
+            {
+                divMenssage.Attributes.Add("class", "");
+                lblMensaje.Text = mensaje;
+            }
         }
 
         private void UserMessageExtra(string mensaje, string type)
@@ -496,17 +509,37 @@ namespace WebApplication1
 
         private void CargarTotales()
         {
+            int totalAlimento = 0;
             int totalExtra = 0;
+
+            foreach (AlimentoPedido item in carrito.ListarAlimentos())
+            {
+                totalAlimento += aDAL.Find(item.IdAlimento.Value).Precio.Value;
+            }
+
             foreach (ExtraPedido extra in extraCarrito.GetList())
             {
                 totalExtra += extra.ValorExtra.HasValue ? extra.ValorExtra.Value : 0;
             }
 
-            lblExtras.Text = totalExtra.ToString();
 
-            int totalAlimento = Convert.ToInt32(lblAlimento.Text);
+            lblTotalAlimento.Text = totalAlimento.ToString();
+            lblTotalExtras.Text = totalExtra.ToString();
+
             int total = totalAlimento + totalExtra;
             lblTotal.Text = total.ToString();
+        }
+
+        private void ValidarSession()
+        {
+            if (Session["Usuario"] == null)
+            {
+                Response.Redirect("/Login.aspx");
+            }
+            else
+            {
+                txtTrabajador.Text = tDAL.Find((int)Session["Usuario"]).Nombres;
+            }
         }
     }
 }

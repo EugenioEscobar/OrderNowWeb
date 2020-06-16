@@ -102,8 +102,7 @@
             <asp:Label ID="lblMensaje" runat="server" Text=""></asp:Label>
         </div>
         <div class="text-center">
-            <asp:GridView ID="GridView1" runat="server" CellPadding="4" CssClass="table table-primary" ForeColor="#333333" GridLines="None" Width="100%" OnRowDataBound="GridView1_RowDataBound" ShowHeaderWhenEmpty="true" OnRowCommand="GridView1_RowCommand" AutoGenerateColumns="false">
-                <AlternatingRowStyle BackColor="White" />
+            <asp:GridView ID="GridView1" runat="server" CssClass="table table-borderless table-hover table-light" Width="100%" OnRowDataBound="GridView1_RowDataBound" ShowHeaderWhenEmpty="true" HeaderStyle-CssClass="thead-light" OnRowCommand="GridView1_RowCommand" AutoGenerateColumns="false">
                 <Columns>
                     <asp:TemplateField HeaderText="Modificar" Visible="false">
                         <ItemTemplate>
@@ -111,7 +110,13 @@
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:BoundField DataField="Index" HeaderText="Index" />
-                    <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+                    
+                    <asp:TemplateField HeaderText="Nombre">
+                        <ItemTemplate>
+                            <asp:Label ID="lblNombre" runat="server" Text='<%#Bind("Nombre") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
                     <asp:BoundField DataField="Descripción" HeaderText="Descripción" />
                     <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" />
                     
@@ -136,16 +141,6 @@
                     <asp:BoundField DataField="Precio" HeaderText="Precio" />
                     <asp:BoundField DataField="Total" HeaderText="Total" />
                 </Columns>
-                <EditRowStyle BackColor="#2461BF" />
-                <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
-                <RowStyle BackColor="#EFF3FB" />
-                <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
-                <SortedAscendingCellStyle BackColor="#F5F7FB" />
-                <SortedAscendingHeaderStyle BackColor="#6D95E1" />
-                <SortedDescendingCellStyle BackColor="#E9EBEF" />
-                <SortedDescendingHeaderStyle BackColor="#4870BE" />
             </asp:GridView>
         </div>
     </div>

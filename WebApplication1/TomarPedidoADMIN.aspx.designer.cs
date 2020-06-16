@@ -337,33 +337,6 @@ namespace WebApplication1 {
         protected global::System.Web.UI.WebControls.GridView GridViewPedido;
         
         /// <summary>
-        /// Control lblAlimento.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAlimento;
-        
-        /// <summary>
-        /// Control lblExtras.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblExtras;
-        
-        /// <summary>
-        /// Control lblTotal.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotal;
-        
-        /// <summary>
         /// Control btnIngresarPedido.
         /// </summary>
         /// <remarks>
@@ -382,6 +355,15 @@ namespace WebApplication1 {
         protected global::System.Web.UI.WebControls.Button btnLimpiar;
         
         /// <summary>
+        /// Control divMenssage.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divMenssage;
+        
+        /// <summary>
         /// Control lblMensaje.
         /// </summary>
         /// <remarks>
@@ -389,6 +371,33 @@ namespace WebApplication1 {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMensaje;
+        
+        /// <summary>
+        /// Control lblTotalAlimento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalAlimento;
+        
+        /// <summary>
+        /// Control lblTotalExtras.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalExtras;
+        
+        /// <summary>
+        /// Control lblTotal.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotal;
         
         /// <summary>
         /// Control GridViewAlimentos.

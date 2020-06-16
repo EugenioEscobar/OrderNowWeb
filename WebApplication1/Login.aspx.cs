@@ -22,6 +22,7 @@ namespace WebApplication1
         {
             try
             {
+                ValidarCampos();
                 string user = txtUsuario.Text;
                 string clave = txtClave.Text;
                 Usuario usuario = new Usuario();
@@ -67,6 +68,18 @@ namespace WebApplication1
         {
             Response.Redirect("Registro.aspx");
 
+        }
+
+        protected void ValidarCampos()
+        {
+            if (txtUsuario.Text.Trim() == "")
+            {
+                throw new Exception("Debe ingresar un Usuario");
+            }
+            if (txtClave.Text.Trim() == "")
+            {
+                throw new Exception("Debe ingresar una contraseña");
+            }
         }
     }
 }
