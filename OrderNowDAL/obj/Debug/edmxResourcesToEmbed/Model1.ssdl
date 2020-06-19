@@ -114,6 +114,7 @@
     <Property Name="IdTipoMedicion" Type="int" />
     <Property Name="Foto" Type="varchar" MaxLength="50" />
     <Property Name="Porción" Type="int" />
+    <Property Name="IdTipoMedicionPorcion" Type="int" />
   </EntityType>
   <EntityType Name="IngredienteFactura">
     <Key>
@@ -153,6 +154,10 @@
     <Property Name="FechaExpiracion" Type="date" />
     <Property Name="Descuento" Type="int" />
     <Property Name="Precio" Type="int" />
+    <Property Name="Estado" Type="int" />
+    <Property Name="Foto" Type="varchar" MaxLength="50" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="OfertaAlimento">
     <Key>
@@ -483,6 +488,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__Ingredien__IdTip__607251E5">
+    <End Role="TipoMedicion" Type="Self.TipoMedicion" Multiplicity="0..1" />
+    <End Role="Ingrediente" Type="Self.Ingrediente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoMedicion">
+        <PropertyRef Name="IdTipoMedicion" />
+      </Principal>
+      <Dependent Role="Ingrediente">
+        <PropertyRef Name="IdTipoMedicionPorcion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__Ingredien__Ingre__6383C8BA">
     <End Role="Ingrediente" Type="Self.Ingrediente" Multiplicity="0..1" />
     <End Role="IngredienteFactura" Type="Self.IngredienteFactura" Multiplicity="*" />
@@ -744,6 +761,10 @@
       <End Role="Ingrediente" EntitySet="Ingrediente" />
     </AssociationSet>
     <AssociationSet Name="FK__Ingredien__IdTip__5FB337D6" Association="Self.FK__Ingredien__IdTip__5FB337D6">
+      <End Role="TipoMedicion" EntitySet="TipoMedicion" />
+      <End Role="Ingrediente" EntitySet="Ingrediente" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Ingredien__IdTip__607251E5" Association="Self.FK__Ingredien__IdTip__607251E5">
       <End Role="TipoMedicion" EntitySet="TipoMedicion" />
       <End Role="Ingrediente" EntitySet="Ingrediente" />
     </AssociationSet>

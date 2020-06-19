@@ -161,6 +161,8 @@
           <Property Name="Precio" Type="int" />
           <Property Name="Estado" Type="int" />
           <Property Name="Foto" Type="varchar" MaxLength="50" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="OfertaAlimento">
           <Key>
@@ -1025,6 +1027,8 @@
           <NavigationProperty Name="OfertaPedido" Relationship="Self.FK__OfertaPed__IdOfe__04E4BC85" FromRole="Oferta" ToRole="OfertaPedido" />
           <Property Name="Estado" Type="Int32" />
           <Property Name="Foto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="OfertaAlimento">
           <Key>
@@ -1885,6 +1889,8 @@
           <EntitySetMapping Name="Oferta">
             <EntityTypeMapping TypeName="OrderNowBDModel.Oferta">
               <MappingFragment StoreEntitySet="Oferta">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Foto" ColumnName="Foto" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="IdOferta" ColumnName="IdOferta" />

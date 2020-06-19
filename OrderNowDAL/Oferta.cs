@@ -29,6 +29,8 @@ namespace OrderNowDAL
         public Nullable<int> Precio { get; set; }
         public Nullable<int> Estado { get; set; }
         public string Foto { get; set; }
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OfertaAlimento> OfertaAlimento { get; set; }

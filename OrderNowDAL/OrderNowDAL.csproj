@@ -85,6 +85,7 @@
     <Compile Include="DAL\AlimentoPedidoGrid.cs" />
     <Compile Include="DAL\AlimentoPedidoDAL.cs" />
     <Compile Include="DAL\BoletaDAL.cs" />
+    <Compile Include="DAL\Carrito.cs" />
     <Compile Include="DAL\ClienteDAL.cs" />
     <Compile Include="DAL\ComunaDAL.cs" />
     <Compile Include="DAL\DistribuidorDAL.cs" />
@@ -97,6 +98,9 @@
     <Compile Include="DAL\IngredienteFacturaDAL.cs" />
     <Compile Include="DAL\IngredientesDAL.cs" />
     <Compile Include="DAL\MarcaDAL.cs" />
+    <Compile Include="DAL\OfertaDAL.cs" />
+    <Compile Include="DAL\OfertaPedidoDAL.cs" />
+    <Compile Include="DAL\OfertaPedidoGrid.cs" />
     <Compile Include="DAL\PedidoDAL.cs" />
     <Compile Include="DAL\ProvinciaDAL.cs" />
     <Compile Include="DAL\RegionDAL.cs" />

@@ -176,14 +176,14 @@
                                 <ItemTemplate>
                                     <asp:LinkButton ID="btnQuitar" runat="server" CommandName="Quitar" CssClass="btn btn-secondary" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>"><i class="far fa-minus-square fa-1x"></i></asp:LinkButton>
 
-                                    <asp:Label ID="lblIdAlimentoPedido" runat="server" Text='<%# Bind("IdAlimentoPedido") %>' Visible="false"></asp:Label>
-                                    <asp:Label ID="lblIdAlimento" runat="server" Text='<%# Bind("IdAlimento") %>' Visible="false"></asp:Label>
+                                    <asp:Label ID="lblIdAlimentoPedido" runat="server" Text='<%# Bind("IdElementoPedido") %>' Visible="false"></asp:Label>
+                                    <asp:Label ID="lblIdAlimento" runat="server" Text='<%# Bind("IdElemento") %>' Visible="false"></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
 
                             <asp:BoundField DataField="Nombre" HeaderText="Nombre" SortExpression="Nombre" />
                             <asp:BoundField DataField="Descripcion" HeaderText="Descripción" SortExpression="Descripcion" />
-                            <asp:BoundField DataField="ValorUnidad" HeaderText="Valor Unidad" SortExpression="ValorUnidad" />
+                            <asp:BoundField DataField="ValorUnitario" HeaderText="Valor Unidad"/>
 
                             <asp:TemplateField HeaderText="Agregar Extra">
                                 <ItemTemplate>
@@ -232,7 +232,10 @@
                         </div>
                     </div>
                 </div>
-                <div>
+                <div class="form-row">
+                    <asp:CheckBox ID="chkMostrarOfertas" runat="server" AutoPostBack="true" OnCheckedChanged="chkMostrarOfertas_CheckedChanged"/>
+                </div>
+                <div id="GridPreparaciones" runat="server">
                     <div class="text-center">
                         <asp:GridView ID="GridViewAlimentos" runat="server" ShowHeaderWhenEmpty="True" CssClass="table table-hover table-light text-center" HeaderStyle-CssClass="thead-light" BorderStyle="None" AutoGenerateColumns="False" DataKeyNames="IdAlimento" DataSourceID="SqlDataSource1" OnRowCommand="GridViewAlimentos_RowCommand">
                             <Columns>
@@ -254,6 +257,28 @@
                         </asp:GridView>
                     </div>
                     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:OrderNowBDConnectionString %>" SelectCommand="SELECT * FROM [Alimento]"></asp:SqlDataSource>
+                </div>
+                <div id="GridOfertas" runat="server" visible="false">
+                    <div class="text-center">
+                        <asp:GridView ID="GridViewOfertas" runat="server" ShowHeaderWhenEmpty="True" CssClass="table table-hover table-light text-center" HeaderStyle-CssClass="thead-light" BorderStyle="None" AutoGenerateColumns="False" DataKeyNames="IdOferta" DataSourceID="SqlDataSource5" OnRowCommand="GridViewOfertas_RowCommand">
+                            <Columns>
+
+                                <asp:TemplateField HeaderText="Agregar">
+                                    <ItemTemplate>
+                                        <asp:LinkButton ID="btnAgregar" runat="server" CommandName="Agregar" CssClass="btn btn-primary" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>"><i class="fas fa-plus"></i></asp:LinkButton>
+                                        <asp:Label ID="lblCodigo" runat="server" Text='<%# Bind("IdOferta") %>' Visible="false" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:BoundField DataField="Nombre" HeaderText="Nombre" SortExpression="Nombre"></asp:BoundField>
+                                <asp:BoundField DataField="Descripcion" HeaderText="Descripcion" SortExpression="Descripcion"></asp:BoundField>
+                                <asp:BoundField DataField="Requisitos" HeaderText="Requisitos" SortExpression="Requisitos" />
+                                <asp:BoundField DataField="Precio" HeaderText="Precio" SortExpression="Precio"></asp:BoundField>
+                                <%--<asp:BoundField DataField="Foto" HeaderText="Foto" SortExpression="Foto"></asp:BoundField>--%>
+                            </Columns>
+                        </asp:GridView>
+                    </div>
+                    <asp:SqlDataSource ID="SqlDataSource5" runat="server" ConnectionString="<%$ ConnectionStrings:OrderNowBDConnectionString %>" SelectCommand="SELECT * FROM [Oferta]"></asp:SqlDataSource>
                 </div>
             </ContentTemplate>
         </asp:UpdatePanel>

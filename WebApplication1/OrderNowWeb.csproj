@@ -1685,7 +1685,7 @@
     <Content Include="Content\fontawesome-free-5.11.2-web\webfonts\fa-brands-400.svg" />
     <Content Include="Content\fontawesome-free-5.11.2-web\webfonts\fa-regular-400.svg" />
     <Content Include="Content\fontawesome-free-5.11.2-web\webfonts\fa-solid-900.svg" />
-    <Content Include="CrudOfertas.aspx" />
+    <Content Include="Mantenedores\CrudOfertas.aspx" />
     <Content Include="Mantenedores\CrudAlimentos.aspx" />
     <Content Include="Mantenedores\CrudIngrediente.aspx" />
     <Content Include="Mantenedores\CrudDistribuidor.aspx" />
@@ -1898,11 +1898,11 @@
     <Compile Include="Administrador.Master.designer.cs">
       <DependentUpon>Administrador.Master</DependentUpon>
     </Compile>
-    <Compile Include="CrudOfertas.aspx.cs">
+    <Compile Include="Mantenedores\CrudOfertas.aspx.cs">
       <DependentUpon>CrudOfertas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="CrudOfertas.aspx.designer.cs">
+    <Compile Include="Mantenedores\CrudOfertas.aspx.designer.cs">
       <DependentUpon>CrudOfertas.aspx</DependentUpon>
     </Compile>
     <Compile Include="Mantenedores\CrudAlimentos.aspx.cs">

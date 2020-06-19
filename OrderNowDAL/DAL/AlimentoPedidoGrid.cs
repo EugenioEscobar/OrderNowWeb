@@ -14,11 +14,11 @@ namespace OrderNowDAL.DAL
         private IngredienteAlimentoDAL iADAL = new IngredienteAlimentoDAL();
         private static List<AlimentoPedido> alimentos = new List<AlimentoPedido>();
 
-        public void AgregarAlimento(Alimento alimento)
+        public void AddAlimento(Alimento alimento)
         {
             try
             {
-                verificarStock(alimento);
+                //verificarStock(alimento);
                 /* Pregunta si existen registros guardados en la lista:
                  * true => Obtiene el Id de el ultimo elemento y le suma 1
                  * false => Le asigna automaticamente en valor 1 */
@@ -34,29 +34,14 @@ namespace OrderNowDAL.DAL
             }
         }
 
-        //ModificarAlimento(Alimento alimento)
-        //{
-        //    try
-        //    {
-        //        /*Encuentra al elemento por el id*/
-        //        string[] ali = alimentos.FirstOrDefault(x => x[1] == alimento[1]);
-        //        int index = alimentos.IndexOf(ali);
-        //        alimentos[index] = alimento;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        throw new Exception(e.Message);
-        //    }
-        //}
-
-        public AlimentoPedido BuscarElemento(int idAlimento)
+        public AlimentoPedido FindElemento(int idAlimento)
         {
             AlimentoPedido obj = new AlimentoPedido();
             obj = alimentos.FirstOrDefault(x => x.IdAlimentoPedido == idAlimento);
             return obj;
         }
 
-        public void EliminarAlimento(AlimentoPedido alimento)
+        public void RemoveAlimento(AlimentoPedido alimento)
         {
             try
             {
@@ -68,7 +53,7 @@ namespace OrderNowDAL.DAL
             }
         }
 
-        public List<AlimentoPedido> ListarAlimentos()
+        public List<AlimentoPedido> GetList()
         {
             return alimentos;
         }
@@ -101,7 +86,7 @@ namespace OrderNowDAL.DAL
 
         }
 
-        public void EliminarAlimentos()
+        public void RemoveAll()
         {
             for (int i = 0; i < alimentos.Count;)
             {

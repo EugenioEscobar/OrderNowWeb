@@ -157,6 +157,12 @@
                             </a>
                         </li>
                         <li class="nav-item active">
+                            <a class="nav-link" href="/Mantenedores/CrudOfertas.aspx">
+                                
+                                Gestión Ofertas
+                            </a>
+                        </li>
+                        <li class="nav-item active">
                             <a class="nav-link" href="/Mantenedores/CRUDCliente.aspx">
                                 
                                 Gestion Clientes

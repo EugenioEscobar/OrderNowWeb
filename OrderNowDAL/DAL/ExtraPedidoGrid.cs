@@ -13,19 +13,19 @@ namespace OrderNowDAL.DAL
 
         private static List<ExtraPedido> listadoExtras = new List<ExtraPedido>();
 
-        public void Add(ExtraPedido extra)
+        public void AddExtra(ExtraPedido extra)
         {
             //VerificarStock(extra);
             extra.IdExtraPedido = listadoExtras.Count > 0 ? listadoExtras.Last().IdExtraPedido + 1 : 1;
             listadoExtras.Add(extra);
         }
 
-        public void Edit(int index, ExtraPedido extra)
+        public void Update(int index, ExtraPedido extra)
         {
             listadoExtras[index] = extra;
         }
 
-        public void Delete(ExtraPedido eP)
+        public void RemoveExtra(ExtraPedido eP)
         {
             listadoExtras.Remove(eP);
         }
@@ -43,7 +43,7 @@ namespace OrderNowDAL.DAL
             }
         }
 
-        public ExtraPedido Find(int idExtra)
+        public ExtraPedido FindExtra(int idExtra)
         {
             return listadoExtras.FirstOrDefault(x=>x.IdExtraPedido== idExtra);
         }

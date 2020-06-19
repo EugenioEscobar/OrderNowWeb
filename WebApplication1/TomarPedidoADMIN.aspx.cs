@@ -19,10 +19,12 @@ namespace WebApplication1
         AlimentoPedidoDAL aPDAL = new AlimentoPedidoDAL();
         IngredienteAlimentoDAL iADAL = new IngredienteAlimentoDAL();
         IngredientesDAL iDAL = new IngredientesDAL();
+        OfertaDAL oDAL = new OfertaDAL();
+        OfertaAlimentoDAL oADAL = new OfertaAlimentoDAL();
+        OfertaPedidoDAL oPDAL = new OfertaPedidoDAL();
         ExtraPedidoDAL ePDAL = new ExtraPedidoDAL();
 
-        AlimentoPedidoGrid carrito = new AlimentoPedidoGrid();
-        ExtraPedidoGrid extraCarrito = new ExtraPedidoGrid();
+        Carrito carrito = new Carrito();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -43,6 +45,31 @@ namespace WebApplication1
             CargarTotales();
         }
 
+        protected void GridViewOfertas_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            try
+            {
+                switch (e.CommandName)
+                {
+                    case "Agregar":
+                        int index = Convert.ToInt32(e.CommandArgument);
+                        int idOferta = Convert.ToInt32(((Label)((GridView)sender).Rows[index].FindControl("lblCodigo")).Text);
+
+                        Oferta obj = oDAL.Find(idOferta);
+                        carrito.AddOferta(obj);
+                        CargarGridCarrito();
+                        CargarTotales();
+                        break;
+                    case "Default":
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                UserMessage(ex.Message, "danger");
+            }
+        }
+
         protected void GridViewAlimentos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             try
@@ -51,10 +78,10 @@ namespace WebApplication1
                 {
                     case "Agregar":
                         int index = Convert.ToInt32(e.CommandArgument);
-                        int idAlimento = Convert.ToInt32(((Label)GridViewAlimentos.Rows[index].FindControl("lblCodigo")).Text);
+                        int idAlimento = Convert.ToInt32(((Label)((GridView)sender).Rows[index].FindControl("lblCodigo")).Text);
 
                         Alimento obj = aDAL.Find(idAlimento);
-                        carrito.AgregarAlimento(obj);
+                        carrito.AddAlimento(obj);
                         CargarGridCarrito();
                         CargarTotales();
                         break;
@@ -75,13 +102,13 @@ namespace WebApplication1
             {
                 int index = Convert.ToInt32(e.CommandArgument);
                 int idAlimentoPedido = Convert.ToInt32(((Label)GridViewPedido.Rows[index].FindControl("lblIdAlimentoPedido")).Text);
-                AlimentoPedido objCarrito = carrito.BuscarElemento(idAlimentoPedido);
+                AlimentoPedido objCarrito = carrito.FindAlimento(idAlimentoPedido);
                 Alimento obj = aDAL.Find((int)objCarrito.IdAlimento);
 
                 switch (e.CommandName)
                 {
                     case "Quitar":
-                        carrito.EliminarAlimento(objCarrito);
+                        carrito.RemoveAlimento(objCarrito);
                         CargarTotales();
                         break;
                     case "AgregarExtra":
@@ -113,6 +140,7 @@ namespace WebApplication1
                 pedido = pDAL.Add(pedido);
 
                 AgregarAlimentosPorPedido(pedido);
+                AgregarOfertasPorPedido(pedido);
 
                 LimpiarPedido();
                 UserMessage("Pedido Realizado", "success");
@@ -164,7 +192,7 @@ namespace WebApplication1
             int idExtraPedido = Convert.ToInt32(txtIdAlimentoPedido.Text);
             LimpiarModalTodo();
 
-            extraCarrito.DeleteAll(idExtraPedido);
+            carrito.RemoveAllExtras(idExtraPedido);
             CargarGridExtras(idExtraPedido);
         }
 
@@ -181,28 +209,29 @@ namespace WebApplication1
                 ValidateExtraFields();
 
                 int idIngrediente = Convert.ToInt32(cboIngrediente.SelectedValue);
-                cboIngrediente.Items.FindByValue(idIngrediente.ToString()).Enabled = false; //Se bloquea la opción de elegir el mismo ingrediente
-
                 int idAlimentoPedido = Convert.ToInt32(txtIdAlimentoPedido.Text);
-                int cantidad = Convert.ToInt32(txtCantidadPorcion.Text);
-                int? valorExtra = string.IsNullOrEmpty(txtValorExtra.Text) ? (int?)null : Convert.ToInt32(txtValorExtra.Text);
+
+                cboIngrediente.Items.FindByValue(idIngrediente.ToString()).Enabled = false; //Se bloquea la opción de elegir el mismo ingrediente
 
                 ExtraPedido extra = new ExtraPedido()
                 {
                     IdIngrediente = idIngrediente,
-                    CantidadExtra = cantidad,
+                    CantidadExtra = Convert.ToInt32(txtCantidadPorcion.Text),
                     IdAlimentoPedido = idAlimentoPedido,
-                    ValorExtra = valorExtra
+                    ValorExtra = string.IsNullOrEmpty(txtValorExtra.Text) ? (int?)null : Convert.ToInt32(txtValorExtra.Text)
                 };
-                ExtraPedido item = extraCarrito.GetListByAlimentoPedido(idAlimentoPedido).FirstOrDefault(x => x.IdIngrediente == idIngrediente);
+
+                List<ExtraPedido> listaExtras = carrito.GetListExtra().Where(x => x.IdAlimentoPedido == idAlimentoPedido).ToList();
+                ExtraPedido item = listaExtras.FirstOrDefault(x => x.IdIngrediente == idIngrediente);
+
                 if (item != null)
                 {
-                    int index = extraCarrito.GetList().IndexOf(item);
-                    extraCarrito.Edit(index, extra);
+                    int index = carrito.GetListExtra().IndexOf(item);
+                    carrito.UpdateExtra(index, extra);
                 }
                 else
                 {
-                    extraCarrito.Add(extra);
+                    carrito.AddExtra(extra);
                 }
 
                 CargarGridExtras(idAlimentoPedido);
@@ -254,7 +283,7 @@ namespace WebApplication1
             {
                 case "Modificar":
                     int idExtra = Convert.ToInt32((row.FindControl("lblIdExtra") as Label).Text);
-                    ExtraPedido extra = extraCarrito.Find(idExtra);
+                    ExtraPedido extra = carrito.FindExtra(idExtra);
                     EliminarCbo();
                     ViewState["IdExtra"] = idExtra;
                     LlenarExtraFields(extra);
@@ -270,7 +299,8 @@ namespace WebApplication1
         {
             ActivarItemsCbo();
             int idAlimentoPedido = objCarrito.IdAlimentoPedido;
-            foreach (ExtraPedido extra in extraCarrito.GetListByAlimentoPedido(idAlimentoPedido))
+            List<ExtraPedido> listaExtras = carrito.GetListExtra().Where(x => x.IdAlimentoPedido == idAlimentoPedido).ToList();
+            foreach (ExtraPedido extra in listaExtras)
             {
                 cboIngrediente.Items.FindByValue(extra.IdIngrediente.ToString()).Enabled = false;
             }
@@ -284,8 +314,7 @@ namespace WebApplication1
 
         protected void LimpiarPedido()
         {
-            carrito.EliminarAlimentos();
-            extraCarrito.DeleteAll();
+            carrito.RemoveAll();
 
             CargarGridCarrito();
             LimpiarModalTodo();
@@ -313,9 +342,9 @@ namespace WebApplication1
 
         private void ValidatePedidoFields()
         {
-            if (carrito.ListarAlimentos().Count == 0)
+            if (!carrito.ExistElements())
             {
-                throw new Exception("Debe Ingresar Alimentos");
+                throw new Exception("Debe Ingresar Alimentos o Ofertas");
             }
             if (cboClientes.SelectedValue == "0")
             {
@@ -371,7 +400,7 @@ namespace WebApplication1
         private void AgregarAlimentosPorPedido(Pedido pedido)
         {
             int idPedido = pedido.IdPedido;
-            foreach (AlimentoPedido item in carrito.ListarAlimentos())
+            foreach (AlimentoPedido item in carrito.GetListAlimentos())
             {
                 //Agregar Alimento a la tabla AlimentoPedido
                 Alimento al = aDAL.Find(Convert.ToInt32(item.IdAlimento));
@@ -397,9 +426,37 @@ namespace WebApplication1
             }
         }
 
+        private void AgregarOfertasPorPedido(Pedido pedido)
+        {
+            int idPedido = pedido.IdPedido;
+            foreach (OfertaPedido item in carrito.GetListOfertas())
+            {
+                //Agregar Alimento a la tabla OfertaPedido
+                Oferta oferta = oDAL.Find(Convert.ToInt32(item.IdOferta));
+                int idOfertaPedidoLista = item.IdOfertaPedido;
+                OfertaPedido alimentoPedido = oPDAL.Add(new OfertaPedido()
+                {
+                    IdOferta = oferta.IdOferta,
+                    IdPedido = idPedido
+                });
+                //Restar el stock del ingrediente respecto a los ingredientes de los alimentos de la oferta
+                List<OfertaAlimento> listaAlimentos = oADAL.Alimentos(oferta.IdOferta);
+                foreach (OfertaAlimento alimento in listaAlimentos)
+                {
+                    List<IngredientesAlimento> lista = iADAL.Ingredientes((int)alimento.IdAlimento);
+                    foreach (IngredientesAlimento ingAl in lista)
+                    {
+                        Ingrediente ingrediente = iDAL.Find((int)ingAl.Ingrediente);
+                        ingrediente.Stock -= ingAl.Cantidad;
+                        iDAL.Update(ingrediente);
+                    }
+                }
+            }
+        }
+
         private void AgregarExtras(int idAlimentoPedido)
         {
-            List<ExtraPedido> listaExtras = extraCarrito.GetListByAlimentoPedido(idAlimentoPedido);
+            List<ExtraPedido> listaExtras = carrito.GetListExtra().Where(x => x.IdAlimentoPedido == idAlimentoPedido).ToList();
             foreach (ExtraPedido extra in listaExtras)
             {
                 ePDAL.Add(extra);
@@ -416,25 +473,25 @@ namespace WebApplication1
             // Se cambia el Id por defecto del listado de Extras, 
             // por el id obtenido de la Base de Datos 
             // para que luego sea agregado el id correcto en la Base de datos
-            List<ExtraPedido> lista = extraCarrito.GetList().Where(x => x.IdAlimentoPedido == id).ToList();
+            List<ExtraPedido> lista = carrito.GetListExtra().Where(x => x.IdAlimentoPedido == id).ToList();
             foreach (ExtraPedido item in lista)
             {
-                int index = extraCarrito.GetList().IndexOf(item);
+                int index = carrito.GetListExtra().IndexOf(item);
                 item.IdAlimentoPedido = idBDD;
-                extraCarrito.Edit(index, item);
+                carrito.UpdateExtra(index, item);
             }
             return idBDD;
         }
 
         private void CargarGridExtras(int idAlimentoPedido)
         {
-            GridViewExtras.DataSource = extraCarrito.GetDataTable(idAlimentoPedido);
+            GridViewExtras.DataSource = carrito.DataTableExtras(idAlimentoPedido);
             GridViewExtras.DataBind();
         }
 
         private void CargarGridCarrito()
         {
-            DataTable dt = carrito.DataTableAlimentos();
+            DataTable dt = carrito.DataTablePedido();
             GridViewPedido.DataSource = dt;
             GridViewPedido.DataBind();
         }
@@ -509,24 +566,21 @@ namespace WebApplication1
 
         private void CargarTotales()
         {
-            int totalAlimento = 0;
+            int subTotal = 0;
             int totalExtra = 0;
 
-            foreach (AlimentoPedido item in carrito.ListarAlimentos())
-            {
-                totalAlimento += aDAL.Find(item.IdAlimento.Value).Precio.Value;
-            }
+            subTotal = carrito.GetSubTotal();
 
-            foreach (ExtraPedido extra in extraCarrito.GetList())
+            foreach (ExtraPedido extra in carrito.GetListExtra())
             {
                 totalExtra += extra.ValorExtra.HasValue ? extra.ValorExtra.Value : 0;
             }
 
 
-            lblTotalAlimento.Text = totalAlimento.ToString();
+            lblTotalAlimento.Text = subTotal.ToString();
             lblTotalExtras.Text = totalExtra.ToString();
 
-            int total = totalAlimento + totalExtra;
+            int total = subTotal + totalExtra;
             lblTotal.Text = total.ToString();
         }
 
@@ -540,6 +594,12 @@ namespace WebApplication1
             {
                 txtTrabajador.Text = tDAL.Find((int)Session["Usuario"]).Nombres;
             }
+        }
+
+        protected void chkMostrarOfertas_CheckedChanged(object sender, EventArgs e)
+        {
+            GridPreparaciones.Visible = !chkMostrarOfertas.Checked;
+            GridOfertas.Visible = chkMostrarOfertas.Checked;
         }
     }
 }

@@ -113,6 +113,7 @@
     <EntitySetMapping Name="Ingrediente">
       <EntityTypeMapping TypeName="OrderNowBDModel.Ingrediente">
         <MappingFragment StoreEntitySet="Ingrediente">
+          <ScalarProperty Name="IdTipoMedicionPorcion" ColumnName="IdTipoMedicionPorcion" />
           <ScalarProperty Name="IdIngrediente" ColumnName="IdIngrediente" />
           <ScalarProperty Name="Nombre" ColumnName="Nombre" />
           <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
@@ -160,6 +161,10 @@
     <EntitySetMapping Name="Oferta">
       <EntityTypeMapping TypeName="OrderNowBDModel.Oferta">
         <MappingFragment StoreEntitySet="Oferta">
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Foto" ColumnName="Foto" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
           <ScalarProperty Name="IdOferta" ColumnName="IdOferta" />
           <ScalarProperty Name="Requisitos" ColumnName="Requisitos" />
           <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
