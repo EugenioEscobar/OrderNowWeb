@@ -98,6 +98,7 @@
     <Compile Include="DAL\IngredienteFacturaDAL.cs" />
     <Compile Include="DAL\IngredientesDAL.cs" />
     <Compile Include="DAL\MarcaDAL.cs" />
+    <Compile Include="DAL\OfertaAlimentoDAL.cs" />
     <Compile Include="DAL\OfertaDAL.cs" />
     <Compile Include="DAL\OfertaPedidoDAL.cs" />
     <Compile Include="DAL\OfertaPedidoGrid.cs" />

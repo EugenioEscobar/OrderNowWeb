@@ -144,7 +144,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-9">
                         <asp:Label ID="Label2" runat="server" Text="Numero de Pedido" Visible="false"></asp:Label>
-                        <asp:Label ID="txtPedido" runat="server" Text="" ></asp:Label>
+                        <asp:Label ID="txtPedido" runat="server" Text=""></asp:Label>
                     </div>
                     <div class="form-group col-md-3">
                         <asp:Label ID="Label1" runat="server" Text="Trabajador"></asp:Label>
@@ -183,11 +183,11 @@
 
                             <asp:BoundField DataField="Nombre" HeaderText="Nombre" SortExpression="Nombre" />
                             <asp:BoundField DataField="Descripcion" HeaderText="Descripción" SortExpression="Descripcion" />
-                            <asp:BoundField DataField="ValorUnitario" HeaderText="Valor Unidad"/>
+                            <asp:BoundField DataField="ValorUnitario" HeaderText="Valor Unidad" />
 
                             <asp:TemplateField HeaderText="Agregar Extra">
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnAgregarExtra" runat="server" CommandName="AgregarExtra" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" ><i class="fas fa-cart-plus fa-2x"></i></asp:LinkButton>
+                                    <asp:LinkButton ID="btnAgregarExtra" runat="server" CommandName="AgregarExtra" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>"><i class="fas fa-cart-plus fa-2x"></i></asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
 
@@ -233,9 +233,18 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <asp:CheckBox ID="chkMostrarOfertas" runat="server" AutoPostBack="true" OnCheckedChanged="chkMostrarOfertas_CheckedChanged"/>
+                    <%--<div class="bg-primary col text-right p-1 text-white">
+                        <h5>Mostrar Pedidos</h5> 
+                    </div>--%>
+                    <div class="">
+                        <asp:CheckBox ID="chkMostrarOfertas" runat="server" CssClass="" AutoPostBack="true" OnCheckedChanged="chkMostrarOfertas_CheckedChanged" />
+                    </div>
+                    <%--<div class="bg-secondary col p-1 text-white">
+                        <h5>Mostrar Ofertas</h5>
+                    </div>--%>
                 </div>
                 <div id="GridPreparaciones" runat="server">
+                    <h4>Listado de Preparaciones</h4>
                     <div class="text-center">
                         <asp:GridView ID="GridViewAlimentos" runat="server" ShowHeaderWhenEmpty="True" CssClass="table table-hover table-light text-center" HeaderStyle-CssClass="thead-light" BorderStyle="None" AutoGenerateColumns="False" DataKeyNames="IdAlimento" DataSourceID="SqlDataSource1" OnRowCommand="GridViewAlimentos_RowCommand">
                             <Columns>
@@ -259,6 +268,7 @@
                     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:OrderNowBDConnectionString %>" SelectCommand="SELECT * FROM [Alimento]"></asp:SqlDataSource>
                 </div>
                 <div id="GridOfertas" runat="server" visible="false">
+                    <h4>Listado de Ofertas</h4>
                     <div class="text-center">
                         <asp:GridView ID="GridViewOfertas" runat="server" ShowHeaderWhenEmpty="True" CssClass="table table-hover table-light text-center" HeaderStyle-CssClass="thead-light" BorderStyle="None" AutoGenerateColumns="False" DataKeyNames="IdOferta" DataSourceID="SqlDataSource5" OnRowCommand="GridViewOfertas_RowCommand">
                             <Columns>
