@@ -75,6 +75,9 @@
     <Compile Include="Boleta.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="ClasificacionAlimento.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Cliente.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -86,6 +89,7 @@
     <Compile Include="DAL\AlimentoPedidoDAL.cs" />
     <Compile Include="DAL\BoletaDAL.cs" />
     <Compile Include="DAL\Carrito.cs" />
+    <Compile Include="DAL\ClasificacionAlimentoDAL.cs" />
     <Compile Include="DAL\ClienteDAL.cs" />
     <Compile Include="DAL\ComunaDAL.cs" />
     <Compile Include="DAL\DistribuidorDAL.cs" />

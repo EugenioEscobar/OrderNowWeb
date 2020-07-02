@@ -14,6 +14,7 @@ namespace WebApplication1
         private AlimentoDAL aDAL = new AlimentoDAL();
         private IngredientesDAL iDAL = new IngredientesDAL();
         private MarcaDAL mDAL = new MarcaDAL();
+        private ClasificacionAlimentoDAL cADAL = new ClasificacionAlimentoDAL();
         private TipoAlimentoDAL tADAL = new TipoAlimentoDAL();
         private TipoMedicionDAL tMDAL = new TipoMedicionDAL();
         private IngredienteAlimentoDAL iADAL = new IngredienteAlimentoDAL();
@@ -77,7 +78,7 @@ namespace WebApplication1
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
-
+            ValidarCampos();
             try
             {
                 //Orden: Cantidad-IdIngrediente-Nombre-Descripcion-ValorUnidad-Marca-TipoMedicion
@@ -130,26 +131,13 @@ namespace WebApplication1
                         iADAL.Remove(Bdd.IdIngredientesAlimento);
                     }
                 }
-                try
-                {
-                    Convert.ToInt32(txtCalorias.Text);
-                }
-                catch (Exception)
-                {
-                    throw new Exception("Las calorías deben ser un número entero");
-                }
-                try
-                {
-                    Convert.ToInt32(txtValor.Text);
-                }
-                catch (Exception)
-                {
-                    throw new Exception("El valor debe ser un número entero");
-                }
+
                 Alimento alimento = aDAL.Find(idAlimento);
                 alimento.Descripcion = txtNombre.Text;
                 alimento.Calorías = Convert.ToInt32(txtCalorias.Text);
                 alimento.Precio = Convert.ToInt32(txtValor.Text);
+                alimento.IdClasificacion = Convert.ToInt32(cboCategoriaAlimento.SelectedValue);
+                alimento.Descripcion = txtDescripcion.Text.Trim();
 
                 aDAL.Update(alimento);
                 lblMensaje.Text = "Alimento Editado";
@@ -168,15 +156,14 @@ namespace WebApplication1
 
             try
             {
-                if (IngredienteAlimento.ListarIngredientes().Count == 0)
-                {
-                    throw new Exception("Debe Ingresar Ingredientes");
-                }
+                ValidarCampos();
                 Alimento tObj = new Alimento()
                 {
                     Nombre = txtNombre.Text,
                     Calorías = Convert.ToInt32(txtCalorias.Text),
-                    Precio = Convert.ToInt32(txtValor.Text)
+                    Precio = Convert.ToInt32(txtValor.Text),
+                    IdClasificacion = Convert.ToInt32(cboCategoriaAlimento.SelectedValue),
+                    Descripcion = txtDescripcion.Text.Trim()
                 };
                 aDAL.Add(tObj);
                 int idAlimento = aDAL.ObtenerIdMax();
@@ -340,6 +327,15 @@ namespace WebApplication1
             }
         }
 
+        protected void gridViewListadoAlimentos_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                Label lblCategory = e.Row.FindControl("lblClasficacion") as Label;
+                lblCategory.Text = cADAL.Find(Convert.ToInt32(lblCategory.Text)).Nombre;
+            }
+        }
+
 
 
         private void Limpiar()
@@ -397,6 +393,25 @@ namespace WebApplication1
                 IngredienteAlimento.AgregarIngrediente(ingrediente);
             }
             CargarGridIngredienteAlimento();
+        }
+
+        protected void ValidarCampos()
+        {
+            if (IngredienteAlimento.ListarIngredientes().Count == 0) { throw new Exception("Debe Ingresar Ingredientes"); }
+
+            if (txtNombre.Text.Trim() == "") { throw new Exception("Debe Ingresar un Nombre"); }
+
+            if (txtDescripcion.Text.Trim() == "") { throw new Exception("Debe Ingresar una Descripción"); }
+
+            if (cboCategoriaAlimento.SelectedValue == "0") { throw new Exception("Debe seleccionar una categoría de alimento"); }
+
+            if (txtCalorias.Text.Trim() == "") { throw new Exception("Debe ingresar la cantidad de calorias"); }
+
+            try { Convert.ToInt32(txtCalorias.Text); }
+            catch (Exception) { throw new Exception("Las calorías deben ser un número entero"); }
+
+            try { Convert.ToInt32(txtValor.Text); }
+            catch (Exception) { throw new Exception("El valor debe ser un número entero"); }
         }
     }
 }

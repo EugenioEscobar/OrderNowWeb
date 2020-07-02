@@ -29,6 +29,7 @@ namespace OrderNowDAL
         public string Foto { get; set; }
         public Nullable<int> Estado { get; set; }
         public string Descripcion { get; set; }
+        public Nullable<int> IdClasificacion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlimentoPedido> AlimentoPedido { get; set; }
@@ -36,5 +37,6 @@ namespace OrderNowDAL
         public virtual ICollection<IngredientesAlimento> IngredientesAlimento { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OfertaAlimento> OfertaAlimento { get; set; }
+        public virtual ClasificacionAlimento ClasificacionAlimento { get; set; }
     }
 }

@@ -64,6 +64,8 @@
         <AssociationConnector Association="OrderNowBDModel.FK__Usuario__IdTipoU__4F7CD00D" ManuallyRouted="false" />
         <AssociationConnector Association="OrderNowBDModel.FK__Trabajado__IdUsu__6754599E" ManuallyRouted="false" />
         <AssociationConnector Association="OrderNowBDModel.FK__Ingredien__IdTip__607251E5" />
+        <EntityTypeShape EntityType="OrderNowBDModel.ClasificacionAlimento" Width="1.5" PointX="10.5" PointY="2.25" />
+        <AssociationConnector Association="OrderNowBDModel.FK__Alimento__IdClas__756D6ECB" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

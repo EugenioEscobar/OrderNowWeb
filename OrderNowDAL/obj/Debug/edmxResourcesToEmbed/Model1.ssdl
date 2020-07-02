@@ -11,6 +11,7 @@
     <Property Name="Foto" Type="varchar" MaxLength="50" />
     <Property Name="Estado" Type="int" />
     <Property Name="Descripcion" Type="varchar" MaxLength="200" />
+    <Property Name="IdClasificacion" Type="int" />
   </EntityType>
   <EntityType Name="AlimentoPedido">
     <Key>
@@ -30,6 +31,14 @@
     <Property Name="IdTipoPago" Type="int" />
     <Property Name="Pedido" Type="int" />
     <Property Name="Descuento" Type="float" />
+  </EntityType>
+  <EntityType Name="ClasificacionAlimento">
+    <Key>
+      <PropertyRef Name="IdClasificacion" />
+    </Key>
+    <Property Name="IdClasificacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="80" />
+    <Property Name="Estado" Type="int" />
   </EntityType>
   <EntityType Name="Cliente">
     <Key>
@@ -668,10 +677,23 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ALIMENTO_CLASIFICACION">
+    <End Role="ClasificacionAlimento" Type="Self.ClasificacionAlimento" Multiplicity="0..1" />
+    <End Role="Alimento" Type="Self.Alimento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ClasificacionAlimento">
+        <PropertyRef Name="IdClasificacion" />
+      </Principal>
+      <Dependent Role="Alimento">
+        <PropertyRef Name="IdClasificacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="OrderNowBDModelStoreContainer">
     <EntitySet Name="Alimento" EntityType="Self.Alimento" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AlimentoPedido" EntityType="Self.AlimentoPedido" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Boleta" EntityType="Self.Boleta" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ClasificacionAlimento" EntityType="Self.ClasificacionAlimento" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Comuna" EntityType="Self.Comuna" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Distribuidor" EntityType="Self.Distribuidor" Schema="dbo" store:Type="Tables" />
@@ -823,6 +845,10 @@
     <AssociationSet Name="FK__Usuario__IdTipoU__4F7CD00D" Association="Self.FK__Usuario__IdTipoU__4F7CD00D">
       <End Role="TipoUsuario" EntitySet="TipoUsuario" />
       <End Role="Usuario" EntitySet="Usuario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ALIMENTO_CLASIFICACION" Association="Self.FK_ALIMENTO_CLASIFICACION">
+      <End Role="ClasificacionAlimento" EntitySet="ClasificacionAlimento" />
+      <End Role="Alimento" EntitySet="Alimento" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

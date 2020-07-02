@@ -37,6 +37,10 @@ namespace OrderNowDAL.DAL
         {
             return nowBDEntities.Cliente.FirstOrDefault(x => x.IdCliente == id);
         }
+        public Cliente FindByUser(int id)
+        {
+            return nowBDEntities.Cliente.FirstOrDefault(x => x.IdUsuario == id);
+        }
         public List<Cliente> GetAll()
         {
             return nowBDEntities.Cliente.ToList();

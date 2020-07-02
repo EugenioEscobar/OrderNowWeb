@@ -52,5 +52,6 @@ namespace OrderNowDAL
         public virtual DbSet<TipoUsuario> TipoUsuario { get; set; }
         public virtual DbSet<Trabajador> Trabajador { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
+        public virtual DbSet<ClasificacionAlimento> ClasificacionAlimento { get; set; }
     }
 }

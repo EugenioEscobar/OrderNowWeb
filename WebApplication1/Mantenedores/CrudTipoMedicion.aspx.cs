@@ -91,7 +91,7 @@ namespace WebApplication1.Mantenedores
             {
                 switch (e.CommandName)
                 {
-                    case "Edit":
+                    case "EditReg":
                         int index = Convert.ToInt32(e.CommandArgument);
                         Label codigo = (Label)GridView1.Rows[index].FindControl("lblCodigo");
                         TipoMedicion obj = tMDAL.Find(Convert.ToInt32(codigo.Text));

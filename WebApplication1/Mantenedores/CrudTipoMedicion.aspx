@@ -32,7 +32,7 @@
                         <asp:Label ID="Label7" runat="server" Text="Modificar"></asp:Label>
                     </HeaderTemplate>
                     <ItemTemplate>
-                        <asp:Button ID="btnEdit" runat="server" Text="Edit" CommandArgument="<%#((GridViewRow)Container).RowIndex %>" CommandName="Edit" />
+                        <asp:Button ID="btnEdit" runat="server" Text="Edit" CommandArgument="<%#((GridViewRow)Container).RowIndex %>" CommandName="EditReg" />
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField>
@@ -40,7 +40,7 @@
                         <asp:Label ID="lblCodigo" runat="server" Text='<%#Bind("IdTipoMedicion") %>' Visible="false"></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:BoundField DataField="Descripcion" HeaderText="Nombre" SortExpression="Descripcion" ReadOnly="true"></asp:BoundField>
+                <asp:BoundField DataField="Descripcion" HeaderText="Nombre" SortExpression="Descripcion"></asp:BoundField>
                 <asp:BoundField DataField="Estado" HeaderText="Estado" SortExpression="Estado" ReadOnly="true"></asp:BoundField>
             </Columns>
         </asp:GridView>

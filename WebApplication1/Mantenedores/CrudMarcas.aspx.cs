@@ -51,7 +51,7 @@ namespace WebApplication1.Mantenedores
                 };
                 mDAL.Edit(marca);
                 GridView1.DataBind();
-                UserMessage("Marca Modificada Correctamente", "sucess");
+                UserMessage("Marca Modificada Correctamente", "succes");
             }
             catch (Exception ex)
             {
@@ -81,7 +81,7 @@ namespace WebApplication1.Mantenedores
             }
             catch (Exception ex)
             {
-                UserMessage(ex.Message, "succes");
+                UserMessage(ex.Message, "danger");
             }
         }
 

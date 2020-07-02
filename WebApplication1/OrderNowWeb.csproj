@@ -88,6 +88,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ClientPages\ProductList.aspx" />
+    <Content Include="ClientPages\VerCarrito.aspx" />
     <Content Include="Content\bootstrap-4.5.0-dist\css\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-4.5.0-dist\css\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-4.5.0-dist\css\bootstrap-reboot.css" />
@@ -1685,6 +1687,7 @@
     <Content Include="Content\fontawesome-free-5.11.2-web\webfonts\fa-brands-400.svg" />
     <Content Include="Content\fontawesome-free-5.11.2-web\webfonts\fa-regular-400.svg" />
     <Content Include="Content\fontawesome-free-5.11.2-web\webfonts\fa-solid-900.svg" />
+    <Content Include="Mantenedores\CrudCategorias.aspx" />
     <Content Include="Mantenedores\CrudOfertas.aspx" />
     <Content Include="Mantenedores\CrudAlimentos.aspx" />
     <Content Include="Mantenedores\CrudIngrediente.aspx" />
@@ -1897,6 +1900,27 @@
     </Compile>
     <Compile Include="Administrador.Master.designer.cs">
       <DependentUpon>Administrador.Master</DependentUpon>
+    </Compile>
+    <Compile Include="ClientPages\ProductList.aspx.cs">
+      <DependentUpon>ProductList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClientPages\ProductList.aspx.designer.cs">
+      <DependentUpon>ProductList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ClientPages\VerCarrito.aspx.cs">
+      <DependentUpon>VerCarrito.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClientPages\VerCarrito.aspx.designer.cs">
+      <DependentUpon>VerCarrito.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Mantenedores\CrudCategorias.aspx.cs">
+      <DependentUpon>CrudCategorias.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Mantenedores\CrudCategorias.aspx.designer.cs">
+      <DependentUpon>CrudCategorias.aspx</DependentUpon>
     </Compile>
     <Compile Include="Mantenedores\CrudOfertas.aspx.cs">
       <DependentUpon>CrudOfertas.aspx</DependentUpon>

@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Alimento">
       <EntityTypeMapping TypeName="OrderNowBDModel.Alimento">
         <MappingFragment StoreEntitySet="Alimento">
+          <ScalarProperty Name="IdClasificacion" ColumnName="IdClasificacion" />
           <ScalarProperty Name="IdAlimento" ColumnName="IdAlimento" />
           <ScalarProperty Name="Nombre" ColumnName="Nombre" />
           <ScalarProperty Name="Calorías" ColumnName="Calorías" />
@@ -309,6 +310,15 @@
           <ScalarProperty Name="Contraseña" ColumnName="Contraseña" />
           <ScalarProperty Name="IdTipoUsuario" ColumnName="IdTipoUsuario" />
           <ScalarProperty Name="Estado" ColumnName="Estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ClasificacionAlimento">
+      <EntityTypeMapping TypeName="OrderNowBDModel.ClasificacionAlimento">
+        <MappingFragment StoreEntitySet="ClasificacionAlimento">
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="IdClasificacion" ColumnName="IdClasificacion" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

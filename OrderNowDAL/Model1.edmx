@@ -16,6 +16,7 @@
           <Property Name="Foto" Type="varchar" MaxLength="50" />
           <Property Name="Estado" Type="int" />
           <Property Name="Descripcion" Type="varchar" MaxLength="200" />
+          <Property Name="IdClasificacion" Type="int" />
         </EntityType>
         <EntityType Name="AlimentoPedido">
           <Key>
@@ -35,6 +36,14 @@
           <Property Name="IdTipoPago" Type="int" />
           <Property Name="Pedido" Type="int" />
           <Property Name="Descuento" Type="float" />
+        </EntityType>
+        <EntityType Name="ClasificacionAlimento">
+          <Key>
+            <PropertyRef Name="IdClasificacion" />
+          </Key>
+          <Property Name="IdClasificacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="80" />
+          <Property Name="Estado" Type="int" />
         </EntityType>
         <EntityType Name="Cliente">
           <Key>
@@ -673,10 +682,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ALIMENTO_CLASIFICACION">
+          <End Role="ClasificacionAlimento" Type="Self.ClasificacionAlimento" Multiplicity="0..1" />
+          <End Role="Alimento" Type="Self.Alimento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClasificacionAlimento">
+              <PropertyRef Name="IdClasificacion" />
+            </Principal>
+            <Dependent Role="Alimento">
+              <PropertyRef Name="IdClasificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="OrderNowBDModelStoreContainer">
           <EntitySet Name="Alimento" EntityType="Self.Alimento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlimentoPedido" EntityType="Self.AlimentoPedido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Boleta" EntityType="Self.Boleta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClasificacionAlimento" EntityType="Self.ClasificacionAlimento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comuna" EntityType="Self.Comuna" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Distribuidor" EntityType="Self.Distribuidor" Schema="dbo" store:Type="Tables" />
@@ -829,6 +851,10 @@
             <End Role="TipoUsuario" EntitySet="TipoUsuario" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
+          <AssociationSet Name="FK_ALIMENTO_CLASIFICACION" Association="Self.FK_ALIMENTO_CLASIFICACION">
+            <End Role="ClasificacionAlimento" EntitySet="ClasificacionAlimento" />
+            <End Role="Alimento" EntitySet="Alimento" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -848,6 +874,8 @@
           <NavigationProperty Name="AlimentoPedido" Relationship="Self.FK__AlimentoP__IdAli__7D439ABD" FromRole="Alimento" ToRole="AlimentoPedido" />
           <NavigationProperty Name="IngredientesAlimento" Relationship="Self.FK__Ingredien__Alime__76969D2E" FromRole="Alimento" ToRole="IngredientesAlimento" />
           <NavigationProperty Name="OfertaAlimento" Relationship="Self.FK__OfertaAli__IdAli__09A971A2" FromRole="Alimento" ToRole="OfertaAlimento" />
+          <Property Name="IdClasificacion" Type="Int32" />
+          <NavigationProperty Name="ClasificacionAlimento" Relationship="OrderNowBDModel.FK__Alimento__IdClas__756D6ECB" FromRole="Alimento" ToRole="ClasificacionAlimento" />
         </EntityType>
         <EntityType Name="AlimentoPedido">
           <Key>
@@ -1710,6 +1738,11 @@
             <End Role="TipoMedicion" EntitySet="TipoMedicion" />
             <End Role="Ingrediente" EntitySet="Ingrediente" />
           </AssociationSet>
+          <EntitySet Name="ClasificacionAlimento" EntityType="OrderNowBDModel.ClasificacionAlimento" />
+          <AssociationSet Name="FK__Alimento__IdClas__756D6ECB" Association="OrderNowBDModel.FK__Alimento__IdClas__756D6ECB">
+            <End Role="ClasificacionAlimento" EntitySet="ClasificacionAlimento" />
+            <End Role="Alimento" EntitySet="Alimento" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK__Ingredien__IdTip__607251E5">
           <End Type="OrderNowBDModel.TipoMedicion" Role="TipoMedicion" Multiplicity="0..1" />
@@ -1723,6 +1756,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ClasificacionAlimento">
+          <Key>
+            <PropertyRef Name="IdClasificacion" />
+          </Key>
+          <Property Name="IdClasificacion" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Int32" />
+          <NavigationProperty Name="Alimento" Relationship="OrderNowBDModel.FK__Alimento__IdClas__756D6ECB" FromRole="ClasificacionAlimento" ToRole="Alimento" />
+        </EntityType>
+        <Association Name="FK__Alimento__IdClas__756D6ECB">
+          <End Type="OrderNowBDModel.ClasificacionAlimento" Role="ClasificacionAlimento" Multiplicity="0..1" />
+          <End Type="OrderNowBDModel.Alimento" Role="Alimento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClasificacionAlimento">
+              <PropertyRef Name="IdClasificacion" />
+            </Principal>
+            <Dependent Role="Alimento">
+              <PropertyRef Name="IdClasificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1732,6 +1786,7 @@
           <EntitySetMapping Name="Alimento">
             <EntityTypeMapping TypeName="OrderNowBDModel.Alimento">
               <MappingFragment StoreEntitySet="Alimento">
+                <ScalarProperty Name="IdClasificacion" ColumnName="IdClasificacion" />
                 <ScalarProperty Name="IdAlimento" ColumnName="IdAlimento" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Calorías" ColumnName="Calorías" />
@@ -2037,6 +2092,15 @@
                 <ScalarProperty Name="Contraseña" ColumnName="Contraseña" />
                 <ScalarProperty Name="IdTipoUsuario" ColumnName="IdTipoUsuario" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClasificacionAlimento">
+            <EntityTypeMapping TypeName="OrderNowBDModel.ClasificacionAlimento">
+              <MappingFragment StoreEntitySet="ClasificacionAlimento">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdClasificacion" ColumnName="IdClasificacion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

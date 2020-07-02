@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -74,11 +75,37 @@ namespace OrderNowDAL.DAL
         }
         public List<IngredientesAlimento> BuscarIngredientesPorAlimento(int idAlimento)
         {
-            List<IngredientesAlimento> lista = new List<IngredientesAlimento>();
             var query = from c in nowBDEntities.IngredientesAlimento
                         where c.Alimento == idAlimento
                         select c;
             return query.ToList();
+        }
+        public DataTable GetByClasificacion(int idClasificacion)
+        {
+            DataTable dt = new DataTable();
+            List<Alimento> lista = new List<Alimento>();
+            var query = from c in nowBDEntities.Alimento
+                        where c.IdClasificacion == idClasificacion
+                        select c;
+            lista = query.ToList();
+
+            dt.Columns.Add("IdAlimento");
+            dt.Columns.Add("Nombre");
+            dt.Columns.Add("Descripcion");
+            dt.Columns.Add("Precio");
+
+            foreach (Alimento item in lista)
+            {
+                string[] reg = new string[dt.Columns.Count];
+                reg[0] = item.IdAlimento.ToString();
+                reg[1] = item.Nombre;
+                reg[2] = item.Descripcion;
+                reg[3] = item.Precio.Value.ToString();
+                dt.Rows.Add(reg);
+            }
+
+            dt = lista.Count == 0 ? null : dt;
+            return dt;
         }
 
     }

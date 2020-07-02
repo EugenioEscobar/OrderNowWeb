@@ -15,7 +15,7 @@ namespace OrderNowDAL.DAL
             nowBDEntities.SaveChanges();
             return obj;
         }
-        public List<OfertaPedido> GetAlimentos(int idPedido)
+        public List<OfertaPedido> GetOfertas(int idPedido)
         {
             var query = from c in nowBDEntities.OfertaPedido
                         where c.IdPedido == idPedido

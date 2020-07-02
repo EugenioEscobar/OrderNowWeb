@@ -17,6 +17,9 @@ namespace WebApplication1
         AlimentoPedidoDAL aPDAL = new AlimentoPedidoDAL();
         AlimentoDAL aDAL = new AlimentoDAL();
         ExtraPedidoDAL exPDAL = new ExtraPedidoDAL();
+        OfertaDAL oDAL = new OfertaDAL();
+        OfertaPedidoDAL oPDAL = new OfertaPedidoDAL();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -79,17 +82,26 @@ namespace WebApplication1
             {
                 //Cargar la lista de alimentos que tiene el pedido
                 Label codigoLbl = (Label)e.Row.FindControl("lblCodigo");
-                int idAlimentoPedido = Convert.ToInt32(codigoLbl.Text);
+                int idPedido = Convert.ToInt32(codigoLbl.Text);
                 Panel listaAlimentosGrid = (Panel)e.Row.FindControl("listAlimentos");
                 listaAlimentosGrid.Controls.Add(new LiteralControl("<table class='table table-light text-center table-striped table-bordered'>"));
-                listaAlimentosGrid.Controls.Add(new LiteralControl(LlenarOrden(idAlimentoPedido)));
+                listaAlimentosGrid.Controls.Add(new LiteralControl(LlenarOrden(idPedido)));
                 listaAlimentosGrid.Controls.Add(new LiteralControl("</table>"));
             }
         }
 
         private string LlenarOrden(int id)
         {
+            string pedido = "";
+            pedido += ExistPreparaciones(id)? LlenarAlimentos(id) : "";
+            pedido += ExistOfertas(id) ? LlenarOfertas(id) : "";
+            return pedido;
+        }
+
+        private string LlenarAlimentos(int id)
+        {
             string alimentos = "";
+            alimentos += "<tr class='thead-light'><th colspan='2'> Preparaciones </th></tr>";
             foreach (AlimentoPedido item in aPDAL.GetAlimentos(id))
             {
                 List<ExtraPedido> extras = exPDAL.GetAll().Where(x => x.IdAlimentoPedido == item.IdAlimentoPedido).ToList();
@@ -131,13 +143,36 @@ namespace WebApplication1
                         }
                         if ((cantidadExtras % 2 == 0) || (extras.IndexOf(extra) != extras.IndexOf(extras.Last()))) //Evita que se haga una nueva row al final de la tabla,
                         {
-                            alimentos += "</tr><tr>"; 
+                            alimentos += "</tr><tr>";
                         }
                     }
                 }
                 alimentos += "</tr>";
             }
             return alimentos;
+        }
+
+        private string LlenarOfertas(int id)
+        {
+            string ofertas = "";
+            ofertas += "<tr class='thead-light'><th colspan='2'> Ofertas </th></tr>";
+            foreach (OfertaPedido item in oPDAL.GetOfertas(id))
+            {
+                ofertas += "<tr>";
+                ofertas += $"<td colspan='2'>{oDAL.Find(item.IdOferta.Value).Nombre}</td>";
+                ofertas += "</tr>";
+            }
+            return ofertas;
+        }
+
+        private bool ExistPreparaciones(int id)
+        {
+            return aPDAL.GetAlimentos(id).Count > 0;
+        }
+
+        private bool ExistOfertas(int id)
+        {
+            return oPDAL.GetOfertas(id).Count > 0;
         }
     }
 }

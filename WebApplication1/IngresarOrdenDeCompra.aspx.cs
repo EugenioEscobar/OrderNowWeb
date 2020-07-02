@@ -83,17 +83,6 @@ namespace WebApplication1
                 bool flag = false;
                 string val = "";
                 int columnIndex = 0;
-                
-                #region Validación de Ingrediente
-                columnIndex = Array.IndexOf(columns, "Nombre") + 1;
-                val = ((Label)e.Row.FindControl("lblNombre")).Text;
-                Ingrediente ingrediente = iDAL.FindByName(val);
-                if (ingrediente == null && val != "")
-                {
-                    e.Row.Cells[columnIndex].BackColor = System.Drawing.Color.Red;
-                    flag = true;
-                }
-                #endregion
 
                 #region Validación de Marca
                 columnIndex = Array.IndexOf(columns, "Marca") + 1;
@@ -128,6 +117,17 @@ namespace WebApplication1
                 }
                 #endregion
 
+                #region Validación de Ingrediente
+                columnIndex = Array.IndexOf(columns, "Nombre") + 1;
+                val = ((Label)e.Row.FindControl("lblNombre")).Text;
+                Ingrediente ingrediente = iDAL.FindByName(val);
+                if (flag || ingrediente == null && val != "")
+                {
+                    e.Row.Cells[columnIndex].BackColor = System.Drawing.Color.Red;
+                    flag = true;
+                }
+                #endregion
+
                 if (flag && (bool)ViewState["Message"] == false)
                 {
                     UserMessage($"{lblMensaje.Text} " +
@@ -139,7 +139,16 @@ namespace WebApplication1
 
         protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-
+            switch (e.CommandName)
+            {
+                case "Editar":
+                    ModalPopupExtender1.Show();
+                    int rowIndex = Convert.ToInt32(e.CommandArgument);
+                    GridViewRow row = ((GridView)sender).Rows[rowIndex];
+                    Label lblIndex = row.FindControl("lblIndex") as Label;
+                    CargarModal(Convert.ToInt32(lblIndex.Text) - 1);
+                    break;
+            }
         }
 
         protected void btnDatosFactura_Click(object sender, EventArgs e)
@@ -178,7 +187,7 @@ namespace WebApplication1
                 };
                 factura = fDAL.Add(factura);
                 SaveIngredients(factura);
-                UserMessage("Factura Guardada con Éxito", "succes");
+                UserMessage("Factura Guardada con Éxito", "success");
 
                 GridView1.DataSource = ViewState["Data"] as DataTable;
                 GridView1.DataBind();
@@ -189,7 +198,43 @@ namespace WebApplication1
             }
         }
 
+        protected void btnModalClean_Click(object sender, EventArgs e)
+        {
+            CargarModal(Convert.ToInt32(txtModalIndex.Text)-1);
+        }
 
+        protected void btnCambiarMarca_Click(object sender, EventArgs e)
+        {
+            ChangeModalityMarca(txtModalMarca.Visible);
+        }
+
+        protected void btnCambiarTipoAlimento_Click(object sender, EventArgs e)
+        {
+            ChangeModalityTipoAlimento(txtModalTipoAlimento.Visible);
+        }
+
+        protected void btnCambiarTipoMedicion_Click(object sender, EventArgs e)
+        {
+            ChangeModalityTipoMedicion(txtModalTipoMedicion.Visible);
+        }
+
+        protected void btnCambiarNombre_Click(object sender, EventArgs e)
+        {
+            ChangeModalityNombre(txtModalNombre.Visible);
+        }
+
+        protected void btnModalSave_Click(object sender, EventArgs e)
+        {
+            ValidateModal();
+
+            ModalPopupExtender1.Hide();
+        }
+
+
+        private void ValidateModal()
+        {
+
+        }
 
         private void ValidateEmptyFields(DataTable dt)
         {
@@ -431,7 +476,7 @@ namespace WebApplication1
                 {
                     Nombre = rowMarca,
                     Estado = 1
-                }) : marca; 
+                }) : marca;
 
                 tipoAlimento = tipoAlimento == null ? tADAL.Add(new TipoAlimento()
                 {
@@ -443,8 +488,8 @@ namespace WebApplication1
                 {
                     Descripcion = rowTipoMedicion,
                     Estado = 1
-                }) : tipoMedicion; 
-                
+                }) : tipoMedicion;
+
                 if ((ingrediente == null) || (ingrediente.IdMarca != marca.IdMarca || ingrediente.Descripcion != rowDescripción))
                 {
                     ingrediente = new Ingrediente()
@@ -469,6 +514,113 @@ namespace WebApplication1
                 iFDAL.Add(ingredienteFactura);
                 iFDAL.UpdateIngrediente(ingredienteFactura);
             }
+        }
+
+        private void CargarModal(int index)
+        {
+            if (ViewState["Data"] != null)
+            {
+                DataTable dt = ViewState["Data"] as DataTable;
+                DataRow dRow = dt.Rows[index];
+                int test;
+
+                #region Declaración de Variables
+                string rowNombre = dRow["Nombre"] as string;
+                string rowDescripcion = dRow["Descripción"] as string;
+                string rowMarca = dRow["Marca"] as string;
+                string rowTipoAlimento = dRow["TipoAlimento"] as string;
+                string rowTipoMedicion = dRow["TipoMedicion"] as string;
+                string rowCantidad = dRow["Cantidad"] as string;
+                string rowPrecio = dRow["Precio"] as string;
+                #endregion
+                SetModalities(rowMarca, rowTipoAlimento, rowTipoMedicion, rowNombre);
+
+                txtModalIndex.Text = (index + 1).ToString();
+                txtModalDescripcion.Text = rowDescripcion;
+                txtModalCantidad.Text = int.TryParse(rowCantidad, out test) ? rowCantidad : "0";
+                txtModalPrecio.Text = int.TryParse(rowPrecio, out test) ? rowPrecio : "0";
+                txtModalTotal.Text = (Convert.ToInt32(txtModalCantidad.Text) * Convert.ToInt32(txtModalPrecio.Text)).ToString();
+            }
+        }
+
+        private void ChangeModalityMarca(bool showExistent)
+        {
+            cboModalMarca.Visible = showExistent;
+            txtModalMarca.Visible = !showExistent;
+            btnCambiarMarca.Text = showExistent ? "Nueva Marca" : "Seleccionar Marca";
+        }
+
+        private void ChangeModalityTipoAlimento(bool showExistent)
+        {
+            cboModalTipoAlimento.Visible = showExistent;
+            txtModalTipoAlimento.Visible = !showExistent;
+            btnCambiarTipoAlimento.Text = showExistent ? "Nuevo Tipo de Alimento" : "Seleccionar Tipo de Laimento";
+        }
+
+        private void ChangeModalityTipoMedicion(bool showExistent)
+        {
+            cboModalTipoMedicion.Visible = showExistent;
+            txtModalTipoMedicion.Visible = !showExistent;
+            btnCambiarTipoMedicion.Text = showExistent ? "Nuevo Tipo de Medición" : "Seleccionar Tipo de Medición";
+        }
+
+        private void ChangeModalityNombre(bool showExistent)
+        {
+            cboModalNombre.Visible = showExistent;
+            txtModalNombre.Visible = !showExistent;
+            btnCambiarNombre.Text = showExistent ? "Nuevo Ingrediente" : "Seleccionar Ingrediente";
+        }
+
+        private void SetModalities(string marca, string tipoAlimento, string tipoMedicion, string nombre)
+        {
+            Marca mFlag = mDAL.FindByName(marca);
+            if (mFlag != null)
+            {
+                ChangeModalityMarca(true);
+                cboModalMarca.SelectedValue = mFlag.IdMarca.ToString();
+            }
+            else
+            {
+                ChangeModalityMarca(false);
+                txtModalMarca.Text = marca;
+            }
+
+            TipoAlimento tAFlag = tADAL.FindByName(tipoAlimento);
+            if (tAFlag != null)
+            {
+                ChangeModalityTipoAlimento(true);
+                cboModalTipoAlimento.SelectedValue = tAFlag.IdTipoAlimento.ToString();
+            }
+            else
+            {
+                ChangeModalityTipoAlimento(false);
+                txtModalTipoAlimento.Text = tipoAlimento;
+            }
+
+            TipoMedicion tMFlag = tMDAL.FindByName(tipoMedicion);
+            if (tMFlag != null)
+            {
+                ChangeModalityTipoMedicion(true);
+                cboModalTipoMedicion.SelectedValue = tMFlag.IdTipoMedicion.ToString();
+            }
+            else
+            {
+                ChangeModalityTipoMedicion(false);
+                txtModalTipoMedicion.Text = tipoMedicion;
+            }
+
+            Ingrediente iFlag = iDAL.FindByName(nombre);
+            if (iFlag != null || mFlag != null || tAFlag != null || tMFlag != null)
+            {
+                ChangeModalityNombre(true);
+                cboModalNombre.SelectedValue = iFlag.IdIngrediente.ToString();
+            }
+            else
+            {
+                ChangeModalityNombre(false);
+                txtModalNombre.Text = nombre;
+            }
+
         }
     }
 }
