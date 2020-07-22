@@ -122,6 +122,12 @@
                                                             <asp:Label ID="lblIdIngrediente" runat="server" Text='<%# Bind("IdIngrediente") %>'></asp:Label>
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
+
+                                                    <asp:TemplateField HeaderText="Eliminar">
+                                                        <ItemTemplate>
+                                                            <asp:LinkButton ID="btnEliminar" runat="server" CssClass="btn btn-primary btn-block btn-danger" CommandArgument='<%# (((GridViewRow)Container).RowIndex) %>' CommandName="Eliminar"><i class="fal fa-minus-circle"></i></asp:LinkButton>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
                                                 </Columns>
                                                 <EmptyDataTemplate>
                                                     <p class="p-2 bg-secondary text-white">Agregue algún extra</p>
@@ -169,7 +175,8 @@
                 </div>
 
                 <div class="text-center content-Grid mt-5">
-                    <asp:GridView ID="GridViewPedido" runat="server" ShowHeaderWhenEmpty="True" CssClass="table table-hover table-light text-center" HeaderStyle-CssClass="thead-light" BorderStyle="None" AutoGenerateColumns="False" OnRowCommand="GridViewPedido_RowCommand">
+                    <asp:GridView ID="GridViewPedido" runat="server" ShowHeaderWhenEmpty="True" CssClass="table table-hover table-light text-center"
+                        HeaderStyle-CssClass="thead-light" BorderStyle="None" AutoGenerateColumns="False" OnRowCommand="GridViewPedido_RowCommand" OnRowDataBound="GridViewPedido_RowDataBound">
                         <Columns>
 
                             <asp:TemplateField HeaderText="Quitar Preparación">
@@ -178,6 +185,7 @@
 
                                     <asp:Label ID="lblIdAlimentoPedido" runat="server" Text='<%# Bind("IdElementoPedido") %>' Visible="false"></asp:Label>
                                     <asp:Label ID="lblIdAlimento" runat="server" Text='<%# Bind("IdElemento") %>' Visible="false"></asp:Label>
+                                    <asp:Label ID="lblTipoElemento" runat="server" Text='<%# Bind("TipoElemento") %>' Visible="false"></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
 
@@ -232,16 +240,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-row">
-                    <%--<div class="bg-primary col text-right p-1 text-white">
-                        <h5>Mostrar Pedidos</h5> 
-                    </div>--%>
-                    <div class="">
-                        <asp:CheckBox ID="chkMostrarOfertas" runat="server" CssClass="" AutoPostBack="true" OnCheckedChanged="chkMostrarOfertas_CheckedChanged" />
+                <div class="form-row d-flex justify-content-center">
+                    <div class="col"></div>
+                    <div class="col-md-3">
+                        <asp:Button ID="btnShowPreparations" runat="server" Text="Ver Preparaciones" CssClass="btn btn-primary btn-block mx-2" OnClick="btnShowPreparations_Click" />
                     </div>
-                    <%--<div class="bg-secondary col p-1 text-white">
-                        <h5>Mostrar Ofertas</h5>
-                    </div>--%>
+                    <div class="col-md-3">
+                        <asp:Button ID="btnShowOferts" runat="server" Text="Ver Ofertas" CssClass="btn btn-primary btn-block mx-2" OnClick="btnShowOferts_Click" />
+                    </div>
+                    <div class="col"></div>
                 </div>
                 <div id="GridPreparaciones" runat="server">
                     <h4>Listado de Preparaciones</h4>

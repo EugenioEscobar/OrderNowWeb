@@ -15,6 +15,7 @@ namespace OrderNowDAL.DAL
 
         public Alimento Add(Alimento a)
         {
+            a.Estado = 1;
             Alimento obj = nowBDEntities.Alimento.Add(a);
             nowBDEntities.SaveChanges();
             return obj;
@@ -58,19 +59,12 @@ namespace OrderNowDAL.DAL
         public void Update(Alimento alimento)
         {
             Alimento objUpdate = nowBDEntities.Alimento.FirstOrDefault(x => x.IdAlimento == alimento.IdAlimento);
-            objUpdate.Nombre = alimento.Descripcion;
+            objUpdate.Nombre = alimento.Nombre;
             objUpdate.Calorías = alimento.Calorías;
             objUpdate.Precio = alimento.Precio;
+            objUpdate.Descripcion = alimento.Descripcion;
+            objUpdate.IdClasificacion = alimento.IdClasificacion;
             nowBDEntities.SaveChanges();
-
-        }
-        public int ObtenerIdMax()
-        {
-            var query = from c in nowBDEntities.Alimento
-                        select c.IdAlimento;
-            int idMax = query.Max();
-
-            return idMax;
 
         }
         public List<IngredientesAlimento> BuscarIngredientesPorAlimento(int idAlimento)

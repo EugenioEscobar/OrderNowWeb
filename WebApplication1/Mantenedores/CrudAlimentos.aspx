@@ -1,97 +1,95 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Administrador.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="CrudAlimentos.aspx.cs" Inherits="WebApplication1.CrudAlimentos" %>
+﻿<%@ Page Title="Adeministrar Alimentos" Language="C#" MasterPageFile="~/Administrador.Master" EnableEventValidation="false" AutoEventWireup="false" CodeBehind="CrudAlimentos.aspx.cs" Inherits="WebApplication1.CrudAlimentos" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
     <div class="container-fluid">
         <div class="container">
-        <div class="h1 text-center">
-            Gestion de Alimentos
-        </div>
-
-
-        <div class="form-row">
-            <div class="col-md-6">
-                <asp:Label ID="Label4" runat="server" Text="Nombre" For="txtNombre"></asp:Label>
-                <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control"></asp:TextBox>
+            <div class="h1 text-center">
+                Gestion de Alimentos
             </div>
-            <div class="col-md-6">
-                <asp:Label ID="Label2" runat="server" Text="Valor " For="txtValor"></asp:Label>
-                <asp:TextBox ID="txtValor" runat="server" CssClass="form-control"></asp:TextBox>
+            <div class="form-row d-flex justify-content-center">
+                <asp:Button ID="btn" runat="server" Text="LoadImage" OnClick="btn_Click" class="btn btn-primary mx-2" Width="300px" Visible="false" />
+                <asp:Image ID="Image1" runat="server" ImageUrl="/Fotos/Productos/aschacarero.jpg" CssClass="gsagsda" 
+                    Style="width: 600px; height: 260px; object-fit: contain; box-shadow: 0 5px 20px rgba(0,0,0,0.1);" />
             </div>
-        </div>
-        <div class="form-row">
-            <div class="col-md-6">
-                <asp:Label ID="Label5" runat="server" Text="Descripción" For="txtDescripcion"></asp:Label>
-                <asp:TextBox ID="txtDescripcion" runat="server" CssClass="form-control"></asp:TextBox>
+            <ajaxToolkit:AsyncFileUpload ID="ImageAjaxFile" runat="server" OnUploadedComplete="ImageAjaxFile_UploadedComplete" ToolTip="Seleccione una imagen" />
+            <div class="form-row">
+                <div class="col-md-6">
+                    <asp:Label ID="Label4" runat="server" Text="Nombre" For="txtNombre"></asp:Label>
+                    <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control"></asp:TextBox>
+                </div>
+                <div class="col-md-6">
+                    <asp:Label ID="Label2" runat="server" Text="Valor " For="txtValor"></asp:Label>
+                    <asp:TextBox ID="txtValor" runat="server" CssClass="form-control"></asp:TextBox>
+                </div>
             </div>
-            <div class="col-md-6">
-                <asp:Label ID="Label3" runat="server" Text="Categoria de alimento" For="cboCategoriaAlimento"></asp:Label>
-                <asp:DropDownList ID="cboCategoriaAlimento" CssClass="form-control" AppendDataBoundItems="true" AutoPostBack="true" runat="server" DataSourceID="SqlDataSourceCategorias" DataTextField="Nombre" DataValueField="IdClasificacion">
-                    <asp:ListItem Value="0">Seleccione una Categoría</asp:ListItem>
-                </asp:DropDownList>
-                <asp:SqlDataSource runat="server" ID="SqlDataSourceCategorias" ConnectionString='<%$ ConnectionStrings:OrderNowBDConnectionString %>' SelectCommand="SELECT [IdClasificacion], [Nombre] FROM [ClasificacionAlimento]"></asp:SqlDataSource>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <asp:Label ID="Label5" runat="server" Text="Descripción" For="txtDescripcion"></asp:Label>
+                    <asp:TextBox ID="txtDescripcion" runat="server" CssClass="form-control"></asp:TextBox>
+                </div>
+                <div class="col-md-6">
+                    <asp:Label ID="Label3" runat="server" Text="Categoria de alimento" For="cboCategoriaAlimento"></asp:Label>
+                    <asp:DropDownList ID="cboCategoriaAlimento" CssClass="form-control" AppendDataBoundItems="true" AutoPostBack="true" runat="server" DataSourceID="SqlDataSourceCategorias" DataTextField="Nombre" DataValueField="IdClasificacion">
+                        <asp:ListItem Value="0">Seleccione una Categoría</asp:ListItem>
+                    </asp:DropDownList>
+                    <asp:SqlDataSource runat="server" ID="SqlDataSourceCategorias" ConnectionString='<%$ ConnectionStrings:OrderNowBDConnectionString %>' SelectCommand="SELECT [IdClasificacion], [Nombre] FROM [ClasificacionAlimento]"></asp:SqlDataSource>
+                </div>
             </div>
-        </div>
-        <div class="form-row">
-            <div class="col-md-6">
-                <asp:Label ID="Label6" runat="server" Text="Calorias" For="txtCalorias"></asp:Label>
-                <asp:TextBox ID="txtCalorias" runat="server" CssClass="form-control"></asp:TextBox>
-            </div>
-            <%--                <div class="col-md-6">
+            <div class="form-row">
+                <div class="col-md-6">
+                    <asp:Label ID="Label6" runat="server" Text="Calorias" For="txtCalorias"></asp:Label>
+                    <asp:TextBox ID="txtCalorias" runat="server" CssClass="form-control"></asp:TextBox>
+                </div>
+                <%--                <div class="col-md-6">
                     <asp:Label ID="Label9" runat="server" Text="Vigencia" For="chkVigencia"></asp:Label>
                     <asp:CheckBox ID="chkVigencia" runat="server" />
                 </div>--%>
-        </div>
-        <br />
-        <div class="form-row d-flex justify-content-center">
-
-            <asp:Button ID="btnAgregar" runat="server" Text="Agregar" OnClick="btnAgregar_Click" class="btn btn-primary mx-2" />
-            <asp:Button ID="btnModificar" runat="server" Text="Modificar" Visible="false" OnClick="btnModificar_Click" class="btn btn-primary mx-2" />
-            <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" OnClick="btnEliminar_Click" class="btn btn-primary mx-2" />
-            <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" class="btn btn-primary mx-2" />
-            <asp:Button ID="btnIngredientes" runat="server" Text="Ver Ingredientes" OnClick="btnIngredientes_Click" class="btn btn-primary mx-2" />
-        </div>
-
-        <div>
-            <asp:Label ID="lblMensaje" runat="server" Text="" CssClass="text-success h3"></asp:Label>
-        </div>
             </div>
+            <br />
+            <div class="form-row d-flex justify-content-center">
+
+                <asp:Button ID="btnAgregar" runat="server" Text="Agregar" OnClick="btnAgregar_Click" class="btn btn-primary mx-2" />
+                <asp:Button ID="btnModificar" runat="server" Text="Modificar" Visible="false" OnClick="btnModificar_Click" class="btn btn-primary mx-2" />
+                <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" OnClick="btnEliminar_Click" class="btn btn-primary mx-2" />
+                <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" class="btn btn-primary mx-2" />
+                <asp:Button ID="btnIngredientes" runat="server" Text="Ver Ingredientes" OnClick="btnIngredientes_Click" class="btn btn-primary mx-2" />
+            </div>
+
+            <div runat="server" id="DivMessage">
+                <asp:Label ID="lblMensaje" runat="server"></asp:Label>
+            </div>
+        </div>
         <div id="divIngredientes" runat="server" visible="false">
             <div class="text-center">
-                <asp:GridView ID="gridViewIngredientesAlimento" ShowHeaderWhenEmpty="true" runat="server" CssClass="table table-hover table-light table-striped" HeaderStyle-CssClass="thead-light" AutoGenerateColumns="false"
-                    OnRowCommand="gridViewIngredientesAlimento_RowCommand" OnRowDataBound="gridViewIngredientesAlimento_RowDataBound">
+                <asp:GridView ID="gridViewIngredientesAlimento" ShowHeaderWhenEmpty="true" runat="server" CssClass="table table-hover table-light table-striped"
+                    HeaderStyle-CssClass="thead-light" AutoGenerateColumns="false" OnRowCommand="gridViewIngredientesAlimento_RowCommand"
+                    OnRowDataBound="gridViewIngredientesAlimento_RowDataBound">
                     <Columns>
                         <asp:TemplateField>
                             <ItemTemplate>
-                                <asp:Button ID="btnQuitar" runat="server" Text="-" CommandArgument="<%#((GridViewRow)Container).RowIndex %>" CommandName="Quitar" Visible="false" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField>
-                            <ItemTemplate>
+                                <asp:Button ID="btnQuitar" runat="server" Text="-" CommandArgument="<%#((GridViewRow)Container).RowIndex %>" CommandName="Quitar" />
                                 <asp:Label ID="lblCantidad" runat="server" Text='<%#Bind("Cantidad") %>'></asp:Label>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField>
-                            <ItemTemplate>
-                                <asp:Button ID="btnAgregar" runat="server" Text="+" CommandArgument="<%#((GridViewRow)Container).RowIndex %>" CommandName="Agregar" Visible="false" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField>
-                            <ItemTemplate>
+                                <asp:Button ID="btnAgregar" runat="server" Text="+" CommandArgument="<%#((GridViewRow)Container).RowIndex %>" CommandName="Agregar" />
                                 <asp:Label ID="lblCodigo" runat="server" Text='<%#Bind("IdIngrediente") %>' Visible="false"></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" SortExpression="Nombre" />
-                        <asp:BoundField DataField="Descripcion" HeaderText="Descripcion" SortExpression="Descripcion" />
-                        <asp:BoundField DataField="ValorUnidad" HeaderText="ValorUnidad" SortExpression="ValorUnidad" />
+
+                        <asp:TemplateField HeaderText="Nombre">
+                            <ItemTemplate>
+                                <asp:Label ID="lblNombre" runat="server"></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Descripción">
+                            <ItemTemplate>
+                                <asp:Label ID="lblDescripcion" runat="server"></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
 
                         <asp:TemplateField HeaderText="Marca">
                             <ItemTemplate>
-                                <asp:Label ID="lblMarca" runat="server" Text='<%#Bind("Marca") %>'></asp:Label>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Tipo Medición">
-                            <ItemTemplate>
-                                <asp:Label ID="lblTipoMedicion" runat="server" Text='<%#Bind("TipoMedicion") %>'></asp:Label>
+                                <asp:Label ID="lblMarca" runat="server"></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
@@ -99,7 +97,6 @@
                         No hay Ingredientes Ingresados
                     </EmptyDataTemplate>
 
-                    <EditRowStyle BackColor="#2461BF" />
                 </asp:GridView>
 
 
@@ -111,10 +108,6 @@
                         <asp:TemplateField>
                             <ItemTemplate>
                                 <asp:Button ID="btnAgregar" runat="server" Text="Añadir" CommandArgument="<%#((GridViewRow)Container).RowIndex %>" CommandName="Agregar" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField>
-                            <ItemTemplate>
                                 <asp:Label ID="lblCodigo" runat="server" Text='<%#Bind("IdIngrediente") %>' Visible="false"></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
@@ -155,10 +148,10 @@
                     <Columns>
                         <asp:TemplateField>
                             <HeaderTemplate>
-                                <asp:Label ID="Label1" runat="server" Text="Agregar"></asp:Label>
+                                <asp:Label ID="Label1" runat="server" Text="Modificar"></asp:Label>
                             </HeaderTemplate>
                             <ItemTemplate>
-                                <asp:Button ID="Button1" runat="server" CommandName="Editar" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" Text="Editar" />
+                                <asp:LinkButton ID="Button1" runat="server" CommandName="Editar" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" Text="Editar"></asp:LinkButton>
                                 <asp:Label ID="lblCodigo" runat="server" Text='<%# Bind("IdAlimento") %>' Visible="false" />
                             </ItemTemplate>
                         </asp:TemplateField>
@@ -167,7 +160,7 @@
                         <asp:BoundField DataField="Calorías" HeaderText="Calorías" SortExpression="Calorías" />
                         <asp:TemplateField HeaderText="Categoría">
                             <ItemTemplate>
-                                <asp:Label ID="lblClasficacion" runat="server" Text='<%# Bind("IdClasificacion") %>' ></asp:Label>
+                                <asp:Label ID="lblClasficacion" runat="server" Text='<%# Bind("IdClasificacion") %>'></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:BoundField DataField="Precio" HeaderText="Precio" SortExpression="Precio" />

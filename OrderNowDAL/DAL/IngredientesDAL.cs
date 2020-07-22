@@ -49,6 +49,11 @@ namespace OrderNowDAL.DAL
             Ingrediente i = nowBDEntities.Ingrediente.FirstOrDefault(obj => obj.Nombre == name);
             return i;
         }
+        public List<Ingrediente> FindAllByName(string name)
+        {
+            List<Ingrediente> i = nowBDEntities.Ingrediente.Where(obj => obj.Nombre == name).ToList();
+            return i;
+        }
         public void Update(string nombre, string descripcion, int? stock, double? valorneto, int? marca, int? medicion, int? tipoalimento)
         {
             var query = from c in nowBDEntities.Ingrediente
@@ -78,6 +83,7 @@ namespace OrderNowDAL.DAL
             ing.IdMarca = obj.IdMarca;
             ing.IdTipoAlimento = obj.IdTipoAlimento;
             ing.Porción = obj.Porción;
+            ing.IdTipoMedicionPorcion = obj.IdTipoMedicionPorcion;
             nowBDEntities.SaveChanges();
 
         }

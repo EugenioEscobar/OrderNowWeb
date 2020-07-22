@@ -44,6 +44,10 @@ namespace OrderNowDAL.DAL
             objDb.ApellidoMat = obj.ApellidoMat;
             objDb.ApellidoPat = obj.ApellidoPat;
             objDb.Telefono = obj.Telefono;
+            objDb.FechaNacimiento = obj.FechaNacimiento;
+            objDb.Sueldo = obj.Sueldo;
+            objDb.Rut = obj.Rut;
+            objDb.Comuna = obj.Comuna;
             objDb.Estado = obj.Estado;
             nowBDEntities.SaveChanges();
 

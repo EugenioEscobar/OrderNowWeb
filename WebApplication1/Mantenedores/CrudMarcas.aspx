@@ -17,10 +17,10 @@
             <asp:CheckBox ID="chkEstado" runat="server" Enabled="false" />
         </div>
         <div class="form-row">
-            <asp:Button ID="btnAgregar" runat="server" Text="Agregar" OnClick="btnAgregar_Click" />
-            <asp:Button ID="btnModificar" runat="server" Text="Modificar" OnClick="btnModificar_Click" Visible="false" />
-            <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" OnClick="btnEliminar_Click" Visible="false" />
-            <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" />
+            <asp:Button ID="btnAgregar" runat="server" Text="Agregar" OnClick="btnAgregar_Click" CssClass="btn btn-primary"/>
+            <asp:Button ID="btnModificar" runat="server" Text="Modificar" OnClick="btnModificar_Click" Visible="false"  CssClass="btn btn-primary mx-2"/>
+            <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" OnClick="btnEliminar_Click" Visible="false" CssClass="btn btn-primary mx-2"/>
+            <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click"  CssClass="btn btn-primary mx-2"/>
         </div>
         <div id="divMessage" runat="server">
             <asp:Label ID="lblMensaje" runat="server" Text="Label"></asp:Label>
@@ -32,7 +32,7 @@
                         <asp:Label ID="Label7" runat="server" Text="Modificar"></asp:Label>
                     </HeaderTemplate>
                     <ItemTemplate>
-                        <asp:Button ID="btnEdit" runat="server" Text="Edit" CommandArgument="<%#((GridViewRow)Container).RowIndex %>" CommandName="Edit" />
+                        <asp:Button ID="btnEdit" runat="server" Text="Modificar" CommandArgument="<%#((GridViewRow)Container).RowIndex %>" CommandName="Edit"  CssClass="btn btn-primary mx-2"/>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField>

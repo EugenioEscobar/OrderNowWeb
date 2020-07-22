@@ -23,7 +23,7 @@ namespace WebApplication1.ClientPages
 
         protected void DataListCategory_ItemDataBound(object sender, DataListItemEventArgs e)
         {
-                Panel item = e.Item.FindControl("itemSection") as Panel;
+            Panel item = e.Item.FindControl("itemSection") as Panel;
             Label lblCodigo = e.Item.FindControl("lblCodigo") as Label;
             Label lblNombre = e.Item.FindControl("lblNombre") as Label;
             int codigo = Convert.ToInt32(lblCodigo.Text);
@@ -42,24 +42,87 @@ namespace WebApplication1.ClientPages
 
         protected void DataListProduct_ItemCommand(object source, DataListCommandEventArgs e)
         {
-            Label lblCodigo = e.Item.FindControl("lblCodigoProduct") as Label;
-            int idProducto = Convert.ToInt32(lblCodigo.Text);
-            carrito.AddAlimento(aDAL.Find(idProducto));
+            try
+            {
+                Label lblCodigo = e.Item.FindControl("lblCodigoProduct") as Label;
+                int idProducto = Convert.ToInt32(lblCodigo.Text);
+                carrito.AddAlimento(aDAL.Find(idProducto));
+            }
+            catch (Exception ex)
+            {
+                UserMessage(ex.Message, "danger");
+            }
         }
 
         protected void DataListOferta_ItemCommand(object source, DataListCommandEventArgs e)
         {
             Label lblCodigo = e.Item.FindControl("lblCodigoOferta") as Label;
             int idProducto = Convert.ToInt32(lblCodigo.Text);
-            carrito.AddOferta(oDAL.Find(idProducto));
+            switch (e.CommandName)
+            {
+                case "AddToCart":
+                    carrito.AddOferta(oDAL.Find(idProducto));
+                    break;
+                case "OfertDetails":
+                    Session["OfertId"] = idProducto;
+                    Response.Redirect("/ClientPages/OfertaDetails.aspx");
+                    break;
+            }
         }
 
-        protected void chkMostrarOfertas_CheckedChanged(object sender, EventArgs e)
+        protected void DataListProduct_ItemDataBound(object sender, DataListItemEventArgs e)
         {
-            bool ShowOferts = ((CheckBox)sender).Checked;
-            lblListado.Text = ShowOferts ? "Ofertas" : "Preparaciones";
+            string path = "/Fotos/Productos/";
+            DataListItem item = e.Item;
+            Label lblCodigo = item.FindControl("lblCodigoProduct") as Label;
+            Image imgAlimento = item.FindControl("imgAlimento") as Image;
+            Alimento alimento = aDAL.Find(Convert.ToInt32(lblCodigo.Text));
+
+            if (alimento.Foto != null && alimento.Foto != "") { imgAlimento.ImageUrl = path + alimento.Foto; }
+            else { imgAlimento.ImageUrl = path + "brasil.png"; }
+        }
+
+        protected void DataListOferta_ItemDataBound(object sender, DataListItemEventArgs e)
+        {
+            string path = "/Fotos/Productos/";
+            DataListItem item = e.Item;
+            Label lblCodigo = item.FindControl("lblCodigoOferta") as Label;
+            Image imgAlimento = item.FindControl("imgOferta") as Image;
+            Oferta oferta = oDAL.Find(Convert.ToInt32(lblCodigo.Text));
+
+            if (oferta.Foto != null && oferta.Foto != "") { imgAlimento.ImageUrl = path + oferta.Foto; }
+            else { imgAlimento.ImageUrl = path + "Oferta.png"; }
+
+        }
+
+        private void ChangeView(bool ShowOferts)
+        {
             PanelOfertas.Visible = ShowOferts;
             PanelPreparaciones.Visible = !ShowOferts;
+        }
+
+        protected void btnVerPreparaciones_Click(object sender, EventArgs e)
+        {
+            ChangeView(false);
+        }
+
+        protected void btnVerOfertas_Click(object sender, EventArgs e)
+        {
+            ChangeView(true);
+        }
+
+        protected void UserMessage(string mensaje, string type)
+        {
+            if (mensaje != "")
+            {
+                DivMessage.Attributes.Add("class", "alert alert-" + type);
+                lblMensaje.Text = mensaje;
+            }
+            else
+            {
+                DivMessage.Attributes.Add("class", "");
+                lblMensaje.Text = mensaje;
+            }
         }
     }
 }

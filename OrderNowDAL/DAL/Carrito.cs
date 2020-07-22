@@ -145,7 +145,7 @@ namespace OrderNowDAL.DAL
                 //Consultar si hay mas 
                 values[0] = item.IdAlimentoPedido.ToString();
                 values[1] = item.IdAlimento.ToString();
-                values[2] = "1";
+                values[2] = "Alimento";
                 values[3] = obj.Nombre;
                 values[4] = obj.Descripcion;
                 values[5] = obj.Precio.ToString();
@@ -165,7 +165,7 @@ namespace OrderNowDAL.DAL
                 //Consultar si hay mas 
                 values[0] = item.IdOfertaPedido.ToString();
                 values[1] = item.IdOferta.ToString();
-                values[2] = "2";
+                values[2] = "Oferta";
                 values[3] = obj.Nombre;
                 values[4] = obj.Descripcion;
                 values[5] = obj.Precio.ToString();

@@ -38,9 +38,14 @@ namespace OrderNowDAL.DAL
         }
         public Usuario Add(Usuario m)
         {
+            if (ExisteUsuario(m.Usuario1)) { throw new Exception("Nombre de Usuario no disponible"); }
             Usuario obj = nowBDEntities.Usuario.Add(m);
             nowBDEntities.SaveChanges();
             return obj;
+        }
+        private bool ExisteUsuario(string user)
+        {
+            return nowBDEntities.Usuario.FirstOrDefault(x => x.Usuario1 == user) != null;
         }
         public void Remove(int id)
         {

@@ -31,15 +31,10 @@ namespace WebApplication1
                         int index = Convert.ToInt32(e.CommandArgument);
                         Label codigo = (Label)GridView1.Rows[index].FindControl("lblCodigo");
                         Ingrediente obj = iDAL.Find(Convert.ToInt32(codigo.Text));
-
                         LlenarFields(obj);
-
-
                         break;
-
                     case "Default":
                         break;
-
                 }
             }
             catch (Exception ex)
@@ -62,12 +57,12 @@ namespace WebApplication1
                     IdMarca = cboMarca.SelectedValue == "0" ? (int?)null : Convert.ToInt32(cboMarca.SelectedValue),
                     IdTipoAlimento = cboTipoAlimento.SelectedValue == "0" ? (int?)null : Convert.ToInt32(cboTipoAlimento.SelectedValue),
                     IdTipoMedicion = cboTipoMedicion.SelectedValue == "0" ? (int?)null : Convert.ToInt32(cboTipoMedicion.SelectedValue),
-                    Porción = Convert.ToInt32(txtPorcion.Text)
+                    Porción = Convert.ToInt32(txtPorcion.Text),
+                    IdTipoMedicionPorcion = cboTipoMedicionPorcion.SelectedValue == "0" ? (int?)null : Convert.ToInt32(cboTipoMedicion.SelectedValue)
                 };
                 iDAL.Add(iObj);
                 UserMessage("Ingrediente agregado", "success");
                 GridView1.DataBind();
-
             }
             catch (Exception ex)
             {
@@ -93,7 +88,9 @@ namespace WebApplication1
                 ingrediente.IdTipoAlimento = cboTipoAlimento.SelectedValue == "0" ? (int?)null : Convert.ToInt32(cboTipoAlimento.SelectedValue);
                 ingrediente.IdTipoMedicion = cboTipoMedicion.SelectedValue == "0" ? (int?)null : Convert.ToInt32(cboTipoMedicion.SelectedValue);
                 ingrediente.Porción = Convert.ToInt32(txtPorcion.Text);
+                ingrediente.IdTipoMedicionPorcion = cboTipoMedicionPorcion.SelectedValue == "0" ? (int?)null : Convert.ToInt32(cboTipoMedicionPorcion.SelectedValue);
                 iDAL.Update(ingrediente);
+
                 UserMessage("Ingrediente Modificado", "success");
                 GridView1.DataBind();
             }
@@ -151,6 +148,7 @@ namespace WebApplication1
 
         private void ValidarCampos()
         {
+            double flag;
             if (txtNombre.Text == "")
             {
                 txtNombre.Focus();
@@ -160,6 +158,10 @@ namespace WebApplication1
             {
                 txtDescripcion.Focus();
                 throw new Exception("Debe Ingresar una descripción");
+            }
+            if (!double.TryParse(txtValorNeto.Text,out flag))
+            {
+                throw new Exception("Valor neto Invalido");
             }
             if (cboTipoMedicion.SelectedValue == "0")
             {
@@ -173,14 +175,9 @@ namespace WebApplication1
             {
                 throw new Exception("El valor de la porción debe ser mayor a 0");
             }
-            if (txtValorNeto.Text != "")
+            if (cboTipoMedicionPorcion.SelectedValue == "0")
             {
-                try
-                {
-                    Convert.ToDouble(txtValorNeto.Text);
-                }
-                catch (Exception ex) { throw new Exception("Valor neto Invalido"); }
-
+                throw new Exception("Debe Seleccionar un Tipo de medición para la porción");
             }
         }
 
@@ -204,9 +201,13 @@ namespace WebApplication1
             txtDescripcion.Text = "";
             txtStock.Text = "";
             txtValorNeto.Text = "";
+            double.TryParse("", out double num);
             cboMarca.SelectedValue = "1";
             cboTipoAlimento.SelectedValue = "0";
             cboTipoMedicion.SelectedValue = "0";
+            cboTipoMedicionPorcion.SelectedValue = "0";
+            txtPorcion.Text = "";
+
             btnAgregar.Visible = true;
             btnModificar.Visible = false;
         }
@@ -219,13 +220,24 @@ namespace WebApplication1
             txtDescripcion.Text = obj.Descripcion;
             txtStock.Text = obj.Stock.ToString();
             txtValorNeto.Text = obj.ValorNeto.ToString();
-            cboMarca.SelectedValue = obj.IdMarca.HasValue ? obj.IdMarca.Value.ToString() : "1" ;
-            cboTipoAlimento.SelectedValue = obj.IdTipoAlimento.HasValue? obj.IdTipoAlimento.ToString() : "0";
+            cboMarca.SelectedValue = obj.IdMarca.HasValue ? obj.IdMarca.Value.ToString() : "1";
+            cboTipoAlimento.SelectedValue = obj.IdTipoAlimento.HasValue ? obj.IdTipoAlimento.ToString() : "0";
             cboTipoMedicion.SelectedValue = obj.IdTipoMedicion.ToString();
             txtPorcion.Text = obj.Porción.ToString();
+            string value = obj.IdTipoMedicionPorcion.HasValue ? obj.IdTipoMedicionPorcion.Value.ToString() : "0";
+            cboTipoMedicionPorcion.SelectedValue = value;
 
             btnAgregar.Visible = false;
             btnModificar.Visible = true;
+        }
+
+        protected void cboTipoMedicion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(cboTipoMedicion.SelectedItem.Text == "Unidad")
+            {
+                txtPorcion.Text = "1";
+                cboTipoMedicionPorcion.SelectedValue = cboTipoMedicionPorcion.Items.FindByText("Unidad").Value;
+            }
         }
     }
 }

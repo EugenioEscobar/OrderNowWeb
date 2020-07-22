@@ -31,7 +31,7 @@ namespace OrderNowDAL.DAL
             nowBDEntities.OfertaAlimento.Remove(obj);
             nowBDEntities.SaveChanges();
         }
-        public void Edit(OfertaAlimento m)
+        public void Update(OfertaAlimento m)
         {
             OfertaAlimento iAl = nowBDEntities.OfertaAlimento.FirstOrDefault(x => x.IdOfertaAlimento == m.IdOfertaAlimento);
             iAl.IdOferta = m.IdOferta;

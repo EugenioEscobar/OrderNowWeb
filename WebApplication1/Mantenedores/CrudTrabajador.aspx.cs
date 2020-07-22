@@ -13,17 +13,19 @@ namespace WebApplication1.Mantenedores
     {
         TrabajadorDAL tDAL = new TrabajadorDAL();
         UsuarioDAL uDAL = new UsuarioDAL();
+        RegionDAL rDAL = new RegionDAL();
+        ProvinciaDAL pDAL = new ProvinciaDAL();
         ComunaDAL cDAL = new ComunaDAL();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
             {
-                //Solo al iniciar al página la primera vez
+                InitCbos();
             }
             else
             {
                 //Cada vez que entra a algún metodo del code behind
-                lblMensaje.Text = "";
+                UserMessage("", "");
             }
         }
 
@@ -42,11 +44,22 @@ namespace WebApplication1.Mantenedores
                         Usuario us = uDAL.Find((int)obj.IdUsuario);
                         txtApellidoMat.Text = obj.ApellidoMat;
                         txtApellidoPat.Text = obj.ApellidoPat;
-                        cboComuna.SelectedValue = obj.Comuna == null ? "0" : obj.Comuna.ToString();
+                        if (obj.Comuna.HasValue)
+                        {
+                            Comuna com = cDAL.Find(obj.Comuna.Value);
+                            Provincia prov = pDAL.Find(com.IdProvincia.Value);
+                            SetCboRegion(prov.IdRegion.Value);
+                            SetCboProvincia(prov.IdRegion.Value, prov.IdProvincia);
+                            SetCboComuna(com.IdProvincia.Value, com.IdComuna);
+                        }
+                        else
+                        {
+                            InitCbos();
+                        }
                         cboTipoUsuario.SelectedValue = us.IdTipoUsuario == null ? "0" : us.IdTipoUsuario.ToString();
                         txtDireccion.Text = obj.Direccion;
                         txtTelefono.Text = obj.Telefono.ToString();
-                        txtFechNac.Text = obj.FechaNacimiento != null ? ((DateTime)obj.FechaNacimiento).ToString("dd/mm/yyyy") : "";
+                        txtFechNac.Text = obj.FechaNacimiento.HasValue ? obj.FechaNacimiento.Value.ToString("dd/MM/yyyy") : "";
                         txtNombre.Text = obj.Nombres;
                         txtRut.Text = obj.Rut;
                         txtSueldo.Text = obj.Sueldo + "";
@@ -62,7 +75,7 @@ namespace WebApplication1.Mantenedores
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = ex.Message;
+                UserMessage(ex.Message, "danger");
             }
         }
 
@@ -91,13 +104,12 @@ namespace WebApplication1.Mantenedores
                     Estado = 1,
                     IdTipoUsuario = Convert.ToInt32(cboTipoUsuario.SelectedValue)
                 };
-                uDAL.Add(uObj);
-                int idUsuario = uDAL.ObtenerMaxId();
+                uObj = uDAL.Add(uObj);
                 Trabajador tObj = new Trabajador()
                 {
                     ApellidoMat = txtApellidoMat.Text,
                     ApellidoPat = txtApellidoPat.Text,
-                    IdUsuario = idUsuario,
+                    IdUsuario = uObj.IdUsuario,
                     Direccion = txtDireccion.Text,
                     Comuna = cboComuna.SelectedValue == "0" ? (int?)null : Convert.ToInt32(cboComuna.SelectedValue),
                     FechaNacimiento = txtFechNac.Text != "" ? DateTime.Parse(txtFechNac.Text) : (DateTime?)null,
@@ -109,12 +121,12 @@ namespace WebApplication1.Mantenedores
                     Estado = 1
                 };
                 tDAL.Add(tObj);
-                lblMensaje.Text = "Trabajador Agregado";
+                UserMessage("Trabajador Agregado", "success");
                 GridView1.DataBind();
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = ex.Message;
+                UserMessage(ex.Message, "danger");
             }
         }
 
@@ -137,12 +149,12 @@ namespace WebApplication1.Mantenedores
                 };
 
                 tDAL.Update(obj);
-                lblMensaje.Text = "Trabajador Editado";
+                UserMessage("Trabajador Editado", "success");
                 GridView1.DataBind();
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = ex.Message;
+                UserMessage(ex.Message, "danger");
             }
         }
 
@@ -157,7 +169,7 @@ namespace WebApplication1.Mantenedores
             {
                 string rut = txtRut.Text;
                 tDAL.Remove(rut);
-                lblMensaje.Text = "Trabajador Eliminado";
+                UserMessage("Trabajador Eliminado", "success");
                 GridView1.DataBind();
                 limpiar();
             }
@@ -165,11 +177,11 @@ namespace WebApplication1.Mantenedores
             {
                 if (ex.Message == "An error occurred while updating the entries. See the inner exception for details.")
                 {
-                    lblMensaje.Text = "Este Registro no se puede eliminar, ya que existe dependencia";
+                    UserMessage("Este Registro no se puede eliminar, ya que existe dependencia", "danger");
                 }
                 else
                 {
-                    lblMensaje.Text = ex.Message;
+                    UserMessage(ex.Message, "danger");
                 }
             }
         }
@@ -179,15 +191,37 @@ namespace WebApplication1.Mantenedores
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 Label label = (Label)e.Row.FindControl("lblFechaCreacion");
-                label.Text = label.Text != "" ? DateTime.Parse(label.Text).ToString("dd-MM-yyyy") : "";
+                label.Text = label.Text != "" ? DateTime.Parse(label.Text).ToString("dd-MM-yyyy") : "No tiene";
 
                 label = (Label)e.Row.FindControl("lblFechaNacimiento");
-                label.Text = label.Text != "" ? DateTime.Parse(label.Text).ToString("dd-MM-yyyy") : "";
+                label.Text = label.Text != "" ? DateTime.Parse(label.Text).ToString("dd-MM-yyyy") : "No tiene";
 
                 label = (Label)e.Row.FindControl("lblComuna");
-                label.Text = label.Text != "" ? cDAL.Find(Convert.ToInt32(label.Text)).Nombre : "";
+                label.Text = label.Text != "" ? cDAL.Find(Convert.ToInt32(label.Text)).Nombre : "Sin Comuna";
             }
         }
+
+        protected void cboRegion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int idRegion = Convert.ToInt32(cboRegion.SelectedValue);
+            SetCboProvincia(idRegion, 0);
+            cboRegion.Items.FindByValue("0").Enabled = false;
+        }
+
+        protected void cboProvincia_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int idProvincia = Convert.ToInt32(cboProvincia.SelectedValue);
+            SetCboComuna(idProvincia, 0);
+            cboProvincia.Items.FindByValue("0").Enabled = false;
+        }
+
+        protected void cboComuna_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cboComuna.Items.FindByValue("0").Enabled = false;
+        }
+
+
+
 
         private void limpiar()
         {
@@ -208,30 +242,92 @@ namespace WebApplication1.Mantenedores
             btnAgregar.Visible = true;
             btnModificar.Visible = false;
             divUsuario.Visible = true;
+
+            InitCbos();
         }
 
         private void validarCampos()
         {
-            if (txtRut.Text == "")
+            int flag = 0;
+            if (txtRut.Text == "") { throw new Exception("Debe ingresar un RUT"); }
+            if (txtNombre.Text == "") { throw new Exception("Debe ingresar un Nombre"); }
+            if (txtApellidoPat.Text == "") { throw new Exception("Debe ingresar un Apellido Paterno"); }
+            if (txtDireccion.Text == "") { throw new Exception("Debe ingresar una dirección"); }
+            if (cboTipoUsuario.SelectedValue == "0") { throw new Exception("Debe Seleccionar un tipo de Usuario"); }
+            if (!int.TryParse(txtTelefono.Text, out flag)) { throw new Exception("Ingrese un numero de teléfono válido"); }
+            //if (txtRut.Text.Contains(".")) { throw new Exception("El Rut debe ser ingresado sin puntos"); }
+            if (txtRut.Text.Length > 12) { throw new Exception("Debe ingresar un Rut Válido"); }
+        }
+
+        private void UserMessage(string mensaje, string type)
+        {
+            if (mensaje != "")
             {
-                throw new Exception("Debe ingresar un RUT");
+                divMessage.Attributes.Add("class", "alert alert-" + type);
+                lblMensaje.Text = mensaje;
             }
-            if (txtNombre.Text == "")
+            else
             {
-                throw new Exception("Debe ingresar un Nombre");
+                divMessage.Attributes.Add("class", "");
+                lblMensaje.Text = mensaje;
             }
-            if (txtApellidoPat.Text == "")
-            {
-                throw new Exception("Debe ingresar un Apellido Paterno");
-            }
-            if (txtDireccion.Text == "")
-            {
-                throw new Exception("Debe ingresar una dirección");
-            }
-            if (cboTipoUsuario.SelectedValue == "0")
-            {
-                throw new Exception("Debe Seleccionar un tipo de Usuario");
-            }
+        }
+
+        private void SetCboRegion(int regSeleccionada)
+        {
+            InitCbos();
+            cboRegion.DataSource = rDAL.getDataTable(rDAL.GetAll());
+            cboRegion.DataBind();
+            if (regSeleccionada != 0) { cboRegion.SelectedValue = regSeleccionada.ToString(); }
+        }
+
+        private void SetCboProvincia(int idRegion, int provSeleccionada)
+        {
+            ResetProvincias();
+            ResetComunas();
+
+            cboProvincia.Items.Remove(cboProvincia.Items.FindByValue("-1"));
+            cboProvincia.DataSource = pDAL.getDataTable(pDAL.GetAllByRegion(idRegion));
+            cboProvincia.DataBind();
+            if (provSeleccionada != 0) { cboProvincia.SelectedValue = provSeleccionada.ToString(); }
+        }
+
+        private void SetCboComuna(int idProvincia, int comSeleccionada)
+        {
+            ResetComunas();
+            cboComuna.Items.Remove(cboComuna.Items.FindByValue("-1"));
+            cboComuna.DataSource = cDAL.getDataTable(cDAL.GetAllByProvincia(idProvincia));
+            cboComuna.DataBind();
+            if (comSeleccionada != 0) { cboComuna.SelectedValue = comSeleccionada.ToString(); }
+        }
+
+        private void InitCbos()
+        {
+            ResetRegiones();
+            ResetProvincias();
+            ResetComunas();
+        }
+
+        private void ResetRegiones()
+        {
+            cboRegion.Items.Clear();
+            cboRegion.Items.Add(new ListItem("Seleccione una Región", "0", true));
+            cboRegion.DataSource = rDAL.getDataTable(rDAL.GetAll());
+            cboRegion.DataBind();
+        }
+
+        private void ResetProvincias()
+        {
+            cboProvincia.Items.Clear();
+            cboProvincia.Items.Add(new ListItem("Seleccione una Provincia", "0", true));
+            cboProvincia.Items.Add(new ListItem("Debe seleccionar un Región", "-1", true));
+        }
+
+        private void ResetComunas()
+        {
+            cboComuna.Items.Clear();
+            cboComuna.Items.Add(new ListItem("Seleccione una Comuna", "0", true));
+            cboComuna.Items.Add(new ListItem("Debe seleccionar una provincia", "-1", true));
         }
     }
 }

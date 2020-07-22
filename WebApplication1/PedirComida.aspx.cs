@@ -34,5 +34,10 @@ namespace WebApplication1
 
             }
         }
+
+        protected void AjaxFileUpload1_UploadComplete(object sender, AjaxControlToolkit.AjaxFileUploadEventArgs e)
+        {
+
+        }
     }
 }

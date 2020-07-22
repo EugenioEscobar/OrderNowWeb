@@ -11,10 +11,15 @@ namespace WebApplication1
     public partial class CrudTMedicion : System.Web.UI.Page
     {
         private DistribuidorDAL dDAL = new DistribuidorDAL();
+        private RegionDAL rDAL = new RegionDAL();
+        private ProvinciaDAL pDAL = new ProvinciaDAL();
         private ComunaDAL cDAL = new ComunaDAL();
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!Page.IsPostBack)
+            {
+                InitCbos();
+            }
         }
 
         protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -85,9 +90,6 @@ namespace WebApplication1
             }
         }
 
-
-
-
         protected void btnLimpiar_Click(object sender, EventArgs e)
         {
             txtRut.Text = "";
@@ -134,6 +136,10 @@ namespace WebApplication1
             {
                 throw new Exception("Debe Ingresar Nombre");
             }
+            if (txtEmail.Text == "")
+            {
+                throw new Exception("Debe Ingresar un Email");
+            }
         }
 
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -144,6 +150,44 @@ namespace WebApplication1
                 Label comuna = (Label)row.FindControl("lblComuna");
                 comuna.Text = comuna.Text != "" ? cDAL.Find(Convert.ToInt32(comuna.Text)).Nombre : "";
             }
+        }
+
+        private void UserMessage(string message, string type)
+        {
+            if (message != "")
+            {
+                divMessage.Attributes.Add("class", "text-center alert alert-" + type);
+                lblMensaje.Text = message;
+            }
+            else
+            {
+                divMessage.Attributes.Add("class", "");
+                lblMensaje.Text = message;
+            }
+        }
+
+        protected void cboRegion_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                cboProvincia.DataSource = pDAL.getDataTable(pDAL.GetAllByRegion(Convert.ToInt32(cboRegion.SelectedValue)));
+                cboProvincia.DataBind();
+            }catch(Exception ex)
+            {
+                UserMessage(ex.Message, "danger");
+            }
+        }
+
+        protected void cboProvincia_TextChanged(object sender, EventArgs e)
+        {
+            cboRegion.DataSource = pDAL.getDataTable(pDAL.GetAllByRegion(Convert.ToInt32(cboProvincia.SelectedValue)));
+            cboRegion.DataBind();
+        }
+
+        private void InitCbos()
+        {
+            cboRegion.DataSource = rDAL.getDataTable(rDAL.GetAll());
+            cboRegion.DataBind();
         }
     }
 }

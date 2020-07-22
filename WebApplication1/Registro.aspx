@@ -27,88 +27,57 @@
 <body>
     <form id="form1" runat="server">
         <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="well well-sm">
-                        <form class="form-horizontal" method="post">
-                            <fieldset>
-                                <legend class="text-center header">Registrate</legend>
-
-                                <div class="form-group">
-                                    <span class="col-md-1 col-md-offset-2 text-center"></span>
-                                    <div class="col-md-8">
-                                        <label for="txtClave">Nombre</label>
-                                        <asp:TextBox type="text" ID="txtNombre" runat="server"
-                                            CssClass="form-control" placeholder="Nombre"></asp:TextBox>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <span class="col-md-1 col-md-offset-2 text-center"></span>
-                                    <div class="col-md-8">
-                                        <label for="txtApellidoPaterno">Apellido Paterno</label>
-                                        <asp:TextBox type="text" ID="txtApellidoPaterno" runat="server"
-                                            CssClass="form-control" placeholder="Apellido Paterno"></asp:TextBox>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <span class="col-md-1 col-md-offset-2 text-center"></span>
-                                    <div class="col-md-8">
-                                        <label for="txtApellidoMaterno">Apellido Materno</label>
-                                        <asp:TextBox type="text" ID="txtApellidoMaterno" runat="server"
-                                            CssClass="form-control" placeholder="Apellido Materno"></asp:TextBox>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <span class="col-md-1 col-md-offset-2 text-center"></span>
-                                    <div class="col-md-8">
-                                        <label for="txtDireccion">Direccion</label>
-                                        <asp:TextBox type="text" ID="txtDireccion" runat="server"
-                                            CssClass="form-control" placeholder="Direccion"></asp:TextBox>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <span class="col-md-1 col-md-offset-2 text-center"></span>
-                                    <div class="col-md-8">
-                                        <label for="txtTelefono">Telefono</label>
-                                        <asp:TextBox type="text" ID="txtTelefono" runat="server"
-                                            CssClass="form-control" placeholder="Telefono"></asp:TextBox>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <span class="col-md-1 col-md-offset-2 text-center"></span>
-                                    <div class="col-md-8">
-                                        <label for="txtUsuario">Nombre de Usuario</label>
-                                        <asp:TextBox type="text" ID="txtUsuario" runat="server"
-                                            CssClass="form-control" placeholder="Nombre de usuario"></asp:TextBox>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <span class="col-md-1 col-md-offset-2 text-center"></span>
-                                    <div class="col-md-8">
-                                        <label for="txtClave">Contraseña </label>
-                                        <asp:TextBox type="password" ID="txtClave" runat="server"
-                                            CssClass="form-control" placeholder="Contraseña"></asp:TextBox>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="col-md-12 text-center">
-                                        <asp:Button ID="btn_registrar" runat="server"
-                                            CssClass="btn btn-primary btn-lg" Text="Registrate " OnClick="btn_Registrar_Click" />
-                                        <asp:Button ID="btn_Volver" runat="server"
-                                            CssClass="btn btn-primary btn-lg" Text="Volver " OnClick="btn_Volver_Click" />
-                                    </div>
-                                </div>
-                                <div>
-                                    <asp:Label ID="lblMensaje" CssClass="text-success h3" runat="server"></asp:Label>
-                                </div>
-                            </fieldset>
-                        </form>
-                    </div>
+            <div class="h2 text-center my-3">
+                Regístrate
+            </div>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <label for="txtClave">Nombre</label>
+                    <asp:TextBox type="text" ID="txtNombre" runat="server" CssClass="form-control" placeholder="Nombre"></asp:TextBox>
                 </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <label for="txtApellidoPaterno">Apellido Paterno</label>
+                    <asp:TextBox type="text" ID="txtApellidoPaterno" runat="server" CssClass="form-control" placeholder="Apellido Paterno"></asp:TextBox>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <label for="txtApellidoMaterno">Apellido Materno</label>
+                    <asp:TextBox type="text" ID="txtApellidoMaterno" runat="server" CssClass="form-control" placeholder="Apellido Materno"></asp:TextBox>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <label for="txtDireccion">Direccion</label>
+                    <asp:TextBox type="text" ID="txtDireccion" runat="server" CssClass="form-control" placeholder="Direccion"></asp:TextBox>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <label for="txtTelefono">Telefono</label>
+                    <asp:TextBox type="text" ID="txtTelefono" runat="server" CssClass="form-control" placeholder="Telefono"></asp:TextBox>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <label for="txtUsuario">Nombre de Usuario</label>
+                    <asp:TextBox type="text" ID="txtUsuario" runat="server" CssClass="form-control" placeholder="Nombre de usuario"></asp:TextBox>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <label for="txtClave">Contraseña </label>
+                    <asp:TextBox type="password" ID="txtClave" runat="server" CssClass="form-control" placeholder="Contraseña"></asp:TextBox>
+                </div>
+            </div>
+            <div class="form-row d-flex justify-content-center my-2">
+                <asp:Button ID="btn_registrar" runat="server" CssClass="btn btn-success btn-lg mx-2" Text="Registrate " OnClick="btn_Registrar_Click" />
+                <asp:Button ID="btn_Volver" runat="server" CssClass="btn btn-primary btn-lg" Text="Volver " OnClick="btn_Volver_Click" />
+            </div>
+            <div id="DivMessage" runat="server">
+                <asp:Label ID="lblMensaje" runat="server"></asp:Label>
             </div>
         </div>
     </form>

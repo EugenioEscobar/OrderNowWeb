@@ -31,25 +31,32 @@ namespace WebApplication1.ClientPages
 
         protected void btnRealizarrPedido_Click(object sender, EventArgs e)
         {
-            if (Session["Usuario"] == null) { Response.Redirect("/Login.aspx"); }
-            //ValidatePedidoFields();
-            Usuario user = uDAL.Find((int)Session["Usuario"]);
-            Cliente client = cDAL.FindByUser(user.IdUsuario);
-
-            Pedido pedido = new Pedido()
+            try
             {
-                Trabajador = null,
-                IdEstadoPedido = 1,
-                IdCliente = client.IdCliente,
-                IdTipoPedido = 3
-            };
-            pedido = pDAL.Add(pedido);
+                if (Session["Usuario"] == null) { Response.Redirect("/Login.aspx"); }
+                ValidatePedidoFields();
+                Usuario user = uDAL.Find((int)Session["Usuario"]);
+                Cliente client = cDAL.FindByUser(user.IdUsuario);
 
-            AgregarAlimentosPorPedido(pedido);
-            AgregarOfertasPorPedido(pedido);
+                Pedido pedido = new Pedido()
+                {
+                    Trabajador = null,
+                    IdEstadoPedido = 1,
+                    IdCliente = client.IdCliente,
+                    IdTipoPedido = 3
+                };
+                pedido = pDAL.Add(pedido);
 
-            LimpiarPedido();
-            UserMessage("Pedido Realizado", "success");
+                AgregarAlimentosPorPedido(pedido);
+                AgregarOfertasPorPedido(pedido);
+
+                LimpiarPedido();
+                UserMessage("Pedido Realizado", "success");
+            }
+            catch (Exception ex)
+            {
+                UserMessage(ex.Message, "danger");
+            }
         }
 
         private void UserMessage(string mensaje, string type)
@@ -119,7 +126,7 @@ namespace WebApplication1.ClientPages
         private void RestarStockOferta(int idOferta)
         {
             List<OfertaAlimento> listadoAlimentos = oADAL.Alimentos(idOferta);
-            foreach(OfertaAlimento item in listadoAlimentos)
+            foreach (OfertaAlimento item in listadoAlimentos)
             {
                 RestarStockAlimento(item.IdAlimento.Value);
             }
@@ -135,7 +142,13 @@ namespace WebApplication1.ClientPages
         {
             GridCarrito.DataSource = carrito.DataTablePedido();
             GridCarrito.DataBind();
+            int total = carrito.GetSubTotal();
+            lblPrecio.Text = carrito.GetSubTotal().ToString();
+        }
+
+        protected void ValidatePedidoFields()
+        {
+            if (carrito.GetListAlimentos().Count == 0 && carrito.GetListOfertas().Count == 0) { throw new Exception("El Carrito está Vacío"); }
         }
     }
-
 }

@@ -62,11 +62,11 @@ namespace WebApplication1
             {
                 if (xx.Stock == 0)
                 {
-                    Response.Write("<script>alert('No quedan " + xx.Nombre + " en el inventario');</script>");
+                    Response.Write("<script>alert('No queda " + xx.Descripcion + " en el inventario');</script>");
                 }
                 else if (xx.Stock <= 10)
                 {
-                    Response.Write("<script>alert('La cantidad de " + xx.Nombre + " en inventario es demasiado escasa');</script>");
+                    Response.Write("<script>alert('La cantidad de " + xx.Descripcion + " en inventario es demasiado escasa');</script>");
                 }
             }
         }

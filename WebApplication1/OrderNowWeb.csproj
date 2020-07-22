@@ -88,6 +88,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ClientPages\OfertaDetails.aspx" />
     <Content Include="ClientPages\ProductList.aspx" />
     <Content Include="ClientPages\VerCarrito.aspx" />
     <Content Include="Content\bootstrap-4.5.0-dist\css\bootstrap-grid.css" />
@@ -1901,6 +1902,13 @@
     <Compile Include="Administrador.Master.designer.cs">
       <DependentUpon>Administrador.Master</DependentUpon>
     </Compile>
+    <Compile Include="ClientPages\OfertaDetails.aspx.cs">
+      <DependentUpon>OfertaDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClientPages\OfertaDetails.aspx.designer.cs">
+      <DependentUpon>OfertaDetails.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ClientPages\ProductList.aspx.cs">
       <DependentUpon>ProductList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2104,6 +2112,9 @@
       <Project>{3d9d570e-626e-4708-93c2-8f915459aaca}</Project>
       <Name>OrderNowDAL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Fotos\Productos\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

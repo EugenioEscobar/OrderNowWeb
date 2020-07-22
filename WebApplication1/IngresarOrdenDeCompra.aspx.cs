@@ -54,25 +54,35 @@ namespace WebApplication1
                 InitCbos();
             }
             UserMessage("", "");
+            UserModalMessage("", "");
+            ValidarModal();
         }
 
         protected void btnSubirPlanilla_Click(object sender, EventArgs e)
         {
-            ViewState["Message"] = false; //Se setea el mensaje de que la planilla está incorrecta
-            using (SLDocument doc = new SLDocument(FileUpload1.FileContent, "CargaDatos"))
+            try
             {
-                DataTable dt = GetTable(doc);
+                //Validar Archivo
+                if (!FileUpload1.HasFile) { throw new Exception("Debe ingresar un archivo antes de Subirlo"); }
+                ViewState["Message"] = false; //Se setea el mensaje de que la planilla está incorrecta
+                using (SLDocument doc = new SLDocument(FileUpload1.FileContent, "CargaDatos"))
+                {
+                    DataTable dt = GetTable(doc);
 
-                ValidateEmptyFields(dt);
+                    ValidateEmptyFields(dt);
+                    ViewState["Data"] = dt;
 
-                GridView1.DataSource = dt;
-                GridView1.DataBind();
+                    CargarGrid();
 
-                btnDatosFactura.Visible = true;
+                    btnDatosFactura.Visible = true;
 
-                ViewState["Data"] = dt;
 
-                FillFacturaFields(doc);//El fillFacture se llama al final ya que podría enviar una Exception
+                    FillFacturaFields(doc);//El fillFacture se llama al final ya que podría enviar una Exception
+                }
+            }
+            catch (Exception ex)
+            {
+                UserMessage(ex.Message, "danger");
             }
         }
 
@@ -90,7 +100,7 @@ namespace WebApplication1
                 Marca marca = val != "" ? mDAL.FindByName(val) : null;
                 if (marca == null && val != "")
                 {
-                    e.Row.Cells[columnIndex].BackColor = System.Drawing.Color.Red;
+                    e.Row.Cells[columnIndex].CssClass = "alert-warning alert-grid";
                     flag = true;
                 }
                 #endregion
@@ -101,7 +111,7 @@ namespace WebApplication1
                 TipoAlimento tipoAlimento = val != "" ? tADAL.FindByName(val) : null;
                 if (tipoAlimento == null && val != "")
                 {
-                    e.Row.Cells[columnIndex].BackColor = System.Drawing.Color.Red;
+                    e.Row.Cells[columnIndex].CssClass = "alert-warning alert-grid";
                     flag = true;
                 }
                 #endregion
@@ -112,7 +122,7 @@ namespace WebApplication1
                 TipoMedicion tipoMedicion = val != "" ? tMDAL.FindByName(val) : null;
                 if (tipoMedicion == null && val != "")
                 {
-                    e.Row.Cells[columnIndex].BackColor = System.Drawing.Color.Red;
+                    e.Row.Cells[columnIndex].CssClass = "alert-warning alert-grid";
                     flag = true;
                 }
                 #endregion
@@ -123,7 +133,7 @@ namespace WebApplication1
                 Ingrediente ingrediente = iDAL.FindByName(val);
                 if (flag || ingrediente == null && val != "")
                 {
-                    e.Row.Cells[columnIndex].BackColor = System.Drawing.Color.Red;
+                    e.Row.Cells[columnIndex].CssClass = "alert-warning alert-grid";
                     flag = true;
                 }
                 #endregion
@@ -131,7 +141,7 @@ namespace WebApplication1
                 if (flag && (bool)ViewState["Message"] == false)
                 {
                     UserMessage($"{lblMensaje.Text} " +
-                        " \n Los datos en rojo se agregarán automaticamente a la Base de datos al ingresar la planilla", "danger");
+                        " \n Los datos en amarillo se agregarán automaticamente a la Base de datos al ingresar la planilla", "warning");
                     ViewState["Message"] = true;
                 }
             }
@@ -139,14 +149,19 @@ namespace WebApplication1
 
         protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            int rowIndex = Convert.ToInt32(e.CommandArgument);
+            GridViewRow row = ((GridView)sender).Rows[rowIndex];
+            Label lblIndex = row.FindControl("lblIndex") as Label;
             switch (e.CommandName)
             {
                 case "Editar":
                     ModalPopupExtender1.Show();
-                    int rowIndex = Convert.ToInt32(e.CommandArgument);
-                    GridViewRow row = ((GridView)sender).Rows[rowIndex];
-                    Label lblIndex = row.FindControl("lblIndex") as Label;
-                    CargarModal(Convert.ToInt32(lblIndex.Text) - 1);
+                    CargarModal(Convert.ToInt32(lblIndex.Text));
+                    ViewState["rowIndex"] = rowIndex;
+                    break;
+                case "DeleteRow":
+                    DeleteRow(Convert.ToInt32(lblIndex.Text));
+                    CargarGrid();
                     break;
             }
         }
@@ -200,7 +215,7 @@ namespace WebApplication1
 
         protected void btnModalClean_Click(object sender, EventArgs e)
         {
-            CargarModal(Convert.ToInt32(txtModalIndex.Text)-1);
+            CargarModal(Convert.ToInt32(txtModalIndex.Text) - 1);
         }
 
         protected void btnCambiarMarca_Click(object sender, EventArgs e)
@@ -225,15 +240,123 @@ namespace WebApplication1
 
         protected void btnModalSave_Click(object sender, EventArgs e)
         {
-            ValidateModal();
+            try
+            {
+                ValidateModal();
+                DataTable dt = ViewState["Data"] as DataTable;
+                int rowIndex = Convert.ToInt32(ViewState["rowIndex"]);
+                DataRow row = dt.Rows[rowIndex];
 
-            ModalPopupExtender1.Hide();
+
+                #region Declaración de Variables
+                string rowNombre = txtModalNombre.Visible ? txtModalNombre.Text : cboModalNombre.SelectedItem.Text;
+                string rowDescripción = txtModalDescripcion.Text;
+                string rowCantidad = txtModalCantidad.Text;
+                string rowMarca = txtModalMarca.Visible ? txtModalMarca.Text : cboModalMarca.SelectedItem.Text;
+                string rowTipoAlimento = txtModalTipoAlimento.Visible ? txtModalTipoAlimento.Text : cboModalTipoAlimento.SelectedItem.Text;
+                string rowTipoMedicion = txtModalTipoMedicion.Visible ? txtModalTipoMedicion.Text : cboModalTipoMedicion.SelectedItem.Text;
+                string rowPrecio = txtModalPrecio.Text;
+                string rowTotal = txtModalTotal.Text;
+                #endregion
+
+                row["Nombre"] = rowNombre;
+                row["Descripción"] = rowDescripción;
+                row["Marca"] = rowMarca;
+                row["TipoAlimento"] = rowTipoAlimento;
+                row["TipoMedicion"] = rowTipoMedicion;
+                row["Cantidad"] = rowCantidad;
+                row["Precio"] = rowPrecio;
+                row["Total"] = rowTotal;
+
+                ViewState["Data"] = dt;
+                CargarGrid();
+
+                CerrarModal();
+            }
+            catch (Exception ex)
+            {
+                UserModalMessage(ex.Message, "danger");
+            }
+        }
+
+        protected void cboModalNombre_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int idIngrediente = Convert.ToInt32(((DropDownList)sender).SelectedValue.ToString());
+            Ingrediente selectedIngredient = iDAL.Find(idIngrediente);
+
+            if (selectedIngredient != null)
+            {
+                ChangeModalityMarca(true);
+                cboModalMarca.SelectedValue = selectedIngredient.IdMarca.HasValue ? selectedIngredient.IdMarca.Value.ToString() : "0";
+
+                ChangeModalityTipoAlimento(true);
+                cboModalTipoAlimento.SelectedValue = selectedIngredient.IdTipoAlimento.HasValue ? selectedIngredient.IdTipoAlimento.Value.ToString() : "0";
+
+                ChangeModalityTipoMedicion(true);
+                cboModalTipoMedicion.SelectedValue = selectedIngredient.IdTipoMedicion.Value.ToString();
+
+                txtModalDescripcion.Text = selectedIngredient.Descripcion;
+            }
+        }
+
+        protected void txtModalPrecio_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                UpdateModalTotal();
+            }
+            catch (Exception ex)
+            {
+                UserModalMessage(ex.Message, "danger");
+            }
+        }
+
+        protected void txtModalCantidad_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                UpdateModalTotal();
+            }
+            catch (Exception ex)
+            {
+                UserModalMessage(ex.Message, "danger");
+            }
+        }
+
+        protected void btnCerrar_Click(object sender, EventArgs e)
+        {
+            CerrarModal();
         }
 
 
+
+
+        private void CargarGrid()
+        {
+            DataTable dt = ViewState["Data"] as DataTable;
+            GridView1.DataSource = dt;
+            GridView1.DataBind();
+        }
+
         private void ValidateModal()
         {
-
+            UpdateModalTotal();
+            if ((txtModalNombre.Visible && string.IsNullOrEmpty(txtModalNombre.Text)) || (cboModalNombre.Visible && cboModalNombre.SelectedValue == "0"))
+            {
+                throw new Exception("Debe ingresar un nombre para el ingrediente o seleccionar uno ya ingresado");
+            }
+            if ((txtModalMarca.Visible && string.IsNullOrEmpty(txtModalMarca.Text)) || (cboModalMarca.Visible && cboModalMarca.SelectedValue == "0"))
+            {
+                throw new Exception("Debe ingresar una marca para el ingrediente o seleccionar una ya ingresada");
+            }
+            if ((txtModalTipoAlimento.Visible && string.IsNullOrEmpty(txtModalTipoAlimento.Text)) || (cboModalTipoAlimento.Visible && cboModalTipoAlimento.SelectedValue == "0"))
+            {
+                throw new Exception("Debe ingresar un tipo de alimento para el ingrediente o seleccionar uno ya ingresado");
+            }
+            if ((txtModalTipoMedicion.Visible && string.IsNullOrEmpty(txtModalTipoMedicion.Text)) || (cboModalTipoMedicion.Visible && cboModalTipoMedicion.SelectedValue == "0"))
+            {
+                throw new Exception("Debe ingresar un tipo de medición para el ingrediente o seleccionar uno ya ingresado");
+            }
         }
 
         private void ValidateEmptyFields(DataTable dt)
@@ -257,7 +380,7 @@ namespace WebApplication1
         {
             if (mensaje != "")
             {
-                divMessage.Attributes.Add("class", "alert alert-" + type);
+                divMessage.Attributes.Add("class", "text-center alert alert-" + type);
                 lblMensaje.Text = mensaje;
             }
             else
@@ -418,7 +541,6 @@ namespace WebApplication1
             DataTable dt = new DataTable();
             char letterExcel = refIndexEx;
 
-            //Se setean las columnas del DataTable
             foreach (string column in columns)
             {
                 dt.Columns.Add(column);
@@ -441,10 +563,10 @@ namespace WebApplication1
                         row[j] = val;
                         letterExcel++;
                     }
+                    dt.Rows.Add(row);
                 }
-                else { break; }
+                //else { break; }
 
-                dt.Rows.Add(row);
             }
             return dt;
         }
@@ -463,34 +585,42 @@ namespace WebApplication1
                 string rowTipoMedicion = row["TipoMedicion"] as string;
                 string rowPrecio = row["Precio"] as string;
                 string rowTotal = row["Total"] as string;
-
                 #endregion
 
                 Marca marca = mDAL.FindByName(rowMarca);
                 TipoAlimento tipoAlimento = tADAL.FindByName(rowTipoAlimento);
                 TipoMedicion tipoMedicion = tMDAL.FindByName(rowTipoMedicion);
-                Ingrediente ingrediente = iDAL.FindByName(rowNombre);
+                List<Ingrediente> ingredientesRepetidos = iDAL.FindAllByName(rowNombre);
+                Ingrediente ingrediente = new Ingrediente();
 
-                //Se pregunta si la marca existe en la BDD, de lo contrario se ingresa una nueva
                 marca = marca == null ? mDAL.Add(new Marca()
                 {
                     Nombre = rowMarca,
                     Estado = 1
                 }) : marca;
-
                 tipoAlimento = tipoAlimento == null ? tADAL.Add(new TipoAlimento()
                 {
                     Descripcion = rowTipoAlimento,
                     Estado = 1
                 }) : tipoAlimento;
-
                 tipoMedicion = tipoMedicion == null ? tMDAL.Add(new TipoMedicion()
                 {
                     Descripcion = rowTipoMedicion,
                     Estado = 1
                 }) : tipoMedicion;
 
-                if ((ingrediente == null) || (ingrediente.IdMarca != marca.IdMarca || ingrediente.Descripcion != rowDescripción))
+                bool existe = false;
+                foreach (Ingrediente item in ingredientesRepetidos)
+                {
+                    if ((item != null) && item.IdMarca == marca.IdMarca && item.Descripcion == rowDescripción)
+                    {
+                        existe = true;
+                        ingrediente = item;
+                        break;
+                    }
+                }
+
+                if (!existe)
                 {
                     ingrediente = new Ingrediente()
                     {
@@ -521,7 +651,7 @@ namespace WebApplication1
             if (ViewState["Data"] != null)
             {
                 DataTable dt = ViewState["Data"] as DataTable;
-                DataRow dRow = dt.Rows[index];
+                DataRow dRow = findRow(index);
                 int test;
 
                 #region Declaración de Variables
@@ -541,6 +671,21 @@ namespace WebApplication1
                 txtModalPrecio.Text = int.TryParse(rowPrecio, out test) ? rowPrecio : "0";
                 txtModalTotal.Text = (Convert.ToInt32(txtModalCantidad.Text) * Convert.ToInt32(txtModalPrecio.Text)).ToString();
             }
+        }
+
+        private DataRow findRow(int index)
+        {
+            DataRow dr = null;
+            DataTable dt = ViewState["Data"] as DataTable;
+            foreach (DataRow item in dt.Rows)
+            {
+                if (item["index"] as string == index.ToString())
+                {
+                    dr = item;
+                    break;
+                }
+            }
+            return dr;
         }
 
         private void ChangeModalityMarca(bool showExistent)
@@ -610,17 +755,76 @@ namespace WebApplication1
             }
 
             Ingrediente iFlag = iDAL.FindByName(nombre);
-            if (iFlag != null || mFlag != null || tAFlag != null || tMFlag != null)
-            {
-                ChangeModalityNombre(true);
-                cboModalNombre.SelectedValue = iFlag.IdIngrediente.ToString();
-            }
-            else
+            if (iFlag == null || mFlag == null || tAFlag == null || tMFlag == null)
             {
                 ChangeModalityNombre(false);
                 txtModalNombre.Text = nombre;
             }
+            else
+            {
+                ChangeModalityNombre(true);
+                cboModalNombre.SelectedValue = iFlag.IdIngrediente.ToString();
+            }
 
+        }
+
+        private void CerrarModal()
+        {
+            txtModalIndex.Text = "";
+            ModalPopupExtender1.Hide();
+        }
+
+        private void ValidarModal()
+        {
+            if (txtModalIndex.Text.Trim() != "")
+            {
+                ModalPopupExtender1.Show();
+            }
+        }
+
+        private void UpdateModalTotal()
+        {
+            int cantidad;
+            int precio;
+            if (!int.TryParse(txtModalCantidad.Text, out cantidad))
+            {
+                throw new Exception("Debe ingresar una cantidad válida");
+            }
+            if (!int.TryParse(txtModalPrecio.Text, out precio))
+            {
+                throw new Exception("Debe ingresar un precio válido");
+            }
+            txtModalTotal.Text = (cantidad * precio).ToString();
+        }
+
+        private void UserModalMessage(string message, string type)
+        {
+            if (string.IsNullOrEmpty(message))
+            {
+                divModalMessage.Attributes.Add("class", "alert");
+                lblModalMessage.Text = "";
+            }
+            else
+            {
+                divModalMessage.Attributes.Add("class", "text-center alert alert-" + type);
+                lblModalMessage.Text = message;
+            }
+        }
+
+        private void DeleteRow(int index)
+        {
+            DataTable dt = ViewState["Data"] as DataTable;
+            DataRow dr = null;
+            foreach (DataRow item in dt.Rows)
+            {
+                if (item["Index"] as string == index.ToString())
+                {
+                    dr = item;
+                    break;
+                }
+            }
+            dr.Delete();
+            ViewState["Data"] = dt;
         }
     }
 }

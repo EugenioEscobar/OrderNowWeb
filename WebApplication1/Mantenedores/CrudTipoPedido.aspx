@@ -10,17 +10,17 @@
         </div>
         <div class="form-row">
             <asp:Label ID="Label2" runat="server" Text="Nombre:"></asp:Label>
-            <asp:TextBox ID="txtNombre" runat="server"></asp:TextBox>
+            <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control"></asp:TextBox>
         </div>
         <div class="form-row">
             <asp:Label ID="Label1" runat="server" Text="Estado"></asp:Label>
             <asp:CheckBox ID="chkEstado" runat="server" Enabled="false" />
         </div>
         <div class="form-row">
-            <asp:Button ID="btnAgregar" runat="server" Text="Agregar" OnClick="btnAgregar_Click" />
-            <asp:Button ID="btnModificar" runat="server" Text="Modificar" OnClick="btnModificar_Click" Visible="false" />
-            <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" OnClick="btnEliminar_Click" Visible="false" />
-            <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" />
+            <asp:Button ID="btnAgregar" runat="server" Text="Agregar" OnClick="btnAgregar_Click" CssClass="btn btn-primary"/>
+            <asp:Button ID="btnModificar" runat="server" Text="Modificar" OnClick="btnModificar_Click" Visible="false" CssClass="btn btn-primary" />
+            <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" OnClick="btnEliminar_Click" Visible="false" CssClass="btn btn-primary mx-2" />
+            <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" OnClick="btnLimpiar_Click" CssClass="btn btn-primary mx-2" />
         </div>
         <div id="divMessage" runat="server">
             <asp:Label ID="lblMensaje" runat="server" Text="Label"></asp:Label>
@@ -32,7 +32,7 @@
                         <asp:Label ID="Label7" runat="server" Text="Modificar"></asp:Label>
                     </HeaderTemplate>
                     <ItemTemplate>
-                        <asp:Button ID="btnEdit" runat="server" Text="Edit" CommandArgument="<%#((GridViewRow)Container).RowIndex %>" CommandName="Edit" />
+                        <asp:Button ID="btnEdit" runat="server" Text="Edit" CommandArgument="<%#((GridViewRow)Container).RowIndex %>" CommandName="Edit"/>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField>

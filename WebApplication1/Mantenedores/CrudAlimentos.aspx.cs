@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -18,10 +19,17 @@ namespace WebApplication1
         private TipoAlimentoDAL tADAL = new TipoAlimentoDAL();
         private TipoMedicionDAL tMDAL = new TipoMedicionDAL();
         private IngredienteAlimentoDAL iADAL = new IngredienteAlimentoDAL();
+        private IngredienteAlimentoGrid listaIngrediente = new IngredienteAlimentoGrid();
+        private SaveImage data = new SaveImage();
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Page.IsPostBack)
+            {
+                //listaIngrediente.RemoveAll();
+            }
             CargarGridIngredienteAlimento();
-            lblMensaje.Text = "";
+            UserMessage("", "");
         }
 
         protected void gridViewListadoAlimentos_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -33,8 +41,8 @@ namespace WebApplication1
                 {
                     case "Editar":
                         int index = Convert.ToInt32(e.CommandArgument);
-                        Label codigoLbl = (Label)gridViewListadoAlimentos.Rows[index].FindControl("lblCodigo");
-                        int codigo = Convert.ToInt32(codigoLbl.Text);
+                        Label lblCodigo = (Label)gridViewListadoAlimentos.Rows[index].FindControl("lblCodigo");
+                        int codigo = Convert.ToInt32(lblCodigo.Text);
                         Alimento alimento = aDAL.Find(codigo);
                         LlenarFields(alimento);
                         break;
@@ -44,7 +52,7 @@ namespace WebApplication1
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = ex.Message;
+                UserMessage(ex.Message, "danger");
             }
         }
 
@@ -54,18 +62,18 @@ namespace WebApplication1
             {
                 string nombre = txtNombre.Text;
                 aDAL.Remove(nombre);
-                lblMensaje.Text = "Alimento Eliminado";
+                UserMessage("Alimento Eliminado", "success");
                 gridViewListadoAlimentos.DataBind();
             }
             catch (Exception ex)
             {
                 if (ex.Message == "An error occurred while updating the entries. See the inner exception for details.")
                 {
-                    lblMensaje.Text = "Este Registro no se puede eliminar, ya que existe dependencia";
+                    UserMessage("Este Registro no se puede eliminar, ya que existe dependencia", "warning");
                 }
                 else
                 {
-                    lblMensaje.Text = ex.Message;
+                    UserMessage(ex.Message, "danger");
                 }
             }
 
@@ -78,75 +86,28 @@ namespace WebApplication1
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
-            ValidarCampos();
             try
             {
-                //Orden: Cantidad-IdIngrediente-Nombre-Descripcion-ValorUnidad-Marca-TipoMedicion
+                ValidarCampos();
                 int idAlimento = (int)ViewState["IdAlimento"];
-                int ingredientesAgregados = 0;
-                //lista=> lista de Ingredientes del gridView     listaDB=> lista de ingredientes de la BD
-                List<string[]> lista = IngredienteAlimento.ListarIngredientes();
-                List<IngredientesAlimento> listaBD = iADAL.Ingredientes(idAlimento);
 
-                foreach (string[] xx in lista)
-                {
-                    int idIgrediente = Convert.ToInt32(xx[1]);
-                    int cantidad = Convert.ToInt32(xx[0]);
-                    IngredientesAlimento obj = iADAL.Find(idIgrediente, idAlimento);
-                    //Pregunta si existe un registro en la tabla IngredientesALimento
-                    //Con los respectivos ID
-                    if (obj != null)
-                    {
-                        //Se encontró un registro, por lo se me midifica la cantidad
-                        obj.Cantidad = cantidad;
-                        iADAL.Edit(obj);
-                    }
-                    else
-                    {
-                        //No se encontró registro por lo que se crea uno
-                        ingredientesAgregados++;
-                        obj = new IngredientesAlimento()
-                        {
-                            Alimento = idAlimento,
-                            Ingrediente = idIgrediente,
-                            Cantidad = cantidad
-                        };
-                        iADAL.Add(obj);
-                    }
-                }
-                //Ciclo para buscar ingredientes que se hayan eliminado de la grilla para eliminarlos en la Base de datos
-                foreach (IngredientesAlimento Bdd in listaBD)
-                {
-                    bool flag = false;
-                    foreach (string[] grid in lista)
-                    {
-                        if (Bdd.Ingrediente == Convert.ToInt32(grid[1]))
-                        {
-                            flag = true;
-                        }
-                    }
-                    if (!flag)
-                    {
-                        //Ingrediente Eliminado del grid
-                        iADAL.Remove(Bdd.IdIngredientesAlimento);
-                    }
-                }
-
+                UpdateIngredients(idAlimento);
                 Alimento alimento = aDAL.Find(idAlimento);
-                alimento.Descripcion = txtNombre.Text;
+                alimento.Nombre = txtNombre.Text;
                 alimento.Calorías = Convert.ToInt32(txtCalorias.Text);
                 alimento.Precio = Convert.ToInt32(txtValor.Text);
                 alimento.IdClasificacion = Convert.ToInt32(cboCategoriaAlimento.SelectedValue);
                 alimento.Descripcion = txtDescripcion.Text.Trim();
+                alimento.Foto = data.getImage() != null ? SaveImage() : null;
 
                 aDAL.Update(alimento);
-                lblMensaje.Text = "Alimento Editado";
+                UserMessage("Alimento Modificado", "success");
                 gridViewListadoAlimentos.DataBind();
                 Limpiar();
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = ex.Message;
+                UserMessage(ex.Message, "danger");
             }
 
         }
@@ -157,33 +118,27 @@ namespace WebApplication1
             try
             {
                 ValidarCampos();
-                Alimento tObj = new Alimento()
+                string path = SaveImage();
+                Alimento nuevoAlimento = new Alimento()
                 {
                     Nombre = txtNombre.Text,
                     Calorías = Convert.ToInt32(txtCalorias.Text),
                     Precio = Convert.ToInt32(txtValor.Text),
                     IdClasificacion = Convert.ToInt32(cboCategoriaAlimento.SelectedValue),
-                    Descripcion = txtDescripcion.Text.Trim()
+                    Descripcion = txtDescripcion.Text.Trim(),
+                    Foto = path
                 };
-                aDAL.Add(tObj);
-                int idAlimento = aDAL.ObtenerIdMax();
-                foreach (string[] xx in IngredienteAlimento.ListarIngredientes())
-                {
-                    iADAL.Add(new IngredientesAlimento()
-                    {
-                        Alimento = idAlimento,
-                        Cantidad = Convert.ToInt32(xx[0]),
-                        Ingrediente = Convert.ToInt32(xx[1])
-                    });
-                }
-                IngredienteAlimento.EliminarIngredientes();
+                nuevoAlimento = aDAL.Add(nuevoAlimento);
+
+                InsertIngredientes(nuevoAlimento);
+
                 CargarGridIngredienteAlimento();
-                lblMensaje.Text = "Alimento Agregado";
+                UserMessage("Alimento Agregado", "success");
                 gridViewListadoAlimentos.DataBind();
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = ex.Message;
+                UserMessage(ex.Message, "danger");
             }
         }
 
@@ -205,46 +160,7 @@ namespace WebApplication1
                     int id = Convert.ToInt32(codigo.Text);
                     Ingrediente obj = iDAL.Find(id);
 
-                    bool flag = false;
-
-                    //Ciclo para saber si hay un alimento igual que el seleccionado en la lista
-                    foreach (string[] s in IngredienteAlimento.ListarIngredientes())
-                    {
-                        if (s[1] == obj.IdIngrediente + "")
-                        {
-                            //Ya hay elemento ingresado en el pedido
-                            flag = true;
-                            index = IngredienteAlimento.ListarIngredientes().IndexOf(s);
-                        }
-                    }
-
-                    int cantidad = 1;
-
-                    if (flag)
-                    {
-                        Label cantidadLabel = (Label)gridViewIngredientesAlimento.Rows[index].FindControl("lblCantidad");
-                        cantidad = Convert.ToInt32(cantidadLabel.Text) + 1;
-
-                    }
-                    //Orden: Cantidad-ID-Nombre-Descripcion-ValorUnidad-Marca-TipoMedicion
-                    string[] ingrediente = new string[7];
-
-                    ingrediente[0] = cantidad.ToString();
-                    ingrediente[1] = codigo.Text;
-                    ingrediente[2] = obj.Nombre;
-                    ingrediente[3] = obj.Descripcion;
-                    ingrediente[4] = obj.ValorNeto.ToString();
-                    ingrediente[5] = obj.IdMarca.ToString();
-                    ingrediente[6] = obj.IdTipoMedicion.ToString();
-
-                    if (flag)
-                    {
-                        IngredienteAlimento.ModificarIngrediente(index, ingrediente);
-                    }
-                    else
-                    {
-                        IngredienteAlimento.AgregarIngrediente(ingrediente);
-                    }
+                    listaIngrediente.AddIngrediente(obj);
                     CargarGridIngredienteAlimento();
                     break;
             }
@@ -256,13 +172,13 @@ namespace WebApplication1
             {
                 GridViewRow row = e.Row;
                 Label label = (Label)row.FindControl("lblMarca");
-                label.Text = label.Text == "" ? "" : mDAL.Find(Convert.ToInt32(label.Text)).Nombre;
+                label.Text = label.Text == "" ? "Sin Marca" : mDAL.Find(Convert.ToInt32(label.Text)).Nombre;
 
                 label = (Label)row.FindControl("lblTipoAlimento");
-                label.Text = label.Text == "" ? "" : tADAL.Find(Convert.ToInt32(label.Text)).Descripcion;
+                label.Text = label.Text == "" ? "Sin Tipo de Alimento" : tADAL.Find(Convert.ToInt32(label.Text)).Descripcion;
 
                 label = (Label)row.FindControl("lblTipoMedicion");
-                label.Text = label.Text == "" ? "" : tMDAL.Find(Convert.ToInt32(label.Text)).Descripcion;
+                label.Text = label.Text == "" ? "Sin Medición" : tMDAL.Find(Convert.ToInt32(label.Text)).Descripcion;
             }
         }
 
@@ -271,11 +187,17 @@ namespace WebApplication1
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 GridViewRow row = e.Row;
-                Label label = (Label)row.FindControl("lblMarca");
-                label.Text = label.Text == "" ? "" : mDAL.Find(Convert.ToInt32(label.Text)).Nombre;
+                Label lblCodigo = row.FindControl("lblCodigo") as Label;
+                Ingrediente ingrediente = iDAL.Find(Convert.ToInt32(lblCodigo.Text));
 
-                label = (Label)row.FindControl("lblTipoMedicion");
-                label.Text = label.Text == "" ? "" : tMDAL.Find(Convert.ToInt32(label.Text)).Descripcion;
+                Label label = (Label)row.FindControl("lblNombre");
+                label.Text = ingrediente.Nombre;
+
+                label = (Label)row.FindControl("lblDescripcion");
+                label.Text = ingrediente.Descripcion;
+
+                label = (Label)row.FindControl("lblMarca");
+                label.Text = ingrediente.IdMarca.HasValue ? mDAL.Find(Convert.ToInt32(ingrediente.IdMarca.Value)).Nombre : "Sin Marca";
             }
         }
 
@@ -284,46 +206,24 @@ namespace WebApplication1
             try
             {
                 int index = Convert.ToInt32(e.CommandArgument);
-                Label codigo = (Label)gridViewIngredientes.Rows[index].FindControl("lblCodigo");
+                Label codigo = (Label)gridViewIngredientesAlimento.Rows[index].FindControl("lblCodigo");
                 int id = Convert.ToInt32(codigo.Text);
-                Alimento obj = aDAL.Find(id);
-
-                foreach (string[] s in IngredienteAlimento.ListarIngredientes())
-                {
-                    if (s[1] == obj.IdAlimento + "")
-                    {
-                        index = IngredienteAlimento.ListarIngredientes().IndexOf(s);
-                    }
-                }
-                string[] ingrediente = IngredienteAlimento.BuscarIngrediente(index);
-                int cantidad = Convert.ToInt32(ingrediente[0]);
+                Ingrediente ingrediente = iDAL.Find(id);
 
                 switch (e.CommandName)
                 {
                     case "Quitar":
-
-                        if (cantidad <= 1)
-                        {
-                            IngredienteAlimento.EliminarIngrediente(index);
-                        }
-                        else
-                        {
-                            cantidad--;
-                            ingrediente[0] = cantidad.ToString();
-                            IngredienteAlimento.ModificarIngrediente(index, ingrediente);
-                        }
+                        listaIngrediente.SubstractOne(ingrediente);
                         break;
                     case "Agregar":
-                        cantidad++;
-                        ingrediente[0] = cantidad.ToString();
-                        IngredienteAlimento.ModificarIngrediente(index, ingrediente);
+                        listaIngrediente.AddIngrediente(ingrediente);
                         break;
                 }
                 CargarGridIngredienteAlimento();
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = ex.Message;
+                UserMessage(ex.Message, "danger");
             }
         }
 
@@ -336,6 +236,11 @@ namespace WebApplication1
             }
         }
 
+        protected void ImageAjaxFile_UploadedComplete(object sender, AjaxControlToolkit.AsyncFileUploadEventArgs e)
+        {
+            UploadImage(ImageAjaxFile.FileBytes, Path.GetExtension(ImageAjaxFile.FileName));
+        }
+
 
 
         private void Limpiar()
@@ -343,9 +248,11 @@ namespace WebApplication1
             txtNombre.Text = "";
             txtCalorias.Text = "";
             txtValor.Text = "";
+            txtDescripcion.Text = "";
+            cboCategoriaAlimento.SelectedValue = "0";
             //chkVigencia.Checked = true;
             //chkVigencia.Enabled = false;
-            IngredienteAlimento.EliminarIngredientes();
+            listaIngrediente.RemoveAll();
             CargarGridIngredienteAlimento();
             btnAgregar.Visible = true;
             btnModificar.Visible = false;
@@ -353,7 +260,7 @@ namespace WebApplication1
 
         private void CargarGridIngredienteAlimento()
         {
-            gridViewIngredientesAlimento.DataSource = IngredienteAlimento.DataTableIngredientes();
+            gridViewIngredientesAlimento.DataSource = listaIngrediente.DataTableAIngredientes();
             gridViewIngredientesAlimento.DataBind();
         }
 
@@ -362,6 +269,14 @@ namespace WebApplication1
             txtNombre.Text = alimento.Nombre;
             txtCalorias.Text = alimento.Calorías != null ? alimento.Calorías.ToString() : "";
             txtValor.Text = alimento.Precio.ToString();
+            txtDescripcion.Text = alimento.Descripcion.ToString();
+            cboCategoriaAlimento.SelectedValue = alimento.IdClasificacion.ToString();
+            if (!string.IsNullOrEmpty(alimento.Foto))
+            {
+                string carpetPath = Server.MapPath("/Fotos/Productos/");
+                string extentsion = alimento.Foto.Substring(alimento.Foto.IndexOf("."));
+                UploadImage(File.ReadAllBytes($"{carpetPath}{alimento.Foto}"),extentsion);
+            }
             btnAgregar.Visible = false;
             btnModificar.Visible = true;
             ViewState["IdAlimento"] = alimento.IdAlimento;
@@ -372,32 +287,19 @@ namespace WebApplication1
 
         protected void LlenarGridIngredientes(Alimento alimento)
         {
-            IngredienteAlimento.EliminarIngredientes(); //Se vacía la lista
+            listaIngrediente.RemoveAll();
 
             List<IngredientesAlimento> lista = aDAL.BuscarIngredientesPorAlimento(alimento.IdAlimento);
-            foreach (IngredientesAlimento ingredienteAl in lista)
+            foreach (IngredientesAlimento ingredientesBDD in lista)
             {
-                Ingrediente xx = iDAL.Find((int)ingredienteAl.Ingrediente);
-                //Orden: Cantidad-IdIngrediente-Nombre-Descripcion-ValorUnidad-Marca-TipoMedicion
-                string[] ingrediente = new string[7];
-
-                ingrediente[0] = ingredienteAl.Cantidad.ToString();
-                ingrediente[1] = ingredienteAl.Ingrediente.ToString();
-                ingrediente[2] = xx.Nombre;
-                ingrediente[3] = xx.Descripcion;
-                ingrediente[4] = xx.ValorNeto.ToString();
-                ingrediente[5] = xx.IdMarca.ToString();
-                ingrediente[6] = xx.IdTipoMedicion.ToString();
-
-
-                IngredienteAlimento.AgregarIngrediente(ingrediente);
+                listaIngrediente.AddIngrediente(ingredientesBDD);
             }
             CargarGridIngredienteAlimento();
         }
 
         protected void ValidarCampos()
         {
-            if (IngredienteAlimento.ListarIngredientes().Count == 0) { throw new Exception("Debe Ingresar Ingredientes"); }
+            if (listaIngrediente.GetList().Count == 0) { throw new Exception("Debe Ingresar Ingredientes"); }
 
             if (txtNombre.Text.Trim() == "") { throw new Exception("Debe Ingresar un Nombre"); }
 
@@ -407,11 +309,139 @@ namespace WebApplication1
 
             if (txtCalorias.Text.Trim() == "") { throw new Exception("Debe ingresar la cantidad de calorias"); }
 
-            try { Convert.ToInt32(txtCalorias.Text); }
-            catch (Exception) { throw new Exception("Las calorías deben ser un número entero"); }
+            int flag;
 
-            try { Convert.ToInt32(txtValor.Text); }
-            catch (Exception) { throw new Exception("El valor debe ser un número entero"); }
+            if (!int.TryParse(txtCalorias.Text, out flag)) { throw new Exception("Las calorías deben ser un número entero"); }
+
+            if (!int.TryParse(txtValor.Text, out flag)) { throw new Exception("El valor debe ser un número entero"); }
+
+            if (data.getImage() == null) { throw new Exception("Debe igresar una foto para la preparación"); }
+        }
+
+        private void UpdateIngredients(int idAlimento)
+        {
+            List<IngredientesAlimento> ingredientesGrid = listaIngrediente.GetList();
+            List<IngredientesAlimento> ingredientesDataBase = iADAL.Ingredientes(idAlimento);
+
+            ChangeQuantity(ingredientesGrid, ingredientesDataBase);
+            AddNewIngredients(ingredientesGrid, ingredientesDataBase, idAlimento);
+            DeleteIngredients(ingredientesGrid, ingredientesDataBase);
+        }
+
+        private void ChangeQuantity(List<IngredientesAlimento> ingredientesGrid, List<IngredientesAlimento> ingredientesDataBase)
+        {
+            foreach (IngredientesAlimento itemGrid in ingredientesGrid)
+            {
+                IngredientesAlimento itemBDD = ingredientesDataBase.FirstOrDefault(i => i.Ingrediente == itemGrid.Ingrediente);
+                if (itemBDD != null)
+                {
+                    itemBDD.Cantidad = itemGrid.Cantidad;
+                    iADAL.Update(itemBDD);
+                }
+            }
+        }
+
+        private void AddNewIngredients(List<IngredientesAlimento> ingredientesGrid, List<IngredientesAlimento> ingredientesDataBase, int idAlimento)
+        {
+            foreach (IngredientesAlimento itemGrid in ingredientesGrid)
+            {
+                if (ingredientesDataBase.FirstOrDefault(obj => obj.Ingrediente == itemGrid.Ingrediente) == null)
+                {
+                    iADAL.Add(new IngredientesAlimento()
+                    {
+                        Alimento = idAlimento,
+                        Ingrediente = itemGrid.Ingrediente,
+                        Cantidad = itemGrid.Cantidad
+                    });
+                }
+            }
+        }
+
+        private void DeleteIngredients(List<IngredientesAlimento> ingredientesGrid, List<IngredientesAlimento> ingredientesDataBase)
+        {
+            foreach (IngredientesAlimento itemBDD in ingredientesDataBase)
+            {
+                if (ingredientesGrid.FirstOrDefault(i => i.Ingrediente == itemBDD.Ingrediente) == null)
+                {
+                    iADAL.Remove(itemBDD.IdIngredientesAlimento);
+                }
+            }
+        }
+
+        private void InsertIngredientes(Alimento obj)
+        {
+            List<IngredientesAlimento> listaGrid = listaIngrediente.GetList();
+            foreach (IngredientesAlimento ingrediente in listaGrid)
+            {
+                iADAL.Add(new IngredientesAlimento()
+                {
+                    Alimento = obj.IdAlimento,
+                    Ingrediente = ingrediente.Ingrediente,
+                    Cantidad = ingrediente.Cantidad
+                });
+            }
+        }
+
+        protected void btn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected string SaveImage()
+        {
+            string nombre = GetNewImageName();
+            string carpetPath = Server.MapPath("/Fotos/Productos/");
+            byte[] image = data.getImage();
+            File.WriteAllBytes($"{carpetPath}{nombre}", image);
+            data.setImage(null, "");
+            return nombre;
+        }
+
+        protected string GetNewImageName()
+        {
+            string nombre = txtNombre.Text;
+            string extension = data.getExtension();
+            string carpetPath = Server.MapPath("/Fotos/Productos/");
+
+            bool exist = true;
+            if (File.Exists($"{carpetPath}{nombre}{extension}"))
+            {
+                int helperNum = 1;
+                while (exist)
+                {
+                    if (File.Exists($"{carpetPath}{nombre + helperNum}{extension}"))
+                    {
+                        helperNum++;
+                    }
+                    else
+                    {
+                        nombre = nombre + helperNum;
+                        exist = false;
+                    }
+                }
+            }
+            nombre = nombre + extension;
+            return nombre;
+        }
+
+        protected void UserMessage(string mensaje, string type)
+        {
+            if (mensaje != "")
+            {
+                DivMessage.Attributes.Add("class", "alert alert-" + type);
+                lblMensaje.Text = mensaje;
+            }
+            else
+            {
+                DivMessage.Attributes.Add("class", "");
+                lblMensaje.Text = mensaje;
+            }
+        }
+
+        private void UploadImage(byte[] image, string extension)
+        {
+            data.setImage(image, extension);
+            Image1.ImageUrl = "data:image;base64," + Convert.ToBase64String(image);
         }
     }
 }

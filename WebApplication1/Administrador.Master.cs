@@ -17,7 +17,6 @@ namespace WebApplication1
         
         protected void linkAlimentos_Click(object sender, EventArgs e)
         {
-            IngredienteAlimento.EliminarIngredientes();
             Response.Redirect("/Mantenedores/CrudAlimentos.aspx");
         }
     }

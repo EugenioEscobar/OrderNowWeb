@@ -279,18 +279,31 @@ namespace WebApplication1
         protected void GridViewExtras_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             GridViewRow row = GridViewExtras.Rows[Convert.ToInt32(e.CommandArgument)];
+            int idExtra = Convert.ToInt32((row.FindControl("lblIdExtra") as Label).Text);
+            ExtraPedido extra = carrito.FindExtra(idExtra);
             switch (e.CommandName)
             {
                 case "Modificar":
-                    int idExtra = Convert.ToInt32((row.FindControl("lblIdExtra") as Label).Text);
-                    ExtraPedido extra = carrito.FindExtra(idExtra);
                     EliminarCbo();
                     ViewState["IdExtra"] = idExtra;
                     LlenarExtraFields(extra);
                     SwitchTextBox(false);
                     break;
-
+                case "Eliminar":
+                    carrito.RemoveExtra(extra);
+                    CargarGridExtras(extra.IdAlimentoPedido.Value);
+                    break;
             }
+        }
+
+        protected void btnShowPreparations_Click(object sender, EventArgs e)
+        {
+            ToogleGrid(false);
+        }
+
+        protected void btnShowOferts_Click(object sender, EventArgs e)
+        {
+            ToogleGrid(true);
         }
 
 
@@ -596,10 +609,24 @@ namespace WebApplication1
             }
         }
 
-        protected void chkMostrarOfertas_CheckedChanged(object sender, EventArgs e)
+        private void ToogleGrid(bool ShowOferts)
         {
-            GridPreparaciones.Visible = !chkMostrarOfertas.Checked;
-            GridOfertas.Visible = chkMostrarOfertas.Checked;
+            GridPreparaciones.Visible = !ShowOferts;
+            GridOfertas.Visible = ShowOferts;
+        }
+
+        protected void GridViewPedido_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                GridViewRow row = e.Row;
+                Label lblTipoElemento = (Label)e.Row.FindControl("lblTipoElemento");
+                LinkButton btnExtra = row.FindControl("btnAgregarExtra") as LinkButton;
+                if (lblTipoElemento.Text == "Oferta")
+                {
+                    btnExtra.Visible = false;
+                }
+            }
         }
     }
 }

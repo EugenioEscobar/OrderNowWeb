@@ -43,7 +43,7 @@ namespace OrderNowDAL.DAL
 
             double precioPromedioTotal = precioPromedioActual != null ? (double)(precioTotalFactura + precioPromedioActual) / ((int)obj.Cantidad + (int)ingrediente.Stock) : (double)obj.Precio;
             ingrediente.Stock += obj.Cantidad;
-            ingrediente.ValorNeto = precioPromedioTotal;
+            ingrediente.ValorNeto = Math.Round(precioPromedioTotal,2);
             nowBDEntities.SaveChanges();
         }
     }

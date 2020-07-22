@@ -31,7 +31,7 @@ namespace OrderNowDAL.DAL
             nowBDEntities.IngredientesAlimento.Remove(obj);
             nowBDEntities.SaveChanges();
         }
-        public void Edit(IngredientesAlimento m)
+        public void Update(IngredientesAlimento m)
         {
             IngredientesAlimento iAl = nowBDEntities.IngredientesAlimento.FirstOrDefault(x => x.IdIngredientesAlimento == m.IdIngredientesAlimento);
             iAl.Ingrediente = m.Ingrediente;

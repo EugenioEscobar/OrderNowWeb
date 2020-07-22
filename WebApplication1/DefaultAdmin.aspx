@@ -12,7 +12,8 @@
         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
-                <asp:GridView ID="GridView1" runat="server" DataSourceID="SqlDataSource1" AutoGenerateColumns="False" ShowHeaderWhenEmpty="True" CssClass="table" OnRowCommand="GridView1_RowCommand" DataKeyNames="IdPedido" OnRowDataBound="GridView1_RowDataBound" HeaderStyle-CssClass="thead-dark" GridLines="None">
+                <asp:GridView ID="GridView1" runat="server" DataSourceID="SqlDataSource1" AutoGenerateColumns="False" ShowHeaderWhenEmpty="True" CssClass="table" 
+                    OnRowCommand="GridView1_RowCommand" DataKeyNames="IdPedido" OnRowDataBound="GridView1_RowDataBound" HeaderStyle-CssClass="thead-dark" GridLines="None">
                     <Columns>
                         <asp:TemplateField ItemStyle-CssClass="align-middle">
                             <HeaderTemplate>
