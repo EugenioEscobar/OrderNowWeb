@@ -11,10 +11,13 @@
                     <div class="h1">
                         Administrar Ofertas
                     </div>
-                    <div class="form-row d-flex justify-content-center">
+                    <div class="form-row d-flex justify-content-center my-2">
                         <%--<asp:Button ID="btn" runat="server" Text="LoadImage" OnClick="btn_Click" class="btn btn-primary mx-2" Width="300px" Visible="false" />--%>
                         <asp:Image ID="Image1" runat="server" ImageUrl="/Fotos/Sin Foto.jpg" CssClass="gsagsda"
-                            Style="width: 600px; height: 260px; object-fit: contain; box-shadow: 0 5px 20px rgba(0,0,0,0.1);" />
+                            Style="width: 500px; height: 230px; object-fit: contain; box-shadow: 0 5px 20px rgba(0,0,0,0.1);" />
+                    </div>
+                    <div class="my-2">
+                        <ajaxToolkit:AsyncFileUpload ID="ImageAjaxFile" runat="server" OnUploadedComplete="ImageAjaxFile_UploadedComplete" ToolTip="Seleccione una imagen" />
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
@@ -67,7 +70,7 @@
                             <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" CssClass="btn btn-primary" OnClick="btnLimpiar_Click" />
                         </div>
                         <div class="col d-flex justify-content-end">
-                            <asp:LinkButton ID="btnChangeTables" runat="server" CssClass="ml-4" OnClick="btnChangeTables_Click">Ver Alimentos</asp:LinkButton>
+                            <asp:LinkButton ID="btnChangeTables" runat="server" CssClass="mr-4" OnClick="btnChangeTables_Click">Ver Alimentos</asp:LinkButton>
                         </div>
                     </div>
                     <div id="DivOfertas" runat="server">

@@ -63,5 +63,46 @@ namespace OrderNowDAL.DAL
             have = lis1.Count > 0;
             return have;
         }
+
+        public List<EquivalenciaMediciones> GetEquivalencias(int idTipoMedicion)
+        {
+            return nowBDEntities.EquivalenciaMediciones.Where(x => (x.IdTipoMedicionEquivalente == idTipoMedicion) || (x.IdTipoMedicionInicial == idTipoMedicion)).ToList();
+        }
+
+        public List<TipoMedicion> GetMediciones(int idTipoMedicion)
+        {
+            List<TipoMedicion> mediciones = new List<TipoMedicion>();
+            List<EquivalenciaMediciones> listado = GetEquivalencias(idTipoMedicion);
+
+            mediciones.Add(Find(idTipoMedicion));
+            foreach (EquivalenciaMediciones item in listado)
+            {
+                if (item.IdTipoMedicionInicial == idTipoMedicion)
+                {
+                    mediciones.Add(Find(item.IdTipoMedicionEquivalente));
+                }
+                else
+                {
+                    mediciones.Add(Find(item.IdTipoMedicionInicial));
+                }
+            }
+            return mediciones;
+        }
+
+        public int GetConvertedStock(int stockActual, int cantidadPorcion, int idMedicionIngrediente, int idMedicionPorcion)
+        {
+            double newStock = 0;
+            List<EquivalenciaMediciones> equivalencias = GetEquivalencias(idMedicionIngrediente);
+            EquivalenciaMediciones equivalenciaMedicion = equivalencias.FirstOrDefault(x => x.IdTipoMedicionInicial == idMedicionPorcion || x.IdTipoMedicionEquivalente == idMedicionPorcion);
+            if (equivalenciaMedicion.IdTipoMedicionEquivalente == idMedicionIngrediente)
+            {
+                newStock = stockActual * equivalenciaMedicion.Equivalencia / cantidadPorcion;
+            }
+            else
+            {
+                newStock = stockActual / equivalenciaMedicion.Equivalencia / cantidadPorcion;
+            }
+            return (int)Math.Truncate(newStock);
+        }
     }
 }

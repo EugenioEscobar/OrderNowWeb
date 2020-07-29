@@ -114,6 +114,7 @@
     <EntitySetMapping Name="Ingrediente">
       <EntityTypeMapping TypeName="OrderNowBDModel.Ingrediente">
         <MappingFragment StoreEntitySet="Ingrediente">
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
           <ScalarProperty Name="IdTipoMedicionPorcion" ColumnName="IdTipoMedicionPorcion" />
           <ScalarProperty Name="IdIngrediente" ColumnName="IdIngrediente" />
           <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -319,6 +320,16 @@
           <ScalarProperty Name="Estado" ColumnName="Estado" />
           <ScalarProperty Name="Nombre" ColumnName="Nombre" />
           <ScalarProperty Name="IdClasificacion" ColumnName="IdClasificacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EquivalenciaMediciones">
+      <EntityTypeMapping TypeName="OrderNowBDModel.EquivalenciaMediciones">
+        <MappingFragment StoreEntitySet="EquivalenciaMediciones">
+          <ScalarProperty Name="IdTipoMedicionEquivalente" ColumnName="IdTipoMedicionEquivalente" />
+          <ScalarProperty Name="Equivalencia" ColumnName="Equivalencia" />
+          <ScalarProperty Name="IdTipoMedicionInicial" ColumnName="IdTipoMedicionInicial" />
+          <ScalarProperty Name="IdEquivalencia" ColumnName="IdEquivalencia" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

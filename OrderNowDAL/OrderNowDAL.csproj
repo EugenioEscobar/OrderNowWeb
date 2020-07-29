@@ -93,6 +93,7 @@
     <Compile Include="DAL\ClienteDAL.cs" />
     <Compile Include="DAL\ComunaDAL.cs" />
     <Compile Include="DAL\DistribuidorDAL.cs" />
+    <Compile Include="DAL\EquivalenciaMedicionesDAL.cs" />
     <Compile Include="DAL\EstadoPedidoDAL.cs" />
     <Compile Include="DAL\ExtraPedidoDAL.cs" />
     <Compile Include="DAL\ExtraPedidoGrid.cs" />
@@ -118,6 +119,9 @@
     <Compile Include="DAL\TrabajadorDAL.cs" />
     <Compile Include="DAL\UsuarioDAL.cs" />
     <Compile Include="Distribuidor.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EquivalenciaMediciones.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="EstadoPedido.cs">

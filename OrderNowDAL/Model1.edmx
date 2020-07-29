@@ -70,6 +70,20 @@
           <Property Name="IdProvincia" Type="int" />
           <Property Name="Estado" Type="varchar" MaxLength="1" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'OrderNowBD.dbo.DetalleIngrediente' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="DetalleIngrediente">
+          <Key>
+            <PropertyRef Name="IdIngredienteDetalle" />
+          </Key>
+          <Property Name="IdIngredienteDetalle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdIngrediente" Type="int" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="200" />
+          <Property Name="IdMarca" Type="int" />
+          <Property Name="CantidadIngresada" Type="int" />
+          <Property Name="Foto" Type="varchar" MaxLength="50" />
+          <Property Name="Estado" Type="int" />
+        </EntityType>
         <EntityType Name="Distribuidor">
           <Key>
             <PropertyRef Name="IdDistribuidor" />
@@ -83,6 +97,15 @@
           <Property Name="Email" Type="varchar" MaxLength="50" />
           <Property Name="Telefono" Type="int" />
           <Property Name="Estado" Type="int" />
+        </EntityType>
+        <EntityType Name="EquivalenciaMediciones">
+          <Key>
+            <PropertyRef Name="IdEquivalencia" />
+          </Key>
+          <Property Name="IdEquivalencia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdTipoMedicionInicial" Type="int" Nullable="false" />
+          <Property Name="Equivalencia" Type="int" Nullable="false" />
+          <Property Name="IdTipoMedicionEquivalente" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="EstadoPedido">
           <Key>
@@ -129,6 +152,7 @@
           <Property Name="Foto" Type="varchar" MaxLength="50" />
           <Property Name="Porción" Type="int" />
           <Property Name="IdTipoMedicionPorcion" Type="int" />
+          <Property Name="Estado" Type="int" />
         </EntityType>
         <EntityType Name="IngredienteFactura">
           <Key>
@@ -382,6 +406,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__DetalleIn__IdIng__32767D0B">
+          <End Role="Ingrediente" Type="Self.Ingrediente" Multiplicity="0..1" />
+          <End Role="DetalleIngrediente" Type="Self.DetalleIngrediente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingrediente">
+              <PropertyRef Name="IdIngrediente" />
+            </Principal>
+            <Dependent Role="DetalleIngrediente">
+              <PropertyRef Name="IdIngrediente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetalleIn__IdMar__336AA144">
+          <End Role="Marca" Type="Self.Marca" Multiplicity="0..1" />
+          <End Role="DetalleIngrediente" Type="Self.DetalleIngrediente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Marca">
+              <PropertyRef Name="IdMarca" />
+            </Principal>
+            <Dependent Role="DetalleIngrediente">
+              <PropertyRef Name="IdMarca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Distribui__IdCom__4CA06362">
           <End Role="Comuna" Type="Self.Comuna" Multiplicity="0..1" />
           <End Role="Distribuidor" Type="Self.Distribuidor" Multiplicity="*" />
@@ -391,6 +439,30 @@
             </Principal>
             <Dependent Role="Distribuidor">
               <PropertyRef Name="IdComuna" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Equivalen__IdTip__1D7B6025">
+          <End Role="TipoMedicion" Type="Self.TipoMedicion" Multiplicity="1" />
+          <End Role="EquivalenciaMediciones" Type="Self.EquivalenciaMediciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoMedicion">
+              <PropertyRef Name="IdTipoMedicion" />
+            </Principal>
+            <Dependent Role="EquivalenciaMediciones">
+              <PropertyRef Name="IdTipoMedicionInicial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Equivalen__IdTip__1E6F845E">
+          <End Role="TipoMedicion" Type="Self.TipoMedicion" Multiplicity="1" />
+          <End Role="EquivalenciaMediciones" Type="Self.EquivalenciaMediciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoMedicion">
+              <PropertyRef Name="IdTipoMedicion" />
+            </Principal>
+            <Dependent Role="EquivalenciaMediciones">
+              <PropertyRef Name="IdTipoMedicionEquivalente" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -702,6 +774,7 @@
           <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comuna" EntityType="Self.Comuna" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Distribuidor" EntityType="Self.Distribuidor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EquivalenciaMediciones" EntityType="Self.EquivalenciaMediciones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EstadoPedido" EntityType="Self.EstadoPedido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExtraPedido" EntityType="Self.ExtraPedido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Factura" EntityType="Self.Factura" Schema="dbo" store:Type="Tables" />
@@ -723,6 +796,17 @@
           <EntitySet Name="TipoUsuario" EntityType="Self.TipoUsuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Trabajador" EntityType="Self.Trabajador" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetalleIngrediente" EntityType="Self.DetalleIngrediente" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [DetalleIngrediente].[IdIngredienteDetalle] AS [IdIngredienteDetalle], 
+    [DetalleIngrediente].[IdIngrediente] AS [IdIngrediente], 
+    [DetalleIngrediente].[Descripcion] AS [Descripcion], 
+    [DetalleIngrediente].[IdMarca] AS [IdMarca], 
+    [DetalleIngrediente].[CantidadIngresada] AS [CantidadIngresada], 
+    [DetalleIngrediente].[Foto] AS [Foto], 
+    [DetalleIngrediente].[Estado] AS [Estado]
+    FROM [dbo].[DetalleIngrediente] AS [DetalleIngrediente]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK__AlimentoP__IdAli__7D439ABD" Association="Self.FK__AlimentoP__IdAli__7D439ABD">
             <End Role="Alimento" EntitySet="Alimento" />
             <End Role="AlimentoPedido" EntitySet="AlimentoPedido" />
@@ -751,9 +835,25 @@
             <End Role="Provincia" EntitySet="Provincia" />
             <End Role="Comuna" EntitySet="Comuna" />
           </AssociationSet>
+          <AssociationSet Name="FK__DetalleIn__IdIng__32767D0B" Association="Self.FK__DetalleIn__IdIng__32767D0B">
+            <End Role="Ingrediente" EntitySet="Ingrediente" />
+            <End Role="DetalleIngrediente" EntitySet="DetalleIngrediente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetalleIn__IdMar__336AA144" Association="Self.FK__DetalleIn__IdMar__336AA144">
+            <End Role="Marca" EntitySet="Marca" />
+            <End Role="DetalleIngrediente" EntitySet="DetalleIngrediente" />
+          </AssociationSet>
           <AssociationSet Name="FK__Distribui__IdCom__4CA06362" Association="Self.FK__Distribui__IdCom__4CA06362">
             <End Role="Comuna" EntitySet="Comuna" />
             <End Role="Distribuidor" EntitySet="Distribuidor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Equivalen__IdTip__1D7B6025" Association="Self.FK__Equivalen__IdTip__1D7B6025">
+            <End Role="TipoMedicion" EntitySet="TipoMedicion" />
+            <End Role="EquivalenciaMediciones" EntitySet="EquivalenciaMediciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Equivalen__IdTip__1E6F845E" Association="Self.FK__Equivalen__IdTip__1E6F845E">
+            <End Role="TipoMedicion" EntitySet="TipoMedicion" />
+            <End Role="EquivalenciaMediciones" EntitySet="EquivalenciaMediciones" />
           </AssociationSet>
           <AssociationSet Name="FK__ExtraPedi__IdAli__1EA48E88" Association="Self.FK__ExtraPedi__IdAli__1EA48E88">
             <End Role="AlimentoPedido" EntitySet="AlimentoPedido" />
@@ -1007,6 +1107,8 @@
           <NavigationProperty Name="IngredientesAlimento" Relationship="Self.FK__Ingredien__Ingre__75A278F5" FromRole="Ingrediente" ToRole="IngredientesAlimento" />
           <Property Name="IdTipoMedicionPorcion" Type="Int32" />
           <NavigationProperty Name="TipoMedicion1" Relationship="OrderNowBDModel.FK__Ingredien__IdTip__607251E5" FromRole="Ingrediente" ToRole="TipoMedicion" />
+          <Property Name="Estado" Type="Int32" />
+          <NavigationProperty Name="DetalleIngrediente" Relationship="OrderNowBDModel.FK__DetalleIn__IdIng__32767D0B" FromRole="Ingrediente" ToRole="DetalleIngrediente" />
         </EntityType>
         <EntityType Name="IngredienteFactura">
           <Key>
@@ -1040,6 +1142,7 @@
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Estado" Type="Int32" />
           <NavigationProperty Name="Ingrediente" Relationship="Self.FK__Ingredien__IdMar__5DCAEF64" FromRole="Marca" ToRole="Ingrediente" />
+          <NavigationProperty Name="DetalleIngrediente" Relationship="OrderNowBDModel.FK__DetalleIn__IdMar__336AA144" FromRole="Marca" ToRole="DetalleIngrediente" />
         </EntityType>
         <EntityType Name="Oferta">
           <Key>
@@ -1147,6 +1250,8 @@
           <Property Name="Simbología" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Ingrediente" Relationship="Self.FK__Ingredien__IdTip__5FB337D6" FromRole="TipoMedicion" ToRole="Ingrediente" />
           <NavigationProperty Name="Ingrediente1" Relationship="OrderNowBDModel.FK__Ingredien__IdTip__607251E5" FromRole="TipoMedicion" ToRole="Ingrediente" />
+          <NavigationProperty Name="EquivalenciaMediciones" Relationship="OrderNowBDModel.FK__Equivalen__IdTip__1D7B6025" FromRole="TipoMedicion" ToRole="EquivalenciaMediciones" />
+          <NavigationProperty Name="EquivalenciaMediciones1" Relationship="OrderNowBDModel.FK__Equivalen__IdTip__1E6F845E" FromRole="TipoMedicion" ToRole="EquivalenciaMediciones" />
         </EntityType>
         <EntityType Name="TipoPago">
           <Key>
@@ -1743,6 +1848,24 @@
             <End Role="ClasificacionAlimento" EntitySet="ClasificacionAlimento" />
             <End Role="Alimento" EntitySet="Alimento" />
           </AssociationSet>
+          <EntitySet Name="EquivalenciaMediciones" EntityType="OrderNowBDModel.EquivalenciaMediciones" />
+          <AssociationSet Name="FK__Equivalen__IdTip__1D7B6025" Association="OrderNowBDModel.FK__Equivalen__IdTip__1D7B6025">
+            <End Role="TipoMedicion" EntitySet="TipoMedicion" />
+            <End Role="EquivalenciaMediciones" EntitySet="EquivalenciaMediciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Equivalen__IdTip__1E6F845E" Association="OrderNowBDModel.FK__Equivalen__IdTip__1E6F845E">
+            <End Role="TipoMedicion" EntitySet="TipoMedicion" />
+            <End Role="EquivalenciaMediciones" EntitySet="EquivalenciaMediciones" />
+          </AssociationSet>
+          <EntitySet Name="DetalleIngrediente" EntityType="OrderNowBDModel.DetalleIngrediente" />
+          <AssociationSet Name="FK__DetalleIn__IdIng__32767D0B" Association="OrderNowBDModel.FK__DetalleIn__IdIng__32767D0B">
+            <End Role="Ingrediente" EntitySet="Ingrediente" />
+            <End Role="DetalleIngrediente" EntitySet="DetalleIngrediente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetalleIn__IdMar__336AA144" Association="OrderNowBDModel.FK__DetalleIn__IdMar__336AA144">
+            <End Role="Marca" EntitySet="Marca" />
+            <End Role="DetalleIngrediente" EntitySet="DetalleIngrediente" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK__Ingredien__IdTip__607251E5">
           <End Type="OrderNowBDModel.TipoMedicion" Role="TipoMedicion" Multiplicity="0..1" />
@@ -1774,6 +1897,79 @@
             </Principal>
             <Dependent Role="Alimento">
               <PropertyRef Name="IdClasificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="EquivalenciaMediciones">
+          <Key>
+            <PropertyRef Name="IdEquivalencia" />
+          </Key>
+          <Property Name="IdEquivalencia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdTipoMedicionInicial" Type="Int32" Nullable="false" />
+          <Property Name="Equivalencia" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoMedicionEquivalente" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TipoMedicion" Relationship="OrderNowBDModel.FK__Equivalen__IdTip__1D7B6025" FromRole="EquivalenciaMediciones" ToRole="TipoMedicion" />
+          <NavigationProperty Name="TipoMedicion1" Relationship="OrderNowBDModel.FK__Equivalen__IdTip__1E6F845E" FromRole="EquivalenciaMediciones" ToRole="TipoMedicion" />
+        </EntityType>
+        <Association Name="FK__Equivalen__IdTip__1D7B6025">
+          <End Type="OrderNowBDModel.TipoMedicion" Role="TipoMedicion" Multiplicity="1" />
+          <End Type="OrderNowBDModel.EquivalenciaMediciones" Role="EquivalenciaMediciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoMedicion">
+              <PropertyRef Name="IdTipoMedicion" />
+            </Principal>
+            <Dependent Role="EquivalenciaMediciones">
+              <PropertyRef Name="IdTipoMedicionInicial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Equivalen__IdTip__1E6F845E">
+          <End Type="OrderNowBDModel.TipoMedicion" Role="TipoMedicion" Multiplicity="1" />
+          <End Type="OrderNowBDModel.EquivalenciaMediciones" Role="EquivalenciaMediciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoMedicion">
+              <PropertyRef Name="IdTipoMedicion" />
+            </Principal>
+            <Dependent Role="EquivalenciaMediciones">
+              <PropertyRef Name="IdTipoMedicionEquivalente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DetalleIngrediente">
+          <Key>
+            <PropertyRef Name="IdIngredienteDetalle" />
+          </Key>
+          <Property Name="IdIngredienteDetalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdIngrediente" Type="Int32" />
+          <Property Name="Descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IdMarca" Type="Int32" />
+          <Property Name="CantidadIngresada" Type="Int32" />
+          <Property Name="Foto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Int32" />
+          <NavigationProperty Name="Ingrediente" Relationship="OrderNowBDModel.FK__DetalleIn__IdIng__32767D0B" FromRole="DetalleIngrediente" ToRole="Ingrediente" />
+          <NavigationProperty Name="Marca" Relationship="OrderNowBDModel.FK__DetalleIn__IdMar__336AA144" FromRole="DetalleIngrediente" ToRole="Marca" />
+        </EntityType>
+        <Association Name="FK__DetalleIn__IdIng__32767D0B">
+          <End Type="OrderNowBDModel.Ingrediente" Role="Ingrediente" Multiplicity="0..1" />
+          <End Type="OrderNowBDModel.DetalleIngrediente" Role="DetalleIngrediente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingrediente">
+              <PropertyRef Name="IdIngrediente" />
+            </Principal>
+            <Dependent Role="DetalleIngrediente">
+              <PropertyRef Name="IdIngrediente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetalleIn__IdMar__336AA144">
+          <End Type="OrderNowBDModel.Marca" Role="Marca" Multiplicity="0..1" />
+          <End Type="OrderNowBDModel.DetalleIngrediente" Role="DetalleIngrediente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Marca">
+              <PropertyRef Name="IdMarca" />
+            </Principal>
+            <Dependent Role="DetalleIngrediente">
+              <PropertyRef Name="IdMarca" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1896,6 +2092,7 @@
           <EntitySetMapping Name="Ingrediente">
             <EntityTypeMapping TypeName="OrderNowBDModel.Ingrediente">
               <MappingFragment StoreEntitySet="Ingrediente">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="IdTipoMedicionPorcion" ColumnName="IdTipoMedicionPorcion" />
                 <ScalarProperty Name="IdIngrediente" ColumnName="IdIngrediente" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -2101,6 +2298,29 @@
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="IdClasificacion" ColumnName="IdClasificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EquivalenciaMediciones">
+            <EntityTypeMapping TypeName="OrderNowBDModel.EquivalenciaMediciones">
+              <MappingFragment StoreEntitySet="EquivalenciaMediciones">
+                <ScalarProperty Name="IdTipoMedicionEquivalente" ColumnName="IdTipoMedicionEquivalente" />
+                <ScalarProperty Name="Equivalencia" ColumnName="Equivalencia" />
+                <ScalarProperty Name="IdTipoMedicionInicial" ColumnName="IdTipoMedicionInicial" />
+                <ScalarProperty Name="IdEquivalencia" ColumnName="IdEquivalencia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetalleIngrediente">
+            <EntityTypeMapping TypeName="OrderNowBDModel.DetalleIngrediente">
+              <MappingFragment StoreEntitySet="DetalleIngrediente">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Foto" ColumnName="Foto" />
+                <ScalarProperty Name="CantidadIngresada" ColumnName="CantidadIngresada" />
+                <ScalarProperty Name="IdMarca" ColumnName="IdMarca" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdIngrediente" ColumnName="IdIngrediente" />
+                <ScalarProperty Name="IdIngredienteDetalle" ColumnName="IdIngredienteDetalle" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

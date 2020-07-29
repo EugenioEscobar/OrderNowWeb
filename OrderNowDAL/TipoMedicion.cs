@@ -19,6 +19,8 @@ namespace OrderNowDAL
         {
             this.Ingrediente = new HashSet<Ingrediente>();
             this.Ingrediente1 = new HashSet<Ingrediente>();
+            this.EquivalenciaMediciones = new HashSet<EquivalenciaMediciones>();
+            this.EquivalenciaMediciones1 = new HashSet<EquivalenciaMediciones>();
         }
     
         public int IdTipoMedicion { get; set; }
@@ -30,5 +32,9 @@ namespace OrderNowDAL
         public virtual ICollection<Ingrediente> Ingrediente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ingrediente> Ingrediente1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EquivalenciaMediciones> EquivalenciaMediciones { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EquivalenciaMediciones> EquivalenciaMediciones1 { get; set; }
     }
 }

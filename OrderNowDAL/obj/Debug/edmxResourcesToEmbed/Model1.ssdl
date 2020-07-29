@@ -79,6 +79,15 @@
     <Property Name="Telefono" Type="int" />
     <Property Name="Estado" Type="int" />
   </EntityType>
+  <EntityType Name="EquivalenciaMediciones">
+    <Key>
+      <PropertyRef Name="IdEquivalencia" />
+    </Key>
+    <Property Name="IdEquivalencia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdTipoMedicionInicial" Type="int" Nullable="false" />
+    <Property Name="Equivalencia" Type="int" Nullable="false" />
+    <Property Name="IdTipoMedicionEquivalente" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="EstadoPedido">
     <Key>
       <PropertyRef Name="IdEstado" />
@@ -124,6 +133,7 @@
     <Property Name="Foto" Type="varchar" MaxLength="50" />
     <Property Name="Porción" Type="int" />
     <Property Name="IdTipoMedicionPorcion" Type="int" />
+    <Property Name="Estado" Type="int" />
   </EntityType>
   <EntityType Name="IngredienteFactura">
     <Key>
@@ -386,6 +396,30 @@
       </Principal>
       <Dependent Role="Distribuidor">
         <PropertyRef Name="IdComuna" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Equivalen__IdTip__1D7B6025">
+    <End Role="TipoMedicion" Type="Self.TipoMedicion" Multiplicity="1" />
+    <End Role="EquivalenciaMediciones" Type="Self.EquivalenciaMediciones" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoMedicion">
+        <PropertyRef Name="IdTipoMedicion" />
+      </Principal>
+      <Dependent Role="EquivalenciaMediciones">
+        <PropertyRef Name="IdTipoMedicionInicial" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Equivalen__IdTip__1E6F845E">
+    <End Role="TipoMedicion" Type="Self.TipoMedicion" Multiplicity="1" />
+    <End Role="EquivalenciaMediciones" Type="Self.EquivalenciaMediciones" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoMedicion">
+        <PropertyRef Name="IdTipoMedicion" />
+      </Principal>
+      <Dependent Role="EquivalenciaMediciones">
+        <PropertyRef Name="IdTipoMedicionEquivalente" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -697,6 +731,7 @@
     <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Comuna" EntityType="Self.Comuna" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Distribuidor" EntityType="Self.Distribuidor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EquivalenciaMediciones" EntityType="Self.EquivalenciaMediciones" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EstadoPedido" EntityType="Self.EstadoPedido" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ExtraPedido" EntityType="Self.ExtraPedido" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Factura" EntityType="Self.Factura" Schema="dbo" store:Type="Tables" />
@@ -749,6 +784,14 @@
     <AssociationSet Name="FK__Distribui__IdCom__4CA06362" Association="Self.FK__Distribui__IdCom__4CA06362">
       <End Role="Comuna" EntitySet="Comuna" />
       <End Role="Distribuidor" EntitySet="Distribuidor" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Equivalen__IdTip__1D7B6025" Association="Self.FK__Equivalen__IdTip__1D7B6025">
+      <End Role="TipoMedicion" EntitySet="TipoMedicion" />
+      <End Role="EquivalenciaMediciones" EntitySet="EquivalenciaMediciones" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Equivalen__IdTip__1E6F845E" Association="Self.FK__Equivalen__IdTip__1E6F845E">
+      <End Role="TipoMedicion" EntitySet="TipoMedicion" />
+      <End Role="EquivalenciaMediciones" EntitySet="EquivalenciaMediciones" />
     </AssociationSet>
     <AssociationSet Name="FK__ExtraPedi__IdAli__1EA48E88" Association="Self.FK__ExtraPedi__IdAli__1EA48E88">
       <End Role="AlimentoPedido" EntitySet="AlimentoPedido" />

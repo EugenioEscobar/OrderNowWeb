@@ -147,6 +147,7 @@
     <NavigationProperty Name="IngredientesAlimento" Relationship="Self.FK__Ingredien__Ingre__75A278F5" FromRole="Ingrediente" ToRole="IngredientesAlimento" />
     <Property Name="IdTipoMedicionPorcion" Type="Int32" />
     <NavigationProperty Name="TipoMedicion1" Relationship="OrderNowBDModel.FK__Ingredien__IdTip__607251E5" FromRole="Ingrediente" ToRole="TipoMedicion" />
+    <Property Name="Estado" Type="Int32" />
   </EntityType>
   <EntityType Name="IngredienteFactura">
     <Key>
@@ -287,6 +288,8 @@
     <Property Name="Simbología" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Ingrediente" Relationship="Self.FK__Ingredien__IdTip__5FB337D6" FromRole="TipoMedicion" ToRole="Ingrediente" />
     <NavigationProperty Name="Ingrediente1" Relationship="OrderNowBDModel.FK__Ingredien__IdTip__607251E5" FromRole="TipoMedicion" ToRole="Ingrediente" />
+    <NavigationProperty Name="EquivalenciaMediciones" Relationship="OrderNowBDModel.FK__Equivalen__IdTip__1D7B6025" FromRole="TipoMedicion" ToRole="EquivalenciaMediciones" />
+    <NavigationProperty Name="EquivalenciaMediciones1" Relationship="OrderNowBDModel.FK__Equivalen__IdTip__1E6F845E" FromRole="TipoMedicion" ToRole="EquivalenciaMediciones" />
   </EntityType>
   <EntityType Name="TipoPago">
     <Key>
@@ -883,6 +886,15 @@
       <End Role="ClasificacionAlimento" EntitySet="ClasificacionAlimento" />
       <End Role="Alimento" EntitySet="Alimento" />
     </AssociationSet>
+    <EntitySet Name="EquivalenciaMediciones" EntityType="OrderNowBDModel.EquivalenciaMediciones" />
+    <AssociationSet Name="FK__Equivalen__IdTip__1D7B6025" Association="OrderNowBDModel.FK__Equivalen__IdTip__1D7B6025">
+      <End Role="TipoMedicion" EntitySet="TipoMedicion" />
+      <End Role="EquivalenciaMediciones" EntitySet="EquivalenciaMediciones" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Equivalen__IdTip__1E6F845E" Association="OrderNowBDModel.FK__Equivalen__IdTip__1E6F845E">
+      <End Role="TipoMedicion" EntitySet="TipoMedicion" />
+      <End Role="EquivalenciaMediciones" EntitySet="EquivalenciaMediciones" />
+    </AssociationSet>
   </EntityContainer>
   <Association Name="FK__Ingredien__IdTip__607251E5">
     <End Type="OrderNowBDModel.TipoMedicion" Role="TipoMedicion" Multiplicity="0..1" />
@@ -914,6 +926,41 @@
       </Principal>
       <Dependent Role="Alimento">
         <PropertyRef Name="IdClasificacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="EquivalenciaMediciones">
+    <Key>
+      <PropertyRef Name="IdEquivalencia" />
+    </Key>
+    <Property Name="IdEquivalencia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdTipoMedicionInicial" Type="Int32" Nullable="false" />
+    <Property Name="Equivalencia" Type="Int32" Nullable="false" />
+    <Property Name="IdTipoMedicionEquivalente" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="TipoMedicion" Relationship="OrderNowBDModel.FK__Equivalen__IdTip__1D7B6025" FromRole="EquivalenciaMediciones" ToRole="TipoMedicion" />
+    <NavigationProperty Name="TipoMedicion1" Relationship="OrderNowBDModel.FK__Equivalen__IdTip__1E6F845E" FromRole="EquivalenciaMediciones" ToRole="TipoMedicion" />
+  </EntityType>
+  <Association Name="FK__Equivalen__IdTip__1D7B6025">
+    <End Type="OrderNowBDModel.TipoMedicion" Role="TipoMedicion" Multiplicity="1" />
+    <End Type="OrderNowBDModel.EquivalenciaMediciones" Role="EquivalenciaMediciones" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoMedicion">
+        <PropertyRef Name="IdTipoMedicion" />
+      </Principal>
+      <Dependent Role="EquivalenciaMediciones">
+        <PropertyRef Name="IdTipoMedicionInicial" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Equivalen__IdTip__1E6F845E">
+    <End Type="OrderNowBDModel.TipoMedicion" Role="TipoMedicion" Multiplicity="1" />
+    <End Type="OrderNowBDModel.EquivalenciaMediciones" Role="EquivalenciaMediciones" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoMedicion">
+        <PropertyRef Name="IdTipoMedicion" />
+      </Principal>
+      <Dependent Role="EquivalenciaMediciones">
+        <PropertyRef Name="IdTipoMedicionEquivalente" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

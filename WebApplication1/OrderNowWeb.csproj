@@ -1688,9 +1688,9 @@
     <Content Include="Content\fontawesome-free-5.11.2-web\webfonts\fa-brands-400.svg" />
     <Content Include="Content\fontawesome-free-5.11.2-web\webfonts\fa-regular-400.svg" />
     <Content Include="Content\fontawesome-free-5.11.2-web\webfonts\fa-solid-900.svg" />
+    <Content Include="Mantenedores\CrudAlimentos.aspx" />
     <Content Include="Mantenedores\CrudCategorias.aspx" />
     <Content Include="Mantenedores\CrudOfertas.aspx" />
-    <Content Include="Mantenedores\CrudAlimentos.aspx" />
     <Content Include="Mantenedores\CrudIngrediente.aspx" />
     <Content Include="Mantenedores\CrudDistribuidor.aspx" />
     <Content Include="css\EstiloMenu.css" />
@@ -1923,6 +1923,13 @@
     <Compile Include="ClientPages\VerCarrito.aspx.designer.cs">
       <DependentUpon>VerCarrito.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Mantenedores\CrudAlimentos.aspx.cs">
+      <DependentUpon>CrudAlimentos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Mantenedores\CrudAlimentos.aspx.designer.cs">
+      <DependentUpon>CrudAlimentos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Mantenedores\CrudCategorias.aspx.cs">
       <DependentUpon>CrudCategorias.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1936,13 +1943,6 @@
     </Compile>
     <Compile Include="Mantenedores\CrudOfertas.aspx.designer.cs">
       <DependentUpon>CrudOfertas.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Mantenedores\CrudAlimentos.aspx.cs">
-      <DependentUpon>CrudAlimentos.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Mantenedores\CrudAlimentos.aspx.designer.cs">
-      <DependentUpon>CrudAlimentos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Mantenedores\CrudIngrediente.aspx.cs">
       <DependentUpon>CrudIngrediente.aspx</DependentUpon>

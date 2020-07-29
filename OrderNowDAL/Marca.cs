@@ -18,6 +18,7 @@ namespace OrderNowDAL
         public Marca()
         {
             this.Ingrediente = new HashSet<Ingrediente>();
+            this.DetalleIngrediente = new HashSet<DetalleIngrediente>();
         }
     
         public int IdMarca { get; set; }
@@ -26,5 +27,7 @@ namespace OrderNowDAL
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ingrediente> Ingrediente { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DetalleIngrediente> DetalleIngrediente { get; set; }
     }
 }

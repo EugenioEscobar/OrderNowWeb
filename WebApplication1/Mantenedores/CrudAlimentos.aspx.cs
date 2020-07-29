@@ -1,14 +1,14 @@
-﻿using System;
+﻿using OrderNowDAL;
+using OrderNowDAL.DAL;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using OrderNowDAL;
-using OrderNowDAL.DAL;
 
-namespace WebApplication1
+namespace WebApplication1.Mantenedores
 {
     public partial class CrudAlimentos : System.Web.UI.Page
     {
@@ -142,11 +142,11 @@ namespace WebApplication1
             }
         }
 
-        protected void btnIngredientes_Click(object sender, EventArgs e)
+        protected void btnChangeTables_Click(object sender, EventArgs e)
         {
             divListado.Visible = divListado.Visible ? false : true;
             divIngredientes.Visible = divIngredientes.Visible ? false : true;
-            btnIngredientes.Text = btnIngredientes.Text == "Ver Ingredientes" ? "Ver Listado" : "Ver Ingredientes";
+            btnChangeTables.Text = btnChangeTables.Text == "Ver Ingredientes" ? "Ver Listado" : "Ver Ingredientes";
         }
 
         protected void gridViewIngredientes_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -275,7 +275,7 @@ namespace WebApplication1
             {
                 string carpetPath = Server.MapPath("/Fotos/Productos/");
                 string extentsion = alimento.Foto.Substring(alimento.Foto.IndexOf("."));
-                UploadImage(File.ReadAllBytes($"{carpetPath}{alimento.Foto}"),extentsion);
+                UploadImage(File.ReadAllBytes($"{carpetPath}{alimento.Foto}"), extentsion);
             }
             btnAgregar.Visible = false;
             btnModificar.Visible = true;

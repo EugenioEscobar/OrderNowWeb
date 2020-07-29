@@ -386,5 +386,10 @@ namespace WebApplication1
                 lbl.Text = lbl.Text == "" ? "Sin Fecha" : DateTime.Parse(lbl.Text).ToString("dd-MM-yyyy");
             }
         }
+
+        protected void ImageAjaxFile_UploadedComplete(object sender, AjaxControlToolkit.AsyncFileUploadEventArgs e)
+        {
+
+        }
     }
 }

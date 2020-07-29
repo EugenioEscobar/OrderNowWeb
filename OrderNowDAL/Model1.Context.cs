@@ -53,5 +53,7 @@ namespace OrderNowDAL
         public virtual DbSet<Trabajador> Trabajador { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<ClasificacionAlimento> ClasificacionAlimento { get; set; }
+        public virtual DbSet<EquivalenciaMediciones> EquivalenciaMediciones { get; set; }
+        public virtual DbSet<DetalleIngrediente> DetalleIngrediente { get; set; }
     }
 }

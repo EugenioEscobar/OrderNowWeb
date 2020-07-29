@@ -125,7 +125,14 @@ namespace WebApplication1
 
         protected void btnLimpiar_Click(object sender, EventArgs e)
         {
-            limpiar();
+            try
+            {
+                limpiar();
+            }
+            catch (Exception ex)
+            {
+                UserMessage(ex.Message, "danger");
+            }
         }
 
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -134,13 +141,16 @@ namespace WebApplication1
             {
                 GridViewRow row = e.Row;
                 Label labelRow = (Label)row.FindControl("lblMarca");
-                labelRow.Text = labelRow.Text != "" ? mDAL.Find(Convert.ToInt32(labelRow.Text)).Nombre : "";
+                labelRow.Text = labelRow.Text != "" ? mDAL.Find(Convert.ToInt32(labelRow.Text)).Nombre : "Sin Marca";
 
                 labelRow = (Label)row.FindControl("lblTipoAlimento");
-                labelRow.Text = labelRow.Text != "" ? tADAL.Find(Convert.ToInt32(labelRow.Text)).Descripcion : "";
+                labelRow.Text = labelRow.Text != "" ? tADAL.Find(Convert.ToInt32(labelRow.Text)).Descripcion : "Sin Tipo de Alimento";
 
                 labelRow = (Label)row.FindControl("lblTipoMedicion");
-                labelRow.Text = labelRow.Text != "" ? tMDAL.Find(Convert.ToInt32(labelRow.Text)).Descripcion : "";
+                labelRow.Text = labelRow.Text != "" ? tMDAL.Find(Convert.ToInt32(labelRow.Text)).Descripcion : "Sin Medición";
+
+                labelRow = (Label)row.FindControl("lblTipoMedicionPorcion");
+                labelRow.Text = labelRow.Text != "" ? tMDAL.Find(Convert.ToInt32(labelRow.Text)).Descripcion : "Sin Medición";
 
             }
         }
@@ -159,7 +169,7 @@ namespace WebApplication1
                 txtDescripcion.Focus();
                 throw new Exception("Debe Ingresar una descripción");
             }
-            if (!double.TryParse(txtValorNeto.Text,out flag))
+            if (!double.TryParse(txtValorNeto.Text, out flag))
             {
                 throw new Exception("Valor neto Invalido");
             }
@@ -201,7 +211,7 @@ namespace WebApplication1
             txtDescripcion.Text = "";
             txtStock.Text = "";
             txtValorNeto.Text = "";
-            double.TryParse("", out double num);
+            if (!double.TryParse(txtValorNeto.Text, out double num)) { throw new Exception("Debe ingresar un Valor Neto Válido"); }
             cboMarca.SelectedValue = "1";
             cboTipoAlimento.SelectedValue = "0";
             cboTipoMedicion.SelectedValue = "0";
@@ -224,6 +234,7 @@ namespace WebApplication1
             cboTipoAlimento.SelectedValue = obj.IdTipoAlimento.HasValue ? obj.IdTipoAlimento.ToString() : "0";
             cboTipoMedicion.SelectedValue = obj.IdTipoMedicion.ToString();
             txtPorcion.Text = obj.Porción.ToString();
+            SetCboTipoMedicionPorcion(Convert.ToInt32(cboTipoMedicion.SelectedValue));
             string value = obj.IdTipoMedicionPorcion.HasValue ? obj.IdTipoMedicionPorcion.Value.ToString() : "0";
             cboTipoMedicionPorcion.SelectedValue = value;
 
@@ -233,11 +244,75 @@ namespace WebApplication1
 
         protected void cboTipoMedicion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(cboTipoMedicion.SelectedItem.Text == "Unidad")
+            try
             {
-                txtPorcion.Text = "1";
-                cboTipoMedicionPorcion.SelectedValue = cboTipoMedicionPorcion.Items.FindByText("Unidad").Value;
+                SetCboTipoMedicionPorcion(Convert.ToInt32(cboTipoMedicion.SelectedValue));
             }
+            catch (Exception ex)
+            {
+                if (ex.Source == "warning")
+                {
+                    UserMessage(ex.Message, "warning");
+                }
+                else
+                {
+                    UserMessage(ex.Message, "danger");
+                }
+            }
+        }
+
+        private void SetCboTipoMedicionPorcion(int idTipoMedicion)
+        {
+            cboTipoMedicionPorcion.Items.Clear();
+            cboTipoMedicionPorcion.Items.Add(new ListItem("Seleccione un Tipo de Medicion", "0"));
+            if (idTipoMedicion != 0)
+            {
+                cboTipoMedicionPorcion.DataSource = tMDAL.GetMediciones(idTipoMedicion);
+                cboTipoMedicionPorcion.DataBind();
+            }
+        }
+
+        private void SetStock()
+        {
+            if (txtPorcion.Text != "" && cboTipoMedicionPorcion.SelectedValue != "0")
+            {
+                int idIngrediente = Convert.ToInt32(ViewState["IdIngrediente"]);
+                Ingrediente obj = iDAL.Find(idIngrediente);
+                int stock = Convert.ToInt32(txtStock.Text);
+                int valorPorcion = Convert.ToInt32(txtPorcion.Text);
+                int idMedicionIngrediente = Convert.ToInt32(cboTipoMedicion.SelectedValue);
+                int idMedicionPorcion = Convert.ToInt32(cboTipoMedicionPorcion.SelectedValue);
+
+                if (obj.IdTipoMedicionPorcion != idMedicionPorcion)
+                {
+                    txtStock.Text = tMDAL.GetConvertedStock(stock, valorPorcion, idMedicionIngrediente, idMedicionPorcion).ToString();
+
+
+                    Exception ex = new Exception("Se Actualizado el valor del Stock, por favor Revíselo antes de Guardar");
+                    ex.Source = "warning";
+                    throw ex;
+                }
+            }
+        }
+
+        protected void btnChangeTables_Click(object sender, EventArgs e)
+        {
+            bool showDetalle = divIngredientes.Visible;
+            divDetalles.Visible = showDetalle;
+            divIngredientes.Visible = !showDetalle;
+            btnChangeTables.Text = showDetalle ? "Ver Ingredientes" : "Ver Marcas Asociadas";
+            GridViewDetalle.DataSource = new List<Alimento>();
+            GridViewDetalle.DataBind();
+        }
+
+        protected void GridViewDetalle_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+
+        }
+
+        protected void GridViewDetalle_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+
         }
     }
 }
