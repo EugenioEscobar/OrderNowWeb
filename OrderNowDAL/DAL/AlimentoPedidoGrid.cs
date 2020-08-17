@@ -119,7 +119,7 @@ namespace OrderNowDAL.DAL
             foreach (AlimentoPedido item in alimentos)
             {
                 //Se hace una nueva lista de ingredientes por cada preparación en el carrito
-                List<IngredientesAlimento> lista = iADAL.Ingredientes((int)item.IdAlimento);
+                List<IngredientesAlimento> lista = iADAL.GetIngredientesByAlimento((int)item.IdAlimento);
 
                 // A cada ingrediente se le resta el stock correcpondiente a cada preparación
                 // de esta forma se hace una simulación de datos de la BDD

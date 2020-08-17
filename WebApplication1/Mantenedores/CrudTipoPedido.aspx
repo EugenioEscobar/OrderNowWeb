@@ -25,7 +25,7 @@
         <div id="divMessage" runat="server">
             <asp:Label ID="lblMensaje" runat="server" Text="Label"></asp:Label>
         </div>
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" BorderStyle="None" CssClass="table table-hover table-light" HeaderStyle-CssClass="thead-light" DataKeyNames="IdTipoPedido" DataSourceID="SqlDataSource1" OnRowCommand="GridView1_RowCommand">
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" BorderStyle="None" CssClass=" text-center table table-hover table-light" HeaderStyle-CssClass="thead-light" DataKeyNames="IdTipoPedido" DataSourceID="SqlDataSource1" OnRowCommand="GridView1_RowCommand">
             <Columns>
                 <asp:TemplateField>
                     <HeaderTemplate>
@@ -33,10 +33,6 @@
                     </HeaderTemplate>
                     <ItemTemplate>
                         <asp:Button ID="btnEdit" runat="server" Text="Edit" CommandArgument="<%#((GridViewRow)Container).RowIndex %>" CommandName="Edit"/>
-                    </ItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField>
-                    <ItemTemplate>
                         <asp:Label ID="lblCodigo" runat="server" Text='<%#Bind("IdTipoPedido") %>' Visible="false"></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>

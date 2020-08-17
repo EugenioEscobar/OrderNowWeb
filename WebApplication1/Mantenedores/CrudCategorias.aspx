@@ -37,10 +37,6 @@
                     </HeaderTemplate>
                     <ItemTemplate>
                         <asp:Button ID="btnEdit" runat="server" Text="Edit" CommandArgument="<%#((GridViewRow)Container).RowIndex %>" CommandName="Edit" />
-                    </ItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField>
-                    <ItemTemplate>
                         <asp:Label ID="lblCodigo" runat="server" Text='<%#Bind("IdClasificacion") %>' Visible="false"></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>

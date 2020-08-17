@@ -12,6 +12,7 @@ namespace WebApplication1
     public partial class CrudIngrediente : System.Web.UI.Page
     {
         IngredientesDAL iDAL = new IngredientesDAL();
+        DetalleIngredienteDAL dIDAL = new DetalleIngredienteDAL();
         MarcaDAL mDAL = new MarcaDAL();
         TipoAlimentoDAL tADAL = new TipoAlimentoDAL();
         TipoMedicionDAL tMDAL = new TipoMedicionDAL();
@@ -32,6 +33,7 @@ namespace WebApplication1
                         Label codigo = (Label)GridView1.Rows[index].FindControl("lblCodigo");
                         Ingrediente obj = iDAL.Find(Convert.ToInt32(codigo.Text));
                         LlenarFields(obj);
+                        LoadGridDetalle();
                         break;
                     case "Default":
                         break;
@@ -54,13 +56,23 @@ namespace WebApplication1
                     Descripcion = txtDescripcion.Text,
                     Stock = txtStock.Text == "" ? (int?)null : Convert.ToInt32(txtStock.Text),
                     ValorNeto = txtValorNeto.Text == "" ? (double?)null : Convert.ToDouble(txtValorNeto.Text),
-                    IdMarca = cboMarca.SelectedValue == "0" ? (int?)null : Convert.ToInt32(cboMarca.SelectedValue),
+                    //IdMarca = cboMarca.SelectedValue == "0" ? (int?)null : Convert.ToInt32(cboMarca.SelectedValue),
                     IdTipoAlimento = cboTipoAlimento.SelectedValue == "0" ? (int?)null : Convert.ToInt32(cboTipoAlimento.SelectedValue),
                     IdTipoMedicion = cboTipoMedicion.SelectedValue == "0" ? (int?)null : Convert.ToInt32(cboTipoMedicion.SelectedValue),
                     Porción = Convert.ToInt32(txtPorcion.Text),
-                    IdTipoMedicionPorcion = cboTipoMedicionPorcion.SelectedValue == "0" ? (int?)null : Convert.ToInt32(cboTipoMedicion.SelectedValue)
+                    IdTipoMedicionPorcion = cboTipoMedicionPorcion.SelectedValue == "0" ? (int?)null : Convert.ToInt32(cboTipoMedicion.SelectedValue),
+                    Estado = 1
                 };
-                iDAL.Add(iObj);
+                DetalleIngrediente diObj = new DetalleIngrediente()
+                {
+                    IdIngrediente = iObj.IdIngrediente,
+                    Descripcion = txtDescripcion.Text,
+                    Foto = "Foto1",
+                    IdMarca = cboMarca.SelectedValue == "0" ? (int?)null : Convert.ToInt32(cboMarca.SelectedValue),
+                    CantidadIngresada = txtStock.Text == "" ? (int?)null : Convert.ToInt32(txtStock.Text),
+                    Estado = 1
+                };
+                iObj = iDAL.Add(iObj, diObj);
                 UserMessage("Ingrediente agregado", "success");
                 GridView1.DataBind();
             }
@@ -76,20 +88,27 @@ namespace WebApplication1
             {
                 ValidarCampos();
                 int idIngrediente = Convert.ToInt32(ViewState["IdIngrediente"]);
+                int idDetalle = Convert.ToInt32(ViewState["IdDetalle"]);
 
-                Ingrediente ingrediente = new Ingrediente();
+                Ingrediente ingrediente = iDAL.Find(idIngrediente);
                 ingrediente.IdIngrediente = idIngrediente;
                 ingrediente.Nombre = txtNombre.Text;
                 ingrediente.Descripcion = txtDescripcion.Text;
 
                 ingrediente.Stock = txtStock.Text == "" ? (int?)null : Convert.ToInt32(txtStock.Text);
                 ingrediente.ValorNeto = txtValorNeto.Text == "" ? (double?)null : Convert.ToDouble(txtValorNeto.Text);
-                ingrediente.IdMarca = cboMarca.SelectedValue == "0" ? (int?)null : Convert.ToInt32(cboMarca.SelectedValue);
                 ingrediente.IdTipoAlimento = cboTipoAlimento.SelectedValue == "0" ? (int?)null : Convert.ToInt32(cboTipoAlimento.SelectedValue);
                 ingrediente.IdTipoMedicion = cboTipoMedicion.SelectedValue == "0" ? (int?)null : Convert.ToInt32(cboTipoMedicion.SelectedValue);
                 ingrediente.Porción = Convert.ToInt32(txtPorcion.Text);
                 ingrediente.IdTipoMedicionPorcion = cboTipoMedicionPorcion.SelectedValue == "0" ? (int?)null : Convert.ToInt32(cboTipoMedicionPorcion.SelectedValue);
+
+                DetalleIngrediente detalle = dIDAL.Find(idDetalle);
+                /*detalle.CantidadIngresada;
+                detalle.Descripcion
+                detalle.Foto
+                detalle.IdMarca*/
                 iDAL.Update(ingrediente);
+                dIDAL.Update(detalle);
 
                 UserMessage("Ingrediente Modificado", "success");
                 GridView1.DataBind();
@@ -158,7 +177,6 @@ namespace WebApplication1
 
         private void ValidarCampos()
         {
-            double flag;
             if (txtNombre.Text == "")
             {
                 txtNombre.Focus();
@@ -169,7 +187,7 @@ namespace WebApplication1
                 txtDescripcion.Focus();
                 throw new Exception("Debe Ingresar una descripción");
             }
-            if (!double.TryParse(txtValorNeto.Text, out flag))
+            if (!double.TryParse(txtValorNeto.Text, out double flag))
             {
                 throw new Exception("Valor neto Invalido");
             }
@@ -211,7 +229,6 @@ namespace WebApplication1
             txtDescripcion.Text = "";
             txtStock.Text = "";
             txtValorNeto.Text = "";
-            if (!double.TryParse(txtValorNeto.Text, out double num)) { throw new Exception("Debe ingresar un Valor Neto Válido"); }
             cboMarca.SelectedValue = "1";
             cboTipoAlimento.SelectedValue = "0";
             cboTipoMedicion.SelectedValue = "0";
@@ -226,11 +243,14 @@ namespace WebApplication1
         {
             ViewState["IdIngrediente"] = obj.IdIngrediente;
 
+            DetalleIngrediente detalle = iDAL.GetDetalleByDefault(obj.IdIngrediente);
+            ViewState["IdDetalle"] = detalle.IdIngredienteDetalle;
+
             txtNombre.Text = obj.Nombre;
             txtDescripcion.Text = obj.Descripcion;
             txtStock.Text = obj.Stock.ToString();
             txtValorNeto.Text = obj.ValorNeto.ToString();
-            cboMarca.SelectedValue = obj.IdMarca.HasValue ? obj.IdMarca.Value.ToString() : "1";
+            cboMarca.SelectedValue = detalle.IdMarca.HasValue ? detalle.IdMarca.Value.ToString() : "1";
             cboTipoAlimento.SelectedValue = obj.IdTipoAlimento.HasValue ? obj.IdTipoAlimento.ToString() : "0";
             cboTipoMedicion.SelectedValue = obj.IdTipoMedicion.ToString();
             txtPorcion.Text = obj.Porción.ToString();
@@ -301,18 +321,57 @@ namespace WebApplication1
             divDetalles.Visible = showDetalle;
             divIngredientes.Visible = !showDetalle;
             btnChangeTables.Text = showDetalle ? "Ver Ingredientes" : "Ver Marcas Asociadas";
-            GridViewDetalle.DataSource = new List<Alimento>();
-            GridViewDetalle.DataBind();
+            //GridViewDetalle.DataSource = new List<Alimento>();
+            //GridViewDetalle.DataBind();
         }
 
         protected void GridViewDetalle_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-
+            try
+            {
+                int index = Convert.ToInt32(e.CommandArgument);
+                Label lblCodigo = (Label)GridViewDetalle.Rows[index].FindControl("lblCodigo");
+                int idDetalle = Convert.ToInt32(lblCodigo.Text);
+                switch (e.CommandName)
+                {
+                    case "Eliminar":
+                        if (dIDAL.GetAllByIngrediente((int)ViewState["IdIngrediente"]).Count == 1) { throw new Exception("No se pueden eliminar todos los registros del ingrediente"); }
+                        DetalleIngrediente obj = dIDAL.Find(idDetalle);
+                        obj.Estado = 0;
+                        dIDAL.Update(obj);
+                        LoadGridDetalle();
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                UserMessage(ex.Message, "danger");
+            }
         }
 
         protected void GridViewDetalle_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            try
+            {
+                if (e.Row.RowType == DataControlRowType.DataRow)
+                {
+                    GridViewRow row = e.Row;
 
+                    Label lbl = (Label)row.FindControl("lblMarca");
+                    lbl.Text = !string.IsNullOrEmpty(lbl.Text) ? mDAL.Find(Convert.ToInt32(lbl.Text)).Nombre : "Sin Marca";
+                }
+            }
+            catch (Exception ex)
+            {
+                UserMessage(ex.Message, "danger");
+            }
+        }
+
+        private void LoadGridDetalle()
+        {
+            int idIngrediente = (int)ViewState["IdIngrediente"];
+            GridViewDetalle.DataSource = dIDAL.GetAllByIngrediente(idIngrediente);
+            GridViewDetalle.DataBind();
         }
     }
 }

@@ -90,6 +90,7 @@
   <ItemGroup>
     <Content Include="ClientPages\OfertaDetails.aspx" />
     <Content Include="ClientPages\ProductList.aspx" />
+    <Content Include="ClientPages\TestingPage.aspx" />
     <Content Include="ClientPages\VerCarrito.aspx" />
     <Content Include="Content\bootstrap-4.5.0-dist\css\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-4.5.0-dist\css\bootstrap-grid.min.css" />
@@ -1688,6 +1689,30 @@
     <Content Include="Content\fontawesome-free-5.11.2-web\webfonts\fa-brands-400.svg" />
     <Content Include="Content\fontawesome-free-5.11.2-web\webfonts\fa-regular-400.svg" />
     <Content Include="Content\fontawesome-free-5.11.2-web\webfonts\fa-solid-900.svg" />
+    <Content Include="Content\js\crystal.js" />
+    <Content Include="lib\crystal\css\crystalnotifications.css" />
+    <Content Include="lib\crystal\css\crystalnotifications.min.css" />
+    <Content Include="lib\crystal\img\back.jpg" />
+    <Content Include="lib\crystal\img\Colorfull\Chrome-colorfull.png" />
+    <Content Include="lib\crystal\img\Colorfull\Dropbox-colorfull.Png" />
+    <Content Include="lib\crystal\img\Colorfull\Evernote-colorfull.png" />
+    <Content Include="lib\crystal\img\Colorfull\Gmail-colorfull.Png" />
+    <Content Include="lib\crystal\img\Colorfull\Google-Docs-colorfull.png" />
+    <Content Include="lib\crystal\img\Colorfull\Google-Drive-colorfull.png" />
+    <Content Include="lib\crystal\img\Colorfull\Google-Maps-128.png" />
+    <Content Include="lib\crystal\img\Colorfull\Google-Play-colorfull.png" />
+    <Content Include="lib\crystal\img\Colorfull\Messages-colorfull.png" />
+    <Content Include="lib\crystal\img\Colorfull\Pocket-colorfull.png" />
+    <Content Include="lib\crystal\img\Colorfull\Rdio-colorfull.png" />
+    <Content Include="lib\crystal\img\Colorfull\Skype-colorfull.png" />
+    <Content Include="lib\crystal\img\Colorfull\Spotify-colorfull.png" />
+    <Content Include="lib\crystal\img\Youtube-128.png" />
+    <Content Include="lib\crystal\js\crystalnotifications.js" />
+    <Content Include="lib\crystal\js\crystalnotifications.min.js" />
+    <Content Include="lib\crystal\js\jquery-1.11.1.min.js" />
+    <Content Include="lib\crystal\sound\crystal.mp3" />
+    <Content Include="lib\crystal\sound\crystal.ogg" />
+    <Content Include="lib\jquery.min.js" />
     <Content Include="Mantenedores\CrudAlimentos.aspx" />
     <Content Include="Mantenedores\CrudCategorias.aspx" />
     <Content Include="Mantenedores\CrudOfertas.aspx" />
@@ -1802,6 +1827,7 @@
     <Content Include="Content\bootstrap-4.5.0-dist\js\bootstrap.bundle.min.js.map" />
     <Content Include="Content\bootstrap-4.5.0-dist\js\bootstrap.js.map" />
     <Content Include="Content\bootstrap-4.5.0-dist\js\bootstrap.min.js.map" />
+    <Content Include="lib\crystal\img\Colorfull\IconsPedia.com.url" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
@@ -1915,6 +1941,13 @@
     </Compile>
     <Compile Include="ClientPages\ProductList.aspx.designer.cs">
       <DependentUpon>ProductList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ClientPages\TestingPage.aspx.cs">
+      <DependentUpon>TestingPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClientPages\TestingPage.aspx.designer.cs">
+      <DependentUpon>TestingPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="ClientPages\VerCarrito.aspx.cs">
       <DependentUpon>VerCarrito.aspx</DependentUpon>

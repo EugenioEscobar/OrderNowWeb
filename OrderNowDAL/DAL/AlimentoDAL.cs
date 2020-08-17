@@ -9,9 +9,9 @@ namespace OrderNowDAL.DAL
 {
     public class AlimentoDAL
     {
+        private IngredientesDAL iDAL = new IngredientesDAL();
 
         private OrderNowBDEntities nowBDEntities = new OrderNowBDEntities();
-
 
         public Alimento Add(Alimento a)
         {
@@ -35,6 +35,12 @@ namespace OrderNowDAL.DAL
         {
             Alimento t = nowBDEntities.Alimento.FirstOrDefault(obj => obj.IdAlimento == id);
             return t;
+        }
+        public void Disable(int id)
+        {
+            Alimento t = nowBDEntities.Alimento.FirstOrDefault(obj => obj.IdAlimento == id);
+            t.Estado = 0;
+            nowBDEntities.SaveChanges();
         }
         public List<Alimento> GetAll()
         {
@@ -102,5 +108,28 @@ namespace OrderNowDAL.DAL
             return dt;
         }
 
+        public List<ExtraDisponible> GetExtrasDisponibles(int idAlimento)
+        {
+            var lista = nowBDEntities.P_obtener_extras_disponibles(idAlimento);
+            return lista.ToList();
+        }
+
+        public DataTable GetDataTableExtrasDisponibles(int idAlimento)
+        {
+            DataTable dt = new DataTable();
+            List<ExtraDisponible> disponibles = GetExtrasDisponibles(idAlimento);
+
+            dt.Columns.Add("IdExtraDisponible");
+            dt.Columns.Add("Ingrediente");
+
+            foreach (ExtraDisponible item in disponibles)
+            {
+                string[] reg = new string[dt.Columns.Count];
+                reg[0] = item.IdIngrediente.ToString();
+                reg[1] = iDAL.Find(item.IdIngrediente).Nombre;
+                dt.Rows.Add(reg);
+            }
+            return dt;
+        }
     }
 }

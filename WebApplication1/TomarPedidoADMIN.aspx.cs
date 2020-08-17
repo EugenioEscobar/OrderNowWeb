@@ -23,6 +23,7 @@ namespace WebApplication1
         OfertaAlimentoDAL oADAL = new OfertaAlimentoDAL();
         OfertaPedidoDAL oPDAL = new OfertaPedidoDAL();
         ExtraPedidoDAL ePDAL = new ExtraPedidoDAL();
+        ExtraDisponibleDAL eDDAL = new ExtraDisponibleDAL();
 
         Carrito carrito = new Carrito();
         protected void Page_Load(object sender, EventArgs e)
@@ -102,17 +103,21 @@ namespace WebApplication1
             {
                 int index = Convert.ToInt32(e.CommandArgument);
                 int idAlimentoPedido = Convert.ToInt32(((Label)GridViewPedido.Rows[index].FindControl("lblIdAlimentoPedido")).Text);
-                AlimentoPedido objCarrito = carrito.FindAlimento(idAlimentoPedido);
-                Alimento obj = aDAL.Find((int)objCarrito.IdAlimento);
+                string tipoElemento = ((Label)GridViewPedido.Rows[index].FindControl("lblTipoElemento")).Text;
+                AlimentoPedido objCarritoAlimento = null;
+                OfertaPedido objCarritoOferta = null;
+                if (tipoElemento == "Alimento") { objCarritoAlimento = carrito.FindAlimento(idAlimentoPedido); }
+                else if (tipoElemento == "Oferta") { objCarritoOferta = carrito.FindOferta(idAlimentoPedido); }
 
                 switch (e.CommandName)
                 {
                     case "Quitar":
-                        carrito.RemoveAlimento(objCarrito);
+                        if (tipoElemento == "Alimento") { carrito.RemoveAlimento(objCarritoAlimento); }
+                        else if (tipoElemento == "Oferta") { carrito.RemoveOferta(objCarritoOferta); }
                         CargarTotales();
                         break;
                     case "AgregarExtra":
-                        ActivarPopUpExtra(objCarrito);
+                        ActivarPopUpExtra(objCarritoAlimento);
                         break;
                 }
                 CargarGridCarrito();
@@ -165,8 +170,10 @@ namespace WebApplication1
 
         protected void cboIngrediente_TextChanged(object sender, EventArgs e)
         {
-            int idIngrediente = Convert.ToInt32(cboIngrediente.SelectedValue);
-            Ingrediente ingrediente = iDAL.Find(idIngrediente);
+            int idAlimentoPedido = Convert.ToInt32(txtIdAlimentoPedido.Text);
+            int idIngrediente = Convert.ToInt32(cboModalIngrediente.SelectedValue);
+            ExtraDisponible extraDisponible = eDDAL.FindByAlimentoAndIngrediente(Convert.ToInt32(lblModalIdAlimento.Text), idIngrediente);
+            Ingrediente ingrediente = iDAL.FindByName(cboModalIngrediente.SelectedItem.Text);
 
             EliminarCbo();
 
@@ -176,6 +183,8 @@ namespace WebApplication1
                 {
                     txtValorPorPorcion.Text = $"{ingrediente.Porción} {ingrediente.TipoMedicion.Descripcion}";
                     txtCantidadPorcion.Text = "1";
+                    lblModalCantidadMaxima.Text = extraDisponible.CantidadMaxima.HasValue ? $"La cantidad maxima de porciones es de: {extraDisponible.CantidadMaxima}" : "";
+                    txtModalValorExtra.Text = extraDisponible.Valor.Value.ToString();
                     SwitchTextBox(false);
                 }
                 else
@@ -206,19 +215,19 @@ namespace WebApplication1
         {
             try
             {
-                ValidateExtraFields();
-
-                int idIngrediente = Convert.ToInt32(cboIngrediente.SelectedValue);
+                int idIngrediente = Convert.ToInt32(cboModalIngrediente.SelectedValue);
                 int idAlimentoPedido = Convert.ToInt32(txtIdAlimentoPedido.Text);
+                ValidateExtraFields(idIngrediente, idAlimentoPedido);
 
-                cboIngrediente.Items.FindByValue(idIngrediente.ToString()).Enabled = false; //Se bloquea la opción de elegir el mismo ingrediente
+
+                cboModalIngrediente.Items.FindByValue(idIngrediente.ToString()).Enabled = false; //Se bloquea la opción de elegir el mismo ingrediente
 
                 ExtraPedido extra = new ExtraPedido()
                 {
                     IdIngrediente = idIngrediente,
                     CantidadExtra = Convert.ToInt32(txtCantidadPorcion.Text),
                     IdAlimentoPedido = idAlimentoPedido,
-                    ValorExtra = string.IsNullOrEmpty(txtValorExtra.Text) ? (int?)null : Convert.ToInt32(txtValorExtra.Text)
+                    ValorExtra = string.IsNullOrEmpty(txtModalValorExtra.Text) ? (int?)null : Convert.ToInt32(txtModalValorExtra.Text)
                 };
 
                 List<ExtraPedido> listaExtras = carrito.GetListExtra().Where(x => x.IdAlimentoPedido == idAlimentoPedido).ToList();
@@ -269,10 +278,13 @@ namespace WebApplication1
                 Ingrediente ing = iDAL.Find(Convert.ToInt32(label.Text));
                 label.Text = ing.Nombre;
 
-                label = e.Row.FindControl("lblTipoMedicion") as Label;
-                TipoMedicion tipoM = tMDAL.Find(Convert.ToInt32(label.Text));
+                label = e.Row.FindControl("lblCantidadExtra") as Label;
+                int cantidadExtra = Convert.ToInt32(label.Text);
 
-                label.Text = $"{ing.Porción} {tipoM.Descripcion}";
+                label = e.Row.FindControl("lblTipoMedicion") as Label;
+                TipoMedicion tipoM = tMDAL.Find(ing.IdTipoMedicionPorcion.Value);
+
+                label.Text = $"{ing.Porción * cantidadExtra} {tipoM.Descripcion}";
             }
         }
 
@@ -292,6 +304,7 @@ namespace WebApplication1
                 case "Eliminar":
                     carrito.RemoveExtra(extra);
                     CargarGridExtras(extra.IdAlimentoPedido.Value);
+                    LoadCboModalIngrediente(carrito.FindAlimento(extra.IdAlimentoPedido.Value));
                     break;
             }
         }
@@ -306,19 +319,27 @@ namespace WebApplication1
             ToogleGrid(true);
         }
 
+        protected void GridViewPedido_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                GridViewRow row = e.Row;
+                Label lblTipoElemento = (Label)e.Row.FindControl("lblTipoElemento");
+                LinkButton btnExtra = row.FindControl("btnAgregarExtra") as LinkButton;
+                if (lblTipoElemento.Text == "Oferta")
+                {
+                    btnExtra.Visible = false;
+                }
+            }
+        }
 
 
         private void ActivarPopUpExtra(AlimentoPedido objCarrito)
         {
-            ActivarItemsCbo();
-            int idAlimentoPedido = objCarrito.IdAlimentoPedido;
-            List<ExtraPedido> listaExtras = carrito.GetListExtra().Where(x => x.IdAlimentoPedido == idAlimentoPedido).ToList();
-            foreach (ExtraPedido extra in listaExtras)
-            {
-                cboIngrediente.Items.FindByValue(extra.IdIngrediente.ToString()).Enabled = false;
-            }
+            LoadCboModalIngrediente(objCarrito);
 
             Alimento obj = aDAL.Find((int)objCarrito.IdAlimento);
+            lblModalIdAlimento.Text = obj.IdAlimento.ToString();
             txtPreparacion.Text = obj.Nombre;
             txtIdAlimentoPedido.Text = objCarrito.IdAlimentoPedido.ToString();
             CargarGridExtras(objCarrito.IdAlimentoPedido);
@@ -339,17 +360,16 @@ namespace WebApplication1
 
         protected void LimpiarModal()
         {
-            cboIngrediente.SelectedValue = "0";
+            cboModalIngrediente.SelectedValue = "0";
 
             txtCantidadPorcion.Text = "";
             txtValorPorPorcion.Text = "";
 
-            txtValorExtra.Text = "";
+            txtModalValorExtra.Text = "";
         }
 
         private void LimpiarModalTodo()
         {
-            ActivarItemsCbo();
             LimpiarModal();
         }
 
@@ -369,45 +389,31 @@ namespace WebApplication1
             }
         }
 
-        private void ValidateExtraFields()
+        private void ValidateExtraFields(int idIngrediente, int idAlimentoPedido)
         {
-            if (cboIngrediente.SelectedValue == "0")
-            {
-                throw new Exception("Debe seleccionar un ingrediente para agregar");
-            }
-            if (txtCantidadPorcion.Text == "")
-            {
-                throw new Exception("Debe ingresar una cantidad para ser agregada");
-            }
-            if (Convert.ToInt32(txtCantidadPorcion.Text) == 0)
-            {
-                throw new Exception("Debe ingresar una cantidad para ser agregada");
-            }
-            if (Convert.ToInt32(txtCantidadPorcion.Text) < 0)
-            {
-                throw new Exception("La cantidad agregada debe ser mayor a 0");
-            }
-            //if (txtCantidadExtra.Text == "" && txtCantidadPorcion.Text == "")
-            //{
-            //    throw new Exception("Debe ingresar una cantidad para ser agregada");
-            //}
-            //if ((txtCantidadExtra.Text != "" && Convert.ToInt32(txtCantidadExtra.Text) < 1) || (txtCantidadPorcion.Text != "" && Convert.ToInt32(txtCantidadPorcion.Text) < 1))
-            //{
-            //    throw new Exception("Debe ingresar una cantidad valida para ser agregada");
-            //}
+            if (idIngrediente == 0) { throw new Exception("Debe seleccionar un ingrediente para agregar"); }
+            ExtraDisponible extraDisponible = eDDAL.FindByAlimentoAndIngrediente(Convert.ToInt32(lblModalIdAlimento.Text), idIngrediente);
+            if (!int.TryParse(txtCantidadPorcion.Text, out int cantidad)) { throw new Exception("Debe ingresar una cantidad para ser agregada"); }
+            if (cantidad == 0) { throw new Exception("Debe ingresar una cantidad para ser agregada"); }
+            if (cantidad < 0) { throw new Exception("La cantidad ingresada debe ser mayor a 0"); }
+            if (cantidad > extraDisponible.CantidadMaxima) { throw new Exception("La cantidad Ingresada supera a la cantidad maxima de este ingrediente"); }
         }
 
         private void LlenarExtraFields(ExtraPedido extra)
         {
+
+            //LoadCboModalIngrediente();
+            ExtraDisponible extraDisponible = eDDAL.FindByAlimentoAndIngrediente(Convert.ToInt32(lblModalIdAlimento.Text), extra.IdIngrediente.Value);
             Ingrediente ingrediente = iDAL.Find(extra.IdIngrediente.Value);
-            cboIngrediente.Items.FindByValue(ingrediente.IdIngrediente.ToString()).Enabled = true;
-            cboIngrediente.SelectedValue = ingrediente.IdIngrediente.ToString();
+
+            cboModalIngrediente.Items.FindByValue(extra.IdIngrediente.Value.ToString()).Enabled = true;
+            cboModalIngrediente.SelectedValue = extra.IdIngrediente.Value.ToString();
             ViewState["IdIngrediente"] = ingrediente.IdIngrediente;
 
             txtCantidadPorcion.Text = extra.CantidadExtra.ToString();
             txtValorPorPorcion.Text = $"{ingrediente.Porción} {tMDAL.Find(ingrediente.IdTipoMedicion.Value).Descripcion}";
 
-            txtValorExtra.Text = extra.ValorExtra.HasValue ? extra.ValorExtra.Value.ToString() : "";
+            txtModalValorExtra.Text = extra.ValorExtra.HasValue ? extra.ValorExtra.Value.ToString() : "";
         }
 
         private void AgregarAlimentosPorPedido(Pedido pedido)
@@ -427,7 +433,7 @@ namespace WebApplication1
                 idAlimentoPedidoLista = CambiarIdListadoExtra(idAlimentoPedidoLista, alimentoPedido.IdAlimentoPedido);
 
                 //Restar el stock del ingrediente respecto a los ingredientes del alimento
-                List<IngredientesAlimento> lista = iADAL.Ingredientes(al.IdAlimento);
+                List<IngredientesAlimento> lista = iADAL.GetIngredientesByAlimento(al.IdAlimento);
                 foreach (IngredientesAlimento ingAl in lista)
                 {
                     Ingrediente ingrediente = iDAL.Find((int)ingAl.Ingrediente);
@@ -456,7 +462,7 @@ namespace WebApplication1
                 List<OfertaAlimento> listaAlimentos = oADAL.Alimentos(oferta.IdOferta);
                 foreach (OfertaAlimento alimento in listaAlimentos)
                 {
-                    List<IngredientesAlimento> lista = iADAL.Ingredientes((int)alimento.IdAlimento);
+                    List<IngredientesAlimento> lista = iADAL.GetIngredientesByAlimento((int)alimento.IdAlimento);
                     foreach (IngredientesAlimento ingAl in lista)
                     {
                         Ingrediente ingrediente = iDAL.Find((int)ingAl.Ingrediente);
@@ -542,15 +548,7 @@ namespace WebApplication1
             if (ViewState["IdIngrediente"] != null)
             {
                 int idIngrediente = (int)ViewState["IdIngrediente"];
-                cboIngrediente.Items.FindByValue(idIngrediente.ToString()).Enabled = false;
-            }
-        }
-
-        private void ActivarItemsCbo()
-        {
-            foreach (ListItem item in cboIngrediente.Items)
-            {
-                item.Enabled = true;
+                //cboModalIngrediente.Items.FindByValue(idIngrediente.ToString()).Enabled = false;
             }
         }
 
@@ -558,10 +556,10 @@ namespace WebApplication1
         {
             if (desactivar)
             {
-                txtValorExtra.Text = "";
+                txtModalValorExtra.Text = "";
                 txtCantidadPorcion.Text = "";
 
-                txtValorExtra.Enabled = false;
+                txtModalValorExtra.Enabled = false;
                 txtCantidadPorcion.Enabled = false;
 
                 btnAgregarExtra.CssClass = "btn btn-secondary btn-block";
@@ -569,7 +567,7 @@ namespace WebApplication1
             }
             else
             {
-                txtValorExtra.Enabled = true;
+                txtModalValorExtra.Enabled = true;
                 txtCantidadPorcion.Enabled = true;
 
                 btnAgregarExtra.CssClass = "btn btn-primary btn-block";
@@ -609,24 +607,37 @@ namespace WebApplication1
             }
         }
 
-        private void ToogleGrid(bool ShowOferts)
+        private void ToogleGrid(bool showOferts)
         {
-            GridPreparaciones.Visible = !ShowOferts;
-            GridOfertas.Visible = ShowOferts;
+            GridPreparaciones.Visible = !showOferts;
+            GridOfertas.Visible = showOferts;
+            lblGridTitle.Text = showOferts ? "Listado de Ofertas" : "Listado de Preparaciones";
         }
 
-        protected void GridViewPedido_RowDataBound(object sender, GridViewRowEventArgs e)
+
+        protected void LlenarItemsCbo(AlimentoPedido obj)
         {
-            if (e.Row.RowType == DataControlRowType.DataRow)
+            cboModalIngrediente.Items.Clear();
+            cboModalIngrediente.Items.Add(new ListItem("Seleccione un ingrediente", "0"));
+            cboModalIngrediente.DataSource = aDAL.GetDataTableExtrasDisponibles(obj.IdAlimento.Value);
+            cboModalIngrediente.DataBind();
+        }
+
+        protected void UnableRepeatedItemsCbo(AlimentoPedido obj)
+        {
+            List<ExtraPedido> listaExtras = carrito.GetListExtra().Where(x => x.IdAlimentoPedido == obj.IdAlimentoPedido).ToList();
+            foreach (ExtraPedido extra in listaExtras)
             {
-                GridViewRow row = e.Row;
-                Label lblTipoElemento = (Label)e.Row.FindControl("lblTipoElemento");
-                LinkButton btnExtra = row.FindControl("btnAgregarExtra") as LinkButton;
-                if (lblTipoElemento.Text == "Oferta")
-                {
-                    btnExtra.Visible = false;
-                }
+                ListItem li = cboModalIngrediente.Items.FindByValue(extra.IdIngrediente.ToString());
+                if (li != null) { li.Enabled = false; }
+                else { carrito.RemoveExtra(extra); }
             }
+        }
+
+        protected void LoadCboModalIngrediente(AlimentoPedido obj)
+        {
+            LlenarItemsCbo(obj);
+            UnableRepeatedItemsCbo(obj);
         }
     }
 }

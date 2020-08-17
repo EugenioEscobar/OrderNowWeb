@@ -16,6 +16,7 @@
     <NavigationProperty Name="OfertaAlimento" Relationship="Self.FK__OfertaAli__IdAli__09A971A2" FromRole="Alimento" ToRole="OfertaAlimento" />
     <Property Name="IdClasificacion" Type="Int32" />
     <NavigationProperty Name="ClasificacionAlimento" Relationship="OrderNowBDModel.FK__Alimento__IdClas__756D6ECB" FromRole="Alimento" ToRole="ClasificacionAlimento" />
+    <NavigationProperty Name="ExtraDisponible" Relationship="OrderNowBDModel.FK__ExtraDisp__IdAli__4C364F0E" FromRole="Alimento" ToRole="ExtraDisponible" />
   </EntityType>
   <EntityType Name="AlimentoPedido">
     <Key>
@@ -134,13 +135,11 @@
     <Property Name="Descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
     <Property Name="Stock" Type="Int32" />
     <Property Name="ValorNeto" Type="Double" />
-    <Property Name="IdMarca" Type="Int32" />
     <Property Name="IdTipoAlimento" Type="Int32" />
     <Property Name="IdTipoMedicion" Type="Int32" />
     <Property Name="Foto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Porción" Type="Int32" />
     <NavigationProperty Name="ExtraPedido" Relationship="Self.FK__ExtraPedi__IdIng__797309D9" FromRole="Ingrediente" ToRole="ExtraPedido" />
-    <NavigationProperty Name="Marca" Relationship="Self.FK__Ingredien__IdMar__5DCAEF64" FromRole="Ingrediente" ToRole="Marca" />
     <NavigationProperty Name="TipoAlimento" Relationship="Self.FK__Ingredien__IdTip__5EBF139D" FromRole="Ingrediente" ToRole="TipoAlimento" />
     <NavigationProperty Name="TipoMedicion" Relationship="Self.FK__Ingredien__IdTip__5FB337D6" FromRole="Ingrediente" ToRole="TipoMedicion" />
     <NavigationProperty Name="IngredienteFactura" Relationship="Self.FK__Ingredien__Ingre__6383C8BA" FromRole="Ingrediente" ToRole="IngredienteFactura" />
@@ -148,6 +147,8 @@
     <Property Name="IdTipoMedicionPorcion" Type="Int32" />
     <NavigationProperty Name="TipoMedicion1" Relationship="OrderNowBDModel.FK__Ingredien__IdTip__607251E5" FromRole="Ingrediente" ToRole="TipoMedicion" />
     <Property Name="Estado" Type="Int32" />
+    <NavigationProperty Name="DetalleIngrediente" Relationship="OrderNowBDModel.FK__DetalleIn__IdIng__32767D0B" FromRole="Ingrediente" ToRole="DetalleIngrediente" />
+    <NavigationProperty Name="ExtraDisponible" Relationship="OrderNowBDModel.FK__ExtraDisp__IdIng__4D2A7347" FromRole="Ingrediente" ToRole="ExtraDisponible" />
   </EntityType>
   <EntityType Name="IngredienteFactura">
     <Key>
@@ -180,7 +181,7 @@
     <Property Name="IdMarca" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Estado" Type="Int32" />
-    <NavigationProperty Name="Ingrediente" Relationship="Self.FK__Ingredien__IdMar__5DCAEF64" FromRole="Marca" ToRole="Ingrediente" />
+    <NavigationProperty Name="DetalleIngrediente" Relationship="OrderNowBDModel.FK__DetalleIn__IdMar__336AA144" FromRole="Marca" ToRole="DetalleIngrediente" />
   </EntityType>
   <EntityType Name="Oferta">
     <Key>
@@ -569,18 +570,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Ingredien__IdMar__5DCAEF64">
-    <End Role="Marca" Type="Self.Marca" Multiplicity="0..1" />
-    <End Role="Ingrediente" Type="Self.Ingrediente" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Marca">
-        <PropertyRef Name="IdMarca" />
-      </Principal>
-      <Dependent Role="Ingrediente">
-        <PropertyRef Name="IdMarca" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK__Ingredien__IdTip__5EBF139D">
     <End Role="TipoAlimento" Type="Self.TipoAlimento" Multiplicity="0..1" />
     <End Role="Ingrediente" Type="Self.Ingrediente" Multiplicity="*" />
@@ -825,10 +814,6 @@
       <End Role="Factura" EntitySet="Factura" />
       <End Role="IngredienteFactura" EntitySet="IngredienteFactura" />
     </AssociationSet>
-    <AssociationSet Name="FK__Ingredien__IdMar__5DCAEF64" Association="Self.FK__Ingredien__IdMar__5DCAEF64">
-      <End Role="Marca" EntitySet="Marca" />
-      <End Role="Ingrediente" EntitySet="Ingrediente" />
-    </AssociationSet>
     <AssociationSet Name="FK__Ingredien__IdTip__5EBF139D" Association="Self.FK__Ingredien__IdTip__5EBF139D">
       <End Role="TipoAlimento" EntitySet="TipoAlimento" />
       <End Role="Ingrediente" EntitySet="Ingrediente" />
@@ -895,6 +880,27 @@
       <End Role="TipoMedicion" EntitySet="TipoMedicion" />
       <End Role="EquivalenciaMediciones" EntitySet="EquivalenciaMediciones" />
     </AssociationSet>
+    <EntitySet Name="DetalleIngrediente" EntityType="OrderNowBDModel.DetalleIngrediente" />
+    <AssociationSet Name="FK__DetalleIn__IdIng__32767D0B" Association="OrderNowBDModel.FK__DetalleIn__IdIng__32767D0B">
+      <End Role="Ingrediente" EntitySet="Ingrediente" />
+      <End Role="DetalleIngrediente" EntitySet="DetalleIngrediente" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DetalleIn__IdMar__336AA144" Association="OrderNowBDModel.FK__DetalleIn__IdMar__336AA144">
+      <End Role="Marca" EntitySet="Marca" />
+      <End Role="DetalleIngrediente" EntitySet="DetalleIngrediente" />
+    </AssociationSet>
+    <EntitySet Name="ExtraDisponible" EntityType="OrderNowBDModel.ExtraDisponible" />
+    <AssociationSet Name="FK__ExtraDisp__IdAli__4C364F0E" Association="OrderNowBDModel.FK__ExtraDisp__IdAli__4C364F0E">
+      <End Role="Alimento" EntitySet="Alimento" />
+      <End Role="ExtraDisponible" EntitySet="ExtraDisponible" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ExtraDisp__IdIng__4D2A7347" Association="OrderNowBDModel.FK__ExtraDisp__IdIng__4D2A7347">
+      <End Role="Ingrediente" EntitySet="Ingrediente" />
+      <End Role="ExtraDisponible" EntitySet="ExtraDisponible" />
+    </AssociationSet>
+    <FunctionImport Name="P_obtener_extras_disponibles" EntitySet="ExtraDisponible" ReturnType="Collection(OrderNowBDModel.ExtraDisponible)">
+      <Parameter Name="Pin_codigo" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <Association Name="FK__Ingredien__IdTip__607251E5">
     <End Type="OrderNowBDModel.TipoMedicion" Role="TipoMedicion" Multiplicity="0..1" />
@@ -964,4 +970,92 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="DetalleIngrediente">
+    <Key>
+      <PropertyRef Name="IdIngredienteDetalle" />
+    </Key>
+    <Property Name="IdIngredienteDetalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdIngrediente" Type="Int32" />
+    <Property Name="Descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="IdMarca" Type="Int32" />
+    <Property Name="CantidadIngresada" Type="Int32" />
+    <Property Name="Foto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Estado" Type="Int32" />
+    <NavigationProperty Name="Ingrediente" Relationship="OrderNowBDModel.FK__DetalleIn__IdIng__32767D0B" FromRole="DetalleIngrediente" ToRole="Ingrediente" />
+    <NavigationProperty Name="Marca" Relationship="OrderNowBDModel.FK__DetalleIn__IdMar__336AA144" FromRole="DetalleIngrediente" ToRole="Marca" />
+  </EntityType>
+  <Association Name="FK__DetalleIn__IdIng__32767D0B">
+    <End Type="OrderNowBDModel.Ingrediente" Role="Ingrediente" Multiplicity="0..1" />
+    <End Type="OrderNowBDModel.DetalleIngrediente" Role="DetalleIngrediente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ingrediente">
+        <PropertyRef Name="IdIngrediente" />
+      </Principal>
+      <Dependent Role="DetalleIngrediente">
+        <PropertyRef Name="IdIngrediente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DetalleIn__IdMar__336AA144">
+    <End Type="OrderNowBDModel.Marca" Role="Marca" Multiplicity="0..1" />
+    <End Type="OrderNowBDModel.DetalleIngrediente" Role="DetalleIngrediente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Marca">
+        <PropertyRef Name="IdMarca" />
+      </Principal>
+      <Dependent Role="DetalleIngrediente">
+        <PropertyRef Name="IdMarca" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="P_OBTENER_EXTRAS_DISPONIBLES_Result">
+    <Property Type="Int32" Name="IdExtraDisponible" Nullable="false" />
+    <Property Type="Int32" Name="IdAlimento" Nullable="false" />
+    <Property Type="Int32" Name="IdIngrediente" Nullable="false" />
+    <Property Type="Int32" Name="CantidadMaxima" Nullable="true" />
+    <Property Type="Int32" Name="Valor" Nullable="true" />
+  </ComplexType>
+  <EntityType Name="ExtraDisponible">
+    <Key>
+      <PropertyRef Name="IdExtraDisponible" />
+    </Key>
+    <Property Name="IdExtraDisponible" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdAlimento" Type="Int32" Nullable="false" />
+    <Property Name="IdIngrediente" Type="Int32" Nullable="false" />
+    <Property Name="CantidadMaxima" Type="Int32" />
+    <Property Name="Valor" Type="Int32" />
+    <NavigationProperty Name="Alimento" Relationship="OrderNowBDModel.FK__ExtraDisp__IdAli__4C364F0E" FromRole="ExtraDisponible" ToRole="Alimento" />
+    <NavigationProperty Name="Ingrediente" Relationship="OrderNowBDModel.FK__ExtraDisp__IdIng__4D2A7347" FromRole="ExtraDisponible" ToRole="Ingrediente" />
+  </EntityType>
+  <Association Name="FK__ExtraDisp__IdAli__4C364F0E">
+    <End Type="OrderNowBDModel.Alimento" Role="Alimento" Multiplicity="1" />
+    <End Type="OrderNowBDModel.ExtraDisponible" Role="ExtraDisponible" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Alimento">
+        <PropertyRef Name="IdAlimento" />
+      </Principal>
+      <Dependent Role="ExtraDisponible">
+        <PropertyRef Name="IdAlimento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ExtraDisp__IdIng__4D2A7347">
+    <End Type="OrderNowBDModel.Ingrediente" Role="Ingrediente" Multiplicity="1" />
+    <End Type="OrderNowBDModel.ExtraDisponible" Role="ExtraDisponible" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ingrediente">
+        <PropertyRef Name="IdIngrediente" />
+      </Principal>
+      <Dependent Role="ExtraDisponible">
+        <PropertyRef Name="IdIngrediente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="P_obtener_extras_disponibles1_Result">
+    <Property Type="Int32" Name="IdExtraDisponible" Nullable="false" />
+    <Property Type="Int32" Name="IdAlimento" Nullable="false" />
+    <Property Type="Int32" Name="IdIngrediente" Nullable="false" />
+    <Property Type="Int32" Name="CantidadMaxima" Nullable="true" />
+    <Property Type="Int32" Name="Valor" Nullable="true" />
+  </ComplexType>
 </Schema>

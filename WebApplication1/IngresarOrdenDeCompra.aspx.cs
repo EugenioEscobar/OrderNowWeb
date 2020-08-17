@@ -37,6 +37,7 @@ namespace WebApplication1
         TipoMedicionDAL tMDAL = new TipoMedicionDAL();
         TipoAlimentoDAL tADAL = new TipoAlimentoDAL();
         TipoPagoDAL tPDAL = new TipoPagoDAL();
+        DetalleIngredienteDAL dIDAL = new DetalleIngredienteDAL();
 
         FacturaDAL fDAL = new FacturaDAL();
         IngredientesDAL iDAL = new IngredientesDAL();
@@ -45,7 +46,6 @@ namespace WebApplication1
         RegionDAL rDAL = new RegionDAL();
         ProvinciaDAL pDAL = new ProvinciaDAL();
         ComunaDAL cDAL = new ComunaDAL();
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -54,6 +54,7 @@ namespace WebApplication1
                 InitCbos();
             }
             UserMessage("", "");
+            UserMessage2("", "");
             UserModalMessage("", "");
             ValidarModal();
         }
@@ -91,8 +92,22 @@ namespace WebApplication1
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 bool flag = false;
+                bool flagIngrediente = false;
                 string val = "";
                 int columnIndex = 0;
+
+
+
+                #region Validación de Ingrediente
+                columnIndex = Array.IndexOf(columns, "Nombre") + 1;
+                val = ((Label)e.Row.FindControl("lblNombre")).Text;
+                Ingrediente ingrediente = iDAL.FindByName(val);
+                if (flag || ingrediente == null && val != "")
+                {
+                    e.Row.Cells[columnIndex].CssClass = "alert-warning alert-grid-warning";
+                    flag = true;
+                }
+                #endregion
 
                 #region Validación de Marca
                 columnIndex = Array.IndexOf(columns, "Marca") + 1;
@@ -100,7 +115,7 @@ namespace WebApplication1
                 Marca marca = val != "" ? mDAL.FindByName(val) : null;
                 if (marca == null && val != "")
                 {
-                    e.Row.Cells[columnIndex].CssClass = "alert-warning alert-grid";
+                    e.Row.Cells[columnIndex].CssClass = "alert-warning alert-grid-warning";
                     flag = true;
                 }
                 #endregion
@@ -111,7 +126,7 @@ namespace WebApplication1
                 TipoAlimento tipoAlimento = val != "" ? tADAL.FindByName(val) : null;
                 if (tipoAlimento == null && val != "")
                 {
-                    e.Row.Cells[columnIndex].CssClass = "alert-warning alert-grid";
+                    e.Row.Cells[columnIndex].CssClass = "alert-warning alert-grid-warning";
                     flag = true;
                 }
                 #endregion
@@ -122,19 +137,17 @@ namespace WebApplication1
                 TipoMedicion tipoMedicion = val != "" ? tMDAL.FindByName(val) : null;
                 if (tipoMedicion == null && val != "")
                 {
-                    e.Row.Cells[columnIndex].CssClass = "alert-warning alert-grid";
+                    e.Row.Cells[columnIndex].CssClass = "alert-warning alert-grid-warning";
                     flag = true;
                 }
                 #endregion
 
-                #region Validación de Ingrediente
-                columnIndex = Array.IndexOf(columns, "Nombre") + 1;
-                val = ((Label)e.Row.FindControl("lblNombre")).Text;
-                Ingrediente ingrediente = iDAL.FindByName(val);
-                if (flag || ingrediente == null && val != "")
+                #region Validación de Campos Correctos
+                if (ingrediente != null && (ingrediente.IdTipoMedicion != tipoMedicion.IdTipoMedicion || ingrediente.IdTipoAlimento != tipoAlimento.IdTipoAlimento))
                 {
-                    e.Row.Cells[columnIndex].CssClass = "alert-warning alert-grid";
-                    flag = true;
+                    columnIndex = Array.IndexOf(columns, "Nombre") + 1;
+                    e.Row.Cells[columnIndex].CssClass = "alert-info alert-grid-info";
+                    flagIngrediente = true;
                 }
                 #endregion
 
@@ -143,6 +156,11 @@ namespace WebApplication1
                     UserMessage($"{lblMensaje.Text} " +
                         " \n Los datos en amarillo se agregarán automaticamente a la Base de datos al ingresar la planilla", "warning");
                     ViewState["Message"] = true;
+                }
+                if (flagIngrediente)
+                {
+                    UserMessage2("Los ingrediente el color azul poseen incongruencias con los registros de la base de datos." +
+                        "\n Se recomienda revisión", "info");
                 }
             }
         }
@@ -282,21 +300,8 @@ namespace WebApplication1
         protected void cboModalNombre_SelectedIndexChanged(object sender, EventArgs e)
         {
             int idIngrediente = Convert.ToInt32(((DropDownList)sender).SelectedValue.ToString());
-            Ingrediente selectedIngredient = iDAL.Find(idIngrediente);
+            NormalizeModalData(idIngrediente);
 
-            if (selectedIngredient != null)
-            {
-                ChangeModalityMarca(true);
-                cboModalMarca.SelectedValue = selectedIngredient.IdMarca.HasValue ? selectedIngredient.IdMarca.Value.ToString() : "0";
-
-                ChangeModalityTipoAlimento(true);
-                cboModalTipoAlimento.SelectedValue = selectedIngredient.IdTipoAlimento.HasValue ? selectedIngredient.IdTipoAlimento.Value.ToString() : "0";
-
-                ChangeModalityTipoMedicion(true);
-                cboModalTipoMedicion.SelectedValue = selectedIngredient.IdTipoMedicion.Value.ToString();
-
-                txtModalDescripcion.Text = selectedIngredient.Descripcion;
-            }
         }
 
         protected void txtModalPrecio_TextChanged(object sender, EventArgs e)
@@ -328,15 +333,75 @@ namespace WebApplication1
             CerrarModal();
         }
 
-
-
-
-        private void CargarGrid()
+        protected void btnModalNormalize_Click(object sender, EventArgs e)
         {
-            DataTable dt = ViewState["Data"] as DataTable;
-            GridView1.DataSource = dt;
-            GridView1.DataBind();
+            int idIngrediente = Convert.ToInt32(cboModalNombre.SelectedValue.ToString());
+            NormalizeModalData(idIngrediente);
+            btnModalNormalize.Visible = false;
         }
+
+        protected void txtModalDescripcion_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                ValidateOpenModal();
+            }
+            catch (Exception ex)
+            {
+                UserModalMessage(ex.Message, "danger");
+            }
+        }
+
+        protected void cboModalTipoMedicion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                ValidateOpenModal();
+            }
+            catch (Exception ex)
+            {
+                UserModalMessage(ex.Message, "danger");
+            }
+        }
+
+        protected void cboModalTipoAlimento_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                ValidateOpenModal();
+            }
+            catch (Exception ex)
+            {
+                UserModalMessage(ex.Message, "danger");
+            }
+        }
+
+        protected void txtModalTipoMedicion_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                ValidateOpenModal();
+            }
+            catch (Exception ex)
+            {
+                UserModalMessage(ex.Message, "danger");
+            }
+        }
+
+        protected void txtModalTipoAlimento_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                ValidateOpenModal();
+            }
+            catch (Exception ex)
+            {
+                UserModalMessage(ex.Message, "danger");
+            }
+        }
+
+
+
 
         private void ValidateModal()
         {
@@ -387,6 +452,20 @@ namespace WebApplication1
             {
                 divMessage.Attributes.Add("class", "");
                 lblMensaje.Text = mensaje;
+            }
+        }
+
+        private void UserMessage2(string mensaje, string type)
+        {
+            if (mensaje != "")
+            {
+                divMessage2.Attributes.Add("class", "text-center alert alert-" + type);
+                lblMensaje2.Text = mensaje;
+            }
+            else
+            {
+                divMessage2.Attributes.Add("class", "");
+                lblMensaje2.Text = mensaje;
             }
         }
 
@@ -591,6 +670,7 @@ namespace WebApplication1
                 TipoAlimento tipoAlimento = tADAL.FindByName(rowTipoAlimento);
                 TipoMedicion tipoMedicion = tMDAL.FindByName(rowTipoMedicion);
                 List<Ingrediente> ingredientesRepetidos = iDAL.FindAllByName(rowNombre);
+                DetalleIngrediente detalleIn = new DetalleIngrediente();
                 Ingrediente ingrediente = new Ingrediente();
 
                 marca = marca == null ? mDAL.Add(new Marca()
@@ -609,15 +689,17 @@ namespace WebApplication1
                     Estado = 1
                 }) : tipoMedicion;
 
-                bool existe = false;
+                ingrediente = iDAL.FindByName(rowNombre);
+
+                bool existe = ingrediente != null;
                 foreach (Ingrediente item in ingredientesRepetidos)
                 {
-                    if ((item != null) && item.IdMarca == marca.IdMarca && item.Descripcion == rowDescripción)
-                    {
-                        existe = true;
-                        ingrediente = item;
-                        break;
-                    }
+                    //if ((item != null) && item.IdMarca == marca.IdMarca && item.Descripcion == rowDescripción)
+                    //{
+                    //    existe = true;
+                    //    ingrediente = item;
+                    //    break;
+                    //}
                 }
 
                 if (!existe)
@@ -627,11 +709,18 @@ namespace WebApplication1
                         Nombre = rowNombre,
                         Descripcion = rowDescripción,
                         Stock = 0,
-                        IdMarca = marca.IdMarca,
+                        //IdMarca = marca.IdMarca,
                         IdTipoAlimento = tipoAlimento.IdTipoAlimento,
                         IdTipoMedicion = tipoMedicion.IdTipoMedicion
                     };
-                    ingrediente = iDAL.Add(ingrediente);
+                    detalleIn = new DetalleIngrediente()
+                    {
+                        CantidadIngresada = Convert.ToInt32(rowCantidad),
+                        Descripcion = rowDescripción,
+                        IdMarca = marca.IdMarca,
+                        Estado = 1
+                    };
+                    ingrediente = iDAL.Add(ingrediente, detalleIn);
                 }
 
                 IngredienteFactura ingredienteFactura = new IngredienteFactura();
@@ -664,6 +753,7 @@ namespace WebApplication1
                 string rowPrecio = dRow["Precio"] as string;
                 #endregion
                 SetModalities(rowMarca, rowTipoAlimento, rowTipoMedicion, rowNombre);
+                ValidateInconsistencies(rowTipoAlimento, rowTipoMedicion, rowNombre, rowDescripcion);
 
                 txtModalIndex.Text = (index + 1).ToString();
                 txtModalDescripcion.Text = rowDescripcion;
@@ -688,33 +778,6 @@ namespace WebApplication1
             return dr;
         }
 
-        private void ChangeModalityMarca(bool showExistent)
-        {
-            cboModalMarca.Visible = showExistent;
-            txtModalMarca.Visible = !showExistent;
-            btnCambiarMarca.Text = showExistent ? "Nueva Marca" : "Seleccionar Marca";
-        }
-
-        private void ChangeModalityTipoAlimento(bool showExistent)
-        {
-            cboModalTipoAlimento.Visible = showExistent;
-            txtModalTipoAlimento.Visible = !showExistent;
-            btnCambiarTipoAlimento.Text = showExistent ? "Nuevo Tipo de Alimento" : "Seleccionar Tipo de Laimento";
-        }
-
-        private void ChangeModalityTipoMedicion(bool showExistent)
-        {
-            cboModalTipoMedicion.Visible = showExistent;
-            txtModalTipoMedicion.Visible = !showExistent;
-            btnCambiarTipoMedicion.Text = showExistent ? "Nuevo Tipo de Medición" : "Seleccionar Tipo de Medición";
-        }
-
-        private void ChangeModalityNombre(bool showExistent)
-        {
-            cboModalNombre.Visible = showExistent;
-            txtModalNombre.Visible = !showExistent;
-            btnCambiarNombre.Text = showExistent ? "Nuevo Ingrediente" : "Seleccionar Ingrediente";
-        }
 
         private void SetModalities(string marca, string tipoAlimento, string tipoMedicion, string nombre)
         {
@@ -766,6 +829,34 @@ namespace WebApplication1
                 cboModalNombre.SelectedValue = iFlag.IdIngrediente.ToString();
             }
 
+        }
+
+        private void ChangeModalityMarca(bool showExistent)
+        {
+            cboModalMarca.Visible = showExistent;
+            txtModalMarca.Visible = !showExistent;
+            btnCambiarMarca.Text = showExistent ? "Nueva Marca" : "Seleccionar Marca";
+        }
+
+        private void ChangeModalityTipoAlimento(bool showExistent)
+        {
+            cboModalTipoAlimento.Visible = showExistent;
+            txtModalTipoAlimento.Visible = !showExistent;
+            btnCambiarTipoAlimento.Text = showExistent ? "Nuevo Tipo de Alimento" : "Seleccionar Tipo de Laimento";
+        }
+
+        private void ChangeModalityTipoMedicion(bool showExistent)
+        {
+            cboModalTipoMedicion.Visible = showExistent;
+            txtModalTipoMedicion.Visible = !showExistent;
+            btnCambiarTipoMedicion.Text = showExistent ? "Nuevo Tipo de Medición" : "Seleccionar Tipo de Medición";
+        }
+
+        private void ChangeModalityNombre(bool showExistent)
+        {
+            cboModalNombre.Visible = showExistent;
+            txtModalNombre.Visible = !showExistent;
+            btnCambiarNombre.Text = showExistent ? "Nuevo Ingrediente" : "Seleccionar Ingrediente";
         }
 
         private void CerrarModal()
@@ -825,6 +916,134 @@ namespace WebApplication1
             }
             dr.Delete();
             ViewState["Data"] = dt;
+        }
+
+        private void NormalizeModalData(int idIngrediente)
+        {
+            Ingrediente selectedIngredient = iDAL.Find(idIngrediente);
+
+            if (selectedIngredient != null)
+            {
+                //ChangeModalityMarca(true);
+                //DetalleIngrediente detalle = iDAL.GetDetalleByDefault()
+                //cboModalMarca.SelectedValue = selectedIngredient.IdMarca.HasValue ? selectedIngredient.IdMarca.Value.ToString() : "0";
+
+                ChangeModalityTipoAlimento(true);
+                cboModalTipoAlimento.SelectedValue = selectedIngredient.IdTipoAlimento.HasValue ? selectedIngredient.IdTipoAlimento.Value.ToString() : "0";
+
+                ChangeModalityTipoMedicion(true);
+                cboModalTipoMedicion.SelectedValue = selectedIngredient.IdTipoMedicion.Value.ToString();
+
+                txtModalDescripcion.Text = selectedIngredient.Descripcion;
+
+                CleanModalValidations();
+            }
+        }
+
+        private void ValidateInconsistencies(string tipoAlimento, string tipoMedicion, string nombre, string descripcion)
+        {
+            Ingrediente objI = iDAL.FindByName(nombre);
+            if (objI != null)
+            {
+                bool flag = false;
+
+                #region Validación de Tipo de Medición
+                TipoMedicion tm = tMDAL.FindByName(tipoMedicion);
+                if (tm != null && tm.IdTipoMedicion != objI.IdTipoMedicion)
+                {
+                    lblModalMessageValidTipoM.Text = $"El tipo de Medición registrado para este ingrediente es '{tADAL.Find(objI.IdTipoMedicion.Value)}'";
+                    cboModalTipoMedicion.CssClass = "custom-select is-invalid";
+                    txtModalTipoMedicion.CssClass = "custom-select is-invalid";
+
+                    flag = true;
+                }
+                else
+                {
+                    cboModalTipoMedicion.CssClass = "form-control";
+                }
+                #endregion
+
+                #region Validación de Tipo de Alimento
+                TipoAlimento ta = tADAL.FindByName(tipoAlimento);
+                if (ta != null && ta.IdTipoAlimento != objI.IdTipoAlimento)
+                {
+                    string DescripcionTipoAlimento = objI.IdTipoAlimento.HasValue ? tADAL.Find(objI.IdTipoAlimento.Value).Descripcion : "No registrado";
+                    lblModalMessageValidTipoA.Text = $"El tipo de Alimento registrado para este ingrediente es '{DescripcionTipoAlimento}'";
+                    cboModalTipoAlimento.CssClass = "custom-select is-invalid";
+                    txtModalTipoAlimento.CssClass = "custom-select is-invalid";
+
+                    flag = true;
+                }
+                else
+                {
+                    cboModalTipoAlimento.CssClass = "form-control";
+                }
+                #endregion
+
+                #region Validación de Descripción
+                if (objI.Descripcion != descripcion)
+                {
+                    lblModalMessageValidDesc.Text = $"La descripción registrada para este ingrediente es '{objI.Descripcion}'";
+                    txtModalDescripcion.CssClass = "form-control is-invalid";
+
+                    flag = true;
+                }
+                else
+                {
+                    txtModalDescripcion.CssClass = "form-control";
+                }
+                #endregion
+
+                if (flag)
+                {
+                    cboModalNombre.CssClass = "custom-select is-invalid";
+                    lblModalMessageValidNombre.Text = "Para registrar un nuevo ingrediente con los nuevos datos debe presionar 'Nuevo Ingrediente' y cambiar el nombre";
+                    btnModalNormalize.Visible = true;
+                }
+                else
+                {
+                    cboModalNombre.CssClass = "form-control";
+                    btnModalNormalize.Visible = false;
+                }
+            }
+            else
+            {
+                CleanModalValidations();
+            }
+        }
+
+        private void CleanModalValidations()
+        {
+            cboModalTipoMedicion.CssClass = "form-control";
+            txtModalTipoMedicion.CssClass = "form-control";
+
+            cboModalTipoAlimento.CssClass = "form-control";
+            txtModalTipoAlimento.CssClass = "form-control";
+
+            txtModalDescripcion.CssClass = "form-control";
+
+            cboModalNombre.CssClass = "form-control";
+
+            btnModalNormalize.Visible = false;
+        }
+
+        private void ValidateOpenModal()
+        {
+            string nombre = txtModalNombre.Visible ? txtModalNombre.Text : cboModalNombre.SelectedItem.Text;
+            string descripción = txtModalDescripcion.Text;
+            string tipoAlimento = txtModalTipoAlimento.Visible ? txtModalTipoAlimento.Text : cboModalTipoAlimento.SelectedItem.Text;
+            string tipoMedicion = txtModalTipoMedicion.Visible ? txtModalTipoMedicion.Text : cboModalTipoMedicion.SelectedItem.Text;
+
+            ValidateInconsistencies(tipoAlimento, tipoMedicion, nombre, descripción);
+        }
+        private void CargarGrid()
+        {
+            ViewState["Message"] = false;
+            DataTable dt = ViewState["Data"] as DataTable;
+
+
+            GridView1.DataSource = dt;
+            GridView1.DataBind();
         }
     }
 }

@@ -121,7 +121,6 @@
           <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
           <ScalarProperty Name="Stock" ColumnName="Stock" />
           <ScalarProperty Name="ValorNeto" ColumnName="ValorNeto" />
-          <ScalarProperty Name="IdMarca" ColumnName="IdMarca" />
           <ScalarProperty Name="IdTipoAlimento" ColumnName="IdTipoAlimento" />
           <ScalarProperty Name="IdTipoMedicion" ColumnName="IdTipoMedicion" />
           <ScalarProperty Name="Foto" ColumnName="Foto" />
@@ -333,5 +332,30 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="DetalleIngrediente">
+      <EntityTypeMapping TypeName="OrderNowBDModel.DetalleIngrediente">
+        <MappingFragment StoreEntitySet="DetalleIngrediente">
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Foto" ColumnName="Foto" />
+          <ScalarProperty Name="CantidadIngresada" ColumnName="CantidadIngresada" />
+          <ScalarProperty Name="IdMarca" ColumnName="IdMarca" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="IdIngrediente" ColumnName="IdIngrediente" />
+          <ScalarProperty Name="IdIngredienteDetalle" ColumnName="IdIngredienteDetalle" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExtraDisponible">
+      <EntityTypeMapping TypeName="OrderNowBDModel.ExtraDisponible">
+        <MappingFragment StoreEntitySet="ExtraDisponible">
+          <ScalarProperty Name="Valor" ColumnName="Valor" />
+          <ScalarProperty Name="CantidadMaxima" ColumnName="CantidadMaxima" />
+          <ScalarProperty Name="IdIngrediente" ColumnName="IdIngrediente" />
+          <ScalarProperty Name="IdAlimento" ColumnName="IdAlimento" />
+          <ScalarProperty Name="IdExtraDisponible" ColumnName="IdExtraDisponible" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="P_obtener_extras_disponibles" FunctionName="OrderNowBDModel.Store.P_obtener_extras_disponibles" />
   </EntityContainerMapping>
 </Mapping>

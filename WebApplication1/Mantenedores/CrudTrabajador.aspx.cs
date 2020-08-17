@@ -68,6 +68,8 @@ namespace WebApplication1.Mantenedores
                         btnAgregar.Visible = false;
                         btnModificar.Visible = true;
                         divUsuario.Visible = false;
+
+                        ViewState["Codigo"] = Convert.ToInt32(codigo.Text);
                         break;
                     case "Default":
                         break;
@@ -165,8 +167,12 @@ namespace WebApplication1.Mantenedores
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
+            int idTrabajador=0;
             try
             {
+                if (ViewState["Codigo"] == null) { throw new Exception("Debe Seleccionar un trabajador para eliminarlo"); }
+                idTrabajador = (int)ViewState["Codigo"];
+
                 string rut = txtRut.Text;
                 tDAL.Remove(rut);
                 UserMessage("Trabajador Eliminado", "success");
@@ -177,7 +183,10 @@ namespace WebApplication1.Mantenedores
             {
                 if (ex.Message == "An error occurred while updating the entries. See the inner exception for details.")
                 {
-                    UserMessage("Este Registro no se puede eliminar, ya que existe dependencia", "danger");
+                    Trabajador obj = tDAL.Find(idTrabajador);
+                    obj.Estado = 0;
+                    tDAL.Update(obj);
+                    UserMessage("Esta Marca ya tiene otros registros asociados. Se ha cambiado el estado a inactivo", "warning");
                 }
                 else
                 {

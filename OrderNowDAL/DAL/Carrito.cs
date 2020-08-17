@@ -122,8 +122,8 @@ namespace OrderNowDAL.DAL
         {
             //Crear columnas del DataTable
             DataTable dt = new DataTable();
-            dt.Columns.Add("IdElementoPedido");
-            dt.Columns.Add("IdElemento");
+            dt.Columns.Add("IdElementoPedido"); //Id del elemento en la lista
+            dt.Columns.Add("IdElemento"); //Id del elemento en la Base de datos
             dt.Columns.Add("TipoElemento");//1 -> Alimento, 2 -> Oferta
             dt.Columns.Add("Nombre");
             dt.Columns.Add("Descripcion");
@@ -230,7 +230,7 @@ namespace OrderNowDAL.DAL
             foreach (AlimentoPedido item in carritoAlimentos.GetList())
             {
                 //Se hace una nueva lista de ingredientes por cada preparación en el carrito
-                List<IngredientesAlimento> lista = iADAL.Ingredientes((int)item.IdAlimento);
+                List<IngredientesAlimento> lista = iADAL.GetIngredientesByAlimento((int)item.IdAlimento);
 
                 // A cada ingrediente se le resta el stock correcpondiente a cada preparación
                 // de esta forma se hace una simulación de datos de la BDD
@@ -245,7 +245,7 @@ namespace OrderNowDAL.DAL
 
         private void RestarAlimento(Alimento alimentoAgregar, List<Ingrediente> ingredientes)
         {
-            foreach (IngredientesAlimento item in iADAL.Ingredientes(alimentoAgregar.IdAlimento))
+            foreach (IngredientesAlimento item in iADAL.GetIngredientesByAlimento(alimentoAgregar.IdAlimento))
             {
                 Ingrediente ingrediente = ingredientes.FirstOrDefault(x => x.IdIngrediente == item.Ingrediente);
                 if (ingrediente.Stock < item.Cantidad)

@@ -12,6 +12,8 @@ namespace OrderNowDAL
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class OrderNowBDEntities : DbContext
     {
@@ -55,5 +57,24 @@ namespace OrderNowDAL
         public virtual DbSet<ClasificacionAlimento> ClasificacionAlimento { get; set; }
         public virtual DbSet<EquivalenciaMediciones> EquivalenciaMediciones { get; set; }
         public virtual DbSet<DetalleIngrediente> DetalleIngrediente { get; set; }
+        public virtual DbSet<ExtraDisponible> ExtraDisponible { get; set; }
+    
+        public virtual ObjectResult<ExtraDisponible> P_obtener_extras_disponibles(Nullable<int> pin_codigo)
+        {
+            var pin_codigoParameter = pin_codigo.HasValue ?
+                new ObjectParameter("Pin_codigo", pin_codigo) :
+                new ObjectParameter("Pin_codigo", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ExtraDisponible>("P_obtener_extras_disponibles", pin_codigoParameter);
+        }
+    
+        public virtual ObjectResult<ExtraDisponible> P_obtener_extras_disponibles(Nullable<int> pin_codigo, MergeOption mergeOption)
+        {
+            var pin_codigoParameter = pin_codigo.HasValue ?
+                new ObjectParameter("Pin_codigo", pin_codigo) :
+                new ObjectParameter("Pin_codigo", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ExtraDisponible>("P_obtener_extras_disponibles", mergeOption, pin_codigoParameter);
+        }
     }
 }

@@ -19,9 +19,14 @@ namespace OrderNowDAL.DAL
         public List<AlimentoPedido> GetAlimentos(int idPedido)
         {
             var query = from c in nowBDEntities.AlimentoPedido
-                       where c.IdPedido == idPedido
-                       select c;
+                        where c.IdPedido == idPedido
+                        select c;
             return query.ToList();
+        }
+
+        public AlimentoPedido Find(int id)
+        {
+            return nowBDEntities.AlimentoPedido.FirstOrDefault(x => x.IdAlimentoPedido == id);
         }
     }
 }

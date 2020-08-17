@@ -28,7 +28,7 @@ namespace WebApplication1.Mantenedores
                 obj.Estado = 1;
                 tPDAL.Add(obj);
                 GridView1.DataBind();
-                UserMessage("Marca Agregada Correctamente", "succes");
+                UserMessage("Marca Agregada Correctamente", "success");
             }
             catch (Exception ex)
             {
@@ -51,7 +51,7 @@ namespace WebApplication1.Mantenedores
                 };
                 tPDAL.Edit(tipoPedido);
                 GridView1.DataBind();
-                UserMessage("Tipo de Pedido Modificado Correctamente", "sucess");
+                UserMessage("Tipo de Pedido Modificado Correctamente", "success");
             }
             catch (Exception ex)
             {
@@ -74,14 +74,14 @@ namespace WebApplication1.Mantenedores
                 else
                 {
                     tPDAL.Remove(idTipoPedido);
-                    UserMessage("Tipo de Pedido Eliminida", "succes");
+                    UserMessage("Tipo de Pedido Eliminida", "success");
                 }
                 GridView1.DataBind();
                 Limpiar();
             }
             catch (Exception ex)
             {
-                UserMessage(ex.Message, "succes");
+                UserMessage(ex.Message, "danger");
             }
         }
 
@@ -122,7 +122,7 @@ namespace WebApplication1.Mantenedores
         {
             if (mensaje != "")
             {
-                divMessage.Attributes.Add("class", "alert alert-" + type);
+                divMessage.Attributes.Add("class", "my-2 alert alert-" + type);
                 lblMensaje.Text = mensaje;
             }
             else

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace WebApplication1.ClientPages
@@ -26,6 +27,10 @@ namespace WebApplication1.ClientPages
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            List<bool> collapsedDivs = new List<bool>();
+            carrito.GetListAlimentos().ForEach(x => { collapsedDivs.Add(true); });
+            ViewState["CollapsedDivs"] = collapsedDivs;
             CargarGridCarrito();
         }
 
@@ -98,7 +103,7 @@ namespace WebApplication1.ClientPages
 
         private void RestarStockAlimento(int idAlimento)
         {
-            List<IngredientesAlimento> lista = iADAL.Ingredientes(idAlimento);
+            List<IngredientesAlimento> lista = iADAL.GetIngredientesByAlimento(idAlimento);
             foreach (IngredientesAlimento ingAl in lista)
             {
                 Ingrediente ingrediente = iDAL.Find((int)ingAl.Ingrediente);
@@ -149,6 +154,113 @@ namespace WebApplication1.ClientPages
         protected void ValidatePedidoFields()
         {
             if (carrito.GetListAlimentos().Count == 0 && carrito.GetListOfertas().Count == 0) { throw new Exception("El Carrito está Vacío"); }
+        }
+
+        protected void GridCarrito_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            try
+            {
+                if (e.Row.RowType == DataControlRowType.DataRow)
+                {
+                    GridViewRow row = e.Row;
+
+                    Label lblIdElementoPedido = (Label)row.FindControl("lblCodigoElementoPedido");
+                    Label lblTipoElemento = (Label)row.FindControl("lblTipoElemento");
+                    Label lblIdAlimento = (Label)row.FindControl("lblCodigo");
+                    Panel panelExtra = (Panel)row.FindControl("PanelExtra");
+                    LinkButton buttonExtra = (LinkButton)row.FindControl("ButtonExtras");
+                    GridView gridExtras = (GridView)row.FindControl("GridViewExtras");
+                    Image image = (Image)row.FindControl("imageAlimento");
+
+                    if (lblTipoElemento.Text == "Alimento")
+                    {
+                        Alimento alimento = aDAL.Find(Convert.ToInt32(lblIdAlimento.Text));
+                        gridExtras.DataSource = aDAL.GetExtrasDisponibles(Convert.ToInt32(lblIdAlimento.Text));
+                        gridExtras.DataBind();
+
+                        buttonExtra.Attributes.Add("href", $"#Div{lblIdElementoPedido.Text}");
+
+                        image.ImageUrl = $"/Fotos/Productos/{alimento.Foto}";
+
+                        List<bool> listDivsColapsed = (List<bool>)ViewState["CollapsedDivs"];
+                        Panel div = (Panel)row.FindControl($"DivCollapse");
+                        div.ID = $"Div{lblIdElementoPedido.Text}";
+                        if (listDivsColapsed.ElementAt(row.RowIndex) == false)
+                        {
+                            div.Attributes["class"] += " show";
+                        }
+                        else
+                        {
+                            div.Attributes["class"] = "collapse";
+                        }
+                    }
+                    else
+                    {
+                        panelExtra.Visible = false;
+                        buttonExtra.Enabled = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                UserMessage(ex.Message, "danger");
+            }
+        }
+
+        protected void GridViewExtras_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+
+            }
+        }
+
+        protected void GridViewExtras_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            try
+            {
+                int index = Convert.ToInt32(e.CommandArgument);
+                GridViewRow row = ((GridView)sender).Rows[index];
+                LinkButton btnAdd = (LinkButton)row.FindControl("btnPlus");
+                LinkButton btnSubstract = (LinkButton)row.FindControl("btnMinus");
+                switch (e.CommandName)
+                {
+                    case "SubstractOne":
+                        btnAdd.Enabled = true;
+                        btnSubstract.Enabled = false;
+                        break;
+                    case "AddOne":
+                        btnAdd.Enabled = false;
+                        btnSubstract.Enabled = true;
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                UserMessage(ex.Message, "danger");
+            }
+        }
+
+        protected void GridCarrito_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            try
+            {
+                int index = Convert.ToInt32(e.CommandArgument);
+                switch (e.CommandName)
+                {
+                    case "ShowDiv":
+                        List<bool> collapsedDivs = ViewState["CollapsedDivs"] as List<bool>;
+                        collapsedDivs[index] = !collapsedDivs.ElementAt(index);
+                        ViewState["CollapsedDivs"] = collapsedDivs;
+                        break;
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+                UserMessage(ex.Message, "danger");
+            }
         }
     }
 }

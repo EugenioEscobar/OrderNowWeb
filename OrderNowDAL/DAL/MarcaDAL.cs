@@ -54,8 +54,8 @@ namespace OrderNowDAL.DAL
         public bool ValidateDependencies(int id)
         {
             bool have = false;
-            List<Ingrediente> var = iDAL.GetAll().Where(x => x.IdMarca == id).ToList();
-            have = var.Count > 0;
+            //List<Ingrediente> var = iDAL.GetAll().Where(x => x.IdMarca == id).ToList();
+            //have = var.Count > 0;
             return have;
         }
     }

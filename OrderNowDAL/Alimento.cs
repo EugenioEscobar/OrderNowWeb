@@ -20,6 +20,7 @@ namespace OrderNowDAL
             this.AlimentoPedido = new HashSet<AlimentoPedido>();
             this.IngredientesAlimento = new HashSet<IngredientesAlimento>();
             this.OfertaAlimento = new HashSet<OfertaAlimento>();
+            this.ExtraDisponible = new HashSet<ExtraDisponible>();
         }
     
         public int IdAlimento { get; set; }
@@ -38,5 +39,7 @@ namespace OrderNowDAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OfertaAlimento> OfertaAlimento { get; set; }
         public virtual ClasificacionAlimento ClasificacionAlimento { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ExtraDisponible> ExtraDisponible { get; set; }
     }
 }

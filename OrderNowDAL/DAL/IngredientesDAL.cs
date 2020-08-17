@@ -8,14 +8,20 @@ namespace OrderNowDAL.DAL
 {
     public class IngredientesDAL
     {
+        private DetalleIngredienteDAL dIDAL = new DetalleIngredienteDAL();
+
         private OrderNowBDEntities nowBDEntities = new OrderNowBDEntities();
 
-        public Ingrediente Add(Ingrediente i)
+        public Ingrediente Add(Ingrediente i, DetalleIngrediente dI)
         {
+            ValidateNombre(i.Nombre);
             Ingrediente obj = nowBDEntities.Ingrediente.Add(i);
             nowBDEntities.SaveChanges();
+            dI.IdIngrediente = obj.IdIngrediente;
+            dIDAL.Add(dI);
             return obj;
         }
+
         public void Remove(string nombre)
         {
 
@@ -29,63 +35,64 @@ namespace OrderNowDAL.DAL
             nowBDEntities.SaveChanges();
 
         }
+
         public void Remove(int id)
         {
             nowBDEntities.Ingrediente.Remove(Find(id));
             nowBDEntities.SaveChanges();
 
         }
+
         public List<Ingrediente> GetAll()
         {
             return nowBDEntities.Ingrediente.ToList();
         }
+
         public Ingrediente Find(int id)
         {
             Ingrediente i = nowBDEntities.Ingrediente.FirstOrDefault(obj => obj.IdIngrediente == id);
             return i;
         }
+
         public Ingrediente FindByName(string name)
         {
             Ingrediente i = nowBDEntities.Ingrediente.FirstOrDefault(obj => obj.Nombre == name);
             return i;
         }
+
         public List<Ingrediente> FindAllByName(string name)
         {
             List<Ingrediente> i = nowBDEntities.Ingrediente.Where(obj => obj.Nombre == name).ToList();
             return i;
         }
-        public void Update(string nombre, string descripcion, int? stock, double? valorneto, int? marca, int? medicion, int? tipoalimento)
-        {
-            var query = from c in nowBDEntities.Ingrediente
-                        where c.Nombre == nombre
-                        select c;
-            List<Ingrediente> objIngrediente = query.ToList();
 
-            Ingrediente objUpdate = objIngrediente[0];
-            objUpdate.Nombre = nombre;
-            objUpdate.Descripcion = descripcion;
-            objUpdate.Stock = stock;
-            objUpdate.ValorNeto = valorneto;
-            objUpdate.IdTipoMedicion = medicion;
-            objUpdate.IdMarca = marca;
-            objUpdate.IdTipoAlimento = tipoalimento;
-            nowBDEntities.SaveChanges();
-
-        }
         public void Update(Ingrediente obj)
         {
             Ingrediente ing = nowBDEntities.Ingrediente.FirstOrDefault(x => x.IdIngrediente == obj.IdIngrediente);
+
             ing.Nombre = obj.Nombre;
             ing.Descripcion = obj.Descripcion;
             ing.Stock = obj.Stock;
             ing.ValorNeto = obj.ValorNeto;
             ing.IdTipoMedicion = obj.IdTipoMedicion;
-            ing.IdMarca = obj.IdMarca;
             ing.IdTipoAlimento = obj.IdTipoAlimento;
             ing.Porción = obj.Porción;
             ing.IdTipoMedicionPorcion = obj.IdTipoMedicionPorcion;
-            nowBDEntities.SaveChanges();
 
+            nowBDEntities.SaveChanges();
+        }
+
+        public DetalleIngrediente GetDetalleByDefault(int idIngredient)
+        {
+            return nowBDEntities.DetalleIngrediente.FirstOrDefault(x => x.IdIngrediente == idIngredient && x.Estado == 1);
+        }
+
+        public void ValidateNombre(string nombre)
+        {
+            if (nowBDEntities.Ingrediente.FirstOrDefault(x => x.Nombre == nombre) != null)
+            {
+                throw new Exception($"Ya existe un ingrediente con nombre: {nombre}");
+            }
         }
     }
 }

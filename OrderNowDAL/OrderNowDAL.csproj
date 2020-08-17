@@ -92,9 +92,12 @@
     <Compile Include="DAL\ClasificacionAlimentoDAL.cs" />
     <Compile Include="DAL\ClienteDAL.cs" />
     <Compile Include="DAL\ComunaDAL.cs" />
+    <Compile Include="DAL\DetalleIngredienteDAL.cs" />
     <Compile Include="DAL\DistribuidorDAL.cs" />
     <Compile Include="DAL\EquivalenciaMedicionesDAL.cs" />
     <Compile Include="DAL\EstadoPedidoDAL.cs" />
+    <Compile Include="DAL\ExtraDisponibleDAL.cs" />
+    <Compile Include="DAL\ExtraDisponibleGrid.cs" />
     <Compile Include="DAL\ExtraPedidoDAL.cs" />
     <Compile Include="DAL\ExtraPedidoGrid.cs" />
     <Compile Include="DAL\FacturaDAL.cs" />
@@ -118,6 +121,9 @@
     <Compile Include="DAL\TipoPedidoDAL.cs" />
     <Compile Include="DAL\TrabajadorDAL.cs" />
     <Compile Include="DAL\UsuarioDAL.cs" />
+    <Compile Include="DetalleIngrediente.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Distribuidor.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -125,6 +131,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="EstadoPedido.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ExtraDisponible.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="ExtraPedido.cs">
@@ -174,6 +183,12 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provincia.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="P_obtener_extras_disponibles1_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="P_OBTENER_EXTRAS_DISPONIBLES_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Region.cs">

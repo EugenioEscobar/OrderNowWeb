@@ -21,6 +21,7 @@ namespace OrderNowDAL
             this.IngredienteFactura = new HashSet<IngredienteFactura>();
             this.IngredientesAlimento = new HashSet<IngredientesAlimento>();
             this.DetalleIngrediente = new HashSet<DetalleIngrediente>();
+            this.ExtraDisponible = new HashSet<ExtraDisponible>();
         }
     
         public int IdIngrediente { get; set; }
@@ -28,7 +29,6 @@ namespace OrderNowDAL
         public string Descripcion { get; set; }
         public Nullable<int> Stock { get; set; }
         public Nullable<double> ValorNeto { get; set; }
-        public Nullable<int> IdMarca { get; set; }
         public Nullable<int> IdTipoAlimento { get; set; }
         public Nullable<int> IdTipoMedicion { get; set; }
         public string Foto { get; set; }
@@ -38,7 +38,6 @@ namespace OrderNowDAL
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ExtraPedido> ExtraPedido { get; set; }
-        public virtual Marca Marca { get; set; }
         public virtual TipoAlimento TipoAlimento { get; set; }
         public virtual TipoMedicion TipoMedicion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -48,5 +47,7 @@ namespace OrderNowDAL
         public virtual TipoMedicion TipoMedicion1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DetalleIngrediente> DetalleIngrediente { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ExtraDisponible> ExtraDisponible { get; set; }
     }
 }

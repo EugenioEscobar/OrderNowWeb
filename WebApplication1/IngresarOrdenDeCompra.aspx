@@ -14,8 +14,12 @@
             min-width: 800px;
         }
 
-        .alert-grid {
+        .alert-grid-warning {
             background: #ffe59273;
+        }
+
+        .alert-grid-info {
+            background: #88dded73;
         }
 
         .alert {
@@ -31,6 +35,7 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
     <div class="container">
         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -130,11 +135,14 @@
                 <asp:Button ID="btnGuardar" CssClass="btn btn-success btn-block" runat="server" Text="Guardar Datos" OnClick="btnGuardar_Click" />
             </div>
         </div>
-        <div id="divMessage" runat="server" class="">
-            <asp:Label ID="lblMensaje" runat="server" Text=""></asp:Label>
-        </div>
         <asp:UpdatePanel ID="UpdatePanel2" runat="server">
             <ContentTemplate>
+                <div id="divMessage" runat="server" class="">
+                    <asp:Label ID="lblMensaje" runat="server" Text=""></asp:Label>
+                </div>
+                <div id="divMessage2" runat="server" class="">
+                    <asp:Label ID="lblMensaje2" runat="server" Text=""></asp:Label>
+                </div>
                 <asp:HiddenField ID="HiddenActivateModal" runat="server" />
                 <asp:UpdatePanel ID="UpdatePanelModal" runat="server">
                     <ContentTemplate>
@@ -187,13 +195,19 @@
                                                         DataTextField="Nombre" DataValueField="IdIngrediente" OnSelectedIndexChanged="cboModalNombre_SelectedIndexChanged">
                                                         <asp:ListItem Value="0">Seleccione un ingrediente</asp:ListItem>
                                                     </asp:DropDownList>
+                                                    <div class="invalid-feedback">
+                                                        <asp:Label ID="lblModalMessageValidNombre" runat="server" Text=""></asp:Label>
+                                                    </div>
                                                     <asp:SqlDataSource runat="server" ID="SqlDataSourceIngredientes" ConnectionString='<%$ ConnectionStrings:OrderNowBDConnectionString %>' SelectCommand="SELECT [IdIngrediente], [Nombre] FROM [Ingrediente]"></asp:SqlDataSource>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <asp:Label ID="Label16" runat="server" Text="Descripción"></asp:Label>
-                                            <asp:TextBox ID="txtModalDescripcion" runat="server" CssClass="form-control"></asp:TextBox>
+                                            <asp:TextBox ID="txtModalDescripcion" runat="server" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtModalDescripcion_TextChanged"></asp:TextBox>
+                                            <div class="invalid-feedback">
+                                                <asp:Label ID="lblModalMessageValidDesc" runat="server" Text=""></asp:Label>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-row my-2">
@@ -209,7 +223,8 @@
                                                 </div>
                                                 <div>
                                                     <asp:TextBox ID="txtModalMarca" runat="server" CssClass="form-control" placeholder="Ingrese la nueva marca"></asp:TextBox>
-                                                    <asp:DropDownList ID="cboModalMarca" runat="server" Visible="true" CssClass="form-control" AppendDataBoundItems="true" AutoPostBack="true" DataSourceID="SqlDataSourceMarcas" DataTextField="Nombre" DataValueField="IdMarca">
+                                                    <asp:DropDownList ID="cboModalMarca" runat="server" Visible="true" CssClass="form-control" AppendDataBoundItems="true" AutoPostBack="true"
+                                                        DataSourceID="SqlDataSourceMarcas" DataTextField="Nombre" DataValueField="IdMarca">
                                                         <asp:ListItem Value="0">Seleccione una marca</asp:ListItem>
                                                     </asp:DropDownList>
                                                     <asp:SqlDataSource runat="server" ID="SqlDataSourceMarcas" ConnectionString='<%$ ConnectionStrings:OrderNowBDConnectionString %>' SelectCommand="SELECT [IdMarca], [Nombre] FROM [Marca]"></asp:SqlDataSource>
@@ -229,10 +244,15 @@
                                                     <asp:LinkButton ID="btnCambiarTipoMedicion" runat="server" OnClick="btnCambiarTipoMedicion_Click">Seleccionar Tipo de Medición</asp:LinkButton>
                                                 </div>
                                                 <div>
-                                                    <asp:TextBox ID="txtModalTipoMedicion" runat="server" CssClass="form-control" placeholder="Ingrese el nuevo Tipo de Medición"></asp:TextBox>
-                                                    <asp:DropDownList ID="cboModalTipoMedicion" runat="server" Visible="true" CssClass="form-control" DataSourceID="SqlDataSourceTipoMedicion" DataTextField="Descripcion" DataValueField="IdTipoMedicion" AppendDataBoundItems="true" AutoPostBack="true">
+                                                    <asp:TextBox ID="txtModalTipoMedicion" runat="server" CssClass="form-control" placeholder="Ingrese el nuevo Tipo de Medición"
+                                                        AutoPostBack="true" OnTextChanged="txtModalTipoMedicion_TextChanged"></asp:TextBox>
+                                                    <asp:DropDownList ID="cboModalTipoMedicion" runat="server" Visible="true" CssClass="form-control" DataSourceID="SqlDataSourceTipoMedicion"
+                                                        DataTextField="Descripcion" DataValueField="IdTipoMedicion" AppendDataBoundItems="true" AutoPostBack="true" OnSelectedIndexChanged="cboModalTipoMedicion_SelectedIndexChanged">
                                                         <asp:ListItem Value="0">Seleccione un Tipo de Medición</asp:ListItem>
                                                     </asp:DropDownList>
+                                                    <div id="divValidationModalTipoM" runat="server" class="invalid-feedback">
+                                                        <asp:Label ID="lblModalMessageValidTipoM" runat="server" Text=""></asp:Label>
+                                                    </div>
                                                     <asp:SqlDataSource runat="server" ID="SqlDataSourceTipoMedicion" ConnectionString='<%$ ConnectionStrings:OrderNowBDConnectionString %>' SelectCommand="SELECT [IdTipoMedicion], [Descripcion] FROM [TipoMedicion]"></asp:SqlDataSource>
                                                 </div>
                                             </div>
@@ -246,11 +266,15 @@
                                                     <asp:LinkButton ID="btnCambiarTipoAlimento" runat="server" OnClick="btnCambiarTipoAlimento_Click">Seleccionar Tipo de Alimento</asp:LinkButton>
                                                 </div>
                                                 <div>
-                                                    <asp:TextBox ID="txtModalTipoAlimento" runat="server" CssClass="form-control" placeholder="Ingrese el nuevo Tipo de Alimento"></asp:TextBox>
+                                                    <asp:TextBox ID="txtModalTipoAlimento" runat="server" CssClass="form-control" placeholder="Ingrese el nuevo Tipo de Alimento"
+                                                        AutoPostBack="true" OnTextChanged="txtModalTipoAlimento_TextChanged"></asp:TextBox>
                                                     <asp:DropDownList ID="cboModalTipoAlimento" runat="server" Visible="true" CssClass="form-control" DataSourceID="SqlDataSourceTipoAlimento" DataTextField="Descripcion"
-                                                        DataValueField="IdTipoAlimento" AppendDataBoundItems="true" AutoPostBack="true">
+                                                        DataValueField="IdTipoAlimento" AppendDataBoundItems="true" AutoPostBack="true" OnSelectedIndexChanged="cboModalTipoAlimento_SelectedIndexChanged">
                                                         <asp:ListItem Value="0">Seleccione un Tipo de Alimento</asp:ListItem>
                                                     </asp:DropDownList>
+                                                    <div id="divValidationModalTipoA" runat="server" class="invalid-feedback">
+                                                        <asp:Label ID="lblModalMessageValidTipoA" runat="server" Text=""></asp:Label>
+                                                    </div>
                                                     <asp:SqlDataSource runat="server" ID="SqlDataSourceTipoAlimento" ConnectionString='<%$ ConnectionStrings:OrderNowBDConnectionString %>' SelectCommand="SELECT [IdTipoAlimento], [Descripcion] FROM [TipoAlimento]"></asp:SqlDataSource>
                                                 </div>
                                             </div>
@@ -261,6 +285,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <div class="form-row">
+                                            <asp:Button ID="btnModalNormalize" runat="server" Text="Normalizar Datos" CssClass="btn btn-info mx-2" OnClick="btnModalNormalize_Click" />
                                             <asp:Button ID="btnModalSave" runat="server" Text="Guardar Cambios" CssClass="btn btn-success mx-2" OnClick="btnModalSave_Click" />
                                             <asp:Button ID="btnModalClean" runat="server" Text="Reset" CssClass="btn btn-secondary" OnClick="btnModalClean_Click" />
                                         </div>

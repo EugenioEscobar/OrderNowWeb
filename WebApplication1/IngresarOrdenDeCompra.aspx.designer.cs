@@ -301,6 +301,15 @@ namespace WebApplication1 {
         protected global::System.Web.UI.WebControls.Button btnGuardar;
         
         /// <summary>
+        /// Control UpdatePanel2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel2;
+        
+        /// <summary>
         /// Control divMessage.
         /// </summary>
         /// <remarks>
@@ -319,13 +328,22 @@ namespace WebApplication1 {
         protected global::System.Web.UI.WebControls.Label lblMensaje;
         
         /// <summary>
-        /// Control UpdatePanel2.
+        /// Control divMessage2.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel2;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divMessage2;
+        
+        /// <summary>
+        /// Control lblMensaje2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMensaje2;
         
         /// <summary>
         /// Control HiddenActivateModal.
@@ -436,6 +454,15 @@ namespace WebApplication1 {
         protected global::System.Web.UI.WebControls.DropDownList cboModalNombre;
         
         /// <summary>
+        /// Control lblModalMessageValidNombre.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblModalMessageValidNombre;
+        
+        /// <summary>
         /// Control SqlDataSourceIngredientes.
         /// </summary>
         /// <remarks>
@@ -461,6 +488,15 @@ namespace WebApplication1 {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtModalDescripcion;
+        
+        /// <summary>
+        /// Control lblModalMessageValidDesc.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblModalMessageValidDesc;
         
         /// <summary>
         /// Control Label19.
@@ -580,6 +616,24 @@ namespace WebApplication1 {
         protected global::System.Web.UI.WebControls.DropDownList cboModalTipoMedicion;
         
         /// <summary>
+        /// Control divValidationModalTipoM.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divValidationModalTipoM;
+        
+        /// <summary>
+        /// Control lblModalMessageValidTipoM.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblModalMessageValidTipoM;
+        
+        /// <summary>
         /// Control SqlDataSourceTipoMedicion.
         /// </summary>
         /// <remarks>
@@ -625,6 +679,24 @@ namespace WebApplication1 {
         protected global::System.Web.UI.WebControls.DropDownList cboModalTipoAlimento;
         
         /// <summary>
+        /// Control divValidationModalTipoA.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divValidationModalTipoA;
+        
+        /// <summary>
+        /// Control lblModalMessageValidTipoA.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblModalMessageValidTipoA;
+        
+        /// <summary>
         /// Control SqlDataSourceTipoAlimento.
         /// </summary>
         /// <remarks>
@@ -650,6 +722,15 @@ namespace WebApplication1 {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblModalMessage;
+        
+        /// <summary>
+        /// Control btnModalNormalize.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnModalNormalize;
         
         /// <summary>
         /// Control btnModalSave.

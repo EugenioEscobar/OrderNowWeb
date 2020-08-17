@@ -39,12 +39,52 @@ namespace OrderNowDAL.DAL
             iAl.Cantidad = m.Cantidad;
             nowBDEntities.SaveChanges();
         }
-        public List<IngredientesAlimento> Ingredientes(int idAlimento)
+        public List<IngredientesAlimento> GetIngredientesByAlimento(int idAlimento)
         {
             var query = from obj in nowBDEntities.IngredientesAlimento
                         where obj.Alimento == idAlimento
                         select obj;
             return query.ToList();
+        }
+
+        public void ChangeQuantity(List<IngredientesAlimento> ingredientesGrid, List<IngredientesAlimento> ingredientesDataBase)
+        {
+            foreach (IngredientesAlimento itemGrid in ingredientesGrid)
+            {
+                IngredientesAlimento itemBDD = ingredientesDataBase.FirstOrDefault(i => i.Ingrediente == itemGrid.Ingrediente);
+                if (itemBDD != null)
+                {
+                    itemBDD.Cantidad = itemGrid.Cantidad;
+                    Update(itemBDD);
+                }
+            }
+        }
+
+        public void AddNewIngredients(List<IngredientesAlimento> ingredientesGrid, List<IngredientesAlimento> ingredientesDataBase, int idAlimento)
+        {
+            foreach (IngredientesAlimento itemGrid in ingredientesGrid)
+            {
+                if (ingredientesDataBase.FirstOrDefault(obj => obj.Ingrediente == itemGrid.Ingrediente) == null)
+                {
+                    Add(new IngredientesAlimento()
+                    {
+                        Alimento = idAlimento,
+                        Ingrediente = itemGrid.Ingrediente,
+                        Cantidad = itemGrid.Cantidad
+                    });
+                }
+            }
+        }
+
+        public void DeleteIngredients(List<IngredientesAlimento> ingredientesGrid, List<IngredientesAlimento> ingredientesDataBase)
+        {
+            foreach (IngredientesAlimento itemBDD in ingredientesDataBase)
+            {
+                if (ingredientesGrid.FirstOrDefault(i => i.Ingrediente == itemBDD.Ingrediente) == null)
+                {
+                    Remove(itemBDD.IdIngredientesAlimento);
+                }
+            }
         }
     }
 }

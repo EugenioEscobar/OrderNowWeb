@@ -51,20 +51,24 @@
                                     <div class="form-row mt-3">
                                         <div class="col-md-6">
                                             <asp:Label ID="Label5" runat="server" Text="Preparación"></asp:Label>
+                                            <asp:Label ID="lblModalIdAlimento" runat="server" Visible="false"></asp:Label>
                                             <asp:TextBox ID="txtPreparacion" CssClass="form-control" Enabled="false" runat="server"></asp:TextBox>
                                         </div>
                                         <div class="col-md-6">
                                             <asp:Label ID="Label6" runat="server" Text="Ingrediente"></asp:Label>
-                                            <asp:DropDownList ID="cboIngrediente" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource4" DataTextField="Descripcion" DataValueField="IdIngrediente" CssClass="form-control" AppendDataBoundItems="true" OnTextChanged="cboIngrediente_TextChanged">
-                                                <asp:ListItem Value="0">Seleccione un ingrediente</asp:ListItem>
+                                            <asp:DropDownList ID="cboModalIngrediente" runat="server" AutoPostBack="True" DataTextField="Ingrediente"
+                                                DataValueField="IdExtraDisponible" CssClass="form-control" AppendDataBoundItems="true" OnTextChanged="cboIngrediente_TextChanged">
                                             </asp:DropDownList>
-                                            <asp:SqlDataSource ID="SqlDataSource4" runat="server" ConnectionString="<%$ ConnectionStrings:OrderNowBDConnectionString %>" SelectCommand="SELECT [IdIngrediente], [Nombre], [Descripcion] FROM [Ingrediente]"></asp:SqlDataSource>
+                                            <%--<asp:SqlDataSource ID="SqlDataSource4" runat="server" ConnectionString="<%$ ConnectionStrings:OrderNowBDConnectionString %>" SelectCommand="SELECT [IdIngrediente], [Nombre], [Descripcion] FROM [Ingrediente]"></asp:SqlDataSource>--%>
                                         </div>
                                     </div>
                                     <div class="form-row my-4">
                                         <div class="col-lg-6">
                                             <asp:Label ID="Label7" runat="server" Text="Porciones Extra"></asp:Label>
                                             <asp:TextBox ID="txtCantidadPorcion" CssClass="form-control" runat="server" Enabled="false" TextMode="Number" min-value="1"></asp:TextBox>
+                                            <small class="form-text text-muted">
+                                                <asp:Label runat="server" ID="lblModalCantidadMaxima"></asp:Label>
+                                            </small>
                                         </div>
                                         <div class="col-lg-6">
                                             <asp:Label ID="Label8" runat="server" Text="Valor por porción"></asp:Label>
@@ -76,7 +80,7 @@
                                             <asp:Label ID="lblTotalExtra" runat="server">Valor Extra $</asp:Label>
                                         </div>
                                         <div class="col-md-3">
-                                            <asp:TextBox ID="txtValorExtra" runat="server" TextMode="Number" Enabled="false"></asp:TextBox>
+                                            <asp:TextBox ID="txtModalValorExtra" runat="server" TextMode="Number" Enabled="false"></asp:TextBox>
                                         </div>
                                     </div>
                                     <div class="form-row my-4">
@@ -108,11 +112,9 @@
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
 
-
-                                                    <asp:BoundField DataField="CantidadExtra" HeaderText="Cantidad Extra" SortExpression="CantidadExtra"></asp:BoundField>
-
-                                                    <asp:TemplateField HeaderText="Porción">
+                                                    <asp:TemplateField HeaderText="Cantidad Extra">
                                                         <ItemTemplate>
+                                                            <asp:Label ID="lblCantidadExtra" runat="server" Text='<%# Bind("CantidadExtra") %>' Visible="false"></asp:Label>
                                                             <asp:Label ID="lblTipoMedicion" runat="server" Text='<%# Bind("IdTipoMedicion") %>'></asp:Label>
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
@@ -191,7 +193,14 @@
 
                             <asp:BoundField DataField="Nombre" HeaderText="Nombre" SortExpression="Nombre" />
                             <asp:BoundField DataField="Descripcion" HeaderText="Descripción" SortExpression="Descripcion" />
-                            <asp:BoundField DataField="ValorUnitario" HeaderText="Valor Unidad" />
+
+                            <asp:TemplateField HeaderText="Valor Unidad">
+                                <ItemTemplate>
+
+                                    <asp:Label ID="Label9" runat="server" Text='$'></asp:Label>
+                                    <asp:Label ID="lblValorUnitario" runat="server" Text='<%# Bind("ValorUnitario") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
 
                             <asp:TemplateField HeaderText="Agregar Extra">
                                 <ItemTemplate>
@@ -216,7 +225,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-row d-flex justify-content-center my-2">
-                            <asp:Button ID="btnIngresarPedido" runat="server" Text="Confirmar Pedido" CssClass="btn btn-primary mx-2" OnClick="btnIngresarPedido_Click" />
+                            <asp:Button ID="btnIngresarPedido" runat="server" Text="Confirmar Pedido" CssClass="btn btn-success mx-2" OnClick="btnIngresarPedido_Click" />
                             <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" CssClass="btn btn-secondary mx-2" OnClick="btnLimpiar_Click" />
                         </div>
                         <div class="form-row">
@@ -250,10 +259,25 @@
                     </div>
                     <div class="col"></div>
                 </div>
+                <div class="form-row my-3">
+                    <div class="col"></div>
+                    <div class="col-md-6 h3 text-center" id="GridTitle" runat="server">
+                        <asp:Label ID="lblGridTitle" runat="server" Text="Listado de Preparaciones"></asp:Label>
+                    </div>
+                    <div class="col">
+                        <div class="input-group">
+                            <asp:TextBox ID="txtFilterNombre" runat="server" CssClass="form-control"></asp:TextBox>
+                            <div class="input-group-append">
+                                <asp:Button ID="btnSearch" runat="server" Text="Buscar" CssClass="btn btn-outline-info" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div id="GridPreparaciones" runat="server">
-                    <h4>Listado de Preparaciones</h4>
-                    <div class="text-center">
-                        <asp:GridView ID="GridViewAlimentos" runat="server" ShowHeaderWhenEmpty="True" CssClass="table table-hover table-light text-center" HeaderStyle-CssClass="thead-light" BorderStyle="None" AutoGenerateColumns="False" DataKeyNames="IdAlimento" DataSourceID="SqlDataSource1" OnRowCommand="GridViewAlimentos_RowCommand">
+                    <div class="text-center content-Grid">
+                        <asp:GridView ID="GridViewAlimentos" runat="server" ShowHeaderWhenEmpty="True" CssClass="table table-hover table-light text-center" HeaderStyle-CssClass="thead-light"
+                            BorderStyle="None" AutoGenerateColumns="False" DataKeyNames="IdAlimento" DataSourceID="SqlDataSource1" OnRowCommand="GridViewAlimentos_RowCommand" AllowPaging="true"
+                            PageSize="5">
                             <Columns>
                                 <asp:TemplateField>
                                     <HeaderTemplate>
@@ -275,8 +299,7 @@
                     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:OrderNowBDConnectionString %>" SelectCommand="SELECT * FROM [Alimento]"></asp:SqlDataSource>
                 </div>
                 <div id="GridOfertas" runat="server" visible="false">
-                    <h4>Listado de Ofertas</h4>
-                    <div class="text-center">
+                    <div class="text-center content-Grid">
                         <asp:GridView ID="GridViewOfertas" runat="server" ShowHeaderWhenEmpty="True" CssClass="table table-hover table-light text-center" HeaderStyle-CssClass="thead-light" BorderStyle="None" AutoGenerateColumns="False" DataKeyNames="IdOferta" DataSourceID="SqlDataSource5" OnRowCommand="GridViewOfertas_RowCommand">
                             <Columns>
 

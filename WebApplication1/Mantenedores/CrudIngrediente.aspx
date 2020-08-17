@@ -10,7 +10,7 @@
 
             <fieldset>
                 <legend>Datos de Ingredinte</legend>
-                <div class="form-row">
+                <div class="form-row my-2">
                     <div class="col-md-6">
                         <asp:Label ID="Label1" runat="server" Text="Nombre" For="txtNombre"></asp:Label>
                         <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control"></asp:TextBox>
@@ -20,7 +20,7 @@
                         <asp:TextBox ID="txtDescripcion" runat="server" CssClass="form-control"></asp:TextBox>
                     </div>
                 </div>
-                <div class="form-row">
+                <div class="form-row my-2">
                     <div class="col-md-6">
                         <asp:Label ID="Label3" runat="server" Text="Stock" for="txtStock"></asp:Label>
                         <asp:TextBox ID="txtStock" runat="server" TextMode="Number" CssClass="form-control"></asp:TextBox>
@@ -30,7 +30,7 @@
                         <asp:TextBox ID="txtValorNeto" runat="server" CssClass="form-control"></asp:TextBox>
                     </div>
                 </div>
-                <div class="form-row">
+                <div class="form-row my-2">
                     <div class="col-md-6">
                         <asp:Label ID="Label5" runat="server" Text="Marca" For="cboMarca"></asp:Label>
                         <asp:DropDownList ID="cboMarca" runat="server" CssClass="form-control" DataSourceID="SqlDataSource2" DataTextField="Nombre" DataValueField="IdMarca">
@@ -46,7 +46,7 @@
                         <asp:SqlDataSource runat="server" ID="SqlDataSource3" ConnectionString='<%$ ConnectionStrings:OrderNowBDConnectionString %>' SelectCommand="SELECT [IdTipoAlimento], [Descripcion] FROM [TipoAlimento]"></asp:SqlDataSource>
                     </div>
                 </div>
-                <div class="form-row">
+                <div class="form-row my-2">
                     <div class="col-md-6">
                         <asp:Label ID="Label10" runat="server" Text="Tipo Medicion" For="cboTipoMedicion"></asp:Label>
                         <asp:DropDownList ID="cboTipoMedicion" runat="server" CssClass="form-control" DataSourceID="SqlDataSource4" DataTextField="Descripcion" DataValueField="IdTipoMedicion" AppendDataBoundItems="true" AutoPostBack="true"
@@ -100,7 +100,7 @@
                 Lista de Ingredientes
             </div>
             <div>
-                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="IdIngrediente" DataSourceID="SqlDataSource1" OnRowCommand="GridView1_RowCommand" CssClass="table table-hover table-light text-center" 
+                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="IdIngrediente" DataSourceID="SqlDataSource1" OnRowCommand="GridView1_RowCommand" CssClass="table table-hover table-light text-center"
                     HeaderStyle-CssClass="thead-light" OnRowDataBound="GridView1_RowDataBound">
                     <Columns>
                         <asp:TemplateField>
@@ -118,7 +118,7 @@
                         <asp:BoundField DataField="ValorNeto" HeaderText="ValorNeto" SortExpression="ValorNeto" />
                         <asp:TemplateField HeaderText="Marca">
                             <ItemTemplate>
-                                <asp:Label ID="lblMarca" runat="server" Text='<%# Bind("IdMarca") %>' />
+                                <asp:Label ID="lblMarca" runat="server" Text='' />
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Tipo Alimento">
@@ -154,12 +154,30 @@
             <asp:GridView ID="GridViewDetalle" runat="server" AutoGenerateColumns="false" BorderStyle="None" CssClass="table table-hover table-light text-center" HeaderStyle-CssClass="thead-light"
                 OnRowCommand="GridViewDetalle_RowCommand" OnRowDataBound="GridViewDetalle_RowDataBound" ShowHeaderWhenEmpty="true">
                 <Columns>
-                    <asp:TemplateField HeaderText="Detalle de Ingredientes">
+                    <asp:TemplateField HeaderText="Button">
                         <ItemTemplate>
                             <asp:LinkButton ID="btnEditarDetalle" runat="server" CommandName="Modificar" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>"><i class="fas fa-edit fa-2x"></i></asp:LinkButton>
-                            <asp:Label ID="lblIdDetalleIngrediente" runat="server" Text='<%# Bind("IdDetalleIngrediente") %>' />
-                            <asp:Label ID="lblIdMarca" runat="server" Text='<%# Bind("IdMarca") %>' />
-                            <asp:Label ID="lblCantidad" runat="server" Text='<%# Bind("Cantidad") %>' />
+                            <asp:Label ID="lblCodigo" runat="server" Text='<%# Bind("IdIngredienteDetalle") %>' Visible="false" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Marca">
+                        <ItemTemplate>
+                            <asp:Label ID="lblMarca" runat="server" Text='<%# Bind("IdMarca") %>' />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Cantidad">
+                        <ItemTemplate>
+                            <asp:Label ID="lblCantidad" runat="server" Text='<%# Bind("CantidadIngresada") %>' />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Foto">
+                        <ItemTemplate>
+                            <asp:Label ID="lblFoto" runat="server" Text='<%# Bind("Foto") %>' />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Button">
+                        <ItemTemplate>
+                            <asp:LinkButton ID="btnELiminarDetalle" runat="server" CommandName="Eliminar" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>"><i class="far fa-minus-circle fa-2x text-danger"></i></asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

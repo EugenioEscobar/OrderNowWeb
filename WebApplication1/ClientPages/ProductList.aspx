@@ -132,6 +132,7 @@
             width: 100%;
         }
     </style>
+    <link rel="stylesheet" href="/lib/crystal/css/crystalnotifications.min.css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container-fluid">
@@ -171,7 +172,8 @@
                                         <ItemTemplate>
                                             <div class="card mx-3">
                                                 <div class="layer">
-                                                    <asp:LinkButton runat="server" ID="btnAddToCart" CommandArgument='<%#((DataListItem)Container).ItemIndex %>' CommandName="AddToCart" CssClass="btm-btn">Agregar Al Carrito</asp:LinkButton>
+                                                    <asp:LinkButton runat="server" ID="btnAddToCart" CommandArgument='<%#((DataListItem)Container).ItemIndex %>' CommandName="AddToCart" 
+                                                        CssClass="btm-btn" OnClientClick="NewAlimento();">Agregar Al Carrito</asp:LinkButton>
                                                 </div>
                                                 <div class="content">
                                                     <asp:Label ID="lblCodigoProduct" runat="server" Text='<%#Bind("IdAlimento") %>' Visible="false"></asp:Label>
@@ -225,4 +227,23 @@
             </ContentTemplate>
         </asp:UpdatePanel>
     </div>
+    <!-- Librerías adicionales -->
+    <script src="lib/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Librerías de plugins -->
+    <script src="/lib/crystal/js/crystalnotifications.min.js"></script>
+
+    <script>
+        function NewAlimento() {
+
+            $.CrystalNotification({
+                position: 1, // try 2, 3 and 4
+                title: "Nuevo alimento agregado al carrito!",
+                image: "",
+                content: "",
+            });
+
+        };
+    </script>
 </asp:Content>

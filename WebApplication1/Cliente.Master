@@ -139,6 +139,12 @@
                                 Ver Carrito
                             </a>
                         </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="ClientPages/TestingPage.aspx">
+                                <i class="fas fa-analytics"></i>
+                                Página Test
+                            </a>
+                        </li>
                         <%--<li class="nav-item active">
                             <a class="nav-link" href="/TomarPedidoCLIENTE.aspx">
                                 <svg class="bi bi-chat-square-dots-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

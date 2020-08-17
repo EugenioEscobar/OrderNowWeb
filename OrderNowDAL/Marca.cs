@@ -17,7 +17,6 @@ namespace OrderNowDAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Marca()
         {
-            this.Ingrediente = new HashSet<Ingrediente>();
             this.DetalleIngrediente = new HashSet<DetalleIngrediente>();
         }
     
@@ -25,8 +24,6 @@ namespace OrderNowDAL
         public string Nombre { get; set; }
         public Nullable<int> Estado { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Ingrediente> Ingrediente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DetalleIngrediente> DetalleIngrediente { get; set; }
     }

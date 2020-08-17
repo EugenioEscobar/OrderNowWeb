@@ -10,6 +10,7 @@ namespace WebApplication1
 {
     public partial class Administrador : System.Web.UI.MasterPage
     {
+        //AlimentoPedidoGrid ingredientes = new AlimentoPedidoGrid();
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -17,6 +18,7 @@ namespace WebApplication1
         
         protected void linkAlimentos_Click(object sender, EventArgs e)
         {
+            
             Response.Redirect("/Mantenedores/CrudAlimentos.aspx");
         }
     }

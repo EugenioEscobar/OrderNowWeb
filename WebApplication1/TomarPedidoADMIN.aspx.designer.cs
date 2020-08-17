@@ -85,6 +85,15 @@ namespace WebApplication1 {
         protected global::System.Web.UI.WebControls.Label Label5;
         
         /// <summary>
+        /// Control lblModalIdAlimento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblModalIdAlimento;
+        
+        /// <summary>
         /// Control txtPreparacion.
         /// </summary>
         /// <remarks>
@@ -103,22 +112,13 @@ namespace WebApplication1 {
         protected global::System.Web.UI.WebControls.Label Label6;
         
         /// <summary>
-        /// Control cboIngrediente.
+        /// Control cboModalIngrediente.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList cboIngrediente;
-        
-        /// <summary>
-        /// Control SqlDataSource4.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource4;
+        protected global::System.Web.UI.WebControls.DropDownList cboModalIngrediente;
         
         /// <summary>
         /// Control Label7.
@@ -137,6 +137,15 @@ namespace WebApplication1 {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtCantidadPorcion;
+        
+        /// <summary>
+        /// Control lblModalCantidadMaxima.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblModalCantidadMaxima;
         
         /// <summary>
         /// Control Label8.
@@ -166,13 +175,13 @@ namespace WebApplication1 {
         protected global::System.Web.UI.WebControls.Label lblTotalExtra;
         
         /// <summary>
-        /// Control txtValorExtra.
+        /// Control txtModalValorExtra.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtValorExtra;
+        protected global::System.Web.UI.WebControls.TextBox txtModalValorExtra;
         
         /// <summary>
         /// Control divMenssageExtra.
@@ -416,6 +425,42 @@ namespace WebApplication1 {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnShowOferts;
+        
+        /// <summary>
+        /// Control GridTitle.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl GridTitle;
+        
+        /// <summary>
+        /// Control lblGridTitle.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblGridTitle;
+        
+        /// <summary>
+        /// Control txtFilterNombre.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFilterNombre;
+        
+        /// <summary>
+        /// Control btnSearch.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSearch;
         
         /// <summary>
         /// Control GridPreparaciones.
