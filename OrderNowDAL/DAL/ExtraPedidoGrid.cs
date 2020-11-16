@@ -13,11 +13,12 @@ namespace OrderNowDAL.DAL
 
         private static List<ExtraPedido> listadoExtras = new List<ExtraPedido>();
 
-        public void AddExtra(ExtraPedido extra)
+        public ExtraPedido AddExtra(ExtraPedido extra)
         {
             //VerificarStock(extra);
             extra.IdExtraPedido = listadoExtras.Count > 0 ? listadoExtras.Last().IdExtraPedido + 1 : 1;
             listadoExtras.Add(extra);
+            return extra;
         }
 
         public void Update(int index, ExtraPedido extra)

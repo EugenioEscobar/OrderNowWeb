@@ -58,6 +58,7 @@ namespace OrderNowDAL
         public virtual DbSet<EquivalenciaMediciones> EquivalenciaMediciones { get; set; }
         public virtual DbSet<DetalleIngrediente> DetalleIngrediente { get; set; }
         public virtual DbSet<ExtraDisponible> ExtraDisponible { get; set; }
+        public virtual DbSet<TipoModalidad> TipoModalidad { get; set; }
     
         public virtual ObjectResult<ExtraDisponible> P_obtener_extras_disponibles(Nullable<int> pin_codigo)
         {
@@ -75,6 +76,39 @@ namespace OrderNowDAL
                 new ObjectParameter("Pin_codigo", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ExtraDisponible>("P_obtener_extras_disponibles", mergeOption, pin_codigoParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<double>> ObtenerTotalesPorDia()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("ObtenerTotalesPorDia");
+        }
+    
+        public virtual ObjectResult<Nullable<double>> ObtenerPorcentajePresencial()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("ObtenerPorcentajePresencial");
+        }
+    
+        public virtual ObjectResult<ObtenerTopInsumos_Result> ObtenerTopInsumos(Nullable<System.DateTime> pIN_FECHA)
+        {
+            var pIN_FECHAParameter = pIN_FECHA.HasValue ?
+                new ObjectParameter("PIN_FECHA", pIN_FECHA) :
+                new ObjectParameter("PIN_FECHA", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerTopInsumos_Result>("ObtenerTopInsumos", pIN_FECHAParameter);
+        }
+    
+        public virtual ObjectResult<ObtenerTopExtras_Result> ObtenerTopExtras(Nullable<System.DateTime> pIN_FECHA)
+        {
+            var pIN_FECHAParameter = pIN_FECHA.HasValue ?
+                new ObjectParameter("PIN_FECHA", pIN_FECHA) :
+                new ObjectParameter("PIN_FECHA", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerTopExtras_Result>("ObtenerTopExtras", pIN_FECHAParameter);
+        }
+    
+        public virtual ObjectResult<InformacionTarjetas_Result> InformacionTarjetas()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InformacionTarjetas_Result>("InformacionTarjetas");
         }
     }
 }

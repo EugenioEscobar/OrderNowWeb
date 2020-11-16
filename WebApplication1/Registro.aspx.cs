@@ -6,6 +6,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using OrderNowDAL;
 using OrderNowDAL.DAL;
+using OrderNowDAL.Encriptar;
+
 namespace WebApplication1
 {
 
@@ -33,10 +35,11 @@ namespace WebApplication1
                 int Telefono = Convert.ToInt32(txtTelefono.Text);
                 string User = txtUsuario.Text;
                 string clave = txtClave.Text;
+                string claveEnc = Encrypt.GetSHA256(clave);
 
                 Usuario u = new Usuario();
                 u.Usuario1 = User;
-                u.Contraseña = clave;
+                u.Contraseña = claveEnc;
                 u.IdTipoUsuario = 2;
                 u.Estado = 1;
                 u = uDAL.Add(u);

@@ -34,10 +34,10 @@ namespace OrderNowDAL.DAL
             }
         }
 
-        public AlimentoPedido FindElemento(int idAlimento)
+        public AlimentoPedido FindElemento(int idAlimentoPedido)
         {
             AlimentoPedido obj = new AlimentoPedido();
-            obj = alimentos.FirstOrDefault(x => x.IdAlimentoPedido == idAlimento);
+            obj = alimentos.FirstOrDefault(x => x.IdAlimentoPedido == idAlimentoPedido);
             return obj;
         }
 

@@ -9,6 +9,7 @@ namespace OrderNowDAL.DAL
     public class OfertaAlimentoDAL
     {
         private OrderNowBDEntities nowBDEntities = new OrderNowBDEntities();
+        private AlimentoDAL aDAL = new AlimentoDAL();
 
         public OfertaAlimento Add(OfertaAlimento m)
         {
@@ -39,12 +40,27 @@ namespace OrderNowDAL.DAL
             iAl.Cantidad = m.Cantidad;
             nowBDEntities.SaveChanges();
         }
-        public List<OfertaAlimento> Alimentos(int idOferta)
+        public List<OfertaAlimento> getAlimentosOferta(int idOferta)
         {
             var query = from obj in nowBDEntities.OfertaAlimento
                         where obj.IdOferta == idOferta
                         select obj;
             return query.ToList();
+        }
+        public List<Alimento> getAllAlimentos(int idOferta)
+        {
+            var query = from obj in nowBDEntities.OfertaAlimento
+                        where obj.IdOferta == idOferta
+                        select obj;
+            List<Alimento> list = new List<Alimento>();
+            query.ToList().ForEach(x =>
+            {
+                for (int i = 0; i < x.Cantidad; i++)
+                {
+                    list.Add(aDAL.Find(x.IdAlimento.Value));
+                }
+            });
+            return list;
         }
     }
 }

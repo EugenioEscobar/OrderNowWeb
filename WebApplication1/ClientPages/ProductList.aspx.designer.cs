@@ -76,13 +76,13 @@ namespace WebApplication1.ClientPages {
         protected global::System.Web.UI.WebControls.Panel PanelPreparaciones;
         
         /// <summary>
-        /// Control DataListCategory.
+        /// Control ListViewCategory.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DataList DataListCategory;
+        protected global::System.Web.UI.WebControls.ListView ListViewCategory;
         
         /// <summary>
         /// Control PanelOfertas.
@@ -94,13 +94,13 @@ namespace WebApplication1.ClientPages {
         protected global::System.Web.UI.WebControls.Panel PanelOfertas;
         
         /// <summary>
-        /// Control DataListOferta.
+        /// Control ListViewOferta.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DataList DataListOferta;
+        protected global::System.Web.UI.WebControls.ListView ListViewOferta;
         
         /// <summary>
         /// Control SqlDataSource1.

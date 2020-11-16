@@ -21,7 +21,7 @@ namespace WebApplication1.ClientPages
 
         }
 
-        protected void DataListCategory_ItemDataBound(object sender, DataListItemEventArgs e)
+        protected void ListViewCategory_ItemDataBound(object sender, ListViewItemEventArgs e)
         {
             Panel item = e.Item.FindControl("itemSection") as Panel;
             Label lblCodigo = e.Item.FindControl("lblCodigo") as Label;
@@ -30,9 +30,9 @@ namespace WebApplication1.ClientPages
             DataTable dt = aDAL.GetByClasificacion(codigo);
             if (dt != null)
             {
-                DataList dataListProducts = e.Item.FindControl("DataListProduct") as DataList;
-                dataListProducts.DataSource = dt;
-                dataListProducts.DataBind();
+                ListView listViewProducts = e.Item.FindControl("ListViewProduct") as ListView;
+                listViewProducts.DataSource = dt;
+                listViewProducts.DataBind();
             }
             else
             {
@@ -40,7 +40,7 @@ namespace WebApplication1.ClientPages
             }
         }
 
-        protected void DataListProduct_ItemCommand(object source, DataListCommandEventArgs e)
+        protected void ListViewProduct_ItemCommand(object sender, ListViewCommandEventArgs e)
         {
             try
             {
@@ -54,7 +54,19 @@ namespace WebApplication1.ClientPages
             }
         }
 
-        protected void DataListOferta_ItemCommand(object source, DataListCommandEventArgs e)
+        protected void ListViewProduct_ItemDataBound(object sender, ListViewItemEventArgs e)
+        {
+            string path = "/Fotos/Productos/";
+            ListViewItem item = e.Item;
+            Label lblCodigo = item.FindControl("lblCodigoProduct") as Label;
+            Image imgAlimento = item.FindControl("imgAlimento") as Image;
+            Alimento alimento = aDAL.Find(Convert.ToInt32(lblCodigo.Text));
+
+            if (alimento.Foto != null && alimento.Foto != "") { imgAlimento.ImageUrl = path + alimento.Foto; }
+            else { imgAlimento.ImageUrl = path + "brasil.png"; }
+        }
+
+        protected void ListViewOferta_ItemCommand(object sender, ListViewCommandEventArgs e)
         {
             Label lblCodigo = e.Item.FindControl("lblCodigoOferta") as Label;
             int idProducto = Convert.ToInt32(lblCodigo.Text);
@@ -70,35 +82,16 @@ namespace WebApplication1.ClientPages
             }
         }
 
-        protected void DataListProduct_ItemDataBound(object sender, DataListItemEventArgs e)
+        protected void ListViewOferta_ItemDataBound(object sender, ListViewItemEventArgs e)
         {
             string path = "/Fotos/Productos/";
-            DataListItem item = e.Item;
-            Label lblCodigo = item.FindControl("lblCodigoProduct") as Label;
-            Image imgAlimento = item.FindControl("imgAlimento") as Image;
-            Alimento alimento = aDAL.Find(Convert.ToInt32(lblCodigo.Text));
-
-            if (alimento.Foto != null && alimento.Foto != "") { imgAlimento.ImageUrl = path + alimento.Foto; }
-            else { imgAlimento.ImageUrl = path + "brasil.png"; }
-        }
-
-        protected void DataListOferta_ItemDataBound(object sender, DataListItemEventArgs e)
-        {
-            string path = "/Fotos/Productos/";
-            DataListItem item = e.Item;
+            ListViewItem item = e.Item;
             Label lblCodigo = item.FindControl("lblCodigoOferta") as Label;
             Image imgAlimento = item.FindControl("imgOferta") as Image;
             Oferta oferta = oDAL.Find(Convert.ToInt32(lblCodigo.Text));
 
             if (oferta.Foto != null && oferta.Foto != "") { imgAlimento.ImageUrl = path + oferta.Foto; }
             else { imgAlimento.ImageUrl = path + "Oferta.png"; }
-
-        }
-
-        private void ChangeView(bool ShowOferts)
-        {
-            PanelOfertas.Visible = ShowOferts;
-            PanelPreparaciones.Visible = !ShowOferts;
         }
 
         protected void btnVerPreparaciones_Click(object sender, EventArgs e)
@@ -109,6 +102,14 @@ namespace WebApplication1.ClientPages
         protected void btnVerOfertas_Click(object sender, EventArgs e)
         {
             ChangeView(true);
+        }
+
+
+
+        private void ChangeView(bool ShowOferts)
+        {
+            PanelOfertas.Visible = ShowOferts;
+            PanelPreparaciones.Visible = !ShowOferts;
         }
 
         protected void UserMessage(string mensaje, string type)

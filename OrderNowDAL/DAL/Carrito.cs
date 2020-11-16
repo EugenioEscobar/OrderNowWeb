@@ -26,9 +26,9 @@ namespace OrderNowDAL.DAL
             carritoAlimentos.AddAlimento(alimento);
         }
 
-        public AlimentoPedido FindAlimento(int idAlimento)
+        public AlimentoPedido FindAlimento(int idAlimentoPedido)
         {
-            return carritoAlimentos.FindElemento(idAlimento);
+            return carritoAlimentos.FindElemento(idAlimentoPedido);
         }
 
         public void RemoveAlimento(AlimentoPedido alimento)
@@ -48,9 +48,9 @@ namespace OrderNowDAL.DAL
         #endregion
 
         #region Extra Module
-        public void AddExtra(ExtraPedido extra)
+        public ExtraPedido AddExtra(ExtraPedido extra)
         {
-            carritoExtras.AddExtra(extra);
+            return carritoExtras.AddExtra(extra);
         }
 
         public ExtraPedido FindExtra(int idExtra)
@@ -219,7 +219,7 @@ namespace OrderNowDAL.DAL
              * Se le deben restar todas las cantidades por cada preparación en el carrito
              */
             List<Ingrediente> ingredientes = RestarIngredientes(iDAL.GetAll());
-            foreach (OfertaAlimento xx in oADAL.Alimentos(oferta.IdOferta))
+            foreach (OfertaAlimento xx in oADAL.getAlimentosOferta(oferta.IdOferta))
             {
                 RestarAlimento(aDAL.Find((int)xx.IdAlimento), ingredientes);
             }

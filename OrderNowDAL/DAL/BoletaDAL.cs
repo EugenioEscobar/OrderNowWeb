@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OrderNowDAL.DAL
 {
-    class BoletaDAL
+    public class BoletaDAL
     {
         private OrderNowBDEntities nowBDEntities = new OrderNowBDEntities();
 
@@ -24,10 +24,14 @@ namespace OrderNowDAL.DAL
             nowBDEntities.SaveChanges();
         }
 
-        public void Edit(Boleta p)
+        public void Edit(Boleta b)
         {
-            Boleta tipoPago = nowBDEntities.Boleta.FirstOrDefault(obj => obj.IdBoleta == p.IdBoleta);
-            tipoPago = p;
+            Boleta boleta = nowBDEntities.Boleta.FirstOrDefault(obj => obj.IdBoleta == b.IdBoleta);
+            boleta.Descuento = b.Descuento;
+            boleta.Fecha = b.Fecha;
+            boleta.Total = b.Total;
+            boleta.Pedido = b.Pedido;
+            boleta.IdTipoPago = b.IdTipoPago;
             nowBDEntities.SaveChanges();
         }
 

@@ -13,9 +13,9 @@ namespace WebApplication1
         //AlimentoPedidoGrid ingredientes = new AlimentoPedidoGrid();
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session["Usuario"] == null) { Response.Redirect("/Login.aspx"); }
         }
-        
+
         protected void linkAlimentos_Click(object sender, EventArgs e)
         {
             

@@ -31,6 +31,7 @@ namespace OrderNowDAL
         public Nullable<System.DateTime> FechaNacimiento { get; set; }
         public Nullable<int> IdUsuario { get; set; }
         public Nullable<int> Estado { get; set; }
+        public string Correo { get; set; }
     
         public virtual Comuna Comuna1 { get; set; }
         public virtual Usuario Usuario { get; set; }

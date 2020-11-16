@@ -24,6 +24,7 @@ namespace OrderNowDAL.DAL
             obj.ApellidoMat = m.ApellidoMat;
             obj.Direccion = m.Direccion;
             obj.FechaNacimiento = m.FechaNacimiento;
+            obj.Correo = m.Correo;
             obj.Estado = m.Estado;
             nowBDEntities.SaveChanges();
         }

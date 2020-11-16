@@ -63,6 +63,27 @@
       <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1404.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1404.0\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1404.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1404.0\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebDesign, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1404.0\lib\net40\Microsoft.ReportViewer.WebDesign.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1404.0\lib\net40\Microsoft.ReportViewer.WebForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
     <Reference Include="SpreadsheetLight, Version=3.4.11.0, Culture=neutral, PublicKeyToken=32fbb46dc1730c57, processorArchitecture=MSIL">
       <HintPath>..\packages\SpreadsheetLight.3.4.11\lib\net40\SpreadsheetLight.dll</HintPath>
     </Reference>
@@ -88,8 +109,48 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AdminPages\InteligenciaDeNegocio.aspx" />
+    <Content Include="AdminPages\Reportes\ReporteVentas.aspx" />
+    <Content Include="AdminPages\testing.aspx" />
+    <Content Include="assets\contact.php" />
+    <Content Include="assets\css\animate.css" />
+    <Content Include="assets\css\jquery.mCustomScrollbar.min.css" />
+    <Content Include="assets\css\media-queries.css" />
+    <Content Include="assets\css\productsStyle.css" />
+    <Content Include="assets\css\style.css" />
+    <Content Include="assets\ico\apple-touch-icon-114-precomposed.png" />
+    <Content Include="assets\ico\apple-touch-icon-144-precomposed.png" />
+    <Content Include="assets\ico\apple-touch-icon-57-precomposed.png" />
+    <Content Include="assets\ico\apple-touch-icon-72-precomposed.png" />
+    <Content Include="assets\ico\favicon%281%29.png" />
+    <Content Include="assets\ico\favicon.ico" />
+    <Content Include="assets\ico\favicon.png" />
+    <Content Include="assets\img\about-us.jpg" />
+    <Content Include="assets\img\backgrounds\1.jpg" />
+    <Content Include="assets\img\backgrounds\2.jpg" />
+    <Content Include="assets\img\logo%402x.png" />
+    <Content Include="assets\img\logo-dark%402x.png" />
+    <Content Include="assets\img\logo-dark.png" />
+    <Content Include="assets\img\logo.png" />
+    <Content Include="assets\img\portfolio\1.jpg" />
+    <Content Include="assets\img\portfolio\2.jpg" />
+    <Content Include="assets\img\portfolio\3.jpg" />
+    <Content Include="assets\js\jquery-3.3.1.min.js" />
+    <Content Include="assets\js\jquery-migrate-3.0.0.min.js" />
+    <Content Include="assets\js\jquery.backstretch.js" />
+    <Content Include="assets\js\jquery.backstretch.min.js" />
+    <Content Include="assets\js\jquery.mCustomScrollbar.concat.min.js" />
+    <Content Include="assets\js\jquery.waypoints.js" />
+    <Content Include="assets\js\jquery.waypoints.min.js" />
+    <Content Include="assets\js\scripts.js" />
+    <Content Include="assets\js\waypoints.js" />
+    <Content Include="assets\js\waypoints.min.js" />
+    <Content Include="assets\js\wow.js" />
+    <Content Include="assets\js\wow.min.js" />
+    <Content Include="ClientPages\CambiarContrasenia.aspx" />
     <Content Include="ClientPages\OfertaDetails.aspx" />
     <Content Include="ClientPages\ProductList.aspx" />
+    <Content Include="ClientPages\ShoppingCart.aspx" />
     <Content Include="ClientPages\TestingPage.aspx" />
     <Content Include="ClientPages\VerCarrito.aspx" />
     <Content Include="Content\bootstrap-4.5.0-dist\css\bootstrap-grid.css" />
@@ -1689,7 +1750,24 @@
     <Content Include="Content\fontawesome-free-5.11.2-web\webfonts\fa-brands-400.svg" />
     <Content Include="Content\fontawesome-free-5.11.2-web\webfonts\fa-regular-400.svg" />
     <Content Include="Content\fontawesome-free-5.11.2-web\webfonts\fa-solid-900.svg" />
+    <Content Include="Content\js\charts-demo\chart-area-demo.js" />
+    <Content Include="Content\js\charts-demo\chart-bar-demo.js" />
+    <Content Include="Content\js\charts-demo\chart-pie-demo.js" />
+    <Content Include="Content\js\charts\Chart-fill.js" />
+    <Content Include="Content\js\charts\Chart.bundle.js" />
+    <Content Include="Content\js\charts\Chart.bundle.min.js" />
+    <Content Include="Content\js\charts\Chart.js" />
+    <Content Include="Content\js\charts\Chart.min.js" />
     <Content Include="Content\js\crystal.js" />
+    <Content Include="Content\sb-admin-2.min.css" />
+    <Content Include="css\main.css" />
+    <Content Include="css\estiloRegistro.css" />
+    <Content Include="Fotos\Landing\background.jpg" />
+    <Content Include="Fotos\Landing\logdo.png" />
+    <Content Include="Fotos\Landing\logo.png" />
+    <Content Include="Fotos\Landing\person.png" />
+    <Content Include="Fotos\Landing\product.jpg" />
+    <Content Include="LandingPage.aspx" />
     <Content Include="lib\crystal\css\crystalnotifications.css" />
     <Content Include="lib\crystal\css\crystalnotifications.min.css" />
     <Content Include="lib\crystal\img\back.jpg" />
@@ -1713,29 +1791,29 @@
     <Content Include="lib\crystal\sound\crystal.mp3" />
     <Content Include="lib\crystal\sound\crystal.ogg" />
     <Content Include="lib\jquery.min.js" />
-    <Content Include="Mantenedores\CrudAlimentos.aspx" />
-    <Content Include="Mantenedores\CrudCategorias.aspx" />
-    <Content Include="Mantenedores\CrudOfertas.aspx" />
-    <Content Include="Mantenedores\CrudIngrediente.aspx" />
-    <Content Include="Mantenedores\CrudDistribuidor.aspx" />
+    <Content Include="AdminPages\Mantenedores\CrudAlimentos.aspx" />
+    <Content Include="AdminPages\Mantenedores\CrudCategorias.aspx" />
+    <Content Include="AdminPages\Mantenedores\CrudOfertas.aspx" />
+    <Content Include="AdminPages\Mantenedores\CrudIngrediente.aspx" />
+    <Content Include="AdminPages\Mantenedores\CrudDistribuidor.aspx" />
     <Content Include="css\EstiloMenu.css" />
-    <Content Include="Default.aspx" />
-    <Content Include="DefaultAdmin.aspx" />
+    <Content Include="ClientPages\Default.aspx" />
+    <Content Include="AdminPages\DefaultAdmin.aspx" />
     <Content Include="Fotos\chorrillana.jpg" />
     <Content Include="Fotos\Churrascos.png" />
     <Content Include="Fotos\hamburguesa.jpg" />
     <Content Include="Fotos\OrderNow.png" />
-    <Content Include="IngresarOrdenDeCompra.aspx" />
+    <Content Include="AdminPages\IngresarOrdenDeCompra.aspx" />
     <Content Include="Login.aspx" />
-    <Content Include="Mantenedores\CrudCliente.aspx" />
-    <Content Include="Mantenedores\CrudMarcas.aspx" />
-    <Content Include="Mantenedores\CrudTipoAlimento.aspx" />
-    <Content Include="Mantenedores\CrudTipoMedicion.aspx" />
-    <Content Include="Mantenedores\CrudTipoPago.aspx" />
-    <Content Include="Mantenedores\CrudTipoPedido.aspx" />
-    <Content Include="Mantenedores\CrudTrabajador.aspx" />
+    <Content Include="AdminPages\Mantenedores\CrudCliente.aspx" />
+    <Content Include="AdminPages\Mantenedores\CrudMarcas.aspx" />
+    <Content Include="AdminPages\Mantenedores\CrudTipoAlimento.aspx" />
+    <Content Include="AdminPages\Mantenedores\CrudTipoMedicion.aspx" />
+    <Content Include="AdminPages\Mantenedores\CrudTipoPago.aspx" />
+    <Content Include="AdminPages\Mantenedores\CrudTipoPedido.aspx" />
+    <Content Include="AdminPages\Mantenedores\CrudTrabajador.aspx" />
     <Content Include="MenuComida.aspx" />
-    <Content Include="MenuPrincipal.aspx" />
+    <Content Include="AdminPages\MenuPrincipal.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1904,7 +1982,20 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="TomarPedidoADMIN.aspx" />
+    <Content Include="AdminPages\TomarPedidoADMIN.aspx" />
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="SqlServerTypes\x64\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="TomarPedidoCLIENTE.aspx" />
     <Content Include="Web.config" />
     <Content Include="Scripts\umd\popper.min.js.map" />
@@ -1928,6 +2019,34 @@
     <Compile Include="Administrador.Master.designer.cs">
       <DependentUpon>Administrador.Master</DependentUpon>
     </Compile>
+    <Compile Include="AdminPages\InteligenciaDeNegocio.aspx.cs">
+      <DependentUpon>InteligenciaDeNegocio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminPages\InteligenciaDeNegocio.aspx.designer.cs">
+      <DependentUpon>InteligenciaDeNegocio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminPages\Reportes\ReporteVentas.aspx.cs">
+      <DependentUpon>ReporteVentas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminPages\Reportes\ReporteVentas.aspx.designer.cs">
+      <DependentUpon>ReporteVentas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminPages\testing.aspx.cs">
+      <DependentUpon>testing.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminPages\testing.aspx.designer.cs">
+      <DependentUpon>testing.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ClientPages\CambiarContrasenia.aspx.cs">
+      <DependentUpon>CambiarContrasenia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClientPages\CambiarContrasenia.aspx.designer.cs">
+      <DependentUpon>CambiarContrasenia.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ClientPages\OfertaDetails.aspx.cs">
       <DependentUpon>OfertaDetails.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1941,6 +2060,13 @@
     </Compile>
     <Compile Include="ClientPages\ProductList.aspx.designer.cs">
       <DependentUpon>ProductList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ClientPages\ShoppingCart.aspx.cs">
+      <DependentUpon>ShoppingCart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClientPages\ShoppingCart.aspx.designer.cs">
+      <DependentUpon>ShoppingCart.aspx</DependentUpon>
     </Compile>
     <Compile Include="ClientPages\TestingPage.aspx.cs">
       <DependentUpon>TestingPage.aspx</DependentUpon>
@@ -1956,61 +2082,68 @@
     <Compile Include="ClientPages\VerCarrito.aspx.designer.cs">
       <DependentUpon>VerCarrito.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Mantenedores\CrudAlimentos.aspx.cs">
+    <Compile Include="AdminPages\Mantenedores\CrudAlimentos.aspx.cs">
       <DependentUpon>CrudAlimentos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Mantenedores\CrudAlimentos.aspx.designer.cs">
+    <Compile Include="AdminPages\Mantenedores\CrudAlimentos.aspx.designer.cs">
       <DependentUpon>CrudAlimentos.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Mantenedores\CrudCategorias.aspx.cs">
+    <Compile Include="AdminPages\Mantenedores\CrudCategorias.aspx.cs">
       <DependentUpon>CrudCategorias.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Mantenedores\CrudCategorias.aspx.designer.cs">
+    <Compile Include="AdminPages\Mantenedores\CrudCategorias.aspx.designer.cs">
       <DependentUpon>CrudCategorias.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Mantenedores\CrudOfertas.aspx.cs">
+    <Compile Include="AdminPages\Mantenedores\CrudOfertas.aspx.cs">
       <DependentUpon>CrudOfertas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Mantenedores\CrudOfertas.aspx.designer.cs">
+    <Compile Include="AdminPages\Mantenedores\CrudOfertas.aspx.designer.cs">
       <DependentUpon>CrudOfertas.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Mantenedores\CrudIngrediente.aspx.cs">
+    <Compile Include="AdminPages\Mantenedores\CrudIngrediente.aspx.cs">
       <DependentUpon>CrudIngrediente.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Mantenedores\CrudIngrediente.aspx.designer.cs">
+    <Compile Include="AdminPages\Mantenedores\CrudIngrediente.aspx.designer.cs">
       <DependentUpon>CrudIngrediente.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Mantenedores\CrudDistribuidor.aspx.cs">
+    <Compile Include="AdminPages\Mantenedores\CrudDistribuidor.aspx.cs">
       <DependentUpon>CrudDistribuidor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Mantenedores\CrudDistribuidor.aspx.designer.cs">
+    <Compile Include="AdminPages\Mantenedores\CrudDistribuidor.aspx.designer.cs">
       <DependentUpon>CrudDistribuidor.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Default.aspx.cs">
+    <Compile Include="ClientPages\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Default.aspx.designer.cs">
+    <Compile Include="ClientPages\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="DefaultAdmin.aspx.cs">
+    <Compile Include="AdminPages\DefaultAdmin.aspx.cs">
       <DependentUpon>DefaultAdmin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="DefaultAdmin.aspx.designer.cs">
+    <Compile Include="AdminPages\DefaultAdmin.aspx.designer.cs">
       <DependentUpon>DefaultAdmin.aspx</DependentUpon>
     </Compile>
-    <Compile Include="IngresarOrdenDeCompra.aspx.cs">
+    <Compile Include="AdminPages\IngresarOrdenDeCompra.aspx.cs">
       <DependentUpon>IngresarOrdenDeCompra.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="IngresarOrdenDeCompra.aspx.designer.cs">
+    <Compile Include="AdminPages\IngresarOrdenDeCompra.aspx.designer.cs">
       <DependentUpon>IngresarOrdenDeCompra.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LandingPage.aspx.cs">
+      <DependentUpon>LandingPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LandingPage.aspx.designer.cs">
+      <DependentUpon>LandingPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
@@ -2019,53 +2152,53 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Mantenedores\CrudCliente.aspx.cs">
+    <Compile Include="AdminPages\Mantenedores\CrudCliente.aspx.cs">
       <DependentUpon>CrudCliente.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Mantenedores\CrudCliente.aspx.designer.cs">
+    <Compile Include="AdminPages\Mantenedores\CrudCliente.aspx.designer.cs">
       <DependentUpon>CrudCliente.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Mantenedores\CrudMarcas.aspx.cs">
+    <Compile Include="AdminPages\Mantenedores\CrudMarcas.aspx.cs">
       <DependentUpon>CrudMarcas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Mantenedores\CrudMarcas.aspx.designer.cs">
+    <Compile Include="AdminPages\Mantenedores\CrudMarcas.aspx.designer.cs">
       <DependentUpon>CrudMarcas.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Mantenedores\CrudTipoAlimento.aspx.cs">
+    <Compile Include="AdminPages\Mantenedores\CrudTipoAlimento.aspx.cs">
       <DependentUpon>CrudTipoAlimento.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Mantenedores\CrudTipoAlimento.aspx.designer.cs">
+    <Compile Include="AdminPages\Mantenedores\CrudTipoAlimento.aspx.designer.cs">
       <DependentUpon>CrudTipoAlimento.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Mantenedores\CrudTipoMedicion.aspx.cs">
+    <Compile Include="AdminPages\Mantenedores\CrudTipoMedicion.aspx.cs">
       <DependentUpon>CrudTipoMedicion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Mantenedores\CrudTipoMedicion.aspx.designer.cs">
+    <Compile Include="AdminPages\Mantenedores\CrudTipoMedicion.aspx.designer.cs">
       <DependentUpon>CrudTipoMedicion.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Mantenedores\CrudTipoPago.aspx.cs">
+    <Compile Include="AdminPages\Mantenedores\CrudTipoPago.aspx.cs">
       <DependentUpon>CrudTipoPago.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Mantenedores\CrudTipoPago.aspx.designer.cs">
+    <Compile Include="AdminPages\Mantenedores\CrudTipoPago.aspx.designer.cs">
       <DependentUpon>CrudTipoPago.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Mantenedores\CrudTipoPedido.aspx.cs">
+    <Compile Include="AdminPages\Mantenedores\CrudTipoPedido.aspx.cs">
       <DependentUpon>CrudTipoPedido.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Mantenedores\CrudTipoPedido.aspx.designer.cs">
+    <Compile Include="AdminPages\Mantenedores\CrudTipoPedido.aspx.designer.cs">
       <DependentUpon>CrudTipoPedido.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Mantenedores\CrudTrabajador.aspx.cs">
+    <Compile Include="AdminPages\Mantenedores\CrudTrabajador.aspx.cs">
       <DependentUpon>CrudTrabajador.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Mantenedores\CrudTrabajador.aspx.designer.cs">
+    <Compile Include="AdminPages\Mantenedores\CrudTrabajador.aspx.designer.cs">
       <DependentUpon>CrudTrabajador.aspx</DependentUpon>
     </Compile>
     <Compile Include="MenuComida.aspx.cs">
@@ -2075,7 +2208,7 @@
     <Compile Include="MenuComida.aspx.designer.cs">
       <DependentUpon>MenuComida.aspx</DependentUpon>
     </Compile>
-    <Compile Include="MenuPrincipal.aspx.cs">
+    <Compile Include="AdminPages\MenuPrincipal.aspx.cs">
       <DependentUpon>MenuPrincipal.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -2108,13 +2241,14 @@
     <Compile Include="Registro.aspx.designer.cs">
       <DependentUpon>Registro.aspx</DependentUpon>
     </Compile>
-    <Compile Include="TomarPedidoADMIN.aspx.cs">
+    <Compile Include="AdminPages\TomarPedidoADMIN.aspx.cs">
       <DependentUpon>TomarPedidoADMIN.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="TomarPedidoADMIN.aspx.designer.cs">
+    <Compile Include="AdminPages\TomarPedidoADMIN.aspx.designer.cs">
       <DependentUpon>TomarPedidoADMIN.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="TomarPedidoCLIENTE.aspx.cs">
       <DependentUpon>TomarPedidoCLIENTE.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -20,6 +20,7 @@ namespace OrderNowDAL.DAL
             return query;
 
         }
+
         public int TipoUsuario(string user, string clave)
         {
             var query = from c in nowBDEntities.Usuario
@@ -29,13 +30,13 @@ namespace OrderNowDAL.DAL
             if (Convert.ToInt32(query.SingleOrDefault()) == 1)
             {
                 return 1;
-
             }
             else
             {
                 return 2;
             }
         }
+
         public Usuario Add(Usuario m)
         {
             if (ExisteUsuario(m.Usuario1)) { throw new Exception("Nombre de Usuario no disponible"); }
@@ -43,21 +44,41 @@ namespace OrderNowDAL.DAL
             nowBDEntities.SaveChanges();
             return obj;
         }
+
         private bool ExisteUsuario(string user)
         {
             return nowBDEntities.Usuario.FirstOrDefault(x => x.Usuario1 == user) != null;
         }
+
         public void Remove(int id)
         {
             Usuario c = nowBDEntities.Usuario.FirstOrDefault(x => x.IdUsuario == id);
             nowBDEntities.Usuario.Remove(c);
             nowBDEntities.SaveChanges();
         }
+
+        public void Edit(Usuario updatedUser)
+        {
+            Usuario user = nowBDEntities.Usuario.FirstOrDefault(x => x.IdUsuario == updatedUser.IdUsuario);
+            user.Usuario1 = updatedUser.Usuario1;
+            user.Contraseña = updatedUser.Contraseña;
+            user.Estado = updatedUser.Estado;
+            user.IdTipoUsuario = updatedUser.IdTipoUsuario;
+            nowBDEntities.SaveChanges();
+        }
+
         public Usuario Find(int id)
         {
             Usuario uObj = nowBDEntities.Usuario.FirstOrDefault(u => u.IdUsuario == id);
             return uObj;
         }
+
+        public List<Usuario> getAll()
+        {
+            return nowBDEntities.Usuario.ToList();
+
+        }
+
         public int ObtenerMaxId()
         {
             var query = from c in nowBDEntities.Usuario

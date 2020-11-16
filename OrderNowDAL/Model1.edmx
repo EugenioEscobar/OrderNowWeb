@@ -60,6 +60,7 @@
           <Property Name="FechaNacimiento" Type="date" />
           <Property Name="IdUsuario" Type="int" />
           <Property Name="Estado" Type="int" />
+          <Property Name="Correo" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Comuna">
           <Key>
@@ -232,6 +233,7 @@
           <Property Name="IdTipoPedido" Type="int" />
           <Property Name="Direccion" Type="varchar" MaxLength="30" />
           <Property Name="Observación" Type="varchar" MaxLength="200" />
+          <Property Name="IdTipoModalidad" Type="int" />
         </EntityType>
         <EntityType Name="Provincia">
           <Key>
@@ -276,6 +278,14 @@
           <Property Name="Descripcion" Type="varchar" MaxLength="25" />
           <Property Name="Estado" Type="int" />
           <Property Name="Simbología" Type="varchar" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="TipoModalidad">
+          <Key>
+            <PropertyRef Name="IdTipoModalidad" />
+          </Key>
+          <Property Name="IdTipoModalidad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" />
+          <Property Name="Estado" Type="int" />
         </EntityType>
         <EntityType Name="TipoPago">
           <Key>
@@ -325,7 +335,7 @@
           </Key>
           <Property Name="IdUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Usuario" Type="varchar" MaxLength="25" />
-          <Property Name="Contraseña" Type="varchar" MaxLength="20" />
+          <Property Name="Contraseña" Type="varchar" MaxLength="300" />
           <Property Name="IdTipoUsuario" Type="int" />
           <Property Name="Estado" Type="int" />
         </EntityType>
@@ -701,6 +711,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Pedido__IdTipoMo__54CB950F">
+          <End Role="TipoModalidad" Type="Self.TipoModalidad" Multiplicity="0..1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoModalidad">
+              <PropertyRef Name="IdTipoModalidad" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="IdTipoModalidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Pedido__IdTipoPe__6EF57B66">
           <End Role="TipoPedido" Type="Self.TipoPedido" Multiplicity="0..1" />
           <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
@@ -785,6 +807,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="InformacionTarjetas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ObtenerPorcentajePresencial" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ObtenerTopExtras" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PIN_FECHA" Type="date" Mode="In" />
+        </Function>
+        <Function Name="ObtenerTopInsumos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PIN_FECHA" Type="date" Mode="In" />
+        </Function>
+        <Function Name="ObtenerTotalesPorDia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="P_obtener_extras_disponibles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Pin_codigo" Type="int" Mode="In" />
         </Function>
@@ -815,6 +846,7 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoAlimento" EntityType="Self.TipoAlimento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoMedicion" EntityType="Self.TipoMedicion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoModalidad" EntityType="Self.TipoModalidad" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoPago" EntityType="Self.TipoPago" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoPedido" EntityType="Self.TipoPedido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoUsuario" EntityType="Self.TipoUsuario" Schema="dbo" store:Type="Tables" />
@@ -944,6 +976,10 @@
             <End Role="EstadoPedido" EntitySet="EstadoPedido" />
             <End Role="Pedido" EntitySet="Pedido" />
           </AssociationSet>
+          <AssociationSet Name="FK__Pedido__IdTipoMo__54CB950F" Association="Self.FK__Pedido__IdTipoMo__54CB950F">
+            <End Role="TipoModalidad" EntitySet="TipoModalidad" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
           <AssociationSet Name="FK__Pedido__IdTipoPe__6EF57B66" Association="Self.FK__Pedido__IdTipoPe__6EF57B66">
             <End Role="TipoPedido" EntitySet="TipoPedido" />
             <End Role="Pedido" EntitySet="Pedido" />
@@ -1037,6 +1073,7 @@
           <NavigationProperty Name="Comuna1" Relationship="Self.FK__Cliente__Comuna__52593CB8" FromRole="Cliente" ToRole="Comuna" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK__Cliente__IdUsuar__534D60F1" FromRole="Cliente" ToRole="Usuario" />
           <NavigationProperty Name="Pedido" Relationship="Self.FK__Pedido__IdClient__6D0D32F4" FromRole="Cliente" ToRole="Pedido" />
+          <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Comuna">
           <Key>
@@ -1216,6 +1253,8 @@
           <NavigationProperty Name="OfertaPedido" Relationship="Self.FK__OfertaPed__IdPed__05D8E0BE" FromRole="Pedido" ToRole="OfertaPedido" />
           <NavigationProperty Name="TipoPedido" Relationship="Self.FK__Pedido__IdTipoPe__6EF57B66" FromRole="Pedido" ToRole="TipoPedido" />
           <NavigationProperty Name="Trabajador1" Relationship="Self.FK__Pedido__Trabajad__6E01572D" FromRole="Pedido" ToRole="Trabajador" />
+          <Property Name="IdTipoModalidad" Type="Int32" />
+          <NavigationProperty Name="TipoModalidad" Relationship="OrderNowBDModel.FK__Pedido__IdTipoMo__54CB950F" FromRole="Pedido" ToRole="TipoModalidad" />
         </EntityType>
         <EntityType Name="Provincia">
           <Key>
@@ -1324,7 +1363,7 @@
           </Key>
           <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Usuario1" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="Contraseña" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Contraseña" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="IdTipoUsuario" Type="Int32" />
           <Property Name="Estado" Type="Int32" />
           <NavigationProperty Name="Cliente" Relationship="Self.FK__Cliente__IdUsuar__534D60F1" FromRole="Usuario" ToRole="Cliente" />
@@ -1876,8 +1915,22 @@
             <End Role="ExtraDisponible" EntitySet="ExtraDisponible" />
           </AssociationSet>
           <FunctionImport Name="P_obtener_extras_disponibles" EntitySet="ExtraDisponible" ReturnType="Collection(OrderNowBDModel.ExtraDisponible)">
-            <Parameter Name="Pin_codigo" Mode="In" Type="Int32" />
+          <Parameter Name="Pin_codigo" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="TipoModalidad" EntityType="OrderNowBDModel.TipoModalidad" />
+          <AssociationSet Name="FK__Pedido__IdTipoMo__54CB950F" Association="OrderNowBDModel.FK__Pedido__IdTipoMo__54CB950F">
+            <End Role="TipoModalidad" EntitySet="TipoModalidad" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <FunctionImport Name="ObtenerTotalesPorDia" ReturnType="Collection(Double)" />
+          <FunctionImport Name="ObtenerPorcentajePresencial" ReturnType="Collection(Double)" />
+          <FunctionImport Name="ObtenerTopInsumos" ReturnType="Collection(OrderNowBDModel.ObtenerTopInsumos_Result)">
+          <Parameter Name="PIN_FECHA" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="ObtenerTopExtras" ReturnType="Collection(OrderNowBDModel.ObtenerTopExtras_Result)">
+          <Parameter Name="PIN_FECHA" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="InformacionTarjetas" ReturnType="Collection(OrderNowBDModel.InformacionTarjetas_Result)" />
         </EntityContainer>
         <Association Name="FK__Ingredien__IdTip__607251E5">
           <End Type="OrderNowBDModel.TipoMedicion" Role="TipoMedicion" Multiplicity="0..1" />
@@ -2035,6 +2088,41 @@
           <Property Type="Int32" Name="CantidadMaxima" Nullable="true" />
           <Property Type="Int32" Name="Valor" Nullable="true" />
         </ComplexType>
+        <EntityType Name="TipoModalidad">
+          <Key>
+            <PropertyRef Name="IdTipoModalidad" />
+          </Key>
+          <Property Name="IdTipoModalidad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="Int32" />
+          <NavigationProperty Name="Pedido" Relationship="OrderNowBDModel.FK__Pedido__IdTipoMo__54CB950F" FromRole="TipoModalidad" ToRole="Pedido" />
+        </EntityType>
+        <Association Name="FK__Pedido__IdTipoMo__54CB950F">
+          <End Type="OrderNowBDModel.TipoModalidad" Role="TipoModalidad" Multiplicity="0..1" />
+          <End Type="OrderNowBDModel.Pedido" Role="Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoModalidad">
+              <PropertyRef Name="IdTipoModalidad" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="IdTipoModalidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="ObtenerTopInsumos_Result">
+          <Property Type="String" Name="NombreIng" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Cantidad" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="ObtenerTopExtras_Result">
+          <Property Type="String" Name="NombreIng" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Total" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="InformacionTarjetas_Result">
+          <Property Type="Double" Name="TotalMensual" Nullable="true" />
+          <Property Type="Double" Name="TotalAnual" Nullable="true" />
+          <Property Type="Int32" Name="NuevosUsuarios" Nullable="true" />
+          <Property Type="Int32" Name="Cuarto" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2079,6 +2167,7 @@
           <EntitySetMapping Name="Cliente">
             <EntityTypeMapping TypeName="OrderNowBDModel.Cliente">
               <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
                 <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
                 <ScalarProperty Name="ApellidoPat" ColumnName="ApellidoPat" />
@@ -2237,6 +2326,7 @@
           <EntitySetMapping Name="Pedido">
             <EntityTypeMapping TypeName="OrderNowBDModel.Pedido">
               <MappingFragment StoreEntitySet="Pedido">
+                <ScalarProperty Name="IdTipoModalidad" ColumnName="IdTipoModalidad" />
                 <ScalarProperty Name="IdPedido" ColumnName="IdPedido" />
                 <ScalarProperty Name="IdEstadoPedido" ColumnName="IdEstadoPedido" />
                 <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
@@ -2397,6 +2487,43 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="P_obtener_extras_disponibles" FunctionName="OrderNowBDModel.Store.P_obtener_extras_disponibles">
+          </FunctionImportMapping>
+          <EntitySetMapping Name="TipoModalidad">
+            <EntityTypeMapping TypeName="OrderNowBDModel.TipoModalidad">
+              <MappingFragment StoreEntitySet="TipoModalidad">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdTipoModalidad" ColumnName="IdTipoModalidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ObtenerTotalesPorDia" FunctionName="OrderNowBDModel.Store.ObtenerTotalesPorDia" />
+          <FunctionImportMapping FunctionImportName="ObtenerPorcentajePresencial" FunctionName="OrderNowBDModel.Store.ObtenerPorcentajePresencial" />
+          <FunctionImportMapping FunctionImportName="ObtenerTopInsumos" FunctionName="OrderNowBDModel.Store.ObtenerTopInsumos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OrderNowBDModel.ObtenerTopInsumos_Result">
+                <ScalarProperty Name="NombreIng" ColumnName="NombreIng" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ObtenerTopExtras" FunctionName="OrderNowBDModel.Store.ObtenerTopExtras">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OrderNowBDModel.ObtenerTopExtras_Result">
+                <ScalarProperty Name="NombreIng" ColumnName="NombreIng" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="InformacionTarjetas" FunctionName="OrderNowBDModel.Store.InformacionTarjetas">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OrderNowBDModel.InformacionTarjetas_Result">
+                <ScalarProperty Name="TotalMensual" ColumnName="TotalMensual" />
+                <ScalarProperty Name="TotalAnual" ColumnName="TotalAnual" />
+                <ScalarProperty Name="NuevosUsuarios" ColumnName="NuevosUsuarios" />
+                <ScalarProperty Name="Cuarto" ColumnName="Cuarto" />
+              </ComplexTypeMapping>
+            </ResultMapping>
           </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>

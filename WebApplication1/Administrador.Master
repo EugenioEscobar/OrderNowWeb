@@ -6,9 +6,28 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
-    <link rel="stylesheet" href="Content/bootstrap-4.5.0-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="Content/fontawesome-free-5.11.2-web/css/all.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500&display=swap">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+
+    <link rel="stylesheet" href="/Content/bootstrap-4.5.0-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/Content/fontawesome-free-5.11.2-web/css/all.min.css" />
+
+    <link rel="stylesheet" href="/assets/css/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" href="/assets/css/animate.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/media-queries.css">
+
+    <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" href="/assets/ico/favicon(1).png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+
+
     <asp:ContentPlaceHolder ID="ContentPlaceHolderHeader" runat="server"></asp:ContentPlaceHolder>
+
     <style>
         .site-footer {
             background-color: #26272b;
@@ -105,15 +124,223 @@
     </style>
     <script type="text/javascript">
         function newPeididosWindows() {
-            window.open("DefaultAdmin.aspx");
+            window.open("/AdminPages/DefaultAdmin.aspx");
         }
     </script>
 </head>
 <body>
     <form id="form1" runat="server">
+
+        <!-- Wrapper -->
+        <div class="wrapper">
+
+            <!-- Sidebar -->
+            <nav class="sidebar">
+
+                <!-- close sidebar menu -->
+                <div class="dismiss">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+
+                <div class="logo">
+                    <h3>
+                        <a href="/AdminPages/DefaultAdmin.aspx">
+                            <img src="/assets/img/logo.png" />
+                        </a>
+                    </h3>
+                </div>
+
+                <ul class="list-unstyled menu-elements">
+                    <li class="active">
+                        <a class="scdroll-link" href="/AdminPages/TomarPedidoADMIN.aspx"><i class="fas fa-home"></i>Tomar Orden</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="newPeididosWindows();"><i class="fas fa-cog"></i>Pedidos en Curso</a>
+                        <%--<asp:LinkButton ID="LinkButton1" runat="server" class="nav-link" 
+                            OnClientClick="newPeididosWindows();">
+                                <i class="fas fa-cog"></i>Pedidos
+                        </asp:LinkButton>--%>
+                    </li>
+                    <li>
+                        <a class="scdroll-link" href="/AdminPages/IngresarOrdenDeCompra.aspx"><i class="fas fa-user"></i>Ingresar Orden de Compra</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-toggle" href="#mantenedores" data-toggle="collapse" aria-expanded="false" role="button">
+                            <i class="fas fa-pencil-alt"></i>Mantenedores
+                        </a>
+                        <ul class="collapse list-unstyled" id="mantenedores">
+                            <li>
+                                <a class="" href="/AdminPages/Mantenedores/CrudTrabajador.aspx">Trabajadores</a>
+                            </li>
+                            <li>
+                                <a class="" href="/AdminPages/Mantenedores/CrudCliente.aspx">Clientes</a>
+                            </li>
+                            <li>
+                                <a class="" href="/AdminPages/Mantenedores/CrudDistribuidor.aspx">Distribuidores</a>
+                            </li>
+                            <li>
+                                <a class="" href="/AdminPages/Mantenedores/CrudAlimentos.aspx">Alimentos</a>
+                            </li>
+                            <li>
+                                <a class="" href="/AdminPages/Mantenedores/CrudOfertas.aspx">Ofertas</a>
+                            </li>
+                            <li>
+                                <a class="" href="/AdminPages/Mantenedores/CrudIngrediente.aspx">Ingredientes</a>
+                            </li>
+                            <li>
+                                <a class="" href="/AdminPages/Mantenedores/CrudCategorias.aspx">Categorías</a>
+                            </li>
+                            <li>
+                                <a class="" href="/AdminPages/Mantenedores/CrudMarcas.aspx">Marcas</a>
+                            </li>
+                            <li>
+                                <a class="" href="/AdminPages/Mantenedores/CrudTipoPago.aspx">Tipo de Pago</a>
+                            </li>
+                            <li>
+                                <a class="" href="/AdminPages/Mantenedores/CrudTipoMedicion.aspx">Tipo de Medición</a>
+                            </li>
+                            <li>
+                                <a class="" href="/AdminPages/Mantenedores/CrudTipoPedido.aspx">Tipo de Pedido</a>
+                            </li>
+                            <li>
+                                <a class="" href="/AdminPages/Mantenedores/CrudTipoAlimento.aspx">Tipo de Alimento</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="dropdown-toggle" href="#reportes" data-toggle="collapse" aria-expanded="false" role="button">
+                            <i class="fas fa-pencil-alt"></i>Reportes
+                        </a>
+                        <ul class="collapse list-unstyled" id="reportes">
+                            <li>
+                                <a class="" href="/AdminPages/Reportes/ReporteVentas.aspx">Reporte Ventas</a>
+                            </li>
+                            <li>
+                                <%--<a class="" href="/AdminPages/Mantenedores/CrudTipoAlimento.aspx">Tipo de Alimento</a>--%>
+                            </li>
+                            <li>
+                                <%--<a class="" href="/AdminPages/Mantenedores/CrudTipoAlimento.aspx">Tipo de Alimento</a>--%>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="" href="/AdminPages/InteligenciaDeNegocio.aspx"><i class="fas fa-user"></i>Análisis del Negocio</a>
+                    </li>
+                    <li>
+                        <a class="" href="/AdminPages/testing.aspx"><i class="fas fa-terminal"></i>Test</a>
+                    </li>
+                    <li>
+                        <a class="" href="/Login.aspx"><i class="fas fa-envelope"></i>Cerrar Sesión</a>
+                    </li>
+                </ul>
+
+                <div class="to-top">
+                    <a class="btn btn-primary btn-customized-3" href="#" role="button">
+                        <i class="fas fa-arrow-up"></i>Top
+                    </a>
+                </div>
+
+                <div class="dark-light-buttons">
+                    <a class="btn btn-primary btn-customized-4 btn-customized-dark" href="#" role="button">Dark</a>
+                    <a class="btn btn-primary btn-customized-4 btn-customized-light" href="#" role="button">Light</a>
+                </div>
+
+            </nav>
+            <!-- End sidebar -->
+
+            <!-- Dark overlay -->
+            <div class="overlay"></div>
+
+            <!-- Content -->
+            <div class="content">
+
+                <!-- open sidebar menu -->
+                <div class="py-lg-5 text-light bg-dark text-center" style="font-family: 'Roboto', sans-serif;">
+                    <h1 class="text-light">
+                        <asp:ContentPlaceHolder runat="server" ID="ContentPlaceHolderTitle"></asp:ContentPlaceHolder>
+                    </h1>
+                </div>
+                <a class="btn btn-primary btn-customized open-menu" href="#" role="button">
+                    <i class="fas fa-align-left"></i><span>Menu</span>
+                </a>
+
+
+                <div style="min-height: 59vh;">
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>
+
+                <!-- Footer -->
+                <footer class="site-footer">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <h6>Sobre Nosotros</h6>
+                                <p class="text-justify"><i>OrderNow </i>esto es una prueba esto es una prueba esto es una prueba esto es una prueba esto es una prueba esto es una prueba esto es una prueba esto es una prueba</p>
+                            </div>
+
+                            <div class="col-xs-6 col-md-3">
+                                <h6>RRSS</h6>
+                                <ul class="footer-links">
+                                    <li><a href="#">Twitter</a></li>
+                                    <li><a href="#">Facebook</a></li>
+                                    <li><a href="#">Instagram</a></li>
+
+                                </ul>
+                            </div>
+
+                            <div class="col-xs-6 col-md-3">
+                                <h6>Enlaces Rapidos</h6>
+                                <ul class="footer-links">
+                                    <li><a href="http://scanfcode.com/about/">Sobre Nosotros</a></li>
+                                    <li><a href="http://scanfcode.com/contact/">Contactanos</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-8 col-sm-6 col-xs-12">
+                                <p class="copyright-text">
+                                    Copyright &copy; 2020 All Rights Reserved by <a href="#">Donde Luchitos</a>                                    .
+                                </p>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </footer>
+
+            </div>
+            <!-- End content -->
+
+        </div>
+        <!-- End wrapper -->
+
+        <!-- Javascript -->
+        <script src="/assets/js/jquery-3.3.1.min.js"></script>
+        <script src="/assets/js/jquery-migrate-3.0.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="/assets/js/jquery.backstretch.min.js"></script>
+        <script src="/assets/js/wow.min.js"></script>
+        <script src="/assets/js/jquery.waypoints.min.js"></script>
+        <script src="/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+        <script src="/assets/js/scripts.js"></script>
+
+
+
+        <asp:ContentPlaceHolder ID="ContentPlaceHolderJsRef" runat="server">
+        </asp:ContentPlaceHolder>
+
+
+
+        <%--
+
         <div>
             <nav class="navbar navbar-dark bg-primary">
-                <a class="navbar-brand" href="/DefaultAdmin.aspx">
+                <a class="navbar-brand" href="/AdminPages/DefaultAdmin.aspx">
                     <img src="/Fotos\OrderNow.png" width="120" height="120" class="d-inline-block " alt=""><span></span></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -121,9 +348,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item active">
-                            <a class="nav-link" href="/TomarPedidoADMIN.aspx">
-                                
-                                Tomar Orden
+                            <a class="nav-link" href="/AdminPages/TomarPedidoADMIN.aspx">Tomar Orden
                             </a>
                         </li>
                         <li class="nav-item active">
@@ -133,15 +358,11 @@
                             </asp:LinkButton>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="/Mantenedores/CrudIngrediente.aspx">
-                                
-                                Gestion Ingredientes
+                            <a class="nav-link" href="/AdminPages/Mantenedores/CrudIngrediente.aspx">Gestion Ingredientes
                             </a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="/Mantenedores/CRUDtrabajador.aspx">
-                                
-                                Gestion Trabajadores
+                            <a class="nav-link" href="/AdminPages/Mantenedores/CRUDtrabajador.aspx">Gestion Trabajadores
                             </a>
                         </li>
                         <li class="nav-item active">
@@ -151,70 +372,48 @@
                             </asp:LinkButton>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="/Mantenedores/CrudDistribuidor.aspx">
-                                
-                                Gestion Distribuidores
+                            <a class="nav-link" href="/AdminPages/Mantenedores/CrudDistribuidor.aspx">Gestion Distribuidores
                             </a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="/Mantenedores/CrudOfertas.aspx">
-                                
-                                Gestión Ofertas
+                            <a class="nav-link" href="/AdminPages/Mantenedores/CrudOfertas.aspx">Gestión Ofertas
                             </a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="/Mantenedores/CRUDCliente.aspx">
-                                
-                                Gestion Clientes
+                            <a class="nav-link" href="/AdminPages/Mantenedores/CRUDCliente.aspx">Gestion Clientes
                             </a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="/Mantenedores/CrudMarcas.aspx">
-                                
-                                Gestion Marcas
+                            <a class="nav-link" href="/AdminPages/Mantenedores/CrudMarcas.aspx">Gestion Marcas
                             </a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="/Mantenedores/CrudTipoPago.aspx">
-                                
-                                Gestion Tipo de Pago
+                            <a class="nav-link" href="/AdminPages/Mantenedores/CrudTipoPago.aspx">Gestion Tipo de Pago
                             </a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="/Mantenedores/CrudCategorias.aspx">
-                                
-                                Gestion Categorías
+                            <a class="nav-link" href="/AdminPages/Mantenedores/CrudCategorias.aspx">Gestion Categorías
                             </a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="/Mantenedores/CrudTipoPedido.aspx">
-                                
-                                Gestion Tipo de Pedido
+                            <a class="nav-link" href="/AdminPages/Mantenedores/CrudTipoPedido.aspx">Gestion Tipo de Pedido
                             </a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="/Mantenedores/CrudTipoMedicion.aspx">
-                                
-                                Gestion Tipo de Medición
+                            <a class="nav-link" href="/AdminPages/Mantenedores/CrudTipoMedicion.aspx">Gestion Tipo de Medición
                             </a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="/Mantenedores/CrudTipoAlimento.aspx">
-                                
-                                Gestion Tipo de Alimento
+                            <a class="nav-link" href="/AdminPages/Mantenedores/CrudTipoAlimento.aspx">Gestion Tipo de Alimento
                             </a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="/IngresarOrdenDeCompra.aspx">
-                                
-                                Ingresar Orden de Compra
+                            <a class="nav-link" href="/AdminPages/IngresarOrdenDeCompra.aspx">Ingresar Orden de Compra
                             </a>
                         </li>
 
                         <li class="nav-item active">
-                            <a class="nav-link " href="/Login.aspx">
-                                
-                                Cerrar Sesion
+                            <a class="nav-link " href="/Login.aspx">Cerrar Sesion
                             </a>
                         </li>
                     </ul>
@@ -274,8 +473,7 @@
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>--%>
     </form>
 </body>
 </html>

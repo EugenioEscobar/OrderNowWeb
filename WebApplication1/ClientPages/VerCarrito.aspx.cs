@@ -1,4 +1,5 @@
 ﻿using OrderNowDAL;
+using OrderNowDAL.Correo;
 using OrderNowDAL.DAL;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace WebApplication1.ClientPages
         UsuarioDAL uDAL = new UsuarioDAL();
         ClienteDAL cDAL = new ClienteDAL();
         PedidoDAL pDAL = new PedidoDAL();
+        BoletaDAL bDAL = new BoletaDAL();
         AlimentoDAL aDAL = new AlimentoDAL();
         AlimentoPedidoDAL aPDAL = new AlimentoPedidoDAL();
         OfertaDAL oDAL = new OfertaDAL();
@@ -27,11 +29,8 @@ namespace WebApplication1.ClientPages
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            List<bool> collapsedDivs = new List<bool>();
-            carrito.GetListAlimentos().ForEach(x => { collapsedDivs.Add(true); });
-            ViewState["CollapsedDivs"] = collapsedDivs;
             CargarGridCarrito();
+            ValidateModal();
         }
 
         protected void btnRealizarrPedido_Click(object sender, EventArgs e)
@@ -52,6 +51,16 @@ namespace WebApplication1.ClientPages
                 };
                 pedido = pDAL.Add(pedido);
 
+                Boleta boleta = new Boleta()
+                {
+                    Fecha = DateTime.Today,
+                    IdTipoPago = 3, //Cambiar
+                    Pedido = pedido.IdPedido,
+                    Total = carrito.GetSubTotal()
+                };
+                boleta = bDAL.Add(boleta);
+
+                EnviarCorreo(pedido, client, boleta);
                 AgregarAlimentosPorPedido(pedido);
                 AgregarOfertasPorPedido(pedido);
 
@@ -62,6 +71,26 @@ namespace WebApplication1.ClientPages
             {
                 UserMessage(ex.Message, "danger");
             }
+        }
+
+        private void EnviarCorreo(Pedido pedido, Cliente cliente, Boleta boleta)
+        {
+            clsEnvioCorreo enviar = new clsEnvioCorreo();
+            string correoCliente = cliente.Correo;
+            string fechaPedido = DateTime.Now.ToString(" hh:mm:ss dd-MM-yyyy ");
+            string idPedido = Convert.ToString(pedido.IdPedido);
+            string total = Convert.ToString(boleta.Total);
+            string nombre = cliente.Nombres + cliente.ApellidoPat + cliente.ApellidoMat;
+
+            try
+            {
+                enviar.EnviarMensaje(correoCliente, total, nombre, idPedido, fechaPedido);
+            }
+            catch (Exception ex)
+            {
+                UserMessage(ex.Message, "NO SE ENVIO EL CORREO ");
+            }
+
         }
 
         private void UserMessage(string mensaje, string type)
@@ -130,7 +159,7 @@ namespace WebApplication1.ClientPages
 
         private void RestarStockOferta(int idOferta)
         {
-            List<OfertaAlimento> listadoAlimentos = oADAL.Alimentos(idOferta);
+            List<OfertaAlimento> listadoAlimentos = oADAL.getAlimentosOferta(idOferta);
             foreach (OfertaAlimento item in listadoAlimentos)
             {
                 RestarStockAlimento(item.IdAlimento.Value);
@@ -167,36 +196,36 @@ namespace WebApplication1.ClientPages
                     Label lblIdElementoPedido = (Label)row.FindControl("lblCodigoElementoPedido");
                     Label lblTipoElemento = (Label)row.FindControl("lblTipoElemento");
                     Label lblIdAlimento = (Label)row.FindControl("lblCodigo");
-                    Panel panelExtra = (Panel)row.FindControl("PanelExtra");
+                    //Panel panelExtra = (Panel)row.FindControl("PanelExtra");
                     LinkButton buttonExtra = (LinkButton)row.FindControl("ButtonExtras");
-                    GridView gridExtras = (GridView)row.FindControl("GridViewExtras");
+                    //GridView gridExtras = (GridView)row.FindControl("GridViewExtras");
                     Image image = (Image)row.FindControl("imageAlimento");
 
                     if (lblTipoElemento.Text == "Alimento")
                     {
                         Alimento alimento = aDAL.Find(Convert.ToInt32(lblIdAlimento.Text));
-                        gridExtras.DataSource = aDAL.GetExtrasDisponibles(Convert.ToInt32(lblIdAlimento.Text));
-                        gridExtras.DataBind();
+                        //gridExtras.DataSource = aDAL.GetExtrasDisponibles(Convert.ToInt32(lblIdAlimento.Text));
+                        //gridExtras.DataBind();
 
-                        buttonExtra.Attributes.Add("href", $"#Div{lblIdElementoPedido.Text}");
+                        //buttonExtra.Attributes.Add("data-target", $"#Div{lblIdElementoPedido.Text}");
 
                         image.ImageUrl = $"/Fotos/Productos/{alimento.Foto}";
 
-                        List<bool> listDivsColapsed = (List<bool>)ViewState["CollapsedDivs"];
-                        Panel div = (Panel)row.FindControl($"DivCollapse");
-                        div.ID = $"Div{lblIdElementoPedido.Text}";
-                        if (listDivsColapsed.ElementAt(row.RowIndex) == false)
-                        {
-                            div.Attributes["class"] += " show";
-                        }
-                        else
-                        {
-                            div.Attributes["class"] = "collapse";
-                        }
+                        //List<bool> listDivsColapsed = (List<bool>)ViewState["CollapsedDivs"];
+                        //Panel div = (Panel)row.FindControl($"DivCollapse");
+                        //div.ID = $"Div{lblIdElementoPedido.Text}";
+                        //if (listDivsColapsed.ElementAt(row.RowIndex) == false)
+                        //{
+                        //    div.Attributes["class"] += " show";
+                        //}
+                        //else
+                        //{
+                        //    div.Attributes["class"] = "collapse";
+                        //}
                     }
                     else
                     {
-                        panelExtra.Visible = false;
+                        //panelExtra.Visible = false;
                         buttonExtra.Enabled = false;
                     }
                 }
@@ -248,10 +277,18 @@ namespace WebApplication1.ClientPages
                 int index = Convert.ToInt32(e.CommandArgument);
                 switch (e.CommandName)
                 {
-                    case "ShowDiv":
-                        List<bool> collapsedDivs = ViewState["CollapsedDivs"] as List<bool>;
-                        collapsedDivs[index] = !collapsedDivs.ElementAt(index);
-                        ViewState["CollapsedDivs"] = collapsedDivs;
+                    case "ShowExtras":
+                        Label lblIdAlimento = (Label)((GridView)sender).Rows[index].FindControl("lblCodigo");
+                        GridViewExtras.DataSource = aDAL.GetExtrasDisponibles(Convert.ToInt32(lblIdAlimento.Text));
+                        GridViewExtras.DataBind();
+
+                        lblModalCodigo.Text = lblIdAlimento.Text;
+
+                        ValidateModal();
+                        //List<bool> collapsedDivs = ViewState["CollapsedDivs"] as List<bool>;
+                        //collapsedDivs[index] = !collapsedDivs.ElementAt(index);
+
+                        //ViewState["CollapsedDivs"] = collapsedDivs;
                         break;
                 }
 
@@ -260,6 +297,28 @@ namespace WebApplication1.ClientPages
             catch (Exception ex)
             {
                 UserMessage(ex.Message, "danger");
+            }
+        }
+
+        protected void btnGuardarCambios_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void BtnCerrar_Click(object sender, EventArgs e)
+        {
+            lblModalCodigo.Text = "";
+        }
+
+        private void ValidateModal()
+        {
+            if (!string.IsNullOrEmpty(lblModalCodigo.Text))
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Open Modal Extras", "OpenModal()", true);
+            }
+            else
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Open Modal Extras", "CloseModal()", true);
             }
         }
     }

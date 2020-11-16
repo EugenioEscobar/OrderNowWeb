@@ -55,6 +55,7 @@
     <Property Name="FechaNacimiento" Type="date" />
     <Property Name="IdUsuario" Type="int" />
     <Property Name="Estado" Type="int" />
+    <Property Name="Correo" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Comuna">
     <Key>
@@ -227,6 +228,7 @@
     <Property Name="IdTipoPedido" Type="int" />
     <Property Name="Direccion" Type="varchar" MaxLength="30" />
     <Property Name="Observación" Type="varchar" MaxLength="200" />
+    <Property Name="IdTipoModalidad" Type="int" />
   </EntityType>
   <EntityType Name="Provincia">
     <Key>
@@ -271,6 +273,14 @@
     <Property Name="Descripcion" Type="varchar" MaxLength="25" />
     <Property Name="Estado" Type="int" />
     <Property Name="Simbología" Type="varchar" MaxLength="5" />
+  </EntityType>
+  <EntityType Name="TipoModalidad">
+    <Key>
+      <PropertyRef Name="IdTipoModalidad" />
+    </Key>
+    <Property Name="IdTipoModalidad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="50" />
+    <Property Name="Estado" Type="int" />
   </EntityType>
   <EntityType Name="TipoPago">
     <Key>
@@ -320,7 +330,7 @@
     </Key>
     <Property Name="IdUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Usuario" Type="varchar" MaxLength="25" />
-    <Property Name="Contraseña" Type="varchar" MaxLength="20" />
+    <Property Name="Contraseña" Type="varchar" MaxLength="300" />
     <Property Name="IdTipoUsuario" Type="int" />
     <Property Name="Estado" Type="int" />
   </EntityType>
@@ -696,6 +706,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__Pedido__IdTipoMo__54CB950F">
+    <End Role="TipoModalidad" Type="Self.TipoModalidad" Multiplicity="0..1" />
+    <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoModalidad">
+        <PropertyRef Name="IdTipoModalidad" />
+      </Principal>
+      <Dependent Role="Pedido">
+        <PropertyRef Name="IdTipoModalidad" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__Pedido__IdTipoPe__6EF57B66">
     <End Role="TipoPedido" Type="Self.TipoPedido" Multiplicity="0..1" />
     <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
@@ -780,6 +802,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="InformacionTarjetas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="ObtenerPorcentajePresencial" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="ObtenerTopExtras" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PIN_FECHA" Type="date" Mode="In" />
+  </Function>
+  <Function Name="ObtenerTopInsumos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PIN_FECHA" Type="date" Mode="In" />
+  </Function>
+  <Function Name="ObtenerTotalesPorDia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="P_obtener_extras_disponibles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Pin_codigo" Type="int" Mode="In" />
   </Function>
@@ -810,6 +841,7 @@
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TipoAlimento" EntityType="Self.TipoAlimento" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TipoMedicion" EntityType="Self.TipoMedicion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TipoModalidad" EntityType="Self.TipoModalidad" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TipoPago" EntityType="Self.TipoPago" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TipoPedido" EntityType="Self.TipoPedido" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TipoUsuario" EntityType="Self.TipoUsuario" Schema="dbo" store:Type="Tables" />
@@ -937,6 +969,10 @@
     </AssociationSet>
     <AssociationSet Name="FK__Pedido__IdEstado__6C190EBB" Association="Self.FK__Pedido__IdEstado__6C190EBB">
       <End Role="EstadoPedido" EntitySet="EstadoPedido" />
+      <End Role="Pedido" EntitySet="Pedido" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Pedido__IdTipoMo__54CB950F" Association="Self.FK__Pedido__IdTipoMo__54CB950F">
+      <End Role="TipoModalidad" EntitySet="TipoModalidad" />
       <End Role="Pedido" EntitySet="Pedido" />
     </AssociationSet>
     <AssociationSet Name="FK__Pedido__IdTipoPe__6EF57B66" Association="Self.FK__Pedido__IdTipoPe__6EF57B66">

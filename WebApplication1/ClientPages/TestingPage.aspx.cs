@@ -16,7 +16,19 @@ namespace WebApplication1.ClientPages
 
         protected void btnTest_Click(object sender, EventArgs e)
         {
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "NewAlimento()", true);
+            //lblName.Text = txtName.Text;
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "OpenModal()", true);
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "CloseModal()", true);
+        }
+
+        protected void UpdateButton_Click(object sender, EventArgs e)
+        {
+            //DateTimeLabel1.Text = DateTime.Now.ToString();
+            //DateTimeLabel2.Text = DateTime.Now.ToString();
         }
     }
 }

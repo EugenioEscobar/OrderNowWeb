@@ -45,5 +45,17 @@ namespace OrderNowDAL.DAL
                         select c;
             return query.ToList();
         }
+
+        public int GetTotal(int id)
+        {
+            int total = 0;
+            List<AlimentoPedido> alimentos = nowBDEntities.AlimentoPedido.Where(x=>x.IdPedido==id).ToList();
+            alimentos.ForEach(x =>
+            {
+                total += nowBDEntities.Alimento.FirstOrDefault(p => p.IdAlimento == x.IdAlimento).Precio.Value;
+            });
+
+            return total;
+        }
     }
 }

@@ -39,6 +39,7 @@
     <EntitySetMapping Name="Cliente">
       <EntityTypeMapping TypeName="OrderNowBDModel.Cliente">
         <MappingFragment StoreEntitySet="Cliente">
+          <ScalarProperty Name="Correo" ColumnName="Correo" />
           <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
           <ScalarProperty Name="Nombres" ColumnName="Nombres" />
           <ScalarProperty Name="ApellidoPat" ColumnName="ApellidoPat" />
@@ -197,6 +198,7 @@
     <EntitySetMapping Name="Pedido">
       <EntityTypeMapping TypeName="OrderNowBDModel.Pedido">
         <MappingFragment StoreEntitySet="Pedido">
+          <ScalarProperty Name="IdTipoModalidad" ColumnName="IdTipoModalidad" />
           <ScalarProperty Name="IdPedido" ColumnName="IdPedido" />
           <ScalarProperty Name="IdEstadoPedido" ColumnName="IdEstadoPedido" />
           <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
@@ -357,5 +359,42 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="P_obtener_extras_disponibles" FunctionName="OrderNowBDModel.Store.P_obtener_extras_disponibles" />
+    <EntitySetMapping Name="TipoModalidad">
+      <EntityTypeMapping TypeName="OrderNowBDModel.TipoModalidad">
+        <MappingFragment StoreEntitySet="TipoModalidad">
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="IdTipoModalidad" ColumnName="IdTipoModalidad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="ObtenerTotalesPorDia" FunctionName="OrderNowBDModel.Store.ObtenerTotalesPorDia" />
+    <FunctionImportMapping FunctionImportName="ObtenerPorcentajePresencial" FunctionName="OrderNowBDModel.Store.ObtenerPorcentajePresencial" />
+    <FunctionImportMapping FunctionImportName="ObtenerTopInsumos" FunctionName="OrderNowBDModel.Store.ObtenerTopInsumos">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="OrderNowBDModel.ObtenerTopInsumos_Result">
+          <ScalarProperty Name="NombreIng" ColumnName="NombreIng" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ObtenerTopExtras" FunctionName="OrderNowBDModel.Store.ObtenerTopExtras">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="OrderNowBDModel.ObtenerTopExtras_Result">
+          <ScalarProperty Name="NombreIng" ColumnName="NombreIng" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="InformacionTarjetas" FunctionName="OrderNowBDModel.Store.InformacionTarjetas">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="OrderNowBDModel.InformacionTarjetas_Result">
+          <ScalarProperty Name="TotalMensual" ColumnName="TotalMensual" />
+          <ScalarProperty Name="TotalAnual" ColumnName="TotalAnual" />
+          <ScalarProperty Name="NuevosUsuarios" ColumnName="NuevosUsuarios" />
+          <ScalarProperty Name="Cuarto" ColumnName="Cuarto" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -1,0 +1,129 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #292929;
+    color: white;
+    font-family: sans-serif;
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(350px,1fr));
+    grid-gap: 20px;
+}
+
+    .products .card {
+        position: relative;
+        width: 350px;
+        height: 450px;
+        margin: 0px auto;
+        background: #333;
+        padding: 20px;
+        box-sizing: border-box;
+        text-align: center;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        overflow: hidden;
+    }
+
+        .products .card .layer {
+            position: absolute;
+            top: calc(100% - 2px);
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(#940700,#D60E00);
+            z-index: 1;
+            transition: 0.5s;
+        }
+
+        .products .card:hover .layer {
+            top: 0;
+        }
+
+        .products .card .content {
+            position: relative;
+            z-index: 2;
+        }
+
+            .products .card .content p {
+                font-size: 18px;
+                line-height: 24px;
+                color: #fff;
+                height: 48px;
+            }
+
+            .products .card .content .image {
+                width: 100%;
+                height: 130px;
+                margin: 0 auto;
+                border-radius: 30px;
+                overflow: hidden;
+                border: 2px solid #00000021;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            }
+
+            .products .card .content img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+
+            .products .card .content .description h3 {
+                font-size: 18px;
+                color: transparent;
+                transition-duration: 500ms;
+            }
+
+        .products .card:hover .content .description h3 {
+            color: #fff;
+            transition-duration: 500ms;
+            transition-delay: 500ms;
+        }
+
+        .products .card .content h2 {
+            font-size: 18px;
+            color: #fff;
+        }
+
+            .products .card .content h2 span {
+                color: #03a9f4;
+                font-size: 20px;
+                transition: 0.5s;
+            }
+
+        .products .card:hover .content h2 span {
+            color: #fff;
+        }
+
+        .products .card .layer .btm-btn {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0,0,0,0.3);
+            width: 300px;
+            padding: 10px;
+            border-radius: 3px;
+            color: #fff;
+            border: none;
+        }
+
+        .products .card .layer .btm-btn-ofert {
+            bottom: 60px;
+        }
+
+        .products .card .layer .btm-btn:hover {
+            background-color: rgba(0,0,0,0.7);
+            font-size: 105%;
+            text-decoration: none;
+        }
+
+.hidebr br {
+    display: none;
+}
+
+.grid-scroll {
+    width: 100%;
+}

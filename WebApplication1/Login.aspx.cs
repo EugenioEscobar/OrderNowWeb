@@ -6,6 +6,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using OrderNowDAL;
 using OrderNowDAL.DAL;
+using OrderNowDAL.Encriptar;
+
 namespace WebApplication1
 {
     public partial class Login : System.Web.UI.Page
@@ -25,6 +27,7 @@ namespace WebApplication1
                 ValidarCampos();
                 string user = txtUsuario.Text;
                 string clave = txtClave.Text;
+                string claveEnc = Encrypt.GetSHA256(clave);
                 Usuario usuario = new Usuario();
 
                 usuario = uDAL.IsvalidUser(user);
@@ -32,7 +35,7 @@ namespace WebApplication1
                 {
                     throw new Exception("Usuario Incorrecto");
                 }
-                else if (usuario.Contraseña != clave)
+                else if (usuario.Contraseña != claveEnc)
                 {
                     throw new Exception("Contraseña Incorrecta");
                 }
@@ -46,13 +49,13 @@ namespace WebApplication1
                     switch (usuario.IdTipoUsuario)
                     {
                         case 1:
-                            Response.Redirect("DefaultAdmin.aspx");
+                            Response.Redirect("/AdminPages/DefaultAdmin.aspx");
                             break;
                         case 2:
-                            Response.Redirect("Default.aspx");
+                            Response.Redirect("/ClientPages/Default.aspx");
                             break;
                         case 3:
-                            Response.Redirect("DefaultAdmin.aspx");
+                            Response.Redirect("/AdminPages/DefaultAdmin.aspx");
                             //Response.Redirect("DefaultVendedor.aspx");
                             break;
                     }

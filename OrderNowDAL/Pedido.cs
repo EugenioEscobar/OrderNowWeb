@@ -29,6 +29,7 @@ namespace OrderNowDAL
         public Nullable<int> IdTipoPedido { get; set; }
         public string Direccion { get; set; }
         public string Observación { get; set; }
+        public Nullable<int> IdTipoModalidad { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlimentoPedido> AlimentoPedido { get; set; }
@@ -40,5 +41,6 @@ namespace OrderNowDAL
         public virtual ICollection<OfertaPedido> OfertaPedido { get; set; }
         public virtual TipoPedido TipoPedido { get; set; }
         public virtual Trabajador Trabajador1 { get; set; }
+        public virtual TipoModalidad TipoModalidad { get; set; }
     }
 }

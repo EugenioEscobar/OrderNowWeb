@@ -76,3 +76,29 @@ C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\Microsoft.Exten
 C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\System.Collections.Immutable.dll
 C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.xml
 C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\System.Collections.Immutable.xml
+D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\OrderNowDAL.dll.config
+D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\OrderNowDAL.dll
+D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\OrderNowDAL.pdb
+D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\AjaxControlToolkit.dll
+D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\EntityFramework.dll
+D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\EntityFramework.SqlServer.dll
+D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\EntityFramework.Triggers.dll
+D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\System.Collections.Immutable.dll
+D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\EntityFramework.xml
+D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\EntityFramework.SqlServer.xml
+D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.xml
+D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\System.Collections.Immutable.xml
+D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\obj\Debug\OrderNowDAL.csprojAssemblyReference.cache
+D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\obj\Debug\OrderNowDAL.csproj.CoreCompileInputs.cache
+D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\obj\Debug\OrderNowDAL.csproj.CopyComplete
+D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\obj\Debug\OrderNowDAL.dll
+D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\obj\Debug\OrderNowDAL.pdb
+D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\BouncyCastle.Crypto.dll
+D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\MailKit.dll
+D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\MimeKit.dll
+D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\BouncyCastle.Crypto.xml
+D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\MailKit.pdb
+D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\MailKit.xml
+D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\MimeKit.pdb
+D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\MimeKit.xml
