@@ -61,6 +61,7 @@
           <Property Name="IdUsuario" Type="int" />
           <Property Name="Estado" Type="int" />
           <Property Name="Correo" Type="varchar" MaxLength="50" />
+          <Property Name="RUT" Type="varchar" MaxLength="11" />
         </EntityType>
         <EntityType Name="Comuna">
           <Key>
@@ -70,6 +71,7 @@
           <Property Name="Nombre" Type="varchar" MaxLength="50" />
           <Property Name="IdProvincia" Type="int" />
           <Property Name="Estado" Type="varchar" MaxLength="1" />
+          <Property Name="ValorEnvio" Type="int" />
         </EntityType>
         <EntityType Name="DetalleIngrediente">
           <Key>
@@ -234,6 +236,7 @@
           <Property Name="Direccion" Type="varchar" MaxLength="30" />
           <Property Name="Observación" Type="varchar" MaxLength="200" />
           <Property Name="IdTipoModalidad" Type="int" />
+          <Property Name="IdComuna" Type="int" />
         </EntityType>
         <EntityType Name="Provincia">
           <Key>
@@ -699,6 +702,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Pedido__idComuna__7908F585">
+          <End Role="Comuna" Type="Self.Comuna" Multiplicity="0..1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comuna">
+              <PropertyRef Name="IdComuna" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="IdComuna" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Pedido__IdEstado__6C190EBB">
           <End Role="EstadoPedido" Type="Self.EstadoPedido" Multiplicity="0..1" />
           <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
@@ -972,6 +987,10 @@
             <End Role="Cliente" EntitySet="Cliente" />
             <End Role="Pedido" EntitySet="Pedido" />
           </AssociationSet>
+          <AssociationSet Name="FK__Pedido__idComuna__7908F585" Association="Self.FK__Pedido__idComuna__7908F585">
+            <End Role="Comuna" EntitySet="Comuna" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
           <AssociationSet Name="FK__Pedido__IdEstado__6C190EBB" Association="Self.FK__Pedido__IdEstado__6C190EBB">
             <End Role="EstadoPedido" EntitySet="EstadoPedido" />
             <End Role="Pedido" EntitySet="Pedido" />
@@ -1074,6 +1093,7 @@
           <NavigationProperty Name="Usuario" Relationship="Self.FK__Cliente__IdUsuar__534D60F1" FromRole="Cliente" ToRole="Usuario" />
           <NavigationProperty Name="Pedido" Relationship="Self.FK__Pedido__IdClient__6D0D32F4" FromRole="Cliente" ToRole="Pedido" />
           <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RUT" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Comuna">
           <Key>
@@ -1087,6 +1107,8 @@
           <NavigationProperty Name="Provincia" Relationship="Self.FK__Comuna__IdProvin__2DE6D218" FromRole="Comuna" ToRole="Provincia" />
           <NavigationProperty Name="Distribuidor" Relationship="Self.FK__Distribui__IdCom__4CA06362" FromRole="Comuna" ToRole="Distribuidor" />
           <NavigationProperty Name="Trabajador" Relationship="Self.FK__Trabajado__Comun__66603565" FromRole="Comuna" ToRole="Trabajador" />
+          <Property Name="ValorEnvio" Type="Int32" />
+          <NavigationProperty Name="Pedido" Relationship="OrderNowBDModel.FK__Pedido__idComuna__7908F585" FromRole="Comuna" ToRole="Pedido" />
         </EntityType>
         <EntityType Name="Distribuidor">
           <Key>
@@ -1255,6 +1277,8 @@
           <NavigationProperty Name="Trabajador1" Relationship="Self.FK__Pedido__Trabajad__6E01572D" FromRole="Pedido" ToRole="Trabajador" />
           <Property Name="IdTipoModalidad" Type="Int32" />
           <NavigationProperty Name="TipoModalidad" Relationship="OrderNowBDModel.FK__Pedido__IdTipoMo__54CB950F" FromRole="Pedido" ToRole="TipoModalidad" />
+          <Property Name="IdComuna" Type="Int32" />
+          <NavigationProperty Name="Comuna" Relationship="OrderNowBDModel.FK__Pedido__idComuna__7908F585" FromRole="Pedido" ToRole="Comuna" />
         </EntityType>
         <EntityType Name="Provincia">
           <Key>
@@ -1931,6 +1955,10 @@
           <Parameter Name="PIN_FECHA" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="InformacionTarjetas" ReturnType="Collection(OrderNowBDModel.InformacionTarjetas_Result)" />
+          <AssociationSet Name="FK__Pedido__idComuna__7908F585" Association="OrderNowBDModel.FK__Pedido__idComuna__7908F585">
+            <End Role="Comuna" EntitySet="Comuna" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK__Ingredien__IdTip__607251E5">
           <End Type="OrderNowBDModel.TipoMedicion" Role="TipoMedicion" Multiplicity="0..1" />
@@ -2123,6 +2151,18 @@
           <Property Type="Int32" Name="NuevosUsuarios" Nullable="true" />
           <Property Type="Int32" Name="Cuarto" Nullable="true" />
         </ComplexType>
+        <Association Name="FK__Pedido__idComuna__7908F585">
+          <End Type="OrderNowBDModel.Comuna" Role="Comuna" Multiplicity="0..1" />
+          <End Type="OrderNowBDModel.Pedido" Role="Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comuna">
+              <PropertyRef Name="IdComuna" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="IdComuna" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2167,6 +2207,7 @@
           <EntitySetMapping Name="Cliente">
             <EntityTypeMapping TypeName="OrderNowBDModel.Cliente">
               <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="RUT" ColumnName="RUT" />
                 <ScalarProperty Name="Correo" ColumnName="Correo" />
                 <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
@@ -2185,6 +2226,7 @@
           <EntitySetMapping Name="Comuna">
             <EntityTypeMapping TypeName="OrderNowBDModel.Comuna">
               <MappingFragment StoreEntitySet="Comuna">
+                <ScalarProperty Name="ValorEnvio" ColumnName="ValorEnvio" />
                 <ScalarProperty Name="IdComuna" ColumnName="IdComuna" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="IdProvincia" ColumnName="IdProvincia" />
@@ -2326,6 +2368,7 @@
           <EntitySetMapping Name="Pedido">
             <EntityTypeMapping TypeName="OrderNowBDModel.Pedido">
               <MappingFragment StoreEntitySet="Pedido">
+                <ScalarProperty Name="IdComuna" ColumnName="IdComuna" />
                 <ScalarProperty Name="IdTipoModalidad" ColumnName="IdTipoModalidad" />
                 <ScalarProperty Name="IdPedido" ColumnName="IdPedido" />
                 <ScalarProperty Name="IdEstadoPedido" ColumnName="IdEstadoPedido" />

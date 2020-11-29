@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" />
     <!-- CUSTOM CSS -->
     <link rel="stylesheet" href="css/main.css" />
+
+    <link rel="shortcut icon" href="/assets/ico/favicon(1).png" />
+
 </head>
 <body>
     <form id="form1" runat="server">

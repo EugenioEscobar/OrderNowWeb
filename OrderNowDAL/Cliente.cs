@@ -32,6 +32,7 @@ namespace OrderNowDAL
         public Nullable<int> IdUsuario { get; set; }
         public Nullable<int> Estado { get; set; }
         public string Correo { get; set; }
+        public string RUT { get; set; }
     
         public virtual Comuna Comuna1 { get; set; }
         public virtual Usuario Usuario { get; set; }

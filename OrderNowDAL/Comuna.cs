@@ -20,12 +20,14 @@ namespace OrderNowDAL
             this.Cliente = new HashSet<Cliente>();
             this.Distribuidor = new HashSet<Distribuidor>();
             this.Trabajador = new HashSet<Trabajador>();
+            this.Pedido = new HashSet<Pedido>();
         }
     
         public int IdComuna { get; set; }
         public string Nombre { get; set; }
         public Nullable<int> IdProvincia { get; set; }
         public string Estado { get; set; }
+        public Nullable<int> ValorEnvio { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cliente> Cliente { get; set; }
@@ -34,5 +36,7 @@ namespace OrderNowDAL
         public virtual ICollection<Distribuidor> Distribuidor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Trabajador> Trabajador { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Pedido> Pedido { get; set; }
     }
 }

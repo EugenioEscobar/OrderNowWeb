@@ -219,6 +219,12 @@ namespace WebApplication1.Mantenedores
                 label = (Label)row.FindControl("lblMarca");
                 DetalleIngrediente detalle = iDAL.GetDetalleByDefault(ingrediente.IdIngrediente);
                 label.Text = detalle.IdMarca.HasValue ? mDAL.Find(Convert.ToInt32(detalle.IdMarca.Value)).Nombre : "Sin Marca";
+
+                label = (Label)row.FindControl("lblCantidad");
+                int cantidad = int.Parse(label.Text);
+
+                label = (Label)row.FindControl("lblCantidadTotal");
+                label.Text = $"{ingrediente.Porción * cantidad} {tMDAL.Find(ingrediente.IdTipoMedicionPorcion.Value).Descripcion}";
             }
         }
 

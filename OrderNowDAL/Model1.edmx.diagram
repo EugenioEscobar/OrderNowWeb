@@ -76,6 +76,7 @@
         <AssociationConnector Association="OrderNowBDModel.FK__ExtraDisp__IdIng__4D2A7347" />
         <EntityTypeShape EntityType="OrderNowBDModel.TipoModalidad" Width="1.5" PointX="3.375" PointY="0.875" />
         <AssociationConnector Association="OrderNowBDModel.FK__Pedido__IdTipoMo__54CB950F" />
+        <AssociationConnector Association="OrderNowBDModel.FK__Pedido__idComuna__7908F585" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

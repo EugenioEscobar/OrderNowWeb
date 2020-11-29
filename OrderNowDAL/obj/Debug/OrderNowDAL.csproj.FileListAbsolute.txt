@@ -102,3 +102,11 @@ D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\Order
 D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\MailKit.xml
 D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\MimeKit.pdb
 D:\Documentos de Escritorio\Uni\P 2020\Seminario de Grado\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\MimeKit.xml
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\BouncyCastle.Crypto.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\MailKit.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\MimeKit.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\BouncyCastle.Crypto.xml
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\MailKit.pdb
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\MailKit.xml
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\MimeKit.pdb
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\OrderNowDAL\bin\Debug\MimeKit.xml

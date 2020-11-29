@@ -148,6 +148,7 @@
     <Content Include="assets\js\wow.js" />
     <Content Include="assets\js\wow.min.js" />
     <Content Include="ClientPages\CambiarContrasenia.aspx" />
+    <Content Include="ClientPages\CambiarDatos.aspx" />
     <Content Include="ClientPages\OfertaDetails.aspx" />
     <Content Include="ClientPages\ProductList.aspx" />
     <Content Include="ClientPages\ShoppingCart.aspx" />
@@ -1759,9 +1760,12 @@
     <Content Include="Content\js\charts\Chart.js" />
     <Content Include="Content\js\charts\Chart.min.js" />
     <Content Include="Content\js\crystal.js" />
+    <Content Include="Content\js\jsCambiarDatos.js" />
     <Content Include="Content\sb-admin-2.min.css" />
+    <Content Include="css\estiloCambiarDatos.css" />
     <Content Include="css\main.css" />
     <Content Include="css\estiloRegistro.css" />
+    <Content Include="Fotos\background.jpg" />
     <Content Include="Fotos\Landing\background.jpg" />
     <Content Include="Fotos\Landing\logdo.png" />
     <Content Include="Fotos\Landing\logo.png" />
@@ -2046,6 +2050,13 @@
     </Compile>
     <Compile Include="ClientPages\CambiarContrasenia.aspx.designer.cs">
       <DependentUpon>CambiarContrasenia.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ClientPages\CambiarDatos.aspx.cs">
+      <DependentUpon>CambiarDatos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClientPages\CambiarDatos.aspx.designer.cs">
+      <DependentUpon>CambiarDatos.aspx</DependentUpon>
     </Compile>
     <Compile Include="ClientPages\OfertaDetails.aspx.cs">
       <DependentUpon>OfertaDetails.aspx</DependentUpon>

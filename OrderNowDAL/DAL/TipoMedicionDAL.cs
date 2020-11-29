@@ -104,5 +104,23 @@ namespace OrderNowDAL.DAL
             }
             return (int)Math.Truncate(newStock);
         }
+
+        public int GetEquivalentWantity(int cantidad, int idtipoMedicionInicial, int idMedicionAConvertir)
+        { 
+            //250 GR LA
+            double nuevaCantidad = 0;
+            EquivalenciaMediciones equivalencia = GetEquivalencias(idtipoMedicionInicial)
+                .FirstOrDefault(x=>x.IdTipoMedicionInicial==idMedicionAConvertir|| x.IdTipoMedicionEquivalente == idMedicionAConvertir);
+
+            if (equivalencia.IdTipoMedicionInicial==idtipoMedicionInicial)
+            {
+                nuevaCantidad = cantidad * equivalencia.Equivalencia;
+            }
+            else
+            {
+                nuevaCantidad = cantidad / equivalencia.Equivalencia;
+            }
+            return (int)Math.Truncate(nuevaCantidad);
+        }
     }
 }

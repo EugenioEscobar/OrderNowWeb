@@ -39,6 +39,7 @@
     <EntitySetMapping Name="Cliente">
       <EntityTypeMapping TypeName="OrderNowBDModel.Cliente">
         <MappingFragment StoreEntitySet="Cliente">
+          <ScalarProperty Name="RUT" ColumnName="RUT" />
           <ScalarProperty Name="Correo" ColumnName="Correo" />
           <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
           <ScalarProperty Name="Nombres" ColumnName="Nombres" />
@@ -57,6 +58,7 @@
     <EntitySetMapping Name="Comuna">
       <EntityTypeMapping TypeName="OrderNowBDModel.Comuna">
         <MappingFragment StoreEntitySet="Comuna">
+          <ScalarProperty Name="ValorEnvio" ColumnName="ValorEnvio" />
           <ScalarProperty Name="IdComuna" ColumnName="IdComuna" />
           <ScalarProperty Name="Nombre" ColumnName="Nombre" />
           <ScalarProperty Name="IdProvincia" ColumnName="IdProvincia" />
@@ -198,6 +200,7 @@
     <EntitySetMapping Name="Pedido">
       <EntityTypeMapping TypeName="OrderNowBDModel.Pedido">
         <MappingFragment StoreEntitySet="Pedido">
+          <ScalarProperty Name="IdComuna" ColumnName="IdComuna" />
           <ScalarProperty Name="IdTipoModalidad" ColumnName="IdTipoModalidad" />
           <ScalarProperty Name="IdPedido" ColumnName="IdPedido" />
           <ScalarProperty Name="IdEstadoPedido" ColumnName="IdEstadoPedido" />

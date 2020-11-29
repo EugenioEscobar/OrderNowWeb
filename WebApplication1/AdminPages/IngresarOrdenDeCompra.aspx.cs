@@ -30,7 +30,7 @@ namespace WebApplication1
         readonly string[] facturaDataNecessary = { "Folio", "Distribuidor", "RUT", "TipoPago" }; //}Datos que no pueden estar vacíos
 
         const char refIndexEx = 'E'; //Referencia de la letra en la que está ubicado el Index
-        readonly string[] columns = { "Index", "Nombre", "Descripción", "Cantidad", "Marca", "TipoAlimento", "TipoMedicion", "Precio", "Total" };
+        readonly string[] columns = { "Index", "Nombre", "Descripción", "Cantidad", "Marca", "TipoAlimento", "TipoMedicion", "Precio", "Total", "CantidadPack" };
         readonly string[] valueNecessary = { "Nombre", "Cantidad", "TipoMedicion", "Precio", "Total" }; //Columnas que no pueden estar vacías
         MarcaDAL mDAL = new MarcaDAL();
         DistribuidorDAL dDAL = new DistribuidorDAL();
@@ -222,6 +222,9 @@ namespace WebApplication1
                 SaveIngredients(factura);
                 UserMessage("Factura Guardada con Éxito", "success");
 
+                UploadOption(false);
+                UserMessage2("", "");
+
                 GridView1.DataSource = ViewState["Data"] as DataTable;
                 GridView1.DataBind();
             }
@@ -256,6 +259,11 @@ namespace WebApplication1
             ChangeModalityNombre(txtModalNombre.Visible);
         }
 
+        protected void btnIngresarPack_Click(object sender, EventArgs e)
+        {
+            ChangeModalityPack(txtModalCantidad.Visible);
+        }
+
         protected void btnModalSave_Click(object sender, EventArgs e)
         {
             try
@@ -288,6 +296,7 @@ namespace WebApplication1
 
                 ViewState["Data"] = dt;
                 CargarGrid();
+                ActualizarTotalFactura();
 
                 CerrarModal();
             }
@@ -400,6 +409,33 @@ namespace WebApplication1
             }
         }
 
+        protected void cboRegion_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                cboComuna.Items.Clear();
+                cboComuna.Items.Add(new ListItem("Seleccione una comuna", "0"));
+
+                cboProvincia.Items.Clear();
+                cboProvincia.Items.Add(new ListItem("Seleccione una provincia", "0"));
+
+                cboProvincia.DataSource = pDAL.getDataTable(pDAL.GetAllByRegion(Convert.ToInt32(cboRegion.SelectedValue)));
+                cboProvincia.DataBind();
+            }
+            catch (Exception ex)
+            {
+                UserMessage(ex.Message, "danger");
+            }
+        }
+
+        protected void cboProvincia_TextChanged(object sender, EventArgs e)
+        {
+            cboComuna.Items.Clear();
+            cboComuna.Items.Add(new ListItem("Seleccione una comuna", "0"));
+            cboComuna.DataSource = cDAL.getDataTable(cDAL.GetAllByProvincia(Convert.ToInt32(cboProvincia.SelectedValue)));
+            cboComuna.DataBind();
+        }
+
 
 
 
@@ -471,14 +507,7 @@ namespace WebApplication1
 
         private void UploadOption(bool valid)
         {
-            if (valid)
-            {
-
-            }
-            else
-            {
-
-            }
+            btnGuardar.Enabled = valid;
         }
 
         private void FillFacturaFields(SLDocument doc)
@@ -502,6 +531,10 @@ namespace WebApplication1
                     switch (itemName)
                     {
                         case "Folio":
+                            if (fDAL.FindByFolio(int.Parse(val)) != null)
+                            {
+                                UserMessage("El folio ingresado ya se encuentra registrado. Suba una nueva planilla, o modifique la factura en el panel de los datos.", "warning");
+                            }
                             txtFolio.Text = val;
                             break;
                         case "Distribuidor":
@@ -664,6 +697,7 @@ namespace WebApplication1
                 string rowTipoMedicion = row["TipoMedicion"] as string;
                 string rowPrecio = row["Precio"] as string;
                 string rowTotal = row["Total"] as string;
+                string rowCantPorPack = row["CantidadPack"] as string;
                 #endregion
 
                 Marca marca = mDAL.FindByName(rowMarca);
@@ -671,7 +705,10 @@ namespace WebApplication1
                 TipoMedicion tipoMedicion = tMDAL.FindByName(rowTipoMedicion);
                 List<Ingrediente> ingredientesRepetidos = iDAL.FindAllByName(rowNombre);
                 DetalleIngrediente detalleIn = new DetalleIngrediente();
-                Ingrediente ingrediente = new Ingrediente();
+                Ingrediente ingrediente = iDAL.FindByName(rowNombre);
+                TipoMedicion tipoMedicionIng = tMDAL.Find(ingrediente.IdTipoMedicion.Value);
+                int cantidad = string.IsNullOrEmpty(rowCantPorPack) ? Convert.ToInt32(rowCantidad) : Convert.ToInt32(rowCantidad) * Convert.ToInt32(rowCantPorPack);
+                bool convertido = false;
 
                 marca = marca == null ? mDAL.Add(new Marca()
                 {
@@ -689,18 +726,34 @@ namespace WebApplication1
                     Estado = 1
                 }) : tipoMedicion;
 
-                ingrediente = iDAL.FindByName(rowNombre);
+                if (tipoMedicionIng != tipoMedicion)
+                {
+
+                    List<TipoMedicion> tiposEquivalentes = tMDAL.GetMediciones(tipoMedicion.IdTipoMedicion);
+                    foreach (TipoMedicion xx in tiposEquivalentes)
+                    {
+                        if (tipoMedicionIng == xx)
+                        {
+                            cantidad = tMDAL.GetEquivalentWantity(cantidad, tipoMedicion.IdTipoMedicion, tipoMedicionIng.IdTipoMedicion);
+                            convertido = true;
+                        }
+                    }
+                }
+
+
+
+
 
                 bool existe = ingrediente != null;
-                foreach (Ingrediente item in ingredientesRepetidos)
-                {
-                    //if ((item != null) && item.IdMarca == marca.IdMarca && item.Descripcion == rowDescripción)
-                    //{
-                    //    existe = true;
-                    //    ingrediente = item;
-                    //    break;
-                    //}
-                }
+                //foreach (Ingrediente item in ingredientesRepetidos)
+                //{
+                //    //if ((item != null) && item.IdMarca == marca.IdMarca && item.Descripcion == rowDescripción)
+                //    //{
+                //    //    existe = true;
+                //    //    ingrediente = item;
+                //    //    break;
+                //    //}
+                //}
 
                 if (!existe)
                 {
@@ -711,11 +764,11 @@ namespace WebApplication1
                         Stock = 0,
                         //IdMarca = marca.IdMarca,
                         IdTipoAlimento = tipoAlimento.IdTipoAlimento,
-                        IdTipoMedicion = tipoMedicion.IdTipoMedicion
+                        IdTipoMedicion = convertido ? tipoMedicion.IdTipoMedicion : tipoMedicionIng.IdTipoMedicion
                     };
                     detalleIn = new DetalleIngrediente()
                     {
-                        CantidadIngresada = Convert.ToInt32(rowCantidad),
+                        CantidadIngresada = cantidad,
                         Descripcion = rowDescripción,
                         IdMarca = marca.IdMarca,
                         Estado = 1
@@ -729,6 +782,7 @@ namespace WebApplication1
                 ingredienteFactura.Precio = Convert.ToInt32(rowPrecio);
                 ingredienteFactura.Cantidad = Convert.ToInt32(rowCantidad);
                 ingredienteFactura.Impuesto = 0;
+
 
                 iFDAL.Add(ingredienteFactura);
                 iFDAL.UpdateIngrediente(ingredienteFactura);
@@ -751,13 +805,13 @@ namespace WebApplication1
                 string rowTipoMedicion = dRow["TipoMedicion"] as string;
                 string rowCantidad = dRow["Cantidad"] as string;
                 string rowPrecio = dRow["Precio"] as string;
+                string rowPack = dRow["CantidadPack"] as string;
                 #endregion
-                SetModalities(rowMarca, rowTipoAlimento, rowTipoMedicion, rowNombre);
+                SetModalities(rowMarca, rowTipoAlimento, rowTipoMedicion, rowNombre, rowPack, rowCantidad);
                 ValidateInconsistencies(rowTipoAlimento, rowTipoMedicion, rowNombre, rowDescripcion);
 
                 txtModalIndex.Text = (index + 1).ToString();
                 txtModalDescripcion.Text = rowDescripcion;
-                txtModalCantidad.Text = int.TryParse(rowCantidad, out test) ? rowCantidad : "0";
                 txtModalPrecio.Text = int.TryParse(rowPrecio, out test) ? rowPrecio : "0";
                 txtModalTotal.Text = (Convert.ToInt32(txtModalCantidad.Text) * Convert.ToInt32(txtModalPrecio.Text)).ToString();
             }
@@ -779,7 +833,7 @@ namespace WebApplication1
         }
 
 
-        private void SetModalities(string marca, string tipoAlimento, string tipoMedicion, string nombre)
+        private void SetModalities(string marca, string tipoAlimento, string tipoMedicion, string nombre, string cantidadPorPack, string cantidad)
         {
             Marca mFlag = mDAL.FindByName(marca);
             if (mFlag != null)
@@ -829,6 +883,18 @@ namespace WebApplication1
                 cboModalNombre.SelectedValue = iFlag.IdIngrediente.ToString();
             }
 
+            if (cantidadPorPack != "")
+            {
+                ChangeModalityPack(true);
+                txtModalCantPorPack.Text = int.TryParse(cantidadPorPack, out int test) ? cantidadPorPack : "0";
+                txtModalCantPack.Text = int.TryParse(cantidad, out test) ? cantidad : "0";
+                txtModalCantidad.Text = int.TryParse(cantidad, out test) ? cantidad : "0";
+            }
+            else
+            {
+                ChangeModalityPack(false);
+                txtModalCantidad.Text = int.TryParse(cantidad, out int test) ? cantidad : "0";
+            }
         }
 
         private void ChangeModalityMarca(bool showExistent)
@@ -857,6 +923,13 @@ namespace WebApplication1
             cboModalNombre.Visible = showExistent;
             txtModalNombre.Visible = !showExistent;
             btnCambiarNombre.Text = showExistent ? "Nuevo Ingrediente" : "Seleccionar Ingrediente";
+        }
+
+        private void ChangeModalityPack(bool showPackOption)
+        {
+            txtModalCantidad.Visible = !showPackOption;
+            divModalPack.Visible = showPackOption;
+            btnIngresarPack.Text = showPackOption ? "Ingresar alimento por Unidad" : "Ingresar alimento por pack";
         }
 
         private void CerrarModal()
@@ -951,7 +1024,7 @@ namespace WebApplication1
                 TipoMedicion tm = tMDAL.FindByName(tipoMedicion);
                 if (tm != null && tm.IdTipoMedicion != objI.IdTipoMedicion)
                 {
-                    lblModalMessageValidTipoM.Text = $"El tipo de Medición registrado para este ingrediente es '{tADAL.Find(objI.IdTipoMedicion.Value)}'";
+                    lblModalMessageValidTipoM.Text = $"El tipo de Medición registrado para este ingrediente es '{tMDAL.Find(objI.IdTipoMedicion.Value).Descripcion}'";
                     cboModalTipoMedicion.CssClass = "custom-select is-invalid";
                     txtModalTipoMedicion.CssClass = "custom-select is-invalid";
 
@@ -1036,14 +1109,26 @@ namespace WebApplication1
 
             ValidateInconsistencies(tipoAlimento, tipoMedicion, nombre, descripción);
         }
+
         private void CargarGrid()
         {
             ViewState["Message"] = false;
             DataTable dt = ViewState["Data"] as DataTable;
 
-
             GridView1.DataSource = dt;
             GridView1.DataBind();
+        }
+
+        private void ActualizarTotalFactura()
+        {
+            DataTable dt = ViewState["Data"] as DataTable;
+            int total = 0;
+            foreach (DataRow row in dt.Rows)
+            {
+                string val = row["total"].ToString();
+                total += int.Parse(val);
+            }
+            txtTotal.Text = total.ToString();
         }
     }
 }

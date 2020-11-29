@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Administrador.Master" AutoEventWireup="true" CodeBehind="IngresarOrdenDeCompra.aspx.cs" Inherits="WebApplication1.IngresarOrdenDeCompra" %>
+﻿<%@ Page Title="Ingresar Orden de compra" Language="C#" MasterPageFile="~/Administrador.Master" AutoEventWireup="true" CodeBehind="IngresarOrdenDeCompra.aspx.cs" Inherits="WebApplication1.IngresarOrdenDeCompra" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 
@@ -48,12 +48,12 @@
                 <%--<div class="form-row d-flex justify-content-center text-uppercase">
                     <h1>Ingresar orden de compra</h1>
                 </div>--%>
-                <div class="form-row my-4 border border-primary rounded px-1">
+                <div class="form-row my-4 border border-primary rounded p-1">
                     <asp:Button ID="btnDatosFactura" runat="server" Text="Mostrar Datos Factura" Visible="false" CssClass="btn btn-primary btn-block" OnClick="btnDatosFactura_Click" />
                     <div class="col">
                         <div id="divDatos" runat="server" visible="false" class="form-row">
                             <div class="col">
-                                <div class="form-row">
+                                <div class="form-row mt-2">
                                     <div class="col-md-6">
                                         <asp:Label ID="Label1" runat="server" Text="Folio"></asp:Label>
                                         <asp:TextBox ID="txtFolio" class="form-control" runat="server"></asp:TextBox>
@@ -79,20 +79,23 @@
                                     <div class="form-row">
                                         <div class="col-md-4">
                                             <asp:Label ID="Label5" runat="server" Text="Region"></asp:Label>
-                                            <asp:DropDownList ID="cboRegion" runat="server" CssClass="form-control" AppendDataBoundItems="true" DataTextField="DESCRIPCION" DataValueField="CODIGO">
+                                            <asp:DropDownList ID="cboRegion" runat="server" CssClass="form-control" AppendDataBoundItems="true" DataTextField="DESCRIPCION"
+                                                DataValueField="CODIGO" OnTextChanged="cboRegion_TextChanged" AutoPostBack="true">
                                                 <asp:ListItem Value="0">SELECCIONE UNA REGION</asp:ListItem>
                                             </asp:DropDownList>
                                         </div>
                                         <div class="col-md-4">
                                             <asp:Label ID="Label7" runat="server" Text="Provincia"></asp:Label>
-                                            <asp:DropDownList ID="cboProvincia" runat="server" CssClass="form-control" AppendDataBoundItems="true" DataTextField="DESCRIPCION" DataValueField="CODIGO">
+                                            <asp:DropDownList ID="cboProvincia" runat="server" CssClass="form-control" AppendDataBoundItems="true" DataTextField="DESCRIPCION"
+                                                DataValueField="CODIGO" OnTextChanged="cboProvincia_TextChanged" AutoPostBack="true">
                                                 <asp:ListItem Value="0">SELECCIONE UNA PROVINCIA</asp:ListItem>
                                                 <asp:ListItem Value="-1">Debe Seleccionar primero una región</asp:ListItem>
                                             </asp:DropDownList>
                                         </div>
                                         <div class="col-md-4">
                                             <asp:Label ID="Label6" runat="server" Text="Comuna"></asp:Label>
-                                            <asp:DropDownList ID="cboComuna" runat="server" CssClass="form-control" AppendDataBoundItems="true" DataTextField="DESCRIPCION" DataValueField="CODIGO">
+                                            <asp:DropDownList ID="cboComuna" runat="server" CssClass="form-control" AppendDataBoundItems="true" DataTextField="DESCRIPCION"
+                                                DataValueField="CODIGO" AutoPostBack="true">
                                                 <asp:ListItem Value="0">SELECCIONE UNA COMUNA</asp:ListItem>
                                                 <asp:ListItem Value="-1">Debe Seleccionar primero una Provincia</asp:ListItem>
                                             </asp:DropDownList>
@@ -219,8 +222,25 @@
                                     </div>
                                     <div class="form-row my-2">
                                         <div class="col-md-6">
-                                            <asp:Label ID="Label19" runat="server" Text="Cantidad"></asp:Label>
-                                            <asp:TextBox ID="txtModalCantidad" runat="server" CssClass="form-control" placeholder="Ingrese una cantidad" AutoPostBack="true" OnTextChanged="txtModalCantidad_TextChanged"></asp:TextBox>
+                                            <div class="d-flex flex-column">
+                                                <div class="d-flex flex-row justify-content-between">
+                                                    <asp:Label ID="Label23" runat="server" Text="Cantidad"></asp:Label>
+                                                    <asp:LinkButton ID="btnIngresarPack" runat="server" OnClick="btnIngresarPack_Click">Ingresar alimento por pack</asp:LinkButton>
+                                                </div>
+                                                <div>
+                                                    <asp:TextBox ID="txtModalCantidad" runat="server" CssClass="form-control" placeholder="Ingrese una cantidad" AutoPostBack="true" OnTextChanged="txtModalCantidad_TextChanged"></asp:TextBox>
+                                                    <div id="divModalPack" runat="server">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <asp:TextBox ID="txtModalCantPorPack" runat="server" CssClass="form-control" placeholder="Cantidad por pack" AutoPostBack="true"></asp:TextBox>
+                                                            </div>
+                                                            <div class="col">
+                                                                <asp:TextBox ID="txtModalCantPack" runat="server" CssClass="form-control" placeholder="Cantidad de Packs" AutoPostBack="true"></asp:TextBox>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="d-flex flex-column">

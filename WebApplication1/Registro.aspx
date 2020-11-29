@@ -7,6 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="/css/estiloRegistro.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+    <link rel="shortcut icon" href="/assets/ico/favicon(1).png" />
     <title>Registro</title>
 </head>
 <body>
@@ -24,8 +25,8 @@
             <asp:TextBox runat="server" class="controls" type="text" name="usuario" ID="txtUsuario" placeholder="Ingrese su Nombre de Usuario" />
             <asp:TextBox runat="server" class="controls" type="password" name="clave" ID="txtClave" placeholder="Ingrese su Contraseña" />
             <p>Estoy de acuerdo con <a type="button" href="#terminosycondiciones" data-toggle="modal">Terminos y Condiciones</a></p>
-            <asp:Button ID="Button1" runat="server" Text="Registrar" CssClass="botons" />
-            <p><a href="login.aspx">¿Ya tengo Cuenta?</a></p>
+            <asp:Button ID="Button1" runat="server" Text="Registrar" CssClass="botons" OnClick="btn_Registrar_Click" />
+            <p><a href="/Login.aspx">¿Ya tengo Cuenta?</a></p>
             <div id="DivMessage" runat="server">
                 <asp:Label ID="lblMensaje" runat="server"></asp:Label>
             </div>

@@ -37,6 +37,12 @@ namespace OrderNowDAL.DAL
             return m;
         }
 
+        public Factura FindByFolio(int folio)
+        {
+            Factura m = nowBDEntities.Factura.FirstOrDefault(obj => obj.Folio == folio);
+            return m;
+        }
+
         public List<Factura> GetAll()
         {
             return nowBDEntities.Factura.ToList();

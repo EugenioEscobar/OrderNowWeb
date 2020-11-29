@@ -329,7 +329,7 @@
 
                                 <asp:TemplateField HeaderText="Cantidad Neto">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblCantidadTotal" runat="server" Text="Fill This!!" ForeColor="Red"></asp:Label>
+                                        <asp:Label ID="lblCantidadTotal" runat="server"></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>

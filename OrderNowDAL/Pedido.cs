@@ -30,6 +30,7 @@ namespace OrderNowDAL
         public string Direccion { get; set; }
         public string Observación { get; set; }
         public Nullable<int> IdTipoModalidad { get; set; }
+        public Nullable<int> IdComuna { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlimentoPedido> AlimentoPedido { get; set; }
@@ -42,5 +43,6 @@ namespace OrderNowDAL
         public virtual TipoPedido TipoPedido { get; set; }
         public virtual Trabajador Trabajador1 { get; set; }
         public virtual TipoModalidad TipoModalidad { get; set; }
+        public virtual Comuna Comuna { get; set; }
     }
 }
