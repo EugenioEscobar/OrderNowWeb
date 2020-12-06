@@ -56,7 +56,7 @@
                                 <div class="form-row mt-2">
                                     <div class="col-md-6">
                                         <asp:Label ID="Label1" runat="server" Text="Folio"></asp:Label>
-                                        <asp:TextBox ID="txtFolio" class="form-control" runat="server"></asp:TextBox>
+                                        <asp:TextBox ID="txtFolio" class="form-control" runat="server" OnTextChanged="txtFolio_TextChanged"></asp:TextBox>
                                     </div>
                                     <div class="col-md-6">
                                         <asp:Label ID="Label2" runat="server" Text="Distribuidor"></asp:Label>
@@ -137,9 +137,26 @@
         </asp:UpdatePanel>
 
         <div class="form-row d-flex justify-content-center my-2">
-            <div class="col-md-9">
-                <asp:FileUpload ID="FileUpload1" runat="server" CssClass="btn btn-outline-primary w-75" />
-                <asp:Button ID="btnSubirPlanilla" runat="server" Text="Subir Planilla" OnClick="btnSubirPlanilla_Click" CssClass="btn btn-success" />
+            <div class="input-group mb-3 col-9">
+                <div class="input-group-prepend">
+                    <asp:Button ID="btnSubirPlanilla" runat="server" Text="Subir Planilla" OnClick="btnSubirPlanilla_Click" CssClass="input-group-text" />
+                    <%--<span class="" id="inputGroupFileAddon01">Upload</span>--%>
+                </div>
+                <div class="custom-file">
+                    <asp:FileUpload ID="FileUpload1" runat="server" CssClass="custom-file-input" aria-describedby="btnSubirPlanilla" />
+                    <%--<input type="file" class="" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">--%>
+                    <label class="custom-file-label" for="FileUpload1">Escoja un Archivo</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+            </div>
+            <div class="col-md-3">
+            </div>
+        </div>
+
+        <div class="form-row d-flex justify-content-center my-2">
+            <div class="col-md-3">
+                <a class="btn btn-outline-primary btn-block" href="/Content/PLANTILLA_ORDER_NOW.xlsm" download>Descargar Plantilla</a>
             </div>
             <div class="col-md-3">
                 <asp:Button ID="btnGuardar" CssClass="btn btn-success btn-block" runat="server" Text="Guardar Datos" OnClick="btnGuardar_Click" />

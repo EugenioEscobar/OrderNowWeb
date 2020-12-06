@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Administrador.Master" AutoEventWireup="true" CodeBehind="CrudTrabajador.aspx.cs" Inherits="WebApplication1.Mantenedores.CrudTrabajador" %>
+﻿<%@ Page Title="Administrar Trabajador" Language="C#" MasterPageFile="~/Administrador.Master" AutoEventWireup="true" CodeBehind="CrudTrabajador.aspx.cs" Inherits="WebApplication1.Mantenedores.CrudTrabajador" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolderHeader" runat="server">
 </asp:Content>

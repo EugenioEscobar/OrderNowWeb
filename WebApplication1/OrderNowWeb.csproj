@@ -109,6 +109,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AdminPages\AsignarCostosEnvio.aspx" />
     <Content Include="AdminPages\InteligenciaDeNegocio.aspx" />
     <Content Include="AdminPages\Reportes\ReporteVentas.aspx" />
     <Content Include="AdminPages\testing.aspx" />
@@ -147,13 +148,11 @@
     <Content Include="assets\js\waypoints.min.js" />
     <Content Include="assets\js\wow.js" />
     <Content Include="assets\js\wow.min.js" />
-    <Content Include="ClientPages\CambiarContrasenia.aspx" />
     <Content Include="ClientPages\CambiarDatos.aspx" />
     <Content Include="ClientPages\OfertaDetails.aspx" />
     <Content Include="ClientPages\ProductList.aspx" />
     <Content Include="ClientPages\ShoppingCart.aspx" />
     <Content Include="ClientPages\TestingPage.aspx" />
-    <Content Include="ClientPages\VerCarrito.aspx" />
     <Content Include="Content\bootstrap-4.5.0-dist\css\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-4.5.0-dist\css\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-4.5.0-dist\css\bootstrap-reboot.css" />
@@ -1816,7 +1815,6 @@
     <Content Include="AdminPages\Mantenedores\CrudTipoPago.aspx" />
     <Content Include="AdminPages\Mantenedores\CrudTipoPedido.aspx" />
     <Content Include="AdminPages\Mantenedores\CrudTrabajador.aspx" />
-    <Content Include="MenuComida.aspx" />
     <Content Include="AdminPages\MenuPrincipal.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -1841,8 +1839,6 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
-    <Content Include="PedirComida.aspx" />
-    <Content Include="Inventario.aspx" />
     <Content Include="Registro.aspx" />
     <Content Include="Administrador.Master" />
     <Content Include="Content\fontawesome-free-5.11.2-web\less\brands.less" />
@@ -1910,6 +1906,7 @@
     <Content Include="Content\bootstrap-4.5.0-dist\js\bootstrap.js.map" />
     <Content Include="Content\bootstrap-4.5.0-dist\js\bootstrap.min.js.map" />
     <Content Include="lib\crystal\img\Colorfull\IconsPedia.com.url" />
+    <Content Include="Content\PLANTILLA_ORDER_NOW.xlsm" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
@@ -2023,6 +2020,13 @@
     <Compile Include="Administrador.Master.designer.cs">
       <DependentUpon>Administrador.Master</DependentUpon>
     </Compile>
+    <Compile Include="AdminPages\AsignarCostosEnvio.aspx.cs">
+      <DependentUpon>AsignarCostosEnvio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminPages\AsignarCostosEnvio.aspx.designer.cs">
+      <DependentUpon>AsignarCostosEnvio.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AdminPages\InteligenciaDeNegocio.aspx.cs">
       <DependentUpon>InteligenciaDeNegocio.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2043,13 +2047,6 @@
     </Compile>
     <Compile Include="AdminPages\testing.aspx.designer.cs">
       <DependentUpon>testing.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ClientPages\CambiarContrasenia.aspx.cs">
-      <DependentUpon>CambiarContrasenia.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ClientPages\CambiarContrasenia.aspx.designer.cs">
-      <DependentUpon>CambiarContrasenia.aspx</DependentUpon>
     </Compile>
     <Compile Include="ClientPages\CambiarDatos.aspx.cs">
       <DependentUpon>CambiarDatos.aspx</DependentUpon>
@@ -2085,13 +2082,6 @@
     </Compile>
     <Compile Include="ClientPages\TestingPage.aspx.designer.cs">
       <DependentUpon>TestingPage.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ClientPages\VerCarrito.aspx.cs">
-      <DependentUpon>VerCarrito.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ClientPages\VerCarrito.aspx.designer.cs">
-      <DependentUpon>VerCarrito.aspx</DependentUpon>
     </Compile>
     <Compile Include="AdminPages\Mantenedores\CrudAlimentos.aspx.cs">
       <DependentUpon>CrudAlimentos.aspx</DependentUpon>
@@ -2212,13 +2202,6 @@
     <Compile Include="AdminPages\Mantenedores\CrudTrabajador.aspx.designer.cs">
       <DependentUpon>CrudTrabajador.aspx</DependentUpon>
     </Compile>
-    <Compile Include="MenuComida.aspx.cs">
-      <DependentUpon>MenuComida.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="MenuComida.aspx.designer.cs">
-      <DependentUpon>MenuComida.aspx</DependentUpon>
-    </Compile>
     <Compile Include="AdminPages\MenuPrincipal.aspx.cs">
       <DependentUpon>MenuPrincipal.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2230,20 +2213,6 @@
     </Compile>
     <Compile Include="Cliente.Master.designer.cs">
       <DependentUpon>Cliente.Master</DependentUpon>
-    </Compile>
-    <Compile Include="PedirComida.aspx.cs">
-      <DependentUpon>PedirComida.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="PedirComida.aspx.designer.cs">
-      <DependentUpon>PedirComida.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Inventario.aspx.cs">
-      <DependentUpon>Inventario.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Inventario.aspx.designer.cs">
-      <DependentUpon>Inventario.aspx</DependentUpon>
     </Compile>
     <Compile Include="Registro.aspx.cs">
       <DependentUpon>Registro.aspx</DependentUpon>

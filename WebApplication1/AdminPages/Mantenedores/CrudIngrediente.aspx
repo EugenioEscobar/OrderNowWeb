@@ -117,11 +117,6 @@
                         <asp:BoundField DataField="Descripcion" HeaderText="Descripcion" SortExpression="Descripcion" />
                         <asp:BoundField DataField="Stock" HeaderText="Stock" SortExpression="Stock" />
                         <asp:BoundField DataField="ValorNeto" HeaderText="ValorNeto" SortExpression="ValorNeto" />
-                        <asp:TemplateField HeaderText="Marca">
-                            <ItemTemplate>
-                                <asp:Label ID="lblMarca" runat="server" Text='' />
-                            </ItemTemplate>
-                        </asp:TemplateField>
                         <asp:TemplateField HeaderText="Tipo Alimento">
                             <ItemTemplate>
                                 <asp:Label ID="lblTipoAlimento" runat="server" Text='<%# Bind("IdTipoAlimento") %>' />

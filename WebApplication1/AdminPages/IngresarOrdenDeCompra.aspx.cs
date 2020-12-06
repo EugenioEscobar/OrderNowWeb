@@ -79,11 +79,13 @@ namespace WebApplication1
 
 
                     FillFacturaFields(doc);//El fillFacture se llama al final ya que podría enviar una Exception
+                    if (lblMensaje.Text == "") { btnGuardar.Enabled = true; }
                 }
             }
             catch (Exception ex)
             {
                 UserMessage(ex.Message, "danger");
+
             }
         }
 
@@ -283,6 +285,7 @@ namespace WebApplication1
                 string rowTipoMedicion = txtModalTipoMedicion.Visible ? txtModalTipoMedicion.Text : cboModalTipoMedicion.SelectedItem.Text;
                 string rowPrecio = txtModalPrecio.Text;
                 string rowTotal = txtModalTotal.Text;
+                string rowCantPorPack = txtModalCantPorPack.Text;
                 #endregion
 
                 row["Nombre"] = rowNombre;
@@ -293,6 +296,7 @@ namespace WebApplication1
                 row["Cantidad"] = rowCantidad;
                 row["Precio"] = rowPrecio;
                 row["Total"] = rowTotal;
+                row["CantidadPack"] = rowCantPorPack;
 
                 ViewState["Data"] = dt;
                 CargarGrid();
@@ -531,10 +535,6 @@ namespace WebApplication1
                     switch (itemName)
                     {
                         case "Folio":
-                            if (fDAL.FindByFolio(int.Parse(val)) != null)
-                            {
-                                UserMessage("El folio ingresado ya se encuentra registrado. Suba una nueva planilla, o modifique la factura en el panel de los datos.", "warning");
-                            }
                             txtFolio.Text = val;
                             break;
                         case "Distribuidor":
@@ -542,10 +542,6 @@ namespace WebApplication1
                             if (dis != null && val != "")
                             {
                                 cboDistribuidor.SelectedValue = dis.IdDistribuidor.ToString();
-                            }
-                            else
-                            {
-                                //txtDistribuidor.Text = val;
                             }
                             break;
                         case "Dirección":
@@ -557,7 +553,6 @@ namespace WebApplication1
                             {
                                 SetCbosFromExcel(comuna);
                             }
-                            //txtComuna.Text = val;
                             break;
                         case "Teléfono":
                             txtTelefono.Text = val;
@@ -584,9 +579,26 @@ namespace WebApplication1
                             break;
                     }
                 }
+                ValidateFormFactura();
             }
             catch (Exception ex)
             {
+                UserMessage(ex.Message, "warning");
+            }
+        }
+
+        private void ValidateFormFactura()
+        {
+            try
+            {
+                if (fDAL.FindByFolio(int.Parse(txtFolio.Text)) != null)
+                {
+                    throw new Exception("El folio ingresado ya se encuentra registrado. Suba una nueva planilla, o modifique la factura en el panel de los datos.");
+                }
+            }
+            catch (Exception ex)
+            {
+                btnGuardar.Enabled = false;
                 UserMessage(ex.Message, "warning");
             }
         }
@@ -703,7 +715,7 @@ namespace WebApplication1
                 Marca marca = mDAL.FindByName(rowMarca);
                 TipoAlimento tipoAlimento = tADAL.FindByName(rowTipoAlimento);
                 TipoMedicion tipoMedicion = tMDAL.FindByName(rowTipoMedicion);
-                List<Ingrediente> ingredientesRepetidos = iDAL.FindAllByName(rowNombre);
+                List<Ingrediente> ingredientesDeMismoNombre = iDAL.FindAllByName(rowNombre);
                 DetalleIngrediente detalleIn = new DetalleIngrediente();
                 Ingrediente ingrediente = iDAL.FindByName(rowNombre);
                 TipoMedicion tipoMedicionIng = tMDAL.Find(ingrediente.IdTipoMedicion.Value);
@@ -726,34 +738,22 @@ namespace WebApplication1
                     Estado = 1
                 }) : tipoMedicion;
 
-                if (tipoMedicionIng != tipoMedicion)
-                {
+                //SetEquivalence(cantidad, tipoMedicionIng, tipoMedicion, out cantidad, out convertido);
 
-                    List<TipoMedicion> tiposEquivalentes = tMDAL.GetMediciones(tipoMedicion.IdTipoMedicion);
-                    foreach (TipoMedicion xx in tiposEquivalentes)
-                    {
-                        if (tipoMedicionIng == xx)
-                        {
-                            cantidad = tMDAL.GetEquivalentWantity(cantidad, tipoMedicion.IdTipoMedicion, tipoMedicionIng.IdTipoMedicion);
-                            convertido = true;
-                        }
-                    }
-                }
+                //Verificar si ya existe
 
-
-
-
+                //Ingreso del ingrediente y del detalle
 
                 bool existe = ingrediente != null;
-                //foreach (Ingrediente item in ingredientesRepetidos)
-                //{
-                //    //if ((item != null) && item.IdMarca == marca.IdMarca && item.Descripcion == rowDescripción)
-                //    //{
-                //    //    existe = true;
-                //    //    ingrediente = item;
-                //    //    break;
-                //    //}
-                //}
+
+                if (ingredientesDeMismoNombre.Count > 1)
+                {
+                    Ingrediente ingredienteConMismaDescripcion = iDAL.GetAll().FirstOrDefault(x => x.Descripcion == rowDescripción);
+                    if (ingredienteConMismaDescripcion != null)
+                    {
+                        ingrediente = ingredienteConMismaDescripcion;
+                    }
+                }
 
                 if (!existe)
                 {
@@ -762,7 +762,6 @@ namespace WebApplication1
                         Nombre = rowNombre,
                         Descripcion = rowDescripción,
                         Stock = 0,
-                        //IdMarca = marca.IdMarca,
                         IdTipoAlimento = tipoAlimento.IdTipoAlimento,
                         IdTipoMedicion = convertido ? tipoMedicion.IdTipoMedicion : tipoMedicionIng.IdTipoMedicion
                     };
@@ -780,12 +779,31 @@ namespace WebApplication1
                 ingredienteFactura.Factura = obj.IdFactura;
                 ingredienteFactura.Ingrediente = ingrediente.IdIngrediente;
                 ingredienteFactura.Precio = Convert.ToInt32(rowPrecio);
-                ingredienteFactura.Cantidad = Convert.ToInt32(rowCantidad);
+                ingredienteFactura.Cantidad = cantidad;
                 ingredienteFactura.Impuesto = 0;
 
-
                 iFDAL.Add(ingredienteFactura);
-                iFDAL.UpdateIngrediente(ingredienteFactura);
+                iFDAL.UpdateIngrediente(ingredienteFactura, tipoMedicion.IdTipoMedicion);
+            }
+        }
+
+        private void SetEquivalence(int cantidad, TipoMedicion tipoMedicionIng, TipoMedicion tipoMedicion, out int cantidadFinal, out bool convertido)
+        {
+            //Obtener cantidad equivalente respecto al tipo de medición
+            convertido = false;
+            cantidadFinal = cantidad;
+
+            if (tipoMedicionIng != tipoMedicion)
+            {
+                List<TipoMedicion> tiposEquivalentes = tMDAL.GetMediciones(tipoMedicion.IdTipoMedicion);
+                foreach (TipoMedicion xx in tiposEquivalentes)
+                {
+                    if (tipoMedicionIng == xx)
+                    {
+                        cantidadFinal = tMDAL.GetEquivalentQantity(cantidad, tipoMedicion.IdTipoMedicion, tipoMedicionIng.IdTipoMedicion);
+                        convertido = true;
+                    }
+                }
             }
         }
 
@@ -1129,6 +1147,18 @@ namespace WebApplication1
                 total += int.Parse(val);
             }
             txtTotal.Text = total.ToString();
+        }
+
+        protected void txtFolio_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                ValidateFormFactura();
+            }
+            catch (Exception ex)
+            {
+                UserMessage(ex.Message, "danger");
+            }
         }
     }
 }

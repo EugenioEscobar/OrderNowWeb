@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Administrar Tipo Medición" Language="C#" MasterPageFile="~/Administrador.Master" AutoEventWireup="true" CodeBehind="CrudTipoMedicion.aspx.cs" Inherits="WebApplication1.Mantenedores.CrudTipoMedicion" %>
+﻿<%@ Page Title="Administrar Tipo de Medición" Language="C#" MasterPageFile="~/Administrador.Master" AutoEventWireup="true" CodeBehind="CrudTipoMedicion.aspx.cs" Inherits="WebApplication1.Mantenedores.CrudTipoMedicion" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolderHeader" runat="server">
     <style>

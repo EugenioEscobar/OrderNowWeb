@@ -10,7 +10,7 @@ namespace OrderNowDAL.DAL
     {
         private OrderNowBDEntities nowBDEntities = new OrderNowBDEntities();
 
-        public List<double?> getTotalesMensual()
+        public List<ObtenerTotalesPorDia_Result> getTotalesMensual()
         {
             return nowBDEntities.ObtenerTotalesPorDia().ToList();
         }
@@ -31,18 +31,18 @@ namespace OrderNowDAL.DAL
             }
             return data;
         }
-        public List<string[]> getTopInsumos()
+        public List<ObtenerTopInsumos_Result> getTopInsumos()
         {
             List<string[]> data = new List<string[]>();
             var extras = nowBDEntities.ObtenerTopInsumos(DateTime.Today.AddDays(-30)).ToList();
-            foreach (ObtenerTopInsumos_Result xx in extras)
-            {
-                string[] newExtra = new string[2];
-                newExtra[0] = xx.NombreIng;
-                newExtra[1] = xx.Cantidad.ToString();
-                data.Add(newExtra);
-            }
-            return data;
+            //foreach (ObtenerTopInsumos_Result xx in extras)
+            //{
+            //    string[] newExtra = new string[2];
+            //    newExtra[0] = xx.NombreIng;
+            //    newExtra[1] = xx.Cantidad.ToString();
+            //    data.Add(newExtra);
+            //}
+            return extras;
         }
         public string[] getTarjetas()
         {

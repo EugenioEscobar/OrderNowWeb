@@ -257,11 +257,12 @@ namespace WebApplication1.ClientPages
         {
             try
             {
+                if (carrito.GetListAlimentos().Count == 0 && carrito.GetListOfertas().Count == 0) { throw new Exception("El Carrito está Vacío"); }
                 FillPedidoModal();
             }
             catch (Exception ex)
             {
-                UserModalPedidoMessage(ex.Message, "danger");
+                UserMessage(ex.Message, "danger");
             }
         }
 
@@ -279,7 +280,6 @@ namespace WebApplication1.ClientPages
                 int total = int.Parse(lblModalTotal.Text);
                 Usuario user = uDAL.Find((int)Session["Usuario"]);
                 Cliente client = cDAL.FindByUser(user.IdUsuario);
-                int comuna = cboModalPedidoTipoPedido.SelectedItem.Text == "Delivery" ? int.Parse(cboComuna.SelectedValue) : 0;
                 Pedido pedido = new Pedido()
                 {
                     Trabajador = null,
@@ -287,8 +287,8 @@ namespace WebApplication1.ClientPages
                     IdCliente = client.IdCliente,
                     IdTipoPedido = int.Parse(cboModalPedidoTipoPedido.SelectedValue),
                     Direccion = txtModalPedidoDireccion.Text,
-                    IdComuna = comuna
                 };
+                pedido.IdComuna = cboModalPedidoTipoPedido.SelectedItem.Text == "Delivery" ? int.Parse(cboComuna.SelectedValue) : (int?)null;
                 pedido = pDAL.Add(pedido);
 
                 Boleta boleta = new Boleta()

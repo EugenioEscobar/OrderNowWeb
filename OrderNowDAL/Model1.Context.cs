@@ -78,11 +78,6 @@ namespace OrderNowDAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ExtraDisponible>("P_obtener_extras_disponibles", mergeOption, pin_codigoParameter);
         }
     
-        public virtual ObjectResult<Nullable<double>> ObtenerTotalesPorDia()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("ObtenerTotalesPorDia");
-        }
-    
         public virtual ObjectResult<Nullable<double>> ObtenerPorcentajePresencial()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("ObtenerPorcentajePresencial");
@@ -109,6 +104,11 @@ namespace OrderNowDAL
         public virtual ObjectResult<InformacionTarjetas_Result> InformacionTarjetas()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InformacionTarjetas_Result>("InformacionTarjetas");
+        }
+    
+        public virtual ObjectResult<ObtenerTotalesPorDia_Result> ObtenerTotalesPorDia()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ObtenerTotalesPorDia_Result>("ObtenerTotalesPorDia");
         }
     }
 }

@@ -101,6 +101,7 @@ namespace WebApplication1
                 ingrediente.IdTipoMedicion = cboTipoMedicion.SelectedValue == "0" ? (int?)null : Convert.ToInt32(cboTipoMedicion.SelectedValue);
                 ingrediente.Porción = Convert.ToInt32(txtPorcion.Text);
                 ingrediente.IdTipoMedicionPorcion = cboTipoMedicionPorcion.SelectedValue == "0" ? (int?)null : Convert.ToInt32(cboTipoMedicionPorcion.SelectedValue);
+                ingrediente.Estado = chkVigencia.Checked ? 1 : 0;
 
                 DetalleIngrediente detalle = dIDAL.Find(idDetalle);
                 /*detalle.CantidadIngresada;
@@ -159,10 +160,7 @@ namespace WebApplication1
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 GridViewRow row = e.Row;
-                Label labelRow = (Label)row.FindControl("lblMarca");
-                labelRow.Text = labelRow.Text != "" ? mDAL.Find(Convert.ToInt32(labelRow.Text)).Nombre : "Sin Marca";
-
-                labelRow = (Label)row.FindControl("lblTipoAlimento");
+                Label labelRow = (Label)row.FindControl("lblTipoAlimento");
                 labelRow.Text = labelRow.Text != "" ? tADAL.Find(Convert.ToInt32(labelRow.Text)).Descripcion : "Sin Tipo de Alimento";
 
                 labelRow = (Label)row.FindControl("lblTipoMedicion");
@@ -257,6 +255,7 @@ namespace WebApplication1
             SetCboTipoMedicionPorcion(Convert.ToInt32(cboTipoMedicion.SelectedValue));
             string value = obj.IdTipoMedicionPorcion.HasValue ? obj.IdTipoMedicionPorcion.Value.ToString() : "0";
             cboTipoMedicionPorcion.SelectedValue = value;
+            chkVigencia.Checked = obj.Estado == 1;
 
             btnAgregar.Visible = false;
             btnModificar.Visible = true;

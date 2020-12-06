@@ -33,26 +33,35 @@ namespace WebApplication1
         Carrito carrito = new Carrito();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
+            try
             {
-                CargarGridCarrito();
-                ValidarSession();
-                GridViewExtras.DataBind();
-                InitCbos();
-            }
-            else
-            {
-                UserMessage("", "");
-                UserMessageExtra("", "");
-                UserMessageModalDireccion("", "");
-                if (txtIdAlimentoPedido.Text != "")
+                if (!Page.IsPostBack)
                 {
-                    ModalPopupExtender1.Show();
+                    CargarGridCarrito();
+                    CargarGridAlimentos("");
+                    CargarGridOfertas("");
+                    ValidarSession();
+                    GridViewExtras.DataBind();
+                    InitCbos();
                 }
-                ValidarModalSearch();
-                ValidarModalDireccion();
+                else
+                {
+                    UserMessage("", "");
+                    UserMessageExtra("", "");
+                    UserMessageModalDireccion("", "");
+                    if (txtIdAlimentoPedido.Text != "")
+                    {
+                        ModalPopupExtender1.Show();
+                    }
+                    ValidarModalSearch();
+                    ValidarModalDireccion();
+                }
+                CargarTotales();
             }
-            CargarTotales();
+            catch (Exception ex)
+            {
+                UserMessage(ex.Message, "danger");
+            }
         }
 
         protected void GridViewOfertas_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -152,7 +161,8 @@ namespace WebApplication1
                     Trabajador = tDAL.Find((int)Session["Usuario"]).IdTrabajador,
                     IdEstadoPedido = 1,
                     IdCliente = Convert.ToInt32(cboClientes.SelectedValue),
-                    IdTipoPedido = Convert.ToInt32(cboTipoPedido.SelectedValue)
+                    IdTipoPedido = Convert.ToInt32(cboTipoPedido.SelectedValue),
+                    IdTipoModalidad = 2
                 };
                 pedido = pDAL.Add(pedido);
 
@@ -471,6 +481,7 @@ namespace WebApplication1
         {
             try
             {
+                cboTipoPedido.SelectedValue = "0";
                 LimpiarModalDireccion();
                 CloseModalDireccion();
                 CargarTotales();
@@ -540,6 +551,7 @@ namespace WebApplication1
 
             cboClientes.SelectedValue = "0";
             cboTipoPedido.SelectedValue = "0";
+            cboTipoPago.SelectedValue = "0";
         }
 
         protected void LimpiarModal()
@@ -830,6 +842,7 @@ namespace WebApplication1
         protected void LoadCboModalIngrediente(AlimentoPedido obj)
         {
             LlenarItemsCbo(obj);
+            InhabilitarModalIngrediente();
             UnableRepeatedItemsCbo(obj);
         }
 
@@ -839,6 +852,22 @@ namespace WebApplication1
             cboModalSearchRut.SelectedValue = "0";
             txtModalSearchNombre.Text = "";
             ValidarModalSearch();
+        }
+
+        private void InhabilitarModalIngrediente()
+        {
+            if (cboModalIngrediente.Items.Count == 1)
+            {
+                cboModalIngrediente.Enabled = false;
+                txtModalValorExtra.Text = "0";
+                txtModalValorExtra.Enabled = false;
+            }
+            else
+            {
+                cboModalIngrediente.Enabled = true;
+                txtModalValorExtra.Text = "0";
+                txtModalValorExtra.Enabled = true;
+            }
         }
 
         private void ValidarModalSearch()
@@ -936,6 +965,39 @@ namespace WebApplication1
                 divModalDireccionMessage.Attributes.Add("class", "");
                 lblModalDireccionMessage.Text = mensaje;
             }
+        }
+
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (GridOfertas.Visible)
+                {
+                    CargarGridOfertas(txtFilterNombre.Text);
+                }
+                else
+                {
+                    CargarGridAlimentos(txtFilterNombre.Text);
+                }
+            }
+            catch (Exception ex)
+            {
+                UserMessage(ex.Message, "danger");
+            }
+        }
+
+        private void CargarGridAlimentos(string descripcion)
+        {
+            descripcion = descripcion.Trim();
+            GridViewAlimentos.DataSource = aDAL.GetAll().Where(x => x.Nombre.ToUpper().Contains(descripcion.ToUpper()) || x.Descripcion.ToUpper().Contains(descripcion.ToUpper())).ToList();
+            GridViewAlimentos.DataBind();
+        }
+
+        private void CargarGridOfertas(string descripcion)
+        {
+            descripcion = descripcion.Trim();
+            GridViewOfertas.DataSource = oDAL.GetAll().Where(x => x.Nombre.ToUpper().Contains(descripcion.ToUpper()) || x.Descripcion.ToUpper().Contains(descripcion.ToUpper())).ToList();
+            GridOfertas.DataBind();
         }
     }
 }

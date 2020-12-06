@@ -172,7 +172,7 @@
                         <div class="input-group">
                             <asp:TextBox ID="txtFilterNombre" runat="server" CssClass="form-control"></asp:TextBox>
                             <div class="input-group-append">
-                                <asp:Button ID="btnSearch" runat="server" Text="Buscar" CssClass="btn btn-outline-info" />
+                                <asp:Button ID="btnSearch" runat="server" Text="Buscar" CssClass="btn btn-outline-info" OnClick="btnSearch_Click"/>
                             </div>
                         </div>
                     </div>
@@ -180,8 +180,8 @@
                 <div id="GridPreparaciones" runat="server">
                     <div class="text-center content-Grid">
                         <asp:GridView ID="GridViewAlimentos" runat="server" ShowHeaderWhenEmpty="True" CssClass="table table-hover table-light text-center" HeaderStyle-CssClass="thead-light"
-                            BorderStyle="None" AutoGenerateColumns="False" DataKeyNames="IdAlimento" DataSourceID="SqlDataSource1" OnRowCommand="GridViewAlimentos_RowCommand" AllowPaging="true"
-                            PageSize="5">
+                            BorderStyle="None" AutoGenerateColumns="False" DataKeyNames="IdAlimento" OnRowCommand="GridViewAlimentos_RowCommand" AllowPaging="true"
+                            PageSize="12">
                             <Columns>
                                 <asp:TemplateField>
                                     <HeaderTemplate>
@@ -195,16 +195,17 @@
 
 
                                 <asp:BoundField DataField="Nombre" HeaderText="Nombre" SortExpression="Nombre" />
+                                <asp:BoundField DataField="Descripcion" HeaderText="Descripcion" SortExpression="Descripcion" />
                                 <asp:BoundField DataField="Calorías" HeaderText="Calorías" SortExpression="Calorías" />
                                 <asp:BoundField DataField="Precio" HeaderText="Precio" SortExpression="Precio" />
                             </Columns>
                         </asp:GridView>
                     </div>
-                    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:OrderNowBDConnectionString %>" SelectCommand="SELECT * FROM [Alimento]"></asp:SqlDataSource>
                 </div>
                 <div id="GridOfertas" runat="server" visible="false">
                     <div class="text-center content-Grid">
-                        <asp:GridView ID="GridViewOfertas" runat="server" ShowHeaderWhenEmpty="True" CssClass="table table-hover table-light text-center" HeaderStyle-CssClass="thead-light" BorderStyle="None" AutoGenerateColumns="False" DataKeyNames="IdOferta" DataSourceID="SqlDataSource5" OnRowCommand="GridViewOfertas_RowCommand">
+                        <asp:GridView ID="GridViewOfertas" runat="server" ShowHeaderWhenEmpty="True" CssClass="table table-hover table-light text-center" HeaderStyle-CssClass="thead-light"
+                            BorderStyle="None" AutoGenerateColumns="False" DataKeyNames="IdOferta" OnRowCommand="GridViewOfertas_RowCommand">
                             <Columns>
 
                                 <asp:TemplateField HeaderText="Agregar">
@@ -222,7 +223,6 @@
                             </Columns>
                         </asp:GridView>
                     </div>
-                    <asp:SqlDataSource ID="SqlDataSource5" runat="server" ConnectionString="<%$ ConnectionStrings:OrderNowBDConnectionString %>" SelectCommand="SELECT * FROM [Oferta]"></asp:SqlDataSource>
                 </div>
 
                 <asp:HiddenField ID="HiddenActivateModal" runat="server" />

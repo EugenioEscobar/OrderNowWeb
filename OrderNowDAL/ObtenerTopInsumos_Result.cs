@@ -14,6 +14,6 @@ namespace OrderNowDAL
     public partial class ObtenerTopInsumos_Result
     {
         public string NombreIng { get; set; }
-        public Nullable<int> Cantidad { get; set; }
+        public Nullable<double> Cantidad { get; set; }
     }
 }

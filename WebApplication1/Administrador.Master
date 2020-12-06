@@ -224,6 +224,9 @@
                         </ul>
                     </li>
                     <li>
+                        <a class="" href="/AdminPages/AsignarCostosEnvio.aspx"><i class="fas fa-money-bill"></i>Asignar costos de envio</a>
+                    </li>
+                    <li>
                         <a class="" href="/AdminPages/InteligenciaDeNegocio.aspx"><i class="fas fa-user"></i>Análisis del Negocio</a>
                     </li>
                     <li>

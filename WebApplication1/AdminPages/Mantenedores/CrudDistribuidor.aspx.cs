@@ -19,6 +19,7 @@ namespace WebApplication1
             if (!Page.IsPostBack)
             {
                 InitCbos();
+                UserMessage("", "");
             }
         }
 
@@ -28,16 +29,23 @@ namespace WebApplication1
             {
                 switch (e.CommandName)
                 {
-                    case "Agregar":
+                    case "Modificar":
+                        Limpiar();
+
                         int index = Convert.ToInt32(e.CommandArgument);
-                        Label codigo = (Label)GridView1.Rows[index].FindControl("lblcodigo");
-                        Distribuidor obj = dDAL.Find(Convert.ToInt32(codigo.Text));
+                        int codigo = Convert.ToInt32(((Label)GridView1.Rows[index].FindControl("lblcodigo")).Text);
+                        Distribuidor obj = dDAL.Find(codigo);
                         txtRut.Text = obj.Rut;
                         txtNombre.Text = obj.Nombre;
                         txtDireccion.Text = obj.Direccion;
-                        cboComuna.SelectedValue = obj.IdComuna == null ? "0" : obj.IdComuna.ToString();
+                        txtFechaEmpieza.Text = obj.FechaEmpieza.HasValue? obj.FechaEmpieza.Value.ToString("yyyy-MM-dd"):"";
+                        if (obj.IdComuna.HasValue) { SetCbosFromDistribuidor(obj.IdComuna.Value); }
+                        txtTelefono.Text = obj.Telefono.ToString();
+                        txtEmail.Text = obj.Email;
+
                         btnAgregar.Visible = false;
                         btnModificar.Visible = true;
+                        ViewState["IdDistribuidor"] = codigo;
                         break;
                     case "Default":
                         break;
@@ -45,7 +53,7 @@ namespace WebApplication1
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = ex.Message;
+                UserMessage(ex.Message, "danger");
             }
         }
         protected void btnAgregar_Click(object sender, EventArgs e)
@@ -62,12 +70,12 @@ namespace WebApplication1
                     FechaEmpieza = DateTime.Today,
                 };
                 dDAL.Add(dObj);
-                lblMensaje.Text = "Distribuidor Agregado";
+                UserMessage("Distribuidor Agregado", "success");
                 GridView1.DataBind();
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = ex.Message;
+                UserMessage(ex.Message, "danger");
             }
         }
 
@@ -76,28 +84,31 @@ namespace WebApplication1
             try
             {
                 validarCampos();
-                string nombre = txtNombre.Text;
-                string rut = txtRut.Text;
-                string direccion = txtDireccion.Text;
-                int? comuna = cboComuna.SelectedValue == "0" ? (int?)null : Convert.ToInt32(cboComuna.SelectedValue);
-                dDAL.Update(nombre, rut, direccion, comuna);
-                lblMensaje.Text = "Distribuidor Editado";
+                int codigo = Convert.ToInt32(ViewState["IdDistribuidor"].ToString());
+                Distribuidor distToModify = new Distribuidor()
+                {
+                    IdDistribuidor=codigo,
+                    Nombre = txtNombre.Text,
+                    Rut = txtRut.Text,
+                    Direccion = txtDireccion.Text,
+                    IdComuna = Convert.ToInt32(cboComuna.SelectedValue),
+                    Email = txtEmail.Text,
+                    Telefono = Convert.ToInt32(txtTelefono.Text),
+                };
+                dDAL.Update(distToModify);
+                UserMessage("Distribuidor Modificado", "success");
                 GridView1.DataBind();
             }
             catch (Exception ex)
             {
+                UserMessage(ex.Message, "danger");
                 lblMensaje.Text = ex.Message;
             }
         }
 
         protected void btnLimpiar_Click(object sender, EventArgs e)
         {
-            txtRut.Text = "";
-            txtDireccion.Text = "";
-            txtNombre.Text = "";
-            cboComuna.SelectedValue = "0";
-            btnAgregar.Visible = true;
-            btnModificar.Visible = false;
+            Limpiar();
         }
 
         protected void btnEliminar_Click1(object sender, EventArgs e)
@@ -106,21 +117,61 @@ namespace WebApplication1
             {
                 string rut = txtRut.Text;
                 dDAL.Remove(rut);
-                lblMensaje.Text = "Distribuidor Eliminado";
+                UserMessage("Distribuidor Eliminado", "success");
                 GridView1.DataBind();
             }
             catch (Exception ex)
             {
                 if (ex.Message == "An error occurred while updating the entries. See the inner exception for details.")
                 {
-                    lblMensaje.Text = "Este Registro no se puede eliminar, ya que existe dependencia";
+                    UserMessage("Distribuidor Eliminado", "success");
                 }
                 else
                 {
-                    lblMensaje.Text = ex.Message;
+                    UserMessage(ex.Message, "danger");
                 }
             }
         }
+
+        protected void cboRegion_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                LoadProvinciaCbo(Convert.ToInt32(cboRegion.SelectedValue));
+            }
+            catch (Exception ex)
+            {
+                UserMessage(ex.Message, "danger");
+            }
+        }
+
+        protected void cboProvincia_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                LoadComunaCbo(Convert.ToInt32(cboProvincia.SelectedValue));
+            }
+            catch (Exception ex)
+            {
+                UserMessage(ex.Message, "");
+            }
+        }
+
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                GridViewRow row = e.Row;
+
+                Label label = (Label)row.FindControl("lblComuna");
+                label.Text = label.Text != "" ? cDAL.Find(Convert.ToInt32(label.Text)).Nombre : "Sin Comuna";
+
+                label = (Label)row.FindControl("lblFechaEmpieza");
+                label.Text = DateTime.Parse(label.Text).ToString("yyyy-MM-dd");
+            }
+        }
+
+
 
         private void validarCampos()
         {
@@ -132,6 +183,10 @@ namespace WebApplication1
             {
                 throw new Exception("Debe Ingresar Dirección");
             }
+            if (cboComuna.SelectedValue == "0")
+            {
+                throw new Exception("Debe Ingresar la comuna");
+            }
             if (txtNombre.Text == "")
             {
                 throw new Exception("Debe Ingresar Nombre");
@@ -140,15 +195,13 @@ namespace WebApplication1
             {
                 throw new Exception("Debe Ingresar un Email");
             }
-        }
-
-        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.RowType == DataControlRowType.DataRow)
+            if (txtTelefono.Text == "")
             {
-                GridViewRow row = e.Row;
-                Label comuna = (Label)row.FindControl("lblComuna");
-                comuna.Text = comuna.Text != "" ? cDAL.Find(Convert.ToInt32(comuna.Text)).Nombre : "";
+                throw new Exception("Debe Ingresar un Teléfono");
+            }
+            if (!int.TryParse(txtTelefono.Text,out int flag) || txtTelefono.Text.Length!=9)
+            {
+                throw new Exception("Número de Teléfono inválido");
             }
         }
 
@@ -166,28 +219,59 @@ namespace WebApplication1
             }
         }
 
-        protected void cboRegion_TextChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                cboProvincia.DataSource = pDAL.getDataTable(pDAL.GetAllByRegion(Convert.ToInt32(cboRegion.SelectedValue)));
-                cboProvincia.DataBind();
-            }catch(Exception ex)
-            {
-                UserMessage(ex.Message, "danger");
-            }
-        }
-
-        protected void cboProvincia_TextChanged(object sender, EventArgs e)
-        {
-            cboRegion.DataSource = pDAL.getDataTable(pDAL.GetAllByRegion(Convert.ToInt32(cboProvincia.SelectedValue)));
-            cboRegion.DataBind();
-        }
-
         private void InitCbos()
         {
+            cboRegion.Items.Clear();
+            cboProvincia.Items.Clear();
+            cboComuna.Items.Clear();
+
+            cboRegion.Items.Add(new ListItem("Seleccione una Region", "0"));
+            cboProvincia.Items.Add(new ListItem("Seleccione una Provincia", "0"));
+            cboComuna.Items.Add(new ListItem("Seleccione una Comuna", "0"));
+
             cboRegion.DataSource = rDAL.getDataTable(rDAL.GetAll());
             cboRegion.DataBind();
+        }
+
+        private void SetCbosFromDistribuidor(int idComuna)
+        {
+            Comuna obj = cDAL.Find(idComuna);
+            int idProvincia = (int)obj.IdProvincia;
+            Provincia prov = pDAL.Find(idProvincia);
+            cboRegion.SelectedValue = prov.IdRegion.ToString();
+
+            LoadProvinciaCbo((int)prov.IdRegion);
+            cboProvincia.SelectedValue = ((int)prov.IdProvincia).ToString();
+
+            LoadComunaCbo((int)obj.IdProvincia);
+            cboComuna.SelectedValue = (obj.IdComuna).ToString();
+        }
+
+        private void LoadComunaCbo(int idProvincia)
+        {
+            cboComuna.DataSource = cDAL.getDataTable(cDAL.GetAllByProvincia(idProvincia));
+            cboComuna.DataBind();
+        }
+
+        private void LoadProvinciaCbo(int idRegion)
+        {
+            cboProvincia.DataSource = pDAL.getDataTable(pDAL.GetAllByRegion(idRegion));
+            cboProvincia.DataBind();
+        }
+
+        private void Limpiar()
+        {
+            txtRut.Text = "";
+            txtDireccion.Text = "";
+            txtNombre.Text = "";
+            txtEmail.Text = "";
+            txtFechaEmpieza.Text = "";
+            txtTelefono.Text = "";
+
+            InitCbos();
+
+            btnAgregar.Visible = true;
+            btnModificar.Visible = false;
         }
     }
 }

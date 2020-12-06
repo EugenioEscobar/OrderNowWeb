@@ -9,6 +9,7 @@ namespace OrderNowDAL.DAL
     public class IngredienteFacturaDAL
     {
         private OrderNowBDEntities nowBDEntities = new OrderNowBDEntities();
+        TipoMedicionDAL tMDAL = new TipoMedicionDAL();
 
         public IngredienteFactura Add(IngredienteFactura p)
         {
@@ -35,14 +36,14 @@ namespace OrderNowDAL.DAL
             return nowBDEntities.IngredienteFactura.ToList();
         }
 
-        public void UpdateIngrediente(IngredienteFactura obj)
+        public void UpdateIngrediente(IngredienteFactura obj, int idTipoMedicion)
         {
             Ingrediente ingrediente = nowBDEntities.Ingrediente.Find((int)obj.Ingrediente);
             double? precioPromedioActual = ingrediente.ValorNeto != null ? ingrediente.ValorNeto * ingrediente.Stock : null;
             double precioTotalFactura = (double)(obj.Precio * obj.Cantidad);
 
             double precioPromedioTotal = precioPromedioActual != null ? (double)(precioTotalFactura + precioPromedioActual) / ((int)obj.Cantidad + (int)ingrediente.Stock) : (double)obj.Precio;
-            ingrediente.Stock += obj.Cantidad;
+            ingrediente.Stock += tMDAL.GetConvertedStock(idTipoMedicion,ingrediente, obj.Cantidad.Value);
             ingrediente.ValorNeto = Math.Round(precioPromedioTotal,2);
             nowBDEntities.SaveChanges();
         }

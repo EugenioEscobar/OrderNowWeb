@@ -371,7 +371,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="ObtenerTotalesPorDia" FunctionName="OrderNowBDModel.Store.ObtenerTotalesPorDia" />
     <FunctionImportMapping FunctionImportName="ObtenerPorcentajePresencial" FunctionName="OrderNowBDModel.Store.ObtenerPorcentajePresencial" />
     <FunctionImportMapping FunctionImportName="ObtenerTopInsumos" FunctionName="OrderNowBDModel.Store.ObtenerTopInsumos">
       <ResultMapping>
@@ -396,6 +395,14 @@
           <ScalarProperty Name="TotalAnual" ColumnName="TotalAnual" />
           <ScalarProperty Name="NuevosUsuarios" ColumnName="NuevosUsuarios" />
           <ScalarProperty Name="Cuarto" ColumnName="Cuarto" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ObtenerTotalesPorDia" FunctionName="OrderNowBDModel.Store.ObtenerTotalesPorDia">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="OrderNowBDModel.ObtenerTotalesPorDia_Result">
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>

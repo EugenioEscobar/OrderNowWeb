@@ -1,4 +1,5 @@
-﻿using OrderNowDAL.DAL;
+﻿using OrderNowDAL;
+using OrderNowDAL.DAL;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -33,9 +34,15 @@ namespace WebApplication1.AdminPages
         private string llenarGraficoMes(string argumentos)
         {
             argumentos += "[";
-            foreach (double? total in iNDAL.getTotalesMensual())
+            DateTime fechaRef = DateTime.Parse(DateTime.Today.ToString("yyyy-MM-") + "01");
+            foreach (ObtenerTotalesPorDia_Result resultado in iNDAL.getTotalesMensual())
             {
-                argumentos += $"{total},";
+                while (fechaRef.ToString("yyyy-MM-dd") != resultado.Fecha.Value.ToString("yyyy-MM-dd"))
+                {
+                    argumentos += $"0,";
+                    fechaRef = fechaRef.AddDays(1);
+                }
+                argumentos += $"{resultado.Total},";
             }
             argumentos = argumentos.Remove(argumentos.Length - 1);
             argumentos += "]";
@@ -68,10 +75,10 @@ namespace WebApplication1.AdminPages
         {
             string labels = "";
             string valores = "";
-            foreach (string[] extra in iNDAL.getTopInsumos())
+            foreach (ObtenerTopInsumos_Result insumo in iNDAL.getTopInsumos())
             {
-                labels += $"'{extra[0]}',";
-                valores += $"'{extra[1]}',";
+                labels += $"'{insumo.NombreIng}',";
+                valores += $"'{insumo.Cantidad}',";
             }
             labels.Remove(labels.Length - 1);
             valores.Remove(valores.Length - 1);

@@ -13,9 +13,10 @@ namespace OrderNowDAL.DAL
 
         public Distribuidor Add(Distribuidor d)
         {
-            Distribuidor obj = nowBDEntities.Distribuidor.Add(d);
+            d.Estado = 1;
+            d = nowBDEntities.Distribuidor.Add(d);
             nowBDEntities.SaveChanges();
-            return obj;
+            return d;
         }
 
         public void Remove(string rut)
@@ -55,20 +56,18 @@ namespace OrderNowDAL.DAL
             return list.ToList();
         }
 
-        public void Update(string nombre, string rut, string direccion, int? comuna)
+        public void Update(Distribuidor d)
         {
-            var query = from c in nowBDEntities.Distribuidor
-                        where c.Rut == rut
-                        select c;
-            List<Distribuidor> ObjAlimentos = query.ToList();
+            Distribuidor objUp = Find(d.IdDistribuidor);
 
-            Distribuidor objUpdate = ObjAlimentos[0];
-            objUpdate.Nombre = nombre;
-            objUpdate.Rut = rut;
-            objUpdate.Direccion = direccion;
-            objUpdate.IdComuna = comuna;
+            objUp.Rut = d.Rut;
+            objUp.Nombre = d.Nombre;
+            objUp.IdComuna = d.IdComuna;
+            objUp.Direccion = d.Direccion;
+            objUp.Email = d.Email;
+            objUp.Telefono = d.Telefono;
+
             nowBDEntities.SaveChanges();
-
         }
 
         public DataTable getDataTable(List<Distribuidor> list)
@@ -78,7 +77,7 @@ namespace OrderNowDAL.DAL
             dt.Columns.Add("NOMBRE");
 
             string[] reg = new string[2];
-            foreach(Distribuidor obj in list)
+            foreach (Distribuidor obj in list)
             {
                 reg[0] = obj.IdDistribuidor.ToString();
                 reg[1] = obj.Nombre;

@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/assets/css/media-queries.css" />
 
     <link href="/Content/sb-admin-2.min.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/assets/ico/favicon(1).png" />
 
     <title>Dashboard</title>
 </head>
@@ -89,8 +90,8 @@
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">OtroValor</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">$<asp:Label ID="lblOtro" runat="server"></asp:Label></div>
+                                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pedidos vendidos este mes</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800"><asp:Label ID="lblOtro" runat="server"></asp:Label></div>
                                                 <%--<div class="h5 mb-0 font-weight-bold text-gray-800">$4.000</div>--%>
                                             </div>
                                             <div class="col-auto">

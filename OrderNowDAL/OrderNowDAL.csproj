@@ -190,6 +190,9 @@
     <Compile Include="ObtenerTopInsumos_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="ObtenerTotalesPorDia_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Oferta.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

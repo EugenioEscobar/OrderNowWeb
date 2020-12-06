@@ -12,13 +12,14 @@ namespace OrderNowDAL.DAL
 
         public Cliente Add(Cliente m)
         {
-            Cliente obj = nowBDEntities.Cliente.Add(m);
+            m.FechaCreacion = DateTime.Today;
+            m = nowBDEntities.Cliente.Add(m);
             nowBDEntities.SaveChanges();
-            return obj;
+            return m;
         }
         public void Edit(Cliente m)
         {
-            Cliente obj = nowBDEntities.Cliente.FirstOrDefault(x=>x.IdCliente==m.IdCliente);
+            Cliente obj = nowBDEntities.Cliente.FirstOrDefault(x => x.IdCliente == m.IdCliente);
             obj.Nombres = m.Nombres;
             obj.ApellidoPat = m.ApellidoPat;
             obj.ApellidoMat = m.ApellidoMat;

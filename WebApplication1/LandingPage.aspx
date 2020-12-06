@@ -80,7 +80,7 @@
                             <input type="email" class="form-control form-control-lg" placeholder="Ingresa tu Email" />
                         </div>
                         <div class="col-md-4">
-                            <button class="btn btn-primary btn-lg btn-block">
+                            <button class="btn btn-danger btn-lg btn-block">
                                 Suscribirte
            
                             </button>
@@ -95,45 +95,41 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-3">
-                            <div class="card text-center border-primary">
+                            <div class="card text-center border-danger">
                                 <div class="card-body">
-                                    <h3>Feature One</h3>
+                                    <h3>Calidad</h3>
                                     <p>
-                                        Amet alias a ipsa tempora ullam asperiores aperiam rem?
-                                   
+                                        Utilizamos productos de origen nacional de primera calidad para cocinar nuestro productos y asi entregar productos de calidad
                                     </p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="card text-white bg-primary">
+                            <div class="card text-white bg-danger">
                                 <div class="card-body">
-                                    <h3>Feature Two</h3>
+                                    <h3>Rapidéz</h3>
                                     <p>
-                                        Amet alias a ipsa tempora ullam asperiores aperiam rem?
-                                   
+                                        Actualmente contamos con un personal especializado en envios de alimentos para asi asegurar que tu producto llegue en buenas condiciones
                                     </p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="card text-center border-primary">
+                            <div class="card text-center border-danger">
                                 <div class="card-body">
-                                    <h3>Feature Three</h3>
+                                    <h3>Responsabilidad</h3>
                                     <p>
-                                        Amet alias a ipsa tempora ullam asperiores
-                                   
+                                        Nuestra empresa se hace responsable de todos los problemas que puedan llegar a surgir dándole la importancia que necesitan
                                     </p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="card text-white bg-primary">
+                            <div class="card text-white bg-danger">
                                 <div class="card-body">
-                                    <h3>Feature Four</h3>
+                                    <h3>Clientes</h3>
                                     <p>
-                                        Amet alias a ipsa tempora ullam asperiores aperiam rem?
-                                   
+                                        Siempre estamos en contacto con el cliente escuchando sus deseos y necesidades, para asi brindar un trato personalizado.
                                     </p>
                                 </div>
                             </div>
@@ -147,10 +143,9 @@
                 <div class="container">
                     <div class="row">
                         <div class="m-5">
-                            <h3>Why this Product?</h3>
+                            <h3>¿Cual es nuestro objetivo?</h3>
                             <p>
-                                Consectetur dolor at delectus dolores fugiat! Rerum inventore cumque quidem corporis iusto temporibus nesciunt minima! Harum harum qui dolores natus dolore repudiandae quae animi aliquid nobis sed? Quod culpa quia?
-                           
+                                Nuestro objetivo siempre sera el de satisfacer las necesidades de nuestros clientes, por eso contamos con personal capacitado para resolver tus dudas y asi brindar de manera mas efectiva nuestro servicios y productos.
                             </p>
                         </div>
                     </div>
@@ -164,9 +159,8 @@
                         <div class="card">
                             <div class="card-header" id="headingOne">
                                 <h5 class="mb-0">
-                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        ¿Question One?
-               
+                                    <button class="btn btn-link text-danger" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        ¿Pregunta uno?
                                     </button>
                                 </h5>
                             </div>
@@ -183,9 +177,8 @@
                         <div class="card">
                             <div class="card-header" id="headingTwo">
                                 <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        Collapsible Group Item #2
-               
+                                    <button class="btn btn-link collapsed text-danger" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        ¿Pregunta dos?
                                     </button>
                                 </h5>
                             </div>
@@ -201,9 +194,8 @@
                         <div class="card">
                             <div class="card-header" id="headingThree">
                                 <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                        Collapsible Group Item #3
-               
+                                    <button class="btn btn-link collapsed text-danger" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        ¿Pregunta tres?
                                     </button>
                                 </h5>
                             </div>
@@ -225,8 +217,7 @@
                 <div class="container p-5">
                     <h1 class="text-center text-white">Team</h1>
                     <p class="text-white">
-                        Adipisicing unde eum odio aliquam dolor ad voluptas expedita consequuntur aperiam inventore eaque. Dolorum facilis aut eum a delectus. Fugit velit quas harum quisquam amet provident inventore. Repudiandae repudiandae delectus.
-           
+                        Somos un equipo conformado por tres personas las cuales buscan dia a dia mejorar sus capacidades.
                     </p>
                     <div class="row">
                         <!-- USER TEAM -->
@@ -336,10 +327,10 @@
                                 </div>
                                 <textarea name="" cols="30" rows="10" placeholder="Mensaje" class="form-control"></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+                            <button type="submit" class="btn btn-danger btn-block">Enviar</button>
                         </div>
                         <div class="col-lg-3 align-self-center">
-                            <img src="/Fotos/Landing/logo.png" width="150%" />
+                            <img src="/Fotos/Landing/Logotipo.png" width="150%" />
                         </div>
                     </div>
                 </div>

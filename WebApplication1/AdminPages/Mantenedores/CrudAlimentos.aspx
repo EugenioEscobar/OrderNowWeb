@@ -223,7 +223,7 @@
                         </asp:GridView>
                     </div>
                     <div class="alert alert-info">
-                        ¿Que son los Extras Disponibles?
+                        <p><a type="button" href="#ExtrasDisponibles" data-toggle="modal">¿Que son los Extras Disponibles?</a></p>
                     </div>
                 </div>
                 <div id="divListado" runat="server">
@@ -342,6 +342,60 @@
                     </div>
                     <asp:SqlDataSource ID="SqlDataSourceIngredientes" runat="server" ConnectionString="<%$ ConnectionStrings:OrderNowBDConnectionString %>" SelectCommand="SELECT * FROM [Ingrediente]"></asp:SqlDataSource>
                 </div>
+                <div id="ExtrasDisponibles" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Contenido del modal-->
+                        <div class="modal-content">
+                            <div class="modal-header d-flex justify-content-between align-items-center">
+                                <h2 class="modal-title">Extras Disponibles</h2>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <h3>¿Que son los extras disponibles?</h3>
+                                <p>Los extras disponible son ingrediente que se agregan como extras a un alimento si así se desea hacer.</p>
+
+                                <br />
+                                <h3>¿Cuando se pueden utilizar?</h3>
+                                <p>
+                                    Utilizando la pantalla de exras disponibles, solo debe seleccionar los ingredientes que desea ingresar como extra disponible.
+                                </p>
+                                <p>
+                                    Una vez seleccionado, puede modificar el ingrediente para asignarle la cantidad máxima del ingrediente, asi como también un valor a dicho extra.
+                                </p>
+                                <p>
+                                    El valor del extra disponible es fijo desde la pantalla del cliente, no obstante, si este es ingresado por un vendedor desde su respectiva pantalla puede modificar los valores.
+                                </p>
+
+                                <br />
+                                <h3>¿Como funciona el Valor?</h3>
+                                <p>
+                                    El valor de un extra disponible es determinado por cada porción agregada, vale decir, por cada porción que agregue el cliente a su alimento se le agregará el valor del extra disponible.
+                                </p>
+
+                                <br />
+                                <h3>¿Para que utilizarlo?</h3>
+                                <p>
+                                    Los extras disponibles están pensados como una forma de gestión de los insumos del local, ya que, cada vez que se añade algún ingrediente específico a un alimento, este deja de estar sincronizado con la base de datos.
+                                </p>
+                                <p>
+                                    Por lo que de esta forma se puede llevar un mejor control del stock del local.
+                                </p>
+
+                                <br />
+                                <h3>¿Que ingredientes poner?</h3>
+                                <p>
+                                    Lo ideal como extra disponible, es agregar todos los ingredientes que el cliente podría querer agregarle a una preparación, ingredientes como, papas, ketchup, ají, pebre, etc. Junto con su respectiva porción máxima y su valor.
+                                </p>
+                                </textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
             </ContentTemplate>
         </asp:UpdatePanel>
     </div>

@@ -7,91 +7,91 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace WebApplication1.ClientPages {
+namespace WebApplication1.AdminPages {
     
     
-    public partial class VerCarrito {
+    public partial class AsignarCostosEnvio {
         
         /// <summary>
-        /// Control ScriptManager1.
+        /// Control cboRegion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.ScriptManager ScriptManager1;
+        protected global::System.Web.UI.WebControls.DropDownList cboRegion;
         
         /// <summary>
-        /// Control UpdatePanel1.
+        /// Control txtValor.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        protected global::System.Web.UI.WebControls.TextBox txtValor;
         
         /// <summary>
-        /// Control GridViewExtras.
+        /// Control cboProvincia.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridViewExtras;
+        protected global::System.Web.UI.WebControls.DropDownList cboProvincia;
         
         /// <summary>
-        /// Control lblModalCodigo.
+        /// Control divValorComuna.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblModalCodigo;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divValorComuna;
         
         /// <summary>
-        /// Control btnGuardarCambios.
+        /// Control btnAceptar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnGuardarCambios;
+        protected global::System.Web.UI.WebControls.Button btnAceptar;
         
         /// <summary>
-        /// Control BtnCerrar.
+        /// Control divValorProvincia.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnCerrar;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divValorProvincia;
         
         /// <summary>
-        /// Control GridCarrito.
+        /// Control btnCancelarProvincia.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridCarrito;
+        protected global::System.Web.UI.WebControls.Button btnCancelarProvincia;
         
         /// <summary>
-        /// Control lblPrecio.
+        /// Control btnAceptarProvincia.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPrecio;
+        protected global::System.Web.UI.WebControls.Button btnAceptarProvincia;
         
         /// <summary>
-        /// Control btnRealizarrPedido.
+        /// Control cboComuna.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnRealizarrPedido;
+        protected global::System.Web.UI.WebControls.DropDownList cboComuna;
         
         /// <summary>
         /// Control divMessage.

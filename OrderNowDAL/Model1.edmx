@@ -1946,7 +1946,6 @@
             <End Role="TipoModalidad" EntitySet="TipoModalidad" />
             <End Role="Pedido" EntitySet="Pedido" />
           </AssociationSet>
-          <FunctionImport Name="ObtenerTotalesPorDia" ReturnType="Collection(Double)" />
           <FunctionImport Name="ObtenerPorcentajePresencial" ReturnType="Collection(Double)" />
           <FunctionImport Name="ObtenerTopInsumos" ReturnType="Collection(OrderNowBDModel.ObtenerTopInsumos_Result)">
           <Parameter Name="PIN_FECHA" Mode="In" Type="DateTime" />
@@ -1959,6 +1958,7 @@
             <End Role="Comuna" EntitySet="Comuna" />
             <End Role="Pedido" EntitySet="Pedido" />
           </AssociationSet>
+          <FunctionImport Name="ObtenerTotalesPorDia" ReturnType="Collection(OrderNowBDModel.ObtenerTotalesPorDia_Result)" />
         </EntityContainer>
         <Association Name="FK__Ingredien__IdTip__607251E5">
           <End Type="OrderNowBDModel.TipoMedicion" Role="TipoMedicion" Multiplicity="0..1" />
@@ -2139,7 +2139,7 @@
         </Association>
         <ComplexType Name="ObtenerTopInsumos_Result">
           <Property Type="String" Name="NombreIng" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="Cantidad" Nullable="true" />
+          <Property Type="Double" Name="Cantidad" Nullable="true" />
         </ComplexType>
         <ComplexType Name="ObtenerTopExtras_Result">
           <Property Type="String" Name="NombreIng" Nullable="true" MaxLength="50" />
@@ -2163,6 +2163,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="ObtenerTotalesPorDia_Result">
+          <Property Type="Double" Name="Total" Nullable="true" />
+          <Property Type="DateTime" Name="Fecha" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2540,7 +2544,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="ObtenerTotalesPorDia" FunctionName="OrderNowBDModel.Store.ObtenerTotalesPorDia" />
           <FunctionImportMapping FunctionImportName="ObtenerPorcentajePresencial" FunctionName="OrderNowBDModel.Store.ObtenerPorcentajePresencial" />
           <FunctionImportMapping FunctionImportName="ObtenerTopInsumos" FunctionName="OrderNowBDModel.Store.ObtenerTopInsumos">
             <ResultMapping>
@@ -2565,6 +2568,14 @@
                 <ScalarProperty Name="TotalAnual" ColumnName="TotalAnual" />
                 <ScalarProperty Name="NuevosUsuarios" ColumnName="NuevosUsuarios" />
                 <ScalarProperty Name="Cuarto" ColumnName="Cuarto" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ObtenerTotalesPorDia" FunctionName="OrderNowBDModel.Store.ObtenerTotalesPorDia">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OrderNowBDModel.ObtenerTotalesPorDia_Result">
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

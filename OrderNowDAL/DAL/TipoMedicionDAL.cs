@@ -91,6 +91,7 @@ namespace OrderNowDAL.DAL
 
         public int GetConvertedStock(int stockActual, int cantidadPorcion, int idMedicionIngrediente, int idMedicionPorcion)
         {
+            //Cambiar el stockActual de un ingrediente
             double newStock = 0;
             List<EquivalenciaMediciones> equivalencias = GetEquivalencias(idMedicionIngrediente);
             EquivalenciaMediciones equivalenciaMedicion = equivalencias.FirstOrDefault(x => x.IdTipoMedicionInicial == idMedicionPorcion || x.IdTipoMedicionEquivalente == idMedicionPorcion);
@@ -105,14 +106,52 @@ namespace OrderNowDAL.DAL
             return (int)Math.Truncate(newStock);
         }
 
-        public int GetEquivalentWantity(int cantidad, int idtipoMedicionInicial, int idMedicionAConvertir)
-        { 
+        public int GetConvertedStock(int tipoMedicionInicial, Ingrediente ingrediente, int stockInicial)
+        {
+            //El tipo medicion inicial sería el que debe ser convertido
+            //Obtener el stock convertido
+            double newStock = 0;
+            if (ingrediente.Porción.HasValue && tipoMedicionInicial == ingrediente.IdTipoMedicionPorcion)
+            {
+                newStock = stockInicial / ingrediente.Porción.Value;
+            }
+            else if (ingrediente.IdTipoMedicionPorcion != tipoMedicionInicial)
+            {
+                int idTipoMedicion = ingrediente.IdTipoMedicionPorcion.HasValue ? ingrediente.IdTipoMedicionPorcion.Value : 1;
+                List<EquivalenciaMediciones> equivalencias = GetEquivalencias(idTipoMedicion);
+
+                EquivalenciaMediciones equivalenciaCompatible = equivalencias.FirstOrDefault(x =>
+                    x.IdTipoMedicionInicial == tipoMedicionInicial ||
+                    x.IdTipoMedicionEquivalente == tipoMedicionInicial);
+
+                if (ingrediente.IdTipoMedicionPorcion.HasValue && equivalenciaCompatible != null && ingrediente.Porción.HasValue)
+                {
+                    if (equivalenciaCompatible.IdTipoMedicionEquivalente == tipoMedicionInicial)
+                    {
+                        newStock = stockInicial / equivalenciaCompatible.Equivalencia;
+                    }
+                    else
+                    {
+                        newStock = equivalenciaCompatible.Equivalencia * stockInicial / ingrediente.Porción.Value;
+                    }
+                }
+            }
+            else
+            {
+                newStock = stockInicial;
+            }
+            
+            return (int)Math.Truncate(newStock);
+        }
+
+        public int GetEquivalentQantity(int cantidad, int idtipoMedicionInicial, int idMedicionAConvertir)
+        {
             //250 GR LA
             double nuevaCantidad = 0;
             EquivalenciaMediciones equivalencia = GetEquivalencias(idtipoMedicionInicial)
-                .FirstOrDefault(x=>x.IdTipoMedicionInicial==idMedicionAConvertir|| x.IdTipoMedicionEquivalente == idMedicionAConvertir);
+                .FirstOrDefault(x => x.IdTipoMedicionInicial == idMedicionAConvertir || x.IdTipoMedicionEquivalente == idMedicionAConvertir);
 
-            if (equivalencia.IdTipoMedicionInicial==idtipoMedicionInicial)
+            if (equivalencia.IdTipoMedicionInicial == idtipoMedicionInicial)
             {
                 nuevaCantidad = cantidad * equivalencia.Equivalencia;
             }

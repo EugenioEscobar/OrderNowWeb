@@ -33,6 +33,7 @@ namespace OrderNowDAL.DAL
 
         public void RemoveAlimento(AlimentoPedido alimento)
         {
+            GetListExtra().Where(x => x.IdAlimentoPedido == alimento.IdAlimentoPedido).ToList().ForEach(x => { RemoveExtra(x); });
             carritoAlimentos.RemoveAlimento(alimento);
         }
 
