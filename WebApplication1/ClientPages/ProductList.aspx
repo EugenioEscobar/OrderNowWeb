@@ -42,7 +42,7 @@
                                                 <div class="card mx-auto">
                                                     <div class="layer">
                                                         <asp:LinkButton runat="server" ID="btnAddToCart" CommandArgument='<%#((ListViewItem)Container).DataItemIndex %>' CommandName="AddToCart"
-                                                            CssClass="btm-btn" OnClientClick="NewAlimento();">Agregar Al Carrito</asp:LinkButton>
+                                                            CssClass="btm-btn">Agregar Al Carrito</asp:LinkButton>
                                                     </div>
                                                     <div class="content">
                                                         <asp:Label ID="lblCodigoProduct" runat="server" Text='<%#Bind("IdAlimento") %>' Visible="false"></asp:Label>
@@ -107,11 +107,11 @@
     <script src="/lib/crystal/js/crystalnotifications.min.js"></script>
 
     <script>
-        function NewAlimento() {
+        function NewAlimento(nombre) {
 
             $.CrystalNotification({
                 position: 1, // try 2, 3 and 4
-                title: "Nuevo alimento agregado al carrito!",
+                title: nombre+" agregado al carrito!",
                 image: "",
                 content: "",
             });

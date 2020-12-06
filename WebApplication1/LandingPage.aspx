@@ -22,7 +22,7 @@
             <!-- NAVIGATION -->
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="container">
-                    <a class="navbar-brand" href="LandingPage.aspx" style="width:30%">
+                    <a class="navbar-brand" href="LandingPage.aspx" style="width: 30%">
                         <img src="/Fotos/Landing/Logotipo.png" style="width: 70%;" />
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -345,7 +345,16 @@
                     </div>
                 </div>
             </footer>
-
+            <script type="text/javascript">
+                (function (d, m) {
+                    var kommunicateSettings =
+                        { "appId": "1974dcda8c494e1673d10ab4f146ad3b3", "popupWidget": true, "automaticChatOpenOnNavigation": true };
+                    var s = document.createElement("script"); s.type = "text/javascript"; s.async = true;
+                    s.src = "https://widget.kommunicate.io/v2/kommunicate.app";
+                    var h = document.getElementsByTagName("head")[0]; h.appendChild(s);
+                    window.kommunicate = m; m._globals = kommunicateSettings;
+                })(document, window.kommunicate || {});
+            </script>
             <!-- bootstrap scripts -->
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>

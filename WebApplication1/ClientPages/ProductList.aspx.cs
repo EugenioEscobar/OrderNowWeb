@@ -46,7 +46,10 @@ namespace WebApplication1.ClientPages
             {
                 Label lblCodigo = e.Item.FindControl("lblCodigoProduct") as Label;
                 int idProducto = Convert.ToInt32(lblCodigo.Text);
-                carrito.AddAlimento(aDAL.Find(idProducto));
+                Alimento al = aDAL.Find(idProducto);
+                carrito.AddAlimento(al);
+                //ScriptManager.RegisterClientScriptBlock((sender as Control), this.GetType(), "alert", "alert('Hola mundo.')", true);
+                ScriptManager.RegisterClientScriptBlock((sender as Control), this.GetType(), "alert", "$.CrystalNotification({position: 1,title: '" + al.Nombre + " agregado al carrito'});", true);
             }
             catch (Exception ex)
             {
