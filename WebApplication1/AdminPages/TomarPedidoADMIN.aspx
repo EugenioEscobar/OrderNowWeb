@@ -181,18 +181,14 @@
                     <div class="text-center content-Grid">
                         <asp:GridView ID="GridViewAlimentos" runat="server" ShowHeaderWhenEmpty="True" CssClass="table table-hover table-light text-center" HeaderStyle-CssClass="thead-light"
                             BorderStyle="None" AutoGenerateColumns="False" DataKeyNames="IdAlimento" OnRowCommand="GridViewAlimentos_RowCommand" AllowPaging="true"
-                            PageSize="12">
+                            PageSize="10" OnPageIndexChanging="GridViewAlimentos_PageIndexChanging">
                             <Columns>
-                                <asp:TemplateField>
-                                    <HeaderTemplate>
-                                        <asp:Label ID="Label1" runat="server" Text="Agregar"></asp:Label>
-                                    </HeaderTemplate>
+                                <asp:TemplateField HeaderText="Agregar">
                                     <ItemTemplate>
                                         <asp:LinkButton ID="btnAgregar" runat="server" CommandName="Agregar" CssClass="btn btn-primary" CommandArgument="<%# ((GridViewRow)Container).RowIndex %>"><i class="fas fa-plus"></i></asp:LinkButton>
                                         <asp:Label ID="lblCodigo" runat="server" Text='<%# Bind("IdAlimento") %>' Visible="false" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-
 
                                 <asp:BoundField DataField="Nombre" HeaderText="Nombre" SortExpression="Nombre" />
                                 <asp:BoundField DataField="Descripcion" HeaderText="Descripcion" SortExpression="Descripcion" />
@@ -205,7 +201,7 @@
                 <div id="GridOfertas" runat="server" visible="false">
                     <div class="text-center content-Grid">
                         <asp:GridView ID="GridViewOfertas" runat="server" ShowHeaderWhenEmpty="True" CssClass="table table-hover table-light text-center" HeaderStyle-CssClass="thead-light"
-                            BorderStyle="None" AutoGenerateColumns="False" DataKeyNames="IdOferta" OnRowCommand="GridViewOfertas_RowCommand">
+                            BorderStyle="None" AutoGenerateColumns="False" DataKeyNames="IdOferta" OnRowCommand="GridViewOfertas_RowCommand" OnPageIndexChanging="GridViewOfertas_PageIndexChanging">
                             <Columns>
 
                                 <asp:TemplateField HeaderText="Agregar">

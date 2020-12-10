@@ -49,7 +49,7 @@ namespace WebApplication1.ClientPages
                 Alimento al = aDAL.Find(idProducto);
                 carrito.AddAlimento(al);
                 //ScriptManager.RegisterClientScriptBlock((sender as Control), this.GetType(), "alert", "alert('Hola mundo.')", true);
-                ScriptManager.RegisterClientScriptBlock((sender as Control), this.GetType(), "alert", "$.CrystalNotification({position: 1,title: '" + al.Nombre + " agregado al carrito'});", true);
+                ScriptManager.RegisterClientScriptBlock((sender as Control), this.GetType(), "alert", "$.CrystalNotification({position: 1,title: \"'" + al.Nombre + "' agregado al carrito.\"});", true);
             }
             catch (Exception ex)
             {

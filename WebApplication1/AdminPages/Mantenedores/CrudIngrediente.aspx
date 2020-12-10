@@ -69,11 +69,12 @@
                 <div class="form-row">
                     <div class="col-md-6">
                         <asp:Label ID="Label8" runat="server" Text="Porción"></asp:Label>
-                        <asp:TextBox ID="txtPorcion" runat="server" CssClass="form-control" TextMode="Number"></asp:TextBox>
+                        <asp:TextBox ID="txtPorcion" runat="server" CssClass="form-control" TextMode="Number" AutoPostBack="true" OnTextChanged="txtPorcion_TextChanged"></asp:TextBox>
                     </div>
                     <div class="col-md-6">
                         <asp:Label ID="Label9" runat="server" Text="Tipo de Medición Porción"></asp:Label>
-                        <asp:DropDownList ID="cboTipoMedicionPorcion" runat="server" CssClass="form-control" DataTextField="Descripcion" DataValueField="IdTipoMedicion" AppendDataBoundItems="true">
+                        <asp:DropDownList ID="cboTipoMedicionPorcion" runat="server" CssClass="form-control" DataTextField="Descripcion" DataValueField="IdTipoMedicion" 
+                            AppendDataBoundItems="true" AutoPostBack="true" OnSelectedIndexChanged="cboTipoMedicionPorcion_SelectedIndexChanged">
                             <asp:ListItem Value="0">Seleccione un tipo de medición</asp:ListItem>
                         </asp:DropDownList>
                     </div>

@@ -274,6 +274,42 @@ namespace WebApplication1.ClientPages {
         protected global::System.Web.UI.WebControls.Button btnPagar;
         
         /// <summary>
+        /// Control divTransbank.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divTransbank;
+        
+        /// <summary>
+        /// Control token_ws.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden token_ws;
+        
+        /// <summary>
+        /// Control btnPagarRetiro.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnPagarRetiro;
+        
+        /// <summary>
+        /// Control btnPagarTransbank.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnPagarTransbank;
+        
+        /// <summary>
         /// Control HiddenDesactivateModal2.
         /// </summary>
         /// <remarks>

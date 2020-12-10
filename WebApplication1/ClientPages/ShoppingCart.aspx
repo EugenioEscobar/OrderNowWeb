@@ -205,6 +205,11 @@
                                     <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" CssClass="btn btn-secondary" OnClick="btnCancelar_Click" />
                                     <asp:Button ID="btnPagar" runat="server" Text="Pagar" CssClass="btn btn-success" OnClick="btnPagar_Click" />
                                 </div>
+                                <div id="divTransbank" runat="server" class="modal-footer" visible="false">
+                                    <input id="token_ws" runat="server" name="token_ws" type="hidden" />
+                                    <asp:Button ID="btnPagarRetiro" runat="server" Text="Pagar al retirar" CssClass="btn btn-success" OnClick="btnPagarRetiro_Click" />
+                                    <asp:Button ID="btnPagarTransbank" runat="server" Text="Pagar con transbank" CssClass="btn btn-success" OnClick="btnPagarTransbank_Click" />
+                                </div>
                             </div>
                         </div>
                         <asp:HiddenField ID="HiddenDesactivateModal2" runat="server" />
@@ -316,7 +321,7 @@
                         <div class="border border-danger">
                             <div class="form-row d-flex justify-content-center mt-3">
                                 <div class="col-6 text-right">
-                                    <p>SubTotal = $</p>
+                                    <p>SubTotal: $</p>
                                 </div>
                                 <div class="col-6 text-left">
                                     <asp:Label ID="lblSubTotal" runat="server" Text=""></asp:Label>
@@ -324,7 +329,7 @@
                             </div>
                             <div class="form-row d-flex justify-content-center">
                                 <div class="col-6 text-right">
-                                    <p>Total Extras = $</p>
+                                    <p>Total Extras: $</p>
                                 </div>
                                 <div class="col-6 text-left">
                                     <asp:Label ID="lblExtras" runat="server" Text=""></asp:Label>
@@ -332,7 +337,7 @@
                             </div>
                             <div class="form-row d-flex justify-content-center">
                                 <div class="col-6 text-right">
-                                    <p>Total = $</p>
+                                    <p>Total: $</p>
                                 </div>
                                 <div class="col-6 text-left">
                                     <asp:Label ID="lblTotal" runat="server" Text=""></asp:Label>

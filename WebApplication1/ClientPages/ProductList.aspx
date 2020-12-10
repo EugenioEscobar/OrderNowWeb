@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolderHeader" runat="server">
     <link rel="stylesheet" href="/assets/css/productsStyle.css" />
-    <link rel="stylesheet" href="/lib/crystal/css/crystalnotifications.min.css" />
+    <%--<link rel="stylesheet" href="/lib/crystal/css/crystalnotifications.min.css" />--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container-fluid">
@@ -106,7 +106,7 @@
     <!-- Librerías de plugins -->
     <script src="/lib/crystal/js/crystalnotifications.min.js"></script>
 
-    <script>
+    <%--<script>
         function NewAlimento(nombre) {
 
             $.CrystalNotification({
@@ -117,5 +117,5 @@
             });
 
         };
-    </script>
+    </script>--%>
 </asp:Content>

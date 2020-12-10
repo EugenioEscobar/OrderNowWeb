@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using OrderNowDAL;
 using OrderNowDAL.Correo;
 using OrderNowDAL.DAL;
+using Transbank.Webpay;
 
 namespace WebApplication1.ClientPages
 {
@@ -19,6 +23,7 @@ namespace WebApplication1.ClientPages
         BoletaDAL bDAL = new BoletaDAL();
         AlimentoDAL aDAL = new AlimentoDAL();
         AlimentoPedidoDAL aPDAL = new AlimentoPedidoDAL();
+        ExtraPedidoDAL ePDAL = new ExtraPedidoDAL();
         OfertaDAL oDAL = new OfertaDAL();
         OfertaPedidoDAL oPDAL = new OfertaPedidoDAL();
         OfertaAlimentoDAL oADAL = new OfertaAlimentoDAL();
@@ -31,6 +36,9 @@ namespace WebApplication1.ClientPages
         ProvinciaDAL pRDAL = new ProvinciaDAL();
         ComunaDAL cODAL = new ComunaDAL();
 
+        /** Crea Dictionary con datos de entrada */
+        private Dictionary<string, string> request = new Dictionary<string, string>();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -39,6 +47,7 @@ namespace WebApplication1.ClientPages
             }
             CargarGridCarrito();
             CargarTotales();
+            ValidarTransbank();
             ValidateModal();
             ValidatePedidoModal();
             UserMessage("", "");
@@ -122,35 +131,42 @@ namespace WebApplication1.ClientPages
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                GridViewRow row = e.Row;
-                List<ExtraPedido> extrasOnCart = new List<ExtraPedido>();
+                try
+                {
+                    GridViewRow row = e.Row;
+                    List<ExtraPedido> extrasOnCart = new List<ExtraPedido>();
 
-                LinkButton btnAdd = (LinkButton)row.FindControl("btnPlus");
-                LinkButton btnSubstract = (LinkButton)row.FindControl("btnMinus");
+                    LinkButton btnAdd = (LinkButton)row.FindControl("btnPlus");
+                    LinkButton btnSubstract = (LinkButton)row.FindControl("btnMinus");
 
-                int idAlimentoPedido = Convert.ToInt32(lblModalCodigo.Text);
-                int idAlimento = carrito.GetListAlimentos().FirstOrDefault(x => x.IdAlimentoPedido == idAlimentoPedido).IdAlimento.Value;
-                int idIngrediente = Convert.ToInt32((row.FindControl("lblCodigo") as Label).Text);
+                    int idAlimentoPedido = Convert.ToInt32(lblModalCodigo.Text);
+                    int idAlimento = carrito.GetListAlimentos().FirstOrDefault(x => x.IdAlimentoPedido == idAlimentoPedido).IdAlimento.Value;
+                    int idIngrediente = Convert.ToInt32((row.FindControl("lblCodigo") as Label).Text);
 
-                ExtraPedido extraPedido = carrito.GetListExtra().FirstOrDefault(x => x.IdIngrediente == idIngrediente && x.IdAlimentoPedido == idAlimentoPedido);
+                    ExtraPedido extraPedido = carrito.GetListExtra().FirstOrDefault(x => x.IdIngrediente == idIngrediente && x.IdAlimentoPedido == idAlimentoPedido);
 
-                Ingrediente ingrediente = iDAL.Find(idIngrediente);
-                ExtraDisponible extraDisp = eDDAL.FindByAlimentoAndIngrediente(idAlimento, idIngrediente);
+                    Ingrediente ingrediente = iDAL.Find(idIngrediente);
+                    ExtraDisponible extraDisp = eDDAL.FindByAlimentoAndIngrediente(idAlimento, idIngrediente);
 
-                Label lblIngrediente = row.FindControl("lblIngrediente") as Label;
-                lblIngrediente.Text = ingrediente.Descripcion;
+                    Label lblIngrediente = row.FindControl("lblIngrediente") as Label;
+                    lblIngrediente.Text = ingrediente.Descripcion;
 
-                Label lblCantidad = row.FindControl("lblCantidad") as Label;
-                lblCantidad.Text = extraPedido != null ? extraPedido.CantidadExtra.ToString() : "0";
+                    Label lblCantidad = row.FindControl("lblCantidad") as Label;
+                    lblCantidad.Text = extraPedido != null ? extraPedido.CantidadExtra.ToString() : "0";
 
-                Label lblValor = row.FindControl("lblValor") as Label;
-                lblValor.Text = extraDisp.Valor.ToString();
+                    Label lblValor = row.FindControl("lblValor") as Label;
+                    lblValor.Text = extraDisp.Valor.ToString();
 
-                Label lblTotal = row.FindControl("lblTotal") as Label;
-                lblTotal.Text = extraPedido != null ? (extraDisp.Valor * extraPedido.CantidadExtra).ToString() : "0";
+                    Label lblTotal = row.FindControl("lblTotal") as Label;
+                    lblTotal.Text = extraPedido != null ? (extraDisp.Valor * extraPedido.CantidadExtra).ToString() : "0";
 
-                btnAdd.Enabled = extraPedido == null || extraPedido.CantidadExtra != extraDisp.CantidadMaxima;
-                btnSubstract.Enabled = extraPedido != null;
+                    btnAdd.Enabled = extraPedido == null || extraPedido.CantidadExtra != extraDisp.CantidadMaxima;
+                    btnSubstract.Enabled = extraPedido != null;
+                }
+                catch (Exception ex)
+                {
+                    UserMessage(ex.Message, "danger");
+                }
             }
         }
 
@@ -275,39 +291,9 @@ namespace WebApplication1.ClientPages
         {
             try
             {
-                if (Session["Usuario"] == null) { Response.Redirect("/Login.aspx"); }
-                ValidatePedidoFields();
-                int total = int.Parse(lblModalTotal.Text);
-                Usuario user = uDAL.Find((int)Session["Usuario"]);
-                Cliente client = cDAL.FindByUser(user.IdUsuario);
-                Pedido pedido = new Pedido()
-                {
-                    Trabajador = null,
-                    IdEstadoPedido = 1,
-                    IdCliente = client.IdCliente,
-                    IdTipoPedido = int.Parse(cboModalPedidoTipoPedido.SelectedValue),
-                    Direccion = txtModalPedidoDireccion.Text,
-                };
-                pedido.IdComuna = cboModalPedidoTipoPedido.SelectedItem.Text == "Delivery" ? int.Parse(cboComuna.SelectedValue) : (int?)null;
-                pedido = pDAL.Add(pedido);
-
-                Boleta boleta = new Boleta()
-                {
-                    Fecha = DateTime.Today,
-                    IdTipoPago = 3, //Cambiar
-                    Pedido = pedido.IdPedido,
-                    Total = carrito.GetSubTotal()
-                };
-                boleta = bDAL.Add(boleta);
-
-                EnviarCorreo(pedido, client, boleta);
-                AgregarAlimentosPorPedido(pedido);
-                AgregarOfertasPorPedido(pedido);
-
-                LimpiarPedido();
-                CargarTotales();
-                ClosePedidoModal();
-                UserMessage("Pedido Realizado", "success");
+                //divTransbank.Visible = true;
+                //llenarFormTransbank();
+                GenerarPedido();
             }
             catch (Exception ex)
             {
@@ -499,12 +485,36 @@ namespace WebApplication1.ClientPages
                     IdPedido = idPedido
                 });
 
-                //idElementoCarrito = CambiarIdListadoExtra(idElementoCarrito, alimentoPedido.IdAlimentoPedido);
+                idElementoCarrito = CambiarIdListadoExtra(idElementoCarrito, alimentoPedido.IdAlimentoPedido);
 
                 RestarStockAlimento(idAlimento);
 
-                //AgregarExtras(idAlimentoPedidoLista);
+                AgregarExtras(idElementoCarrito);
             }
+        }
+
+        private void AgregarExtras(int idAlimentoPedido)
+        {
+            List<ExtraPedido> listaExtras = carrito.GetListExtra().Where(x => x.IdAlimentoPedido == idAlimentoPedido).ToList();
+            foreach (ExtraPedido extra in listaExtras)
+            {
+                ePDAL.Add(extra);
+
+                //Restar el stock del ingrediente respecto a los ingredientes del extra
+                Ingrediente ingrediente = iDAL.Find((int)extra.IdIngrediente);
+                ingrediente.Stock -= extra.CantidadExtra;
+                iDAL.Update(ingrediente);
+            }
+        }
+
+        private int CambiarIdListadoExtra(int id, int idBDD)
+        {
+            // Se cambia el Id por defecto del listado de Extras, 
+            // por el id obtenido de la Base de Datos 
+            // para que luego sea agregado el id correcto en la Base de datos
+            List<ExtraPedido> lista = carrito.GetListExtra().Where(x => x.IdAlimentoPedido == id).ToList();
+            lista.ForEach(x => x.IdAlimentoPedido = idBDD);
+            return idBDD;
         }
 
         private void RestarStockAlimento(int idAlimento)
@@ -713,6 +723,251 @@ namespace WebApplication1.ClientPages
         {
             cboProvincia.DataSource = pRDAL.getDataTable(pRDAL.GetAllByRegion(idRegion));
             cboProvincia.DataBind();
+        }
+
+        private void llenarFormTransbank()
+        {
+            var configuration = Configuration.ForTestingWebpayPlusMall();
+            var webpay = new Webpay(configuration);
+
+            /** Información de Host para crear URL */
+            var httpHost = HttpContext.Current.Request.ServerVariables["HTTP_HOST"].ToString();
+            var selfURL = HttpContext.Current.Request.ServerVariables["URL"].ToString();
+
+            /** Crea URL de Aplicación */
+            string sample_baseurl = "http://" + httpHost + selfURL;
+
+            /** Orden de compra de la transacción que se requiere anular */
+            string buyOrder;
+            try
+            {
+                var random = new Random();
+
+                /** Orden de compra de la tienda */
+                buyOrder = random.Next(0, 1000).ToString();
+
+                /** (Opcional) Identificador de sesión, uso interno de comercio */
+                string sessionId = random.Next(0, 1000).ToString();
+
+                /** URL Final */
+                string urlReturn = sample_baseurl + "?action=result";
+
+                /** URL Final */
+                string urlFinal = sample_baseurl + "?action=end";
+
+                var stores = new Dictionary<string, string[]>();
+
+                stores.Add(configuration.StoreCodes.First().Value, new string[] {
+                                configuration.StoreCodes.First().Value, // storeCode
+                                lblTotal.Text,                          // amount
+                                random.Next(0, 1000).ToString(),        // buyOrder
+                                random.Next(0, 1000).ToString(),        // sessionId 
+                            });
+
+                /** Ejecutamos metodo initTransaction desde Libreria */
+                var result = webpay.MallNormalTransaction.initTransaction(buyOrder, sessionId, urlReturn, urlFinal, stores);
+                string message;
+                /** Verificamos respuesta de inicio en webpay */
+                if (result.token != null && result.token != "")
+                {
+                    message = "Sesion iniciada con exito en Webpay";
+                }
+                else
+                {
+                    message = "webpay no disponible";
+                }
+
+                token_ws.Value = result.token;
+                token_ws.Name = "token_ws";
+                ViewState["Url"] = result.url;
+
+                UserModalPedidoMessage(message, "as");
+
+            }
+            catch (Exception ex)
+            {
+                UserModalPedidoMessage(ex.Message, "danger");
+            }
+        }
+
+        private void ValidarTransbank()
+        {
+            var configuration = Configuration.ForTestingWebpayPlusMall();
+            var webpay = new Webpay(configuration);
+
+            /** Información de Host para crear URL */
+            var httpHost = HttpContext.Current.Request.ServerVariables["HTTP_HOST"].ToString();
+            var selfURL = HttpContext.Current.Request.ServerVariables["URL"].ToString();
+            string action = !String.IsNullOrEmpty(HttpContext.Current.Request.QueryString["action"]) ? HttpContext.Current.Request.QueryString["action"] : "init";
+
+            /** Crea URL de Aplicación */
+            string sample_baseurl = "http://" + httpHost + selfURL;
+
+            /** Crea Dictionary con codigos de resultado */
+            var codes = new Dictionary<string, string>
+            {
+                { "0", "Transacci&oacute;n aprobada" },
+                { "-1", "Rechazo de transacci&oacute;n" },
+                { "-2", "Transacci&oacute;n debe reintentarse" },
+                { "-3", "Error en transacci&oacute;n" },
+                { "-4", "Rechazo de transacci&oacute;n" },
+                { "-5", "Rechazo por error de tasa" },
+                { "-6", "Excede cupo m&aacute;ximo mensual" },
+                { "-7", "Excede l&iacute;mite diario por transacci&oacute;n" },
+                { "-8", "Rubro no autorizado" }
+            };
+
+            /** Orden de compra de la transacción que se requiere anular */
+            string buyOrder;
+
+            switch (action)
+            {
+                case "result":
+                    try
+                    {
+
+                        /** Obtiene Información POST */
+                        string[] keysPost = Request.Form.AllKeys;
+
+                        /** Token de la transacción */
+                        string token = Request.Form["token_ws"];
+                        request.Add("token", token.ToString());
+                        var result = webpay.MallNormalTransaction.getTransactionResult(token);
+
+                        if (result.detailOutput[0].responseCode == 0)
+                        {
+                            UserMessage("Pago ACEPTADO por webpay.", "Pago ACEPTADO por webpay.");
+                        }
+                        else
+                        {
+                            UserMessage("Pago RECHAZADO por webpay. " + codes[result.detailOutput[0].responseCode.ToString()], "danger");
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        UserMessage(ex.Message, "danger");
+                    }
+                    break;
+
+                case "end":
+                    try
+                    {
+                        if (Request.Form["token_ws"] != null)
+                        {
+                            request.Add("", "");
+                            UserMessage("Transacción Finalizada", "success");
+                        }
+                        else if (Request.Form["TBK_TOKEN"] != null)
+                        {
+                            UserMessage("Transacción Abortada", "danger");
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        UserMessage(ex.Message, "danger");
+                    }
+                    break;
+
+                case "nullify":
+                    try
+                    {
+                        /** Obtiene Información POST */
+                        string[] keysNullify = Request.Form.AllKeys;
+
+                        /** Codigo de Comercio */
+                        string commercecode = Request.Form["commercecode"];
+
+                        /** Código de autorización de la transacción que se requiere anular */
+                        string authorizationCode = Request.Form["authorizationCode"];
+
+                        /** Monto autorizado de la transacción que se requiere anular */
+                        decimal authorizedAmount = Int64.Parse(Request.Form["amount"]);
+
+                        /** Orden de compra de la transacción que se requiere anular */
+                        buyOrder = Request.Form["buyOrder"];
+
+                        /** Monto que se desea anular de la transacción */
+                        decimal nullifyAmount = 3;
+
+                        request.Add("authorizationCode", authorizationCode.ToString());
+                        request.Add("authorizedAmount", authorizedAmount.ToString());
+                        request.Add("buyOrder", buyOrder.ToString());
+                        request.Add("nullifyAmount", nullifyAmount.ToString());
+                        request.Add("commercecode", commercecode.ToString());
+
+                        UserMessage("Transacción Finalizada", "success");
+                    }
+                    catch (Exception ex)
+                    {
+                        UserMessage(ex.Message, "danger");
+                    }
+                    break;
+            }
+        }
+
+        protected void btnPagarTransbank_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //NameValueCollection data = new NameValueCollection();
+                //data.Add("token_ws", token_ws.Value);
+                //RedirectAndPOST(this.Page, ViewState["Url"].ToString(), data);
+            }
+            catch (Exception ex)
+            {
+                UserModalPedidoMessage(ex.Message, "Danger");
+            }
+        }
+
+        protected void btnPagarRetiro_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                GenerarPedido();
+            }
+            catch (Exception ex)
+            {
+                UserMessage(ex.Message, "danger");
+            }
+        }
+
+        private void GenerarPedido()
+        {
+            if (Session["Usuario"] == null) { Response.Redirect("/Login.aspx"); }
+            ValidatePedidoFields();
+            int total = int.Parse(lblModalTotal.Text);
+            Usuario user = uDAL.Find((int)Session["Usuario"]);
+            Cliente client = cDAL.FindByUser(user.IdUsuario);
+            Pedido pedido = new Pedido()
+            {
+                Trabajador = null,
+                IdEstadoPedido = 1,
+                IdCliente = client.IdCliente,
+                IdTipoPedido = int.Parse(cboModalPedidoTipoPedido.SelectedValue),
+                Direccion = txtModalPedidoDireccion.Text,
+            };
+            pedido.IdComuna = cboModalPedidoTipoPedido.SelectedItem.Text == "Delivery" ? int.Parse(cboComuna.SelectedValue) : (int?)null;
+            pedido = pDAL.Add(pedido);
+
+            Boleta boleta = new Boleta()
+            {
+                Fecha = DateTime.Today,
+                IdTipoPago = 3, //Cambiar
+                Pedido = pedido.IdPedido,
+                Total = carrito.GetSubTotal()
+            };
+            boleta = bDAL.Add(boleta);
+
+            EnviarCorreo(pedido, client, boleta);
+            AgregarAlimentosPorPedido(pedido);
+            AgregarOfertasPorPedido(pedido);
+
+            LimpiarPedido();
+            CargarTotales();
+            ClosePedidoModal();
+            UserMessage("Pedido Realizado", "success");
         }
     }
 }

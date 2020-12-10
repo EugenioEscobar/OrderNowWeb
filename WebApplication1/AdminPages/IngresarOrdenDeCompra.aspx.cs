@@ -56,6 +56,7 @@ namespace WebApplication1
             UserMessage("", "");
             UserMessage2("", "");
             UserModalMessage("", "");
+            CargarGrid();
             ValidarModal();
         }
 
@@ -145,7 +146,7 @@ namespace WebApplication1
                 #endregion
 
                 #region Validación de Campos Correctos
-                if (ingrediente != null && (ingrediente.IdTipoMedicion != tipoMedicion.IdTipoMedicion || ingrediente.IdTipoAlimento != tipoAlimento.IdTipoAlimento))
+                if ((tipoAlimento != null && tipoMedicion != null) && (ingrediente != null && (ingrediente.IdTipoMedicion != tipoMedicion.IdTipoMedicion || ingrediente.IdTipoAlimento != tipoAlimento.IdTipoAlimento)))
                 {
                     columnIndex = Array.IndexOf(columns, "Nombre") + 1;
                     e.Row.Cells[columnIndex].CssClass = "alert-info alert-grid-info";
@@ -155,6 +156,7 @@ namespace WebApplication1
 
                 if (flag && (bool)ViewState["Message"] == false)
                 {
+                    if (lblMensaje.Text.Contains("Los datos en amarillo")) { lblMensaje.Text = ""; }
                     UserMessage($"{lblMensaje.Text} " +
                         " \n Los datos en amarillo se agregarán automaticamente a la Base de datos al ingresar la planilla", "warning");
                     ViewState["Message"] = true;
@@ -718,7 +720,7 @@ namespace WebApplication1
                 List<Ingrediente> ingredientesDeMismoNombre = iDAL.FindAllByName(rowNombre);
                 DetalleIngrediente detalleIn = new DetalleIngrediente();
                 Ingrediente ingrediente = iDAL.FindByName(rowNombre);
-                TipoMedicion tipoMedicionIng = tMDAL.Find(ingrediente.IdTipoMedicion.Value);
+                TipoMedicion tipoMedicionIng = ingrediente != null ? tMDAL.Find(ingrediente.IdTipoMedicion.Value) : null;
                 int cantidad = string.IsNullOrEmpty(rowCantPorPack) ? Convert.ToInt32(rowCantidad) : Convert.ToInt32(rowCantidad) * Convert.ToInt32(rowCantPorPack);
                 bool convertido = false;
 
@@ -763,7 +765,7 @@ namespace WebApplication1
                         Descripcion = rowDescripción,
                         Stock = 0,
                         IdTipoAlimento = tipoAlimento.IdTipoAlimento,
-                        IdTipoMedicion = convertido ? tipoMedicion.IdTipoMedicion : tipoMedicionIng.IdTipoMedicion
+                        IdTipoMedicion = tipoMedicion.IdTipoMedicion
                     };
                     detalleIn = new DetalleIngrediente()
                     {
@@ -1130,11 +1132,14 @@ namespace WebApplication1
 
         private void CargarGrid()
         {
-            ViewState["Message"] = false;
-            DataTable dt = ViewState["Data"] as DataTable;
+            if (ViewState["Data"] != null)
+            {
+                ViewState["Message"] = false;
+                DataTable dt = ViewState["Data"] as DataTable;
 
-            GridView1.DataSource = dt;
-            GridView1.DataBind();
+                GridView1.DataSource = dt;
+                GridView1.DataBind();
+            }
         }
 
         private void ActualizarTotalFactura()
@@ -1154,6 +1159,7 @@ namespace WebApplication1
             try
             {
                 ValidateFormFactura();
+                btnGuardar.Enabled = true;
             }
             catch (Exception ex)
             {

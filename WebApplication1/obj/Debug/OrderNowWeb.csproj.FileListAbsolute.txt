@@ -630,3 +630,8 @@ C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\pt\Microsoft.Repo
 C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\ru\Microsoft.ReportViewer.WinForms.resources.dll
 C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\zh-CHS\Microsoft.ReportViewer.WinForms.resources.dll
 C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\zh-CHT\Microsoft.ReportViewer.WinForms.resources.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\Microsoft.Web.Services3.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\MQTTnet.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\Newtonsoft.Json.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\Transbank.dll
+C:\Users\eugen\Escritorio\OrderNowWeb V5.2\WebApplication1\bin\Newtonsoft.Json.xml

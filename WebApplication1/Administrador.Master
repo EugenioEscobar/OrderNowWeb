@@ -126,6 +126,27 @@
         function newPeididosWindows() {
             window.open("/AdminPages/DefaultAdmin.aspx");
         }
+        function reporteCompraInsumos() {
+            window.open("http://localhost/ReportServer/Pages/ReportViewer.aspx?%2fReportesOrderNow%2fReporteCompraInsumos&rs:Command=Render");
+        }
+        function reporteInsumosUtilizados() {
+            window.open("http://localhost/ReportServer/Pages/ReportViewer.aspx?%2fReportesOrderNow%2fReporteInsumosUtilizados&rs:Command=Render");
+        }
+        function reporteClientes() {
+            window.open("http://localhost/ReportServer/Pages/ReportViewer.aspx?%2fReportesOrderNow%2fReporteNuevosClientes&rs:Command=Render");
+        }
+        function reporteProductos() {
+            window.open("http://localhost/ReportServer/Pages/ReportViewer.aspx?%2fReportesOrderNow%2fReporteProductosVendidos&rs:Command=Render");
+        }
+        function reporteVentasFecha() {
+            window.open("http://localhost/ReportServer/Pages/ReportViewer.aspx?%2fReportesOrderNow%2fReporteVentasFecha&rs:Command=Render");
+        }
+        function reporteVentasMensual() {
+            window.open("http://localhost/ReportServer/Pages/ReportViewer.aspx?%2fReportesOrderNow%2fReporteVentasMensual&rs:Command=Render");
+        }
+        function reporteVentasSemanal() {
+            window.open("http://localhost/ReportServer/Pages/ReportViewer.aspx?%2fReportesOrderNow%2fReporteVentasSemanal&rs:Command=Render");
+        }
     </script>
 </head>
 <body>
@@ -152,21 +173,21 @@
 
                 <ul class="list-unstyled menu-elements">
                     <li class="active">
-                        <a class="scdroll-link" href="/AdminPages/TomarPedidoADMIN.aspx"><i class="fas fa-home"></i>Tomar Orden</a>
+                        <a class="scdroll-link" href="/AdminPages/TomarPedidoADMIN.aspx"><i class="fal fa-store-alt"></i>Tomar Orden</a>
                     </li>
                     <li>
-                        <a href="#" onclick="newPeididosWindows();"><i class="fas fa-cog"></i>Pedidos en Curso</a>
+                        <a href="#" onclick="newPeididosWindows();"><i class="fal fa-tachometer-alt-fastest"></i>Pedidos en Curso</a>
                         <%--<asp:LinkButton ID="LinkButton1" runat="server" class="nav-link" 
                             OnClientClick="newPeididosWindows();">
                                 <i class="fas fa-cog"></i>Pedidos
                         </asp:LinkButton>--%>
                     </li>
                     <li>
-                        <a class="scdroll-link" href="/AdminPages/IngresarOrdenDeCompra.aspx"><i class="fas fa-user"></i>Ingresar Orden de Compra</a>
+                        <a class="scdroll-link" href="/AdminPages/IngresarOrdenDeCompra.aspx"><i class="fas fa-file-invoice"></i>Ingresar Orden de Compra</a>
                     </li>
                     <li>
                         <a class="dropdown-toggle" href="#mantenedores" data-toggle="collapse" aria-expanded="false" role="button">
-                            <i class="fas fa-pencil-alt"></i>Mantenedores
+                            <i class="fas fa-cog"></i>Mantenedores
                         </a>
                         <ul class="collapse list-unstyled" id="mantenedores">
                             <li>
@@ -209,29 +230,41 @@
                     </li>
                     <li>
                         <a class="dropdown-toggle" href="#reportes" data-toggle="collapse" aria-expanded="false" role="button">
-                            <i class="fas fa-pencil-alt"></i>Reportes
+                            <i class="fal fa-file-chart-line"></i>Reportes
                         </a>
                         <ul class="collapse list-unstyled" id="reportes">
                             <li>
-                                <a class="" href="/AdminPages/Reportes/ReporteVentas.aspx">Reporte Ventas</a>
+                                <a href="#" onclick="reporteCompraInsumos();"><i class="fal fa-file-chart-line"></i>Reporte Compra Insumos</a>
                             </li>
                             <li>
-                                <%--<a class="" href="/AdminPages/Mantenedores/CrudTipoAlimento.aspx">Tipo de Alimento</a>--%>
+                                <a href="#" onclick="reporteInsumosUtilizados();"><i class="fas fa-file-chart-line"></i>Reporte Insumos Utilizados</a>
                             </li>
                             <li>
-                                <%--<a class="" href="/AdminPages/Mantenedores/CrudTipoAlimento.aspx">Tipo de Alimento</a>--%>
+                                <a href="#" onclick="reporteClientes();"><i class="fal fa-file-chart-line"></i>Reporte Nuevos Clientes</a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="reporteProductos();"><i class="fas fa-file-chart-line"></i>Reporte Productos Vendidos</a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="reporteVentasFecha();"><i class="fal fa-file-chart-line"></i>Reporte Ventas por Fecha</a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="reporteVentasMensual();"><i class="fas fa-file-chart-line"></i>Reporte Ventas Mensual</a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="reporteVentasSemanal();"><i class="fal fa-file-chart-line"></i>Reporte Ventas Semanal</a>
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <a class="" href="/AdminPages/AsignarCostosEnvio.aspx"><i class="fas fa-money-bill"></i>Asignar costos de envio</a>
+                        <a class="" href="/AdminPages/AsignarCostosEnvio.aspx"><i class="far fa-dollar-sign"></i>Asignar costos de envio</a>
                     </li>
                     <li>
-                        <a class="" href="/AdminPages/InteligenciaDeNegocio.aspx"><i class="fas fa-user"></i>Análisis del Negocio</a>
+                        <a class="" href="/AdminPages/InteligenciaDeNegocio.aspx"><i class="fas fa-chart-pie"></i>Análisis del Negocio</a>
                     </li>
-                    <li>
+                    <%--<li>
                         <a class="" href="/AdminPages/testing.aspx"><i class="fas fa-terminal"></i>Test</a>
-                    </li>
+                    </li>--%>
                     <li>
                         <a class="" href="/Login.aspx"><i class="fas fa-envelope"></i>Cerrar Sesión</a>
                     </li>

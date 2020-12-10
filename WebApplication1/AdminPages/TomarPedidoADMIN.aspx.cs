@@ -214,7 +214,7 @@ namespace WebApplication1
             {
                 if (ingrediente.Porción != null)
                 {
-                    txtValorPorPorcion.Text = $"{ingrediente.Porción} {ingrediente.TipoMedicion.Descripcion}";
+                    txtValorPorPorcion.Text = $"{ingrediente.Porción} {ingrediente.TipoMedicion1.Descripcion}";
                     txtCantidadPorcion.Text = "1";
                     lblModalCantidadMaxima.Text = extraDisponible.CantidadMaxima.HasValue ? $"La cantidad maxima de porciones es de: {extraDisponible.CantidadMaxima}" : "";
                     txtModalValorExtra.Text = extraDisponible.Valor.Value.ToString();
@@ -998,6 +998,20 @@ namespace WebApplication1
             descripcion = descripcion.Trim();
             GridViewOfertas.DataSource = oDAL.GetAll().Where(x => x.Nombre.ToUpper().Contains(descripcion.ToUpper()) || x.Descripcion.ToUpper().Contains(descripcion.ToUpper())).ToList();
             GridOfertas.DataBind();
+        }
+
+        protected void GridViewAlimentos_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            CargarGridAlimentos(txtFilterNombre.Text);
+            GridViewAlimentos.PageIndex = e.NewPageIndex;
+            GridViewAlimentos.DataBind();
+        }
+
+        protected void GridViewOfertas_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            CargarGridOfertas(txtFilterNombre.Text);
+            GridViewOfertas.PageIndex = e.NewPageIndex;
+            GridViewOfertas.DataBind();
         }
     }
 }

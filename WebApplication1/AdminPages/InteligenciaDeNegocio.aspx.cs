@@ -43,6 +43,7 @@ namespace WebApplication1.AdminPages
                     fechaRef = fechaRef.AddDays(1);
                 }
                 argumentos += $"{resultado.Total},";
+                fechaRef = fechaRef.AddDays(1);
             }
             argumentos = argumentos.Remove(argumentos.Length - 1);
             argumentos += "]";

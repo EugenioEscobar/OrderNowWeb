@@ -28,12 +28,14 @@ namespace WebApplication1
                 ValidateFields();
                 lblMensaje.Text = "";
 
+                string Rut = txtRut.Text;
                 string Nombre = txtNombre.Text;
                 string ApellidoP = txtApellidoPaterno.Text;
                 string ApellidoM = txtApellidoMaterno.Text;
                 string Direccion = txtDireccion.Text;
                 int Telefono = Convert.ToInt32(txtTelefono.Text);
                 string User = txtUsuario.Text;
+                string correo = txtCorreo.Text;
                 string clave = txtClave.Text;
                 string claveEnc = Encrypt.GetSHA256(clave);
 
@@ -46,11 +48,13 @@ namespace WebApplication1
 
 
                 Cliente c = new Cliente();
+                c.RUT = Rut;
                 c.Nombres = Nombre;
                 c.ApellidoPat = ApellidoP;
                 c.ApellidoMat = ApellidoM;
                 c.Direccion = Direccion;
                 c.IdUsuario = u.IdUsuario;
+                c.Correo = correo;
                 c.Telefono = Telefono;
                 c.Estado = 1;
                 cDAL.Add(c);
@@ -72,6 +76,8 @@ namespace WebApplication1
 
         protected void ValidateFields()
         {
+            if (txtRut.Text == "") { throw new Exception("Debe ingresar un Rut"); }
+            if (txtRut.Text.Length > 12) { throw new Exception("Debe ingresar un Rut válido"); }
             if (txtNombre.Text == "") { throw new Exception("Debe ingresar un Nombre"); }
             if (txtApellidoPaterno.Text == "") { throw new Exception("Debe ingresar un Apellido"); }
             if (txtDireccion.Text == "") { throw new Exception("Debe ingresar una Dirección"); }

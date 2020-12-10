@@ -15,6 +15,7 @@ namespace OrderNowDAL.DAL
         public Ingrediente Add(Ingrediente i, DetalleIngrediente dI)
         {
             ValidateNombre(i.Nombre);
+            i.Estado = 1;
             Ingrediente obj = nowBDEntities.Ingrediente.Add(i);
             nowBDEntities.SaveChanges();
             dI.IdIngrediente = obj.IdIngrediente;

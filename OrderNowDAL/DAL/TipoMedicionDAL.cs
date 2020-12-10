@@ -95,7 +95,8 @@ namespace OrderNowDAL.DAL
             double newStock = 0;
             List<EquivalenciaMediciones> equivalencias = GetEquivalencias(idMedicionIngrediente);
             EquivalenciaMediciones equivalenciaMedicion = equivalencias.FirstOrDefault(x => x.IdTipoMedicionInicial == idMedicionPorcion || x.IdTipoMedicionEquivalente == idMedicionPorcion);
-            if (equivalenciaMedicion.IdTipoMedicionEquivalente == idMedicionIngrediente)
+
+            if (equivalenciaMedicion.IdTipoMedicionInicial == idMedicionIngrediente)
             {
                 newStock = stockActual * equivalenciaMedicion.Equivalencia / cantidadPorcion;
             }

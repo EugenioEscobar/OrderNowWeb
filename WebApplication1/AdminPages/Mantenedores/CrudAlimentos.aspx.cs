@@ -158,27 +158,35 @@ namespace WebApplication1.Mantenedores
 
         protected void gridViewIngredientes_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            switch (e.CommandName)
+            try
             {
-                case "Agregar":
-                    int index = Convert.ToInt32(e.CommandArgument);
-                    Label codigo = (Label)((GridView)sender).Rows[index].FindControl("lblCodigo");
+                switch (e.CommandName)
+                {
+                    case "Agregar":
+                        int index = Convert.ToInt32(e.CommandArgument);
+                        Label codigo = (Label)((GridView)sender).Rows[index].FindControl("lblCodigo");
 
-                    int id = Convert.ToInt32(codigo.Text);
-                    Ingrediente obj = iDAL.Find(id);
+                        int id = Convert.ToInt32(codigo.Text);
+                        Ingrediente obj = iDAL.Find(id);
+                        if (obj.IdTipoMedicionPorcion == null) { throw new Exception("El ingrediente que desea ingresar no tiene ingresadas las porciones"); }
 
-                    switch (((GridView)sender).ID)
-                    {
-                        case "gridViewIngredientes":
-                            listaIngrediente.AddIngrediente(obj);
-                            LoadGridIngredienteAlimento();
-                            break;
-                        case "gridViewIngredientes2":
-                            listaExtras.AddIngrediente(obj);
-                            LoadGridExtrasDisponibles();
-                            break;
-                    }
-                    break;
+                        switch (((GridView)sender).ID)
+                        {
+                            case "gridViewIngredientes":
+                                listaIngrediente.AddIngrediente(obj);
+                                LoadGridIngredienteAlimento();
+                                break;
+                            case "gridViewIngredientes2":
+                                listaExtras.AddIngrediente(obj);
+                                LoadGridExtrasDisponibles();
+                                break;
+                        }
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                UserMessage(ex.Message, "danger");
             }
         }
 

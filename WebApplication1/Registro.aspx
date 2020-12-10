@@ -16,10 +16,11 @@
         </div>
         <section class="form-register" style="margin-top: 100px;">
             <h4>Regístrate</h4>
+            <asp:TextBox runat="server" class="controls" type="text" name="nombres" ID="txtRut" placeholder="Ingrese su RUT" />
             <asp:TextBox runat="server" class="controls" type="text" name="nombres" ID="txtNombre" placeholder="Ingrese su Nombre" />
             <asp:TextBox runat="server" class="controls" type="text" name="apellidopaterno" ID="txtApellidoPaterno" placeholder="Ingrese su Apellido Paterno" />
             <asp:TextBox runat="server" class="controls" type="text" name="apellidomaterno" ID="txtApellidoMaterno" placeholder="Ingrese su Apellido Materno" />
-            <asp:TextBox runat="server" class="controls" type="email" name="correo" ID="correo" placeholder="Ingrese su Correo" />
+            <asp:TextBox runat="server" class="controls" type="email" name="correo" ID="txtCorreo" placeholder="Ingrese su Correo" />
             <asp:TextBox runat="server" class="controls" type="text" name="direccion" ID="txtDireccion" placeholder="Ingrese su Dirección" />
             <asp:TextBox runat="server" class="controls" type="text" name="telefono" ID="txtTelefono" placeholder="Ingrese su Numero de Telefono" />
             <asp:TextBox runat="server" class="controls" type="text" name="usuario" ID="txtUsuario" placeholder="Ingrese su Nombre de Usuario" />

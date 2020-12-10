@@ -185,7 +185,7 @@
                                     <asp:Label ID="lblUserName" runat="server"></asp:Label>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="/ClientPages/CambiarDatos.aspx">Cambiar Contraseña</a>
+                                    <a class="dropdown-item" href="/ClientPages/CambiarDatos.aspx">Actualizar Datos/<br /> Cambiar Contraseña</a>
                                     <%--<a class="dropdown-item" href="#">Pedidos</a>--%>
                                     <div class="dropdown-divider"></div>
                                     <asp:LinkButton ID="lnkCerrarSesion" runat="server" OnClick="lnkCerrarSesion_Click" CssClass="ml-4">

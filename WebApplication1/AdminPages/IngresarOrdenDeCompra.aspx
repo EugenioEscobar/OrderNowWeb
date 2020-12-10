@@ -56,7 +56,7 @@
                                 <div class="form-row mt-2">
                                     <div class="col-md-6">
                                         <asp:Label ID="Label1" runat="server" Text="Folio"></asp:Label>
-                                        <asp:TextBox ID="txtFolio" class="form-control" runat="server" OnTextChanged="txtFolio_TextChanged"></asp:TextBox>
+                                        <asp:TextBox ID="txtFolio" class="form-control" runat="server" TextMode="Number" OnTextChanged="txtFolio_TextChanged" AutoPostBack="true"></asp:TextBox>
                                     </div>
                                     <div class="col-md-6">
                                         <asp:Label ID="Label2" runat="server" Text="Distribuidor"></asp:Label>
@@ -143,9 +143,9 @@
                     <%--<span class="" id="inputGroupFileAddon01">Upload</span>--%>
                 </div>
                 <div class="custom-file">
-                    <asp:FileUpload ID="FileUpload1" runat="server" CssClass="custom-file-input" aria-describedby="btnSubirPlanilla" />
+                    <asp:FileUpload ID="FileUpload1" runat="server" CssClass="custom-file-input" aria-describedby="btnSubirPlanilla" onchange="archivoSubido();" />
                     <%--<input type="file" class="" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">--%>
-                    <label class="custom-file-label" for="FileUpload1">Escoja un Archivo</label>
+                    <label id="labelFile" class="custom-file-label" for="FileUpload1">Escoja un Archivo</label>
                 </div>
             </div>
             <div class="col-md-6">
@@ -159,7 +159,11 @@
                 <a class="btn btn-outline-primary btn-block" href="/Content/PLANTILLA_ORDER_NOW.xlsm" download>Descargar Plantilla</a>
             </div>
             <div class="col-md-3">
-                <asp:Button ID="btnGuardar" CssClass="btn btn-success btn-block" runat="server" Text="Guardar Datos" OnClick="btnGuardar_Click" />
+                <asp:UpdatePanel ID="UpdatePanel3" runat="server">
+                    <ContentTemplate>
+                        <asp:Button ID="btnGuardar" CssClass="btn btn-success btn-block" runat="server" Text="Guardar Datos" OnClick="btnGuardar_Click" />
+                    </ContentTemplate>
+                </asp:UpdatePanel>
             </div>
         </div>
         <asp:UpdatePanel ID="UpdatePanel2" runat="server">
@@ -385,7 +389,7 @@
 
                             <asp:BoundField DataField="Precio" HeaderText="Precio" />
                             <asp:BoundField DataField="Total" HeaderText="Total" />
-                            <asp:TemplateField HeaderText="Modificar" Visible="true">
+                            <asp:TemplateField HeaderText="Eliminar" Visible="true">
                                 <ItemTemplate>
                                     <asp:LinkButton ID="btnDelete" runat="server" CommandArgument='<%#((GridViewRow)Container).RowIndex %>'
                                         CommandName="DeleteRow" CssClass="btn btn-danger"><i class="fal fa-minus-circle text-white"></i></asp:LinkButton>
@@ -400,4 +404,10 @@
             </ContentTemplate>
         </asp:UpdatePanel>
     </div>
+    <script>
+        function archivoSubido() {
+            var label = document.getElementById("labelFile");
+            label.innerText = "Presione 'Subir Planilla' para cargar el Excel";
+        }
+    </script>
 </asp:Content>

@@ -306,7 +306,6 @@ namespace WebApplication1
                 {
                     txtStock.Text = tMDAL.GetConvertedStock(stock, valorPorcion, idMedicionIngrediente, idMedicionPorcion).ToString();
 
-
                     Exception ex = new Exception("Se Actualizado el valor del Stock, por favor Revíselo antes de Guardar");
                     ex.Source = "warning";
                     throw ex;
@@ -371,6 +370,33 @@ namespace WebApplication1
             int idIngrediente = (int)ViewState["IdIngrediente"];
             GridViewDetalle.DataSource = dIDAL.GetAllByIngrediente(idIngrediente);
             GridViewDetalle.DataBind();
+        }
+
+        protected void txtPorcion_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                SetStock();
+            }
+            catch (Exception ex)
+            {
+                string type = ex.Source == "warning" ? ex.Source : "danger";
+                UserMessage(ex.Message, type);
+            }
+        }
+
+        protected void cboTipoMedicionPorcion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            try
+            {
+                SetStock();
+            }
+            catch (Exception ex)
+            {
+                string type = ex.Source == "warning" ? ex.Source : "danger";
+                UserMessage(ex.Message, type);
+            }
         }
     }
 }
